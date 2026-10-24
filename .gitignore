@@ -1,0 +1,17 @@
+# Segredos e dados locais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+node_modules/
+dist/
+build/
+coverage/
+.DS_Store
+Thumbs.db
+*.log
