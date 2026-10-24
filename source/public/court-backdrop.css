@@ -1,0 +1,83 @@
+/* Quiet court markings shared by the account pages and the studio shell. */
+.login-art,
+.login-form-section,
+.dashboard-main {
+  position: relative;
+  isolation: isolate;
+}
+
+.login-art::before,
+.login-form-section::before,
+.dashboard-main::before,
+.stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/assets/quadra-lines.svg');
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--court-fade);
+  mask-image: var(--court-fade);
+}
+
+.login-art::before {
+  z-index: -1;
+  background-size: 1120px auto;
+  background-position: 58% 64%;
+  opacity: .16;
+  --court-fade: radial-gradient(ellipse at 85% 60%, #000 12%, #0009 58%, transparent 90%);
+}
+
+.login-form-section::before {
+  z-index: -1;
+  background-size: 820px auto;
+  background-position: right -490px bottom -150px;
+  opacity: .08;
+  --court-fade: linear-gradient(135deg, transparent 55%, #000);
+}
+
+.dashboard-main::before {
+  z-index: -1;
+  background-size: 1480px auto;
+  background-position: right -510px top -90px;
+  opacity: .10;
+  --court-fade: linear-gradient(110deg, transparent 15%, #0008 62%, #000);
+}
+
+/* The canvas is transparent over this decoration. It stays below the garment
+   and never intercepts rotation, zoom, controls or text selection. */
+.stage::after {
+  z-index: 0;
+  background-size: clamp(850px, 100vw, 1450px) auto;
+  background-position: right -330px center;
+  opacity: .09;
+  --court-fade: linear-gradient(90deg, transparent 25%, #0006 60%, #000);
+}
+
+.viewer:not(.dark) .stage::after {
+  opacity: .08;
+  filter: brightness(.45);
+}
+
+@media (max-width: 760px) {
+  .login-art::before {
+    background-size: 690px auto;
+    background-position: 55% 52%;
+    opacity: .18;
+  }
+  .login-form-section::before {
+    background-size: 650px auto;
+    background-position: right -410px bottom -160px;
+    opacity: .06;
+  }
+  .dashboard-main::before {
+    background-size: 1000px auto;
+    background-position: right -490px top -30px;
+    opacity: .09;
+  }
+  .stage::after {
+    background-size: 850px auto;
+    background-position: right -350px center;
+    opacity: .08;
+  }
+}

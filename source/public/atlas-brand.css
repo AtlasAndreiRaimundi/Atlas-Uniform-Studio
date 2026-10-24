@@ -1,0 +1,12 @@
+/* Complete, proportional variants taken from the supplied Atlas vector logo. */
+.atlas-logo{display:block;position:relative;width:165px;max-width:100%;aspect-ratio:3.55;flex-shrink:0}
+.atlas-logo>img{display:block;width:100%;height:100%;object-fit:contain;filter:none}
+.atlas-logo>.atlas-logo-dark{display:none}
+:root[data-interface-theme=light] .atlas-logo>.atlas-logo-light{display:none}
+:root[data-interface-theme=light] .atlas-logo>.atlas-logo-dark{display:block}
+.brand.atlas-brand{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:47px}
+.studio-sidebar>.brand .atlas-logo,.site-brand .atlas-logo{width:170px}
+.proposal-brand .atlas-logo{width:160px}
+.sidebar-header .atlas-logo{width:150px}
+.login-art .atlas-logo{width:190px}
+@media(max-width:760px){.atlas-logo{width:140px}.brand.atlas-brand{min-height:40px}.login-art .atlas-logo{width:165px}.proposal-brand .atlas-logo{width:140px}}

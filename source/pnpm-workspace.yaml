@@ -1,0 +1,37 @@
+# Copied Sites are standalone projects and cannot inherit the monorepo policy.
+minimumReleaseAge: 10080
+minimumReleaseAgeIgnoreMissingTime: false
+# Exact security patch reviewed on 2026-10-24; keep the seven-day default.
+minimumReleaseAgeExclude:
+  - fast-uri@3.1.9
+trustLockfile: false
+strictDepBuilds: true
+allowBuilds:
+  esbuild: true
+  fsevents: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+storeDir: ${SITES_PNPM_SHARED_STORE:-.sites-runtime/pnpm-store}
+cacheDir: ${SITES_PNPM_SHARED_STORE:-.sites-runtime/pnpm-store}/policy-cache
+enableGlobalVirtualStore: false
+# Reuse store files with clones or hardlinks before falling back to copies.
+packageImportMethod: auto
+# The explicit installer owns dependency setup, including restored workspaces.
+verifyDepsBeforeRun: false
+optimisticRepeatInstall: false
+overrides:
+  "miniflare>sharp": "0.35.5"
+  "@babel/core@>=7 <8": "7.29.6"
+  "browserslist@>=4 <5": "4.28.7"
+  "baseline-browser-mapping@>=2 <3": "2.11.0"
+  "source-map-js@>=1 <2": "1.2.2"
+  "fast-uri@>=3 <4": "3.1.9"
+  "js-yaml@>=4 <5": "4.3.2"
+  "undici@>=7 <8": "7.30.1"
+  "ws@>=8 <9": "8.21.0"
+  "brace-expansion@>=1 <2": "1.1.21"
+  "brace-expansion@>=5 <6": "5.0.12"
+  "fflate@>=0.7 <0.8": "0.7.5"
+  "sharp@0.35.4": "0.35.5"
+  "esbuild@0.28.0": "0.28.1"

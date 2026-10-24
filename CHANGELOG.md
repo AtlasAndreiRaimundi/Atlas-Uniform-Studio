@@ -23,3 +23,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Tag/release:
 - SHA-256 do artefato:
 - Local de armazenamento seguro do artefato:
+
+## 2026-10-24 — Importação autorizada do código real
+
+- Snapshot Sites v51, origem `d88265ccff069ea40ddbc36255191d1aefbb46d8`, 439 arquivos e 94.211.140 bytes em source/.
+- Histórico GitHub preservado; manifesto SHA-256, restauração lossless de três GLBs grandes, varredura sem achados nos padrões verificados e 36 testes aprovados.
+- Workflow de verificação e procedimento/script para novas exportações. Build e validação visual não repetidos nesta etapa; dados de produção não exportados. Ver docs/importacao-2026-10-24.md.

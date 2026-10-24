@@ -1,0 +1,26 @@
+import {workflowActions} from './workflow-contract.js?v=2';
+const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
+function styles(){if(document.querySelector('link[data-workflow-style]'))return;const link=document.createElement('link');link.rel='stylesheet';link.href='/workflow-guide.css?v=2';link.dataset.workflowStyle='true';document.head.appendChild(link);}
+export function createWorkflowGuide({mount,onAction}){
+ styles();const host=typeof mount==='string'?document.querySelector(mount):mount;let state=null,busy=false,collapsed=false,lastKey='',failure='';
+ if(!host)return {update(){},hide(){}};
+ host.classList.add('workflow-guide');host.hidden=true;
+ function render(){if(!state?.id||!state.completed){host.hidden=true;return;}host.hidden=false;host.replaceChildren();
+  const header=node('header'),copy=node('div'),eyebrow=node('span','PRÓXIMO PASSO · TUDO NO MESMO PEDIDO','workflow-eyebrow');copy.append(eyebrow,node('h2',state.kind==='order'?'Pedido conferido':state.kind==='list'?'Lista pronta e conferida':'Apresentação conferida'));header.append(copy);
+  const toggle=node('button',collapsed?'Ver opções':'Continuar depois','workflow-collapse');toggle.type='button';toggle.setAttribute('aria-expanded',String(!collapsed));toggle.onclick=()=>{collapsed=!collapsed;render();};header.append(toggle);host.append(header);
+  if(collapsed)return;if(failure)host.append(node('p',failure,'workflow-error'));
+  host.append(node('p',state.title||'Seu trabalho está salvo.','workflow-name'),node('p',state.message||(state.kind==='order'?'Quer anexar uma lista ou uma apresentação? Você pode criar agora ou usar um arquivo já salvo.':'Gostaria de incorporar '+(state.kind==='list'?'esta lista':'este design')+' a um pedido? Escolha um pedido existente ou comece um novo.')));
+  if(state.linkedOrders?.length&&state.kind!=='order'){for(const order of state.linkedOrders){const link=node('a','Pedido vinculado: '+(order.number||order.title)+' →');link.href='/pedidos?order='+encodeURIComponent(order.id);link.target='_top';host.append(link);}}
+  if(state.orderId&&state.kind!=='order'&&!state.linkedOrders?.some(order=>order.id===state.orderId)){const link=node('a','Abrir pedido de origem →');link.href='/pedidos?order='+encodeURIComponent(state.orderId);link.target='_top';host.append(link);}
+  if(state.projectId&&state.kind==='list'){const link=node('a','Apresentação vinculada →');link.href='/studio/'+encodeURIComponent(state.projectId);link.target='_top';host.append(link);}
+  for(const list of state.linkedLists||[]){const link=node('a','Lista vinculada: '+list.title+(list.reviewed?' · conferida':' · rascunho')+' →');link.href='/organizador?list='+encodeURIComponent(list.id);link.target='_top';host.append(link);}
+  const actions=node('div',undefined,'workflow-actions');for(const item of workflowActions(state.kind,state)){const b=node('button',item.label);b.type='button';b.disabled=busy||item.disabled;b.onclick=async()=>{if(busy)return;failure='';busy=true;render();try{await onAction(item.id);}catch(error){failure=error.message;}finally{busy=false;render();}};actions.append(b);}host.append(actions);
+ }
+ return {update(next){const key=next.kind+':'+next.id,same=key===lastKey;if(!same){collapsed=!next.created;failure='';lastKey=key;}state={...next,created:Boolean(next.created||(same&&state?.created))};render();},hide(){state=null;lastKey='';host.hidden=true;}};
+}
+export async function workflowChoose({title,description='',items,allowNew=false,newLabel='Criar novo pedido',confirmLabel='Continuar'}){
+ styles();const dialog=node('dialog',undefined,'workflow-choice');dialog.setAttribute('aria-label',title);dialog.append(node('h2',title),node('p',description));const select=node('select');select.setAttribute('aria-label',title);const empty=node('option','Selecione…');empty.value='';select.append(empty);if(allowNew){const option=node('option',newLabel);option.value='__new__';select.append(option);}for(const item of items){const option=node('option',item.label);option.value=item.id;select.append(option);}dialog.append(select);if(!items.length&&!allowNew)dialog.append(node('p','Nenhum item disponível nesta etapa. Você pode criar um novo ou voltar e abrir uma revisão de um pedido conferido.'));const footer=node('div'),cancel=node('button','Cancelar'),confirm=node('button',confirmLabel);confirm.disabled=true;select.onchange=()=>confirm.disabled=!select.value;footer.append(cancel,confirm);dialog.append(footer);document.body.appendChild(dialog);
+ return new Promise(resolve=>{const finish=value=>{dialog.close();dialog.remove();resolve(value);};cancel.onclick=()=>finish(null);confirm.onclick=()=>finish(select.value);dialog.oncancel=e=>{e.preventDefault();finish(null);};dialog.showModal();select.focus();});
+}
+export async function workflowOrders(api){let page=0,orders=[],data;do{data=await api('/api/order-tracking?page='+page++);orders.push(...data.orders);}while(data.hasMore);return orders;}
+export function canonicalWorkflowPath(path){try{if(window.top.location.origin===location.origin)window.top.history.replaceState(null,'',path);}catch{/* Saved links remain usable when a host disallows top history access. */}}

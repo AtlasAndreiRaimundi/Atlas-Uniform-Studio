@@ -1,0 +1,42 @@
+name: Código-fonte e versionamento
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 scripts/restore_source.py
+      - run: python3 scripts/check_source.py
+      - name: Testes sem dependências externas
+        working-directory: source
+        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs
+  materializar-modelos:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verificar
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/restore_source.py
+      - run: python3 scripts/check_source.py
+      - name: Registrar os modelos originais restaurados
+        run: |
+          git add -- source/public/assets/molds/simulator-elite-27-kit/model.glb source/public/assets/molds/simulator-elite-27-shirt/model.glb source/public/simulador/models/kit-elite-27.glb
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore: materializar modelos GLB originais verificados'
+            git push origin HEAD:main
+          fi

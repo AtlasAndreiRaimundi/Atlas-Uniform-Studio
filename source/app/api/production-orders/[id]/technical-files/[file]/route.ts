@@ -1,0 +1,5 @@
+import {account,handle,mutation,jsonInput,result,orderTechnicalService} from '@/lib/api';
+export const dynamic='force-dynamic';
+type Context={params:Promise<{id:string;file:string}>};
+export async function GET(request:Request,{params}:Context){return handle(async()=>{const {id,file}=await params,q=new URL(request.url).searchParams,{object,name,size,sha256}=await orderTechnicalService().download(await account(),id,file,{factory:q.get('factory')==='1',revision:q.get('revision'),version:q.get('version')});return new Response(object.body,{headers:{'Content-Type':'application/octet-stream','Content-Length':String(size),'Content-Disposition':"attachment; filename*=UTF-8''"+encodeURIComponent(name).replace(/'/g,'%27'),'X-Content-Type-Options':'nosniff','Cache-Control':'private, no-store','Content-Security-Policy':"default-src 'none'; sandbox",'X-File-SHA256':sha256}});});}
+export async function DELETE(request:Request,{params}:Context){return handle(async()=>{await mutation(request);const {id,file}=await params;return result({order:await orderTechnicalService().detach(await account(),id,file,(await jsonInput(request)).version)});});}

@@ -5,7 +5,7 @@ Software em desenvolvimento para criação, apresentação e gestão de uniforme
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
 **Status:** desenvolvimento e validação; documentação preliminar criada em 24/10/2026.
 
-> Este repositório é privado e reúne a documentação do projeto. **O código-fonte atual do site ainda não foi importado nem auditado neste repositório.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Exportação autorizada de 24/10/2026: 439 arquivos, com manifesto SHA-256 e revisão limitada documentada.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Módulos previstos / em desenvolvimento
 - Apresentação 3D de uniformes e exportações visuais.
@@ -24,3 +24,7 @@ Consultar [funcionalidades](docs/funcionalidades.md), [arquitetura](docs/arquite
 5. Configurar workflow de documentação e verificação de integridade para novas versões.
 
 **Aviso:** informação técnica e organização de evidências, não parecer jurídico ou registro de programa no INPI.
+
+## Código importado e atualizações
+
+Consulte [o relatório da importação](docs/importacao-2026-10-24.md) e [o procedimento de atualização](docs/atualizacoes-do-codigo.md). Execute `python3 scripts/restore_source.py` na raiz antes de usar o código. As verificações automáticas conferem integridade, padrões de segredos e testes críticos. Os próximos passos anteriores são preservados como planejamento inicial; a exportação e a importação foram realizadas, com limites de validação descritos no relatório.

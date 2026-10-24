@@ -1,0 +1,1 @@
+export default function NotFound() { return <main className="unavailable"><p className="eyebrow">ATLAS UNIFORM STUDIO</p><h1>Projeto não encontrado.</h1><p>Confira o endereço ou volte à sua biblioteca.</p><a className="gold-button" href="/projects">Meus projetos ↗</a></main>; }

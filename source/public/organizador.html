@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#121314"><meta name="robots" content="noindex,nofollow">
+  <title>Lista de pedidos — Atlas Uniform Studio</title>
+  <link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/organizer.css?v=7">
+  <script type="module" src="/organizer-ui.js?v=12"></script>
+<link rel="stylesheet" href="/interface-theme.css?v=1"><script src="/interface-theme.js?v=1"></script>
+<link rel="stylesheet" href="/studio-navigation.css?v=1"><script type="module" src="/studio-navigation-init.js?v=1"></script>
+<link rel="stylesheet" href="/atlas-brand.css?v=1"></head>
+<body>
+  <aside class="tool-nav studio-sidebar">
+    <a class="brand" href="/projects" target="_top" aria-label="Atlas Uniform Studio"><span class="atlas-logo" aria-hidden="true"><img class="atlas-logo-light" src="/assets/atlas/atlas-logo-light.svg" alt="" width="1200" height="338"><img class="atlas-logo-dark" src="/assets/atlas/atlas-logo-dark.svg" alt="" width="1200" height="339"></span></a>
+    <!-- studio-navigation --><div class="studio-navigation-shell" data-studio-nav data-open="false"><button class="studio-nav-toggle" type="button" aria-expanded="false" aria-controls="studioNavigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu do estúdio</button><nav class="studio-navigation" id="studioNavigation" aria-label="Menu do estúdio"><div class="studio-nav-groups"><section class="studio-nav-group" aria-labelledby="nav-creation"><h2 id="nav-creation">Criação</h2><div class="studio-nav-items"><a class="studio-nav-link" data-nav-id="simulator" href="/simulador" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 2 8l4 4 2-2v11h8V10l2 2 4-4-6-5c-1 4-7 4-8 0ZM12 10v7M9 14h6"/></svg><span class="studio-nav-label">Simulador de uniformes</span></a><a class="studio-nav-link" data-nav-id="create-presentation" href="/projects?create=1" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h18M4 3v12h16V3M12 15v6M8 21l4-4 4 4M8 7h8M8 11h4"/></svg><span class="studio-nav-label">Criar apresentação</span></a><a class="studio-nav-link" data-nav-id="projects" href="/projects" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v1M3 8h18l-2 12H5L3 8Z"/></svg><span class="studio-nav-label">Meus projetos</span></a></div></section><section class="studio-nav-group" aria-labelledby="nav-orders"><h2 id="nav-orders">Pedidos</h2><div class="studio-nav-items"><a class="studio-nav-link" data-nav-id="create-order" href="/pedidos?new=1" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2ZM14 2v6h6M12 12v6M9 15h6"/></svg><span class="studio-nav-label">Criar pedido</span></a><a class="studio-nav-link" data-nav-id="orders" href="/acompanhamento" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M9 2h6v5H9V2ZM8 12h1M12 12h4M8 17h1M12 17h4"/></svg><span class="studio-nav-label">Meus pedidos</span></a><a class="studio-nav-link" data-nav-id="approved-orders" href="/acompanhamento?status=approved" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3ZM8 12l3 3 5-6"/></svg><span class="studio-nav-label">Pedidos aprovados</span></a></div></section><section class="studio-nav-group" aria-labelledby="nav-tools"><h2 id="nav-tools">Ferramentas</h2><div class="studio-nav-items"><a class="studio-nav-link" data-nav-id="lists" href="/organizador" target="_top" aria-current="page"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM3 9h18M9 9v12M15 9v12M3 15h18"/></svg><span class="studio-nav-label">Criador de planilha</span></a></div></section></div><details class="studio-nav-more"><summary>Outras opções</summary><div><a class="studio-nav-link" data-nav-id="proposals" id="proposalNav" href="/propostas" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16V5h11M5 5l14 14M13 19h6v-6"/></svg><span class="studio-nav-label">Propostas e retornos</span></a><a class="studio-nav-link" data-nav-id="contacts" href="/perfil?tab=designers" target="_top"><svg class="studio-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="studio-nav-label">Desenhistas e contatos</span></a></div></details></nav></div><!-- /studio-navigation -->
+    <a href="/projects" class="back-link" target="_top">← Voltar ao estúdio</a><p class="creator">CRIADO POR ANDREI RAIMUNDI</p>
+  </aside>
+  <main class="dashboard-main">
+    <header class="tool-top"><span>FERRAMENTAS <i>/</i> LISTA DE PEDIDOS</span><span id="toolDesigner">ATLAS UNIFORM STUDIO</span><div data-static-theme-picker></div></header>
+    <div class="tool-content simple-organizer">
+      <section class="tool-intro"><div><p class="eyebrow">DO PEDIDO À PRODUÇÃO</p><h1>Monte sua lista.</h1><p>Adicione os itens, importe uma planilha ou cole um texto. Comece por aqui ou volte depois. Salve a lista e vincule a um pedido quando quiser.</p></div><div class="organizer-heading-actions"><button id="exportOrdersTopBtn" data-export-orders class="gold-button" aria-describedby="exportHelp" disabled>Exportar planilha ↓</button><small>Excel (.xlsx) · lista + resumo</small><button id="loadExampleBtn" class="outline-button">Ver exemplo</button></div></section>
+      <section id="workflowNextStep" aria-label="Próximo passo da lista" hidden></section><section class="list-library" aria-label="Guardar e reabrir listas">
+        <label>Listas salvas<select id="savedLists"><option value="">Selecione uma lista…</option></select></label>
+        <div class="list-library-actions"><button id="openList" class="outline-button">Abrir lista</button><button id="newList" class="outline-button">+ Nova lista</button><button id="saveList" class="outline-button">Salvar rascunho</button><button id="completeList" class="gold-button">Concluir e conferir lista</button><button id="saveListCopy" class="text-link">Salvar como nova</button></div>
+        <p id="listSaveStatus" class="helper" role="status">Preparando suas listas…</p>
+        <a class="text-link" id="continuePresentation" href="/projects" target="_top">Trabalhar na apresentação →</a>
+      </section>
+      <section class="list-setup" aria-label="Dados do pedido">
+        <label>Nome da lista<input id="orderTitle" maxlength="100" placeholder="Ex.: Uniformes ABF · Azul"><button type="button" id="suggestListName" class="text-link">Sugerir nome</button></label>
+        <label>Peça para novas linhas<select id="orderProduct"></select></label>
+        <details class="optional-settings"><summary>Modelo e cor <span>opcional</span></summary><div><label>Modelo<input id="orderModel" maxlength="100" placeholder="Ex.: Jogo 01"></label><label>Cor<input id="orderColor" maxlength="100" placeholder="Ex.: Azul"></label></div><p class="helper">Usados nas novas linhas. Na importação, preenchem apenas o que estiver vazio.</p></details>
+      </section>
+      <section class="list-connections" aria-label="Vincular lista"><div><h2>Destino da lista <small>opcional</small></h2><p class="helper">Escolha um pedido ou uma apresentação que já existe. Você também pode concluir a lista e decidir depois.</p></div><label>Pedido existente<select id="listOrderLink"><option value="">Decidir depois / criar novo pedido</option></select></label><label>Apresentação existente<select id="listProjectLink"><option value="">Sem apresentação vinculada</option></select></label><button id="refreshListLinks" class="text-link">Atualizar opções</button></section>
+      <section class="template-guide" aria-label="Modelo de planilha">
+        <div><h2>Baixe o modelo, preencha e importe.</h2><p>Preencha a aba <strong>Pedido</strong> e envie o Excel aqui. Nome vazio = sem nome. Número vazio = sem número. Adicional vazio = sem texto adicional.</p><small id="templateProductHint"></small></div>
+        <div class="template-guide-actions"><button id="downloadTemplateBtn" class="outline-button">Baixar modelo Excel ↓</button><a id="templateFileLink" class="download-link" hidden>Baixar modelo gerado ↓</a></div>
+      </section>
+      <section class="import-card" aria-label="Montar a lista">
+        <div class="input-tabs" role="tablist" aria-label="Como montar a lista">
+          <button id="manualTab" role="tab" aria-selected="true" aria-controls="manualInputPanel" data-input="manual" class="active">Criar manualmente</button>
+          <button id="fileTab" role="tab" aria-selected="false" aria-controls="fileInputPanel" data-input="file">Importar planilha</button>
+          <button id="textTab" role="tab" aria-selected="false" aria-controls="textInputPanel" data-input="text">Colar texto</button>
+        </div>
+        <div id="manualInputPanel" class="manual-panel" role="tabpanel" aria-labelledby="manualTab">
+          <div class="manual-heading"><p id="manualHint">Preencha camiseta e calção para montar um kit automaticamente. Nome, número e adicional são opcionais. BL = Baby Look. TAM = Infantil.</p><button id="cancelEditBtn" class="text-link" hidden>Cancelar edição</button></div>
+          <form id="manualForm" autocomplete="off">
+            <div class="manual-grid">
+              <label>Tipo<select id="manualGroup" name="grupo"></select></label>
+              <label>Nome<input id="manualName" name="nome" maxlength="120" placeholder="Sem nome, se não personalizar"></label>
+              <label>Número<input id="manualNumber" name="numero" inputmode="numeric" maxlength="4" placeholder="Vazio = sem número"></label>
+              <label><span id="topSizeLabel">Tam. Camiseta</span><select id="manualTop" name="tamanhoCamiseta"></select></label>
+              <label><span id="bottomSizeLabel">Tam. Calção</span><select id="manualBottom" name="tamanhoCalcao"></select></label>
+              <label>Quant.<input id="manualQuantity" name="quantidade" type="number" min="1" max="99999" step="1" value="1" required></label>
+              <label class="additional-field">Adicional<input id="manualAdditional" name="adicional" maxlength="200" placeholder="Ex.: CAPITÃO, PROFESSOR ou O+"></label>
+              <button class="gold-button" id="addManualBtn" type="submit">Adicionar</button>
+            </div>
+          </form>
+          <p id="manualError" class="inline-error" role="alert" hidden></p>
+        </div>
+        <div id="fileInputPanel" class="simple-import" role="tabpanel" aria-labelledby="fileTab" hidden>
+          <label class="file-drop" id="orderDrop" for="orderFile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></svg><strong>Solte a planilha aqui</strong><span>ou clique para escolher</span><small>XLSX, CSV, TSV ou TXT · até 10 MB · 5.000 itens</small></label>
+          <input id="orderFile" type="file" accept=".xlsx,.csv,.tsv,.txt" hidden><p id="sourceSummary" class="source-summary" role="status"></p>
+        </div>
+        <div id="textInputPanel" class="simple-import" role="tabpanel" aria-labelledby="textTab" hidden>
+          <label class="field-label" for="orderText">Cole a lista ou as colunas copiadas do Excel</label>
+          <textarea id="orderText" maxlength="1000000" spellcheck="false" placeholder="Tipo;Nome;Número;Tam. Camiseta;Tam. Calção;Quantidade;Adicional&#10;Linha;João;07;M;G;1;CAPITÃO&#10;Linha;Ana;10;BLP;P;1;&#10;Goleiro;Pedro;01;TAM10;TAM10;2;O+"></textarea>
+          <p class="helper">Pode usar o modelo acima ou uma lista com nome, número e tamanho. Camiseta e calção têm tamanhos independentes.</p>
+        </div>
+        <div id="mappingPanel" class="simple-import" hidden><details id="mappingDetails"><summary id="mappingStatus">Ajustar colunas reconhecidas</summary><div id="sheetMappings"></div></details></div>
+        <div id="importActions" class="simple-import-actions" hidden><button id="organizeBtn" class="gold-button">Organizar lista →</button></div>
+        <p id="sourceError" class="inline-error" role="alert" hidden></p>
+      </section>
+      <section id="results" class="results" aria-label="Itens do pedido">
+        <div class="simple-results-heading"><div><p class="eyebrow">SEU PEDIDO</p><h2 id="listHeading">Itens da lista</h2><p id="resultDescription">Ordenados por tamanho e depois por modelo.</p></div><div class="export-actions"><button id="generateProductionOrder" class="outline-button">Usar em um pedido →</button><button id="exportOrdersBtn" data-export-orders class="gold-button" aria-describedby="exportHelp" disabled>Exportar planilha ↓</button><a id="exportFileLink" class="download-link" hidden>Baixar arquivo gerado ↓</a></div></div>
+        <div class="simple-list-tools"><label class="search-box"><span class="sr-only">Buscar na lista</span><input id="searchOrders" type="search" placeholder="Buscar nome, número ou tamanho"></label><div><span id="recordCount">0 itens</span><button id="undoBtn" class="text-link" hidden>Desfazer</button><button id="newManualBtn" class="text-link">+ Adicionar item</button></div></div>
+        <div class="table-scroll"><table class="simple-orders-table"><thead><tr><th>Tipo</th><th>Nome</th><th>Número</th><th id="listTopSizeLabel">Tam. Camiseta</th><th id="listBottomSizeLabel">Tam. Calção</th><th>Quant.</th><th>Adicional</th><th>Ações</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+        <div class="pagination"><span id="pageStatus"></span><div><button id="previousPageBtn" class="outline-button">← Anterior</button><button id="nextPageBtn" class="outline-button">Próxima →</button></div></div>
+        <p id="exportHelp" class="export-help" role="status">Comece adicionando um item.</p>
+      </section>
+      <section id="reviewPanel" class="list-review" hidden aria-label="Itens para conferir"><div class="section-heading"><h2>Confira antes de baixar</h2><span id="issueCount"></span></div><div id="reviewList"></div></section>
+      <section class="quantity-summary" aria-label="Resumo das peças">
+        <div class="section-heading"><div><p class="eyebrow">QUANTIDADES PARA PRODUÇÃO</p><h2>Resumo das peças</h2></div><button id="copySummaryBtn" class="outline-button" disabled>Copiar resumo</button></div>
+        <div class="summary-metrics"><span><strong id="pieceCount">0</strong> peças</span><span><strong id="kitCount">0</strong> kits</span><p>Kits: camiseta + calção ou jaqueta + calça. Cada peça entra na própria grade.</p></div>
+        <p id="summaryNotice" class="helper">Adicione itens para ver as quantidades por tamanho.</p><div id="summaryCards" class="summary-cards"></div>
+        <details id="summaryPlain"><summary>Ver resumo em texto</summary><textarea id="summaryText" readonly aria-label="Resumo para copiar" spellcheck="false"></textarea></details>
+      </section>
+      <footer class="tool-footer"><span>ATLAS UNIFORM STUDIO</span><p>Sua lista pode ser salva separadamente. Apresentação e pedido podem ser vinculados depois.</p><span>POR ANDREI RAIMUNDI</span></footer>
+    </div>
+  </main>
+  <dialog id="rowDetails"><form id="detailsForm"><div class="section-heading"><h2>Detalhes do item</h2><button id="closeDetailsBtn" type="button" class="text-link" aria-label="Fechar detalhes">Fechar</button></div><div class="details-fields"><label>Peça / kit<select id="detailProduct"></select></label><label>Modelo<input id="detailModel" maxlength="100"></label><label>Cor<input id="detailColor" maxlength="100"></label></div><p id="detailSource" class="helper"></p><button class="gold-button" type="submit">Salvar detalhes</button></form></dialog>
+  <dialog id="orderDestination"><form id="orderDestinationForm"><div class="section-heading"><h2>Usar esta lista em um pedido</h2><button id="closeOrderDestination" type="button" class="text-link">Fechar</button></div><p class="helper">Crie um pedido ou escolha um que já começou. A lista permanece salva separadamente.</p><label class="destination-label">Destino<select id="listOrderDestination"><option value="">Criar novo pedido</option></select></label><button class="gold-button" id="applyListDestination" type="submit">Continuar →</button></form></dialog>
+  <div id="orderToast" class="toast" role="status" hidden></div>
+</body>
+</html>

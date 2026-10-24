@@ -1,0 +1,2 @@
+export function Mark() { return <svg viewBox="0 0 256 256" aria-hidden="true"><image href="/assets/atlas/atlas-symbol.png" width="256" height="256"/></svg>; }
+export function Brand() { return <a className="brand atlas-brand" href="/" aria-label="Atlas Uniform Studio, início"><span className="atlas-logo" aria-hidden="true"><img className="atlas-logo-light" src="/assets/atlas/atlas-logo-light.svg" alt="" width="1200" height="338"/><img className="atlas-logo-dark" src="/assets/atlas/atlas-logo-dark.svg" alt="" width="1200" height="339"/></span></a>; }

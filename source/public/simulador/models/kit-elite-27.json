@@ -1,0 +1,550 @@
+{
+  "model": "kit-elite-27",
+  "sourceFile": "KIT ELITE 27.glb",
+  "sourceSha256": "d65ebe9d25da7065e8d9dd196e124d9c4655cf29c23b3fe70945ec095fde45b3",
+  "panels": [
+    {
+      "number": 1,
+      "id": "waist-1",
+      "label": "Cós do calção · painel 1",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 20.77,
+        "h": 5.85
+      },
+      "sourceName": "Pattern2D_54806",
+      "originalUV": {
+        "min": [
+          -0.10383821278810501,
+          0.9707703590393066
+        ],
+        "max": [
+          0.10383818298578262,
+          1.0292296409606934
+        ]
+      },
+      "fullVertices": 342,
+      "fullTriangles": 512,
+      "compatibleVertices": 52,
+      "compatibleTriangles": 74,
+      "compatibleRelativeError": 0.002340434119105339
+    },
+    {
+      "number": 2,
+      "id": "waist-2",
+      "label": "Cós do calção · painel 2",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 20.77,
+        "h": 5.85
+      },
+      "sourceName": "Pattern2D_54807",
+      "originalUV": {
+        "min": [
+          -0.10383818298578262,
+          0.9707703590393066
+        ],
+        "max": [
+          0.10383818298578262,
+          1.0292296409606934
+        ]
+      },
+      "fullVertices": 342,
+      "fullTriangles": 512,
+      "compatibleVertices": 52,
+      "compatibleTriangles": 74,
+      "compatibleRelativeError": 0.0026412205770611763
+    },
+    {
+      "number": 3,
+      "id": "waist-3",
+      "label": "Cós do calção · painel 3",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "back",
+      "trim": true,
+      "cm": {
+        "w": 20.77,
+        "h": 5.85
+      },
+      "sourceName": "Pattern2D_54808",
+      "originalUV": {
+        "min": [
+          -0.10383821278810501,
+          0.9707703590393066
+        ],
+        "max": [
+          0.10383821278810501,
+          1.0292296409606934
+        ]
+      },
+      "fullVertices": 335,
+      "fullTriangles": 502,
+      "compatibleVertices": 52,
+      "compatibleTriangles": 75,
+      "compatibleRelativeError": 0.00218740152195096
+    },
+    {
+      "number": 4,
+      "id": "waist-4",
+      "label": "Cós do calção · painel 4",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "back",
+      "trim": true,
+      "cm": {
+        "w": 20.77,
+        "h": 5.85
+      },
+      "sourceName": "Pattern2D_54809",
+      "originalUV": {
+        "min": [
+          -0.10383821278810501,
+          0.9707703590393066
+        ],
+        "max": [
+          0.10383821278810501,
+          1.0292296409606934
+        ]
+      },
+      "fullVertices": 335,
+      "fullTriangles": 502,
+      "compatibleVertices": 52,
+      "compatibleTriangles": 75,
+      "compatibleRelativeError": 0.0011391787556931376
+    },
+    {
+      "number": 5,
+      "id": "short-panel-5",
+      "label": "Calção · painel 5",
+      "piece": "shorts",
+      "group": "Calção",
+      "view": "front",
+      "cm": {
+        "w": 64.98,
+        "h": 42.45
+      },
+      "sourceName": "Pattern2D_71604",
+      "originalUV": {
+        "min": [
+          0.3566628098487854,
+          0.1846911907196045
+        ],
+        "max": [
+          1.0064443349838257,
+          0.6091697216033936
+        ]
+      },
+      "fullVertices": 2875,
+      "fullTriangles": 5186,
+      "compatibleVertices": 203,
+      "compatibleTriangles": 299,
+      "compatibleRelativeError": 0.006691567599773407
+    },
+    {
+      "number": 6,
+      "id": "short-panel-6",
+      "label": "Calção · painel 6",
+      "piece": "shorts",
+      "group": "Calção",
+      "view": "front",
+      "cm": {
+        "w": 64.83,
+        "h": 41.88
+      },
+      "sourceName": "Pattern2D_58296",
+      "originalUV": {
+        "min": [
+          -0.6898196935653687,
+          0.17083007097244263
+        ],
+        "max": [
+          -0.04154783859848976,
+          0.5896174907684326
+        ]
+      },
+      "fullVertices": 2847,
+      "fullTriangles": 5130,
+      "compatibleVertices": 203,
+      "compatibleTriangles": 299,
+      "compatibleRelativeError": 0.006880527827888727
+    },
+    {
+      "number": 7,
+      "id": "sleeve-strip-7",
+      "label": "Filete da manga · painel 7",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "right",
+      "trim": true,
+      "cm": {
+        "w": 19.74,
+        "h": 1.04
+      },
+      "sourceName": "42",
+      "originalUV": {
+        "min": [
+          0.5005751848220825,
+          0.14097756147384644
+        ],
+        "max": [
+          0.6980220079421997,
+          0.15137457847595215
+        ]
+      },
+      "fullVertices": 4297,
+      "fullTriangles": 7770,
+      "compatibleVertices": 185,
+      "compatibleTriangles": 189,
+      "compatibleRelativeError": 0.012093882076442242
+    },
+    {
+      "number": 8,
+      "id": "sleeve-strip-8",
+      "label": "Filete da manga · painel 8",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "left",
+      "trim": true,
+      "cm": {
+        "w": 33.32,
+        "h": 1.75
+      },
+      "sourceName": "39",
+      "originalUV": {
+        "min": [
+          -0.8822041749954224,
+          0.30747008323669434
+        ],
+        "max": [
+          -0.548964262008667,
+          0.325017511844635
+        ]
+      },
+      "fullVertices": 4321,
+      "fullTriangles": 7818,
+      "compatibleVertices": 185,
+      "compatibleTriangles": 189,
+      "compatibleRelativeError": 0.013062466867268085
+    },
+    {
+      "number": 9,
+      "id": "collar-9",
+      "label": "Gola · painel 9",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "back",
+      "trim": true,
+      "cm": {
+        "w": 20.4,
+        "h": 2.1
+      },
+      "sourceName": "Pattern2D_768517",
+      "originalUV": {
+        "min": [
+          -0.5068649649620056,
+          0.12960118055343628
+        ],
+        "max": [
+          -0.3028641641139984,
+          0.15062165260314941
+        ]
+      },
+      "fullVertices": 2662,
+      "fullTriangles": 4714,
+      "compatibleVertices": 120,
+      "compatibleTriangles": 119,
+      "compatibleRelativeError": 0.002470745937898755
+    },
+    {
+      "number": 10,
+      "id": "collar-10",
+      "label": "Gola · painel 10",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 4.2,
+        "h": 10.94
+      },
+      "sourceName": "Pattern2D_780013",
+      "originalUV": {
+        "min": [
+          -0.21562564373016357,
+          0.17077195644378662
+        ],
+        "max": [
+          -0.17364075779914856,
+          0.2801467180252075
+        ]
+      },
+      "fullVertices": 841,
+      "fullTriangles": 1378,
+      "compatibleVertices": 69,
+      "compatibleTriangles": 75,
+      "compatibleRelativeError": 0.001885329489596188
+    },
+    {
+      "number": 11,
+      "id": "collar-11",
+      "label": "Gola · painel 11",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 4.2,
+        "h": 11.13
+      },
+      "sourceName": "Pattern2D_780014",
+      "originalUV": {
+        "min": [
+          -0.3235802948474884,
+          0.16909539699554443
+        ],
+        "max": [
+          -0.2815954089164734,
+          0.28039586544036865
+        ]
+      },
+      "fullVertices": 846,
+      "fullTriangles": 1384,
+      "compatibleVertices": 69,
+      "compatibleTriangles": 74,
+      "compatibleRelativeError": 0.0019297359976917505
+    },
+    {
+      "number": 12,
+      "id": "collar-12",
+      "label": "Gola · painel 12",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 7.03,
+        "h": 4.19
+      },
+      "sourceName": "Pattern2D_1143691",
+      "originalUV": {
+        "min": [
+          -0.2586175501346588,
+          0.24506956338882446
+        ],
+        "max": [
+          -0.18830375373363495,
+          0.28695112466812134
+        ]
+      },
+      "fullVertices": 518,
+      "fullTriangles": 774,
+      "compatibleVertices": 62,
+      "compatibleTriangles": 75,
+      "compatibleRelativeError": 0.0008788943523541093
+    },
+    {
+      "number": 13,
+      "id": "collar-13",
+      "label": "Gola · painel 13",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "cm": {
+        "w": 7.27,
+        "h": 4.27
+      },
+      "sourceName": "Pattern2D_1143692",
+      "originalUV": {
+        "min": [
+          -0.30794140696525574,
+          0.2301497459411621
+        ],
+        "max": [
+          -0.23525837063789368,
+          0.27284467220306396
+        ]
+      },
+      "fullVertices": 535,
+      "fullTriangles": 804,
+      "compatibleVertices": 62,
+      "compatibleTriangles": 74,
+      "compatibleRelativeError": 0.0012656447943300009
+    },
+    {
+      "number": 14,
+      "id": "sleeve-left",
+      "label": "Manga esquerda · painel 14",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "left",
+      "cm": {
+        "w": 39.7,
+        "h": 33.7
+      },
+      "sourceName": "39",
+      "originalUV": {
+        "min": [
+          -0.9200693368911743,
+          -0.04001033306121826
+        ],
+        "max": [
+          -0.5230450630187988,
+          0.2969511151313782
+        ]
+      },
+      "fullVertices": 20199,
+      "fullTriangles": 38924,
+      "compatibleVertices": 404,
+      "compatibleTriangles": 484,
+      "compatibleRelativeError": 0.014870790764689445
+    },
+    {
+      "number": 15,
+      "id": "sleeve-right",
+      "label": "Manga direita · painel 15",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "right",
+      "cm": {
+        "w": 39.7,
+        "h": 33.72
+      },
+      "sourceName": "41",
+      "originalUV": {
+        "min": [
+          -0.0003844604652840644,
+          -0.04025447368621826
+        ],
+        "max": [
+          0.39660385251045227,
+          0.2969511151313782
+        ]
+      },
+      "fullVertices": 19868,
+      "fullTriangles": 38258,
+      "compatibleVertices": 405,
+      "compatibleTriangles": 485,
+      "compatibleRelativeError": 0.014863383956253529
+    },
+    {
+      "number": 16,
+      "id": "side-right",
+      "label": "Recorte direito · painel 16",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "right",
+      "cm": {
+        "w": 8.78,
+        "h": 52.43
+      },
+      "sourceName": "55",
+      "originalUV": {
+        "min": [
+          -0.029770981520414352,
+          0.3861839771270752
+        ],
+        "max": [
+          0.05799174681305885,
+          0.9104558825492859
+        ]
+      },
+      "fullVertices": 13778,
+      "fullTriangles": 26194,
+      "compatibleVertices": 326,
+      "compatibleTriangles": 343,
+      "compatibleRelativeError": 0.013107101432979107
+    },
+    {
+      "number": 17,
+      "id": "side-left",
+      "label": "Recorte esquerdo · painel 17",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "left",
+      "cm": {
+        "w": 8.78,
+        "h": 52.69
+      },
+      "sourceName": "53",
+      "originalUV": {
+        "min": [
+          -0.5546203255653381,
+          0.3847534656524658
+        ],
+        "max": [
+          -0.46685490012168884,
+          0.9116635918617249
+        ]
+      },
+      "fullVertices": 13832,
+      "fullTriangles": 26302,
+      "compatibleVertices": 326,
+      "compatibleTriangles": 343,
+      "compatibleRelativeError": 0.014036941342055798
+    },
+    {
+      "number": 18,
+      "id": "front",
+      "label": "Frente · painel 18",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "front",
+      "cm": {
+        "w": 42.49,
+        "h": 69.33
+      },
+      "sourceName": "52",
+      "originalUV": {
+        "min": [
+          -0.46095010638237,
+          0.32240599393844604
+        ],
+        "max": [
+          -0.036055758595466614,
+          1.0157239437103271
+        ]
+      },
+      "fullVertices": 66427,
+      "fullTriangles": 130312,
+      "compatibleVertices": 876,
+      "compatibleTriangles": 1200,
+      "compatibleRelativeError": 0.0028295046649873257
+    },
+    {
+      "number": 19,
+      "id": "back",
+      "label": "Costas · painel 19",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "back",
+      "cm": {
+        "w": 45.19,
+        "h": 75.2
+      },
+      "sourceName": "29",
+      "originalUV": {
+        "min": [
+          0.42433884739875793,
+          0.1715298891067505
+        ],
+        "max": [
+          0.8761983513832092,
+          0.9235719442367554
+        ]
+      },
+      "fullVertices": 75980,
+      "fullTriangles": 149494,
+      "compatibleVertices": 879,
+      "compatibleTriangles": 1199,
+      "compatibleRelativeError": 0.002290009520947933
+    }
+  ]
+}
