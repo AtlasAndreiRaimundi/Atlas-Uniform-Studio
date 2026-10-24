@@ -1,0 +1,35 @@
+name: Integridade e documentação
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verificar-e-documentar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python
+        run: python3 --version
+      - name: Verificar sintaxe do gerador
+        run: python3 -c "import ast, pathlib; ast.parse(pathlib.Path('scripts/gerar_manifesto.py').read_text(encoding='utf-8'))"
+      - name: Gerar manifesto dos arquivos do commit
+        run: |
+          mkdir -p evidencias
+          python3 scripts/gerar_manifesto.py . > evidencias/manifesto.json
+          sha256sum evidencias/manifesto.json > evidencias/manifesto.sha256
+          printf '%s\n' "${GITHUB_SHA}" > evidencias/commit.txt
+      - name: Publicar manifesto como artefato temporário
+        uses: actions/upload-artifact@v4
+        with:
+          name: manifesto-${{ github.sha }}
+          path: evidencias/
+          retention-days: 90
+          if-no-files-found: error
