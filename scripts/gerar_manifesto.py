@@ -8,7 +8,7 @@ import json
 import sys
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
-excluded = {".git", "node_modules", ".next", "dist", "build", "__pycache__", ".venv", "secrets"}
+excluded = {".git", "node_modules", ".next", "dist", "build", "__pycache__", ".venv", "secrets", "evidencias"}
 def eligible(p):
     parts = p.relative_to(root).parts
     if any(x in excluded for x in parts):
