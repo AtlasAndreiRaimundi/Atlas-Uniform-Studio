@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "03f6a9b71841f48ef7464efd2af52fd567c087bb",
-  "exported_at": "2026-10-26T20:47:14.014337+00:00",
+  "source_commit": "6ee6dd626bdbab2fe2406b4ba2887cf0f3c550f9",
+  "exported_at": "2026-10-26T20:54:06.056946+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -310,8 +310,8 @@
     },
     {
       "path": "app/catalogo-tecnico/page.tsx",
-      "size": 381,
-      "sha256": "e3b0a8b6b2e4044919dbe9e33d873b5eb2d515ea9d0e96977d4d4137b6901789"
+      "size": 384,
+      "sha256": "1928463730da4cf9a5772040946a8ae55de92a9fd1371d06bf5204e4641f086f"
     },
     {
       "path": "app/chatgpt-auth.ts",
@@ -810,8 +810,8 @@
     },
     {
       "path": "docs/produtos/IMPLEMENTACAO-2026-10-26.md",
-      "size": 9051,
-      "sha256": "258e78f3b60c9a798dd4dca57d5be2530a3f4d9b3400247bb90ee96f0d2be9ae"
+      "size": 9348,
+      "sha256": "b79a5502e2bacaeaff06dff4463bfad30ef6d6e8132789a7099d9522f8aee024"
     },
     {
       "path": "docs/produtos/ROTEIRO-DE-HOMOLOGACAO.md",
@@ -1429,11 +1429,6 @@
       "sha256": "f8830d8dabd9d391f1454ed02c33ed189a3ea5522bade5cb641e9c7b1f83aee2"
     },
     {
-      "path": "public/catalogo-tecnico.html",
-      "size": 1019,
-      "sha256": "d91edade16ab7f0f79908057a03e67879fb124399a8b3eb424ce8c17ca326ed2"
-    },
-    {
       "path": "public/court-backdrop.css",
       "size": 2118,
       "sha256": "9c31ee19613f911dc5e1675272444b4f51ebaca9635023220554867b0b14a728"
@@ -1657,6 +1652,11 @@
       "path": "public/record-id.js",
       "size": 532,
       "sha256": "76562d2a3c7d870612ee92d5fe4c6f854f0b2f3eb06807ffbfc50facf7720ca1"
+    },
+    {
+      "path": "public/referencia-producao.html",
+      "size": 1019,
+      "sha256": "d91edade16ab7f0f79908057a03e67879fb124399a8b3eb424ce8c17ca326ed2"
     },
     {
       "path": "public/simulador/app.js",
@@ -2245,8 +2245,8 @@
     },
     {
       "path": "tests/product-catalog.test.mjs",
-      "size": 19640,
-      "sha256": "249b71feb7c0fa95880540e9c4569fc618f2bec2d4a47454dc2df991cf6737ba"
+      "size": 20187,
+      "sha256": "efad47ea04efc6c0807dba82ca863e970c4eab06aed6fb264f240bc2b9a840a8"
     },
     {
       "path": "tests/production.test.mjs",

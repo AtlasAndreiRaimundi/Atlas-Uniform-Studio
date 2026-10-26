@@ -63,4 +63,6 @@ As suítes `product-catalog.test.mjs` e `product-catalog-files.test.mjs` exercit
 
 Ver também `ROTEIRO-DE-HOMOLOGACAO.md`. Os resultados finais e a origem exata do snapshot constam no registro de sincronização do GitHub e no manifesto de fonte.
 
-Verificação local de 26/10/2026: suíte completa com 299 casos (298 aprovados e 1 ignorado porque a planilha de referência antiga não foi anexada), TypeScript aprovado, teste no navegador dos formulários CAM/CAL e kit 2+1, e inspeção visual do PDF gerado em A4 paisagem. Vinte casos novos cobrem as fichas, além dos testes de fluxo atualizados. O roteiro de homologação fabril permanece uma revisão humana adicional.
+Verificação local de 26/10/2026: suíte completa com 300 casos (299 aprovados e 1 ignorado porque a planilha de referência antiga não foi anexada), TypeScript aprovado, teste no navegador dos formulários CAM/CAL e kit 2+1, e inspeção visual do PDF gerado em A4 paisagem. Vinte e um casos novos cobrem as fichas, além dos testes de fluxo atualizados. O roteiro de homologação fabril permanece uma revisão humana adicional.
+
+A página estática de referência usa nome distinto da rota autenticada do estúdio (`referencia-producao.html` versus `/catalogo-tecnico`) para evitar colisão no roteamento de assets. O catálogo público não contém dados de clientes; pedidos e listas continuam protegidos no servidor.

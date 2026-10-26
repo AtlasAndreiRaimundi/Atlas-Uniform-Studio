@@ -1,11 +1,11 @@
 # Sincronização das fichas técnicas — 26/10/2026
 
-- Site existente: ATLAS UNIFORM STUDIO, versão publicada **57**.
-- Commit canônico Sites: `03f6a9b71841f48ef7464efd2af52fd567c087bb`.
+- Site existente: ATLAS UNIFORM STUDIO, versão publicada **58**.
+- Commit canônico Sites: `6ee6dd626bdbab2fe2406b4ba2887cf0f3c550f9`.
 - Publicação confirmada em https://uniforme-studio-andrei.rockyowl7.chatgpt.site.
 - Catálogo: `2026-10-26.1`; CAM-001 e CAL-001.
 - Snapshot: 468 arquivos, com manifesto SHA-256 por arquivo; histórico GitHub preservado.
-- A sincronização inclui as alterações canônicas entre o snapshot anterior (v51) e a v57: favicon Atlas, simetria, edição de grafismos e tutorial, além das fichas desta entrega. Não há mudanças locais exclusivas sobrepostas à fonte canônica.
+- A sincronização inclui as alterações canônicas entre o snapshot anterior (v51) e a v58: favicon Atlas, simetria, edição de grafismos e tutorial, além das fichas desta entrega. Não há mudanças locais exclusivas sobrepostas à fonte canônica.
 
 ## Documentação junto ao código
 
@@ -19,7 +19,7 @@ As três orientações anexadas foram preservadas sem alterações. Os dois novo
 
 ## Verificação executada
 
-- 299 testes locais: **298 aprovados**, 1 ignorado por ausência da planilha de referência antiga. Vinte testes novos exercitam as fichas e arquivos, além do fluxo atualizado.
+- 300 testes locais: **299 aprovados**, 1 ignorado por ausência da planilha de referência antiga. Vinte e um testes novos exercitam as fichas e arquivos, além do fluxo atualizado.
 - TypeScript e build de produção aprovados.
 - Varredura dos padrões de segredo do repositório aprovada, sem imprimir valores. Isso não é certificação geral de segurança.
 - Navegador: nova seleção de kit, regras da camiseta ELASTIC/Edge e do Stein Feminino, aplicações e lista com duas camisetas + um calção sem nome/número.

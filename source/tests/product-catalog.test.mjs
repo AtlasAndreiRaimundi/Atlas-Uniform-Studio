@@ -119,3 +119,7 @@ test('a saved typed order cannot remove its catalog or a product technical recor
  await assert.rejects(service.save({userId:'alice'},'order-a',{version:1,document:changed}),/ficha técnica não pode ser removida/);
  const partial=structuredClone(stored);delete partial.technicalCatalogVersion;service.get=async()=>({document:partial});await assert.rejects(service.save({userId:'alice'},'order-a',{version:1,document:changed}),/ficha técnica de uma peça/);
 });
+
+test('the signed-in catalog route has a distinct static reference filename',async()=>{
+ const {readFile,access}=await import('node:fs/promises');const route=await readFile(new URL('../app/catalogo-tecnico/page.tsx',import.meta.url),'utf8');assert.match(route,/requireChatGPTUser\('\/catalogo-tecnico'\)/);assert.match(route,/src="\/referencia-producao.html"/);await access(new URL('../public/referencia-producao.html',import.meta.url));await assert.rejects(access(new URL('../public/catalogo-tecnico.html',import.meta.url)),{code:'ENOENT'});
+});

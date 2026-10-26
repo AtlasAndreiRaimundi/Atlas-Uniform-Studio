@@ -30,11 +30,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Histórico GitHub preservado; manifesto SHA-256, restauração lossless de três GLBs grandes, varredura sem achados nos padrões verificados e 36 testes aprovados.
 - Workflow de verificação e procedimento/script para novas exportações. Build e validação visual não repetidos nesta etapa; dados de produção não exportados. Ver docs/importacao-2026-10-24.md.
 
-## 2026-10-26 — Fichas CAM-001 / CAL-001 e sincronização v57
+## 2026-10-26 — Fichas CAM-001 / CAL-001 e sincronização v58
 
-- Código e documentação sincronizados com o commit Sites `03f6a9b71841f48ef7464efd2af52fd567c087bb`, versão pública 57, preservando o histórico existente e as atualizações v52–v56.
+- Código e documentação sincronizados com o commit Sites `6ee6dd626bdbab2fe2406b4ba2887cf0f3c550f9`, versão pública 58, preservando o histórico existente e as atualizações v52–v56.
 - Catálogo técnico versionado, formulários dependentes, aplicações físicas, tamanhos especiais, lista com quantidades independentes, organização de páginas e resumo A4.
 - Fichas originais preservadas em `source/docs/produtos/`, com registro de implementação, migração, pendências e roteiro de homologação.
-- 298 testes aprovados (1 referência antiga ausente), TypeScript, build, conferência visual e varredura de padrões de segredo. A suíte de catálogo sem dependências foi adicionada ao workflow existente.
-- Artefato publicado: SHA-256 `2c97832fc5346a8852b9074cfdcbd7f2fb0d6ca257a2a8be10f08807aac5ecee`. Manifesto por arquivo em `source-manifest.json`.
+- 299 testes aprovados (1 referência antiga ausente), TypeScript, build, conferência visual e varredura de padrões de segredo. A suíte de catálogo sem dependências foi adicionada ao workflow existente.
+- Artefato publicado: SHA-256 `95aba47d28bda87081ed0d1efb81bcc27bd6b8d41b14c2b6a1cc46a387df1a29`. Manifesto por arquivo em `source-manifest.json`.
 - Detalhes e limites: [sincronização das fichas](docs/implementacao-fichas-2026-10-26.md).
