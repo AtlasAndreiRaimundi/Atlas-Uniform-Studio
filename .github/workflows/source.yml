@@ -20,7 +20,7 @@ jobs:
       - run: python3 scripts/check_source.py
       - name: Testes sem dependências externas
         working-directory: source
-        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs
+        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs tests/product-catalog.test.mjs
   materializar-modelos:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verificar
@@ -40,3 +40,4 @@ jobs:
             git commit -m 'chore: materializar modelos GLB originais verificados'
             git push origin HEAD:main
           fi
+

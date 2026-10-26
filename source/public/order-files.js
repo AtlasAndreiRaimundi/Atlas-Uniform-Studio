@@ -1,15 +1,17 @@
+import {CATALOG_LIST_FIELDS} from './catalog-list.js';
+import {FITS} from './product-catalog.js';
 import { ORDER_FIELDS, ORDER_LIMITS, PIECE_TYPES, kitComponents, validProductType, isBottomProduct, typeValue, detectHeader, sortOrders, summarizeOrders, orderProblems } from './order-core.js?v=3';
-import {LIST_FIELDS, LIST_TEMPLATE_ID, LIST_TEMPLATE_VERSION, listFields, GROUP_TYPES, LIST_SIZES, listProblems, sortListRows, listSummary} from './order-list.js?v=6';
+import {LIST_FIELDS, LIST_TEMPLATE_ID, LIST_TEMPLATE_VERSION, listFields, GROUP_TYPES, LIST_SIZES, listProblems, sortListRows, listSummary} from './order-list.js?v=7';
 
 const TEMPLATE_SHEET='_Modelo Atlas';
 function readTemplate(workbook){
   const sheet=workbook.getWorksheet(TEMPLATE_SHEET)||workbook.getWorksheet('_Modelo Meinerz');
   if(!sheet||![LIST_TEMPLATE_ID,'meinerz.order-list'].includes(sheet.getCell('A1').value))return null;
   const version=sheet.getCell('B1').value;
-  if(![1,LIST_TEMPLATE_VERSION].includes(version))throw new Error('Este modelo usa outra versão. Baixe o modelo atual no site.');
+  if(![1,LIST_TEMPLATE_VERSION,3].includes(version))throw new Error('Este modelo usa outra versão. Baixe o modelo atual no site.');
   const produto=String(sheet.getCell('B2').value??'');
   if(!validProductType(produto)||!workbook.getWorksheet('Pedido'))throw new Error('O modelo foi alterado. Mantenha a aba Pedido e baixe um novo modelo se necessário.');
-  return {version,defaults:{produto,modelo:String(sheet.getCell('B3').value??''),cor:String(sheet.getCell('B4').value??'')},title:String(sheet.getCell('B5').value??'')};
+  return {version,defaults:{...(version===3?{catalogVersion:3}:{}),produto,modelo:String(sheet.getCell('B3').value??''),cor:String(sheet.getCell('B4').value??'')},title:String(sheet.getCell('B5').value??'')};
 }
 
 export async function readOrderWorkbook(data,Excel) {
@@ -64,30 +66,40 @@ export async function writeListWorkbook(rows,Excel,{title='Pedido',template=fals
   if(rows.some(row=>listProblems(row).length))throw new Error('Corrija as linhas sinalizadas antes de baixar o Excel.');
   const workbook=new Excel.Workbook();workbook.creator='Atlas Uniform Studio · Andrei Raimundi';workbook.subject=title;workbook.created=new Date();
   const sorted=sortListRows(rows),sheet=workbook.addWorksheet('Pedido');
-  const templateDefaults={produto:typeValue(defaults.produto)||String(defaults.produto||'').trim()||'Kit',modelo:String(defaults.modelo??'').trim(),cor:String(defaults.cor??'').trim()};
+  const modern=defaults.catalogVersion===3||rows.some(row=>row.catalogVersion===3);
+  const templateDefaults={...(modern?{catalogVersion:3}:{}),produto:typeValue(defaults.produto)||String(defaults.produto||'').trim()||'Kit',modelo:String(defaults.modelo??'').trim(),cor:String(defaults.cor??'').trim()};
   if(!validProductType(templateDefaults.produto))throw new Error('Confira os nomes das peças antes de baixar o modelo.');
-  const fields=listFields(template?[templateDefaults]:sorted);
+  const fields=listFields(template?[templateDefaults]:sorted),cellValue=(row,field)=>typeof row[field]==='boolean'?(row[field]?'SIM':'NÃO'):typeof row[field]==='number'?row[field]:(String(row[field]??'')||null);
+  const widths=[25,32,13,21,21,16,32,...CATALOG_LIST_FIELDS.map(([key])=>key.includes('Descricao')?48:25)].slice(0,fields.length);
   sheet.addRow(fields.map(([,label])=>label));
-  sorted.forEach(row=>sheet.addRow(LIST_FIELDS.map(([field])=>field==='quantidade'?row.quantidade:(String(row[field]??'')||null))));
-  formatSheet(sheet,[25,32,13,21,21,16,32]);
+  sorted.forEach(row=>sheet.addRow(fields.map(([field])=>cellValue(row,field))));
+  formatSheet(sheet,widths);
   for(const column of [1,2,3,4,5,7])sheet.getColumn(column).numFmt='@';
   sheet.getColumn(6).numFmt='0';
   const sizes=workbook.addWorksheet('Tamanhos',{state:'hidden'}),types=workbook.addWorksheet('Tipos',{state:'hidden'});
-  LIST_SIZES.forEach(size=>sizes.addRow([size]));GROUP_TYPES.forEach(type=>types.addRow([type]));
+  const validSizes=modern?[...new Set(FITS.flatMap(f=>f.sizes.map(size=>f.id==='FEMININA'?'BL'+size:size.replaceAll(' ','')))),'ESPECIAL']:LIST_SIZES;
+  validSizes.forEach(size=>sizes.addRow([size]));GROUP_TYPES.forEach(type=>types.addRow([type]));
   workbook.definedNames.add(`Tipos!$A$1:$A$${GROUP_TYPES.length}`,'TiposPedido');
-  workbook.definedNames.add(`Tamanhos!$A$1:$A$${LIST_SIZES.length}`,'TamanhosPedido');
+  workbook.definedNames.add(`Tamanhos!$A$1:$A$${validSizes.length}`,'TamanhosPedido');
   const last=template?ORDER_LIMITS.rows+1:Math.max(500,sorted.length+100);
   for(const [column,formula] of [['A','TiposPedido'],['D','TamanhosPedido'],['E','TamanhosPedido']]){
     sheet.dataValidations.add(`${column}2:${column}${last}`,{type:'list',allowBlank:true,formulae:[formula],showErrorMessage:true,errorStyle:'stop',errorTitle:'Valor inválido',error:'Selecione um valor da lista.'});
   }
   sheet.dataValidations.add(`F2:F${last}`,{type:'whole',operator:'between',formulae:[1,99999],allowBlank:true,showErrorMessage:true,error:'Use uma quantidade inteira de 1 a 99999.'});
+  if(modern){
+    const choices=workbook.addWorksheet('Opções técnicas',{state:'veryHidden'});choices.addRows([['MASCULINA','SIM','MEDIDAS FORNECIDAS'],['FEMININA','NÃO','PEÇA FÍSICA DE AMOSTRA'],['INFANTIL']]);workbook.definedNames.add("'Opções técnicas'!$A$1:$A$3",'ModelagensTecnicas');workbook.definedNames.add("'Opções técnicas'!$B$1:$B$2",'SemNumeroTecnico');workbook.definedNames.add("'Opções técnicas'!$C$1:$C$2",'ReferenciasEspeciais');
+    for(const [key]of CATALOG_LIST_FIELDS){const col=sheet.getColumn(fields.findIndex(([f])=>f===key)+1),letter=col.letter;col.numFmt=key.startsWith('quantidade')?'0':'@';
+      if(key.startsWith('quantidade'))sheet.dataValidations.add(`${letter}2:${letter}${last}`,{type:'whole',operator:'between',formulae:[0,99999],allowBlank:true,showErrorMessage:true,error:'Use 0 a 99999; vazio usa a quantidade comum.'});
+      else if(key.startsWith('modelagem')||key.startsWith('semNumero')||key.startsWith('especialReferencia')){const column=key.startsWith('modelagem')?'A':key.startsWith('semNumero')?'B':'C',end=column==='A'?3:2;sheet.dataValidations.add(`${letter}2:${letter}${last}`,{type:'list',allowBlank:true,formulae:[column==='A'?'ModelagensTecnicas':column==='B'?'SemNumeroTecnico':'ReferenciasEspeciais'],showErrorMessage:true,error:'Selecione uma opção ou deixe vazio.'});}
+    }
+  }
   if(template){
     sheet.dataValidations.add(`B2:B${last}`,{type:'textLength',operator:'lessThanOrEqual',formulae:[120],allowBlank:true,showInputMessage:true,promptTitle:'Nome opcional',prompt:'Deixe vazio para produzir sem nome. Não repita o nome da linha anterior.'});
     sheet.dataValidations.add(`C2:C${last}`,{type:'textLength',operator:'lessThanOrEqual',formulae:[4],allowBlank:true,showInputMessage:true,promptTitle:'Número opcional',prompt:'Deixe vazio para produzir sem número. Use até 4 dígitos, inclusive 0 ou 07.',showErrorMessage:true,error:'Use até quatro dígitos ou deixe vazio.'});
     sheet.dataValidations.add(`G2:G${last}`,{type:'textLength',operator:'lessThanOrEqual',formulae:[200],allowBlank:true,showInputMessage:true,promptTitle:'Adicional opcional',prompt:'Cargo, tipo sanguíneo ou outro texto. Deixe vazio para produzir sem adicional.',showErrorMessage:true,error:'Use até 200 caracteres ou deixe vazio.'});
     addTemplateInstructions(workbook,fields,templateDefaults);
     const metadata=workbook.addWorksheet(TEMPLATE_SHEET,{state:'veryHidden'});
-    metadata.addRows([[LIST_TEMPLATE_ID,LIST_TEMPLATE_VERSION],['Peça / kit',templateDefaults.produto],['Modelo',templateDefaults.modelo],['Cor',templateDefaults.cor],['Pedido',title==='Pedido'?'':title]]);
+    metadata.addRows([[LIST_TEMPLATE_ID,modern?3:LIST_TEMPLATE_VERSION],['Peça / kit',templateDefaults.produto],['Modelo',templateDefaults.modelo],['Cor',templateDefaults.cor],['Pedido',title==='Pedido'?'':title]]);
   }
   if(!template){
     const summary=listSummary(sorted),totals=workbook.addWorksheet('Resumo');
@@ -96,15 +108,15 @@ export async function writeListWorkbook(rows,Excel,{title='Pedido',template=fals
       totals.addRow([]);
     }
     totals.addRow([`TOTAL DE PEÇAS=${summary.pieces}`]);
-    if(summary.kits)totals.addRow([`KITS=${summary.kits} (as duas peças de cada kit já estão incluídas no total de peças)`]);
+    if(summary.kits&&!modern)totals.addRow([`KITS=${summary.kits} (as duas peças de cada kit já estão incluídas no total de peças)`]);
     totals.getColumn(1).width=80;
     totals.eachRow(row=>{row.font={name:'Arial',size:11};row.alignment={wrapText:true,vertical:'middle'};if(row.getCell(1).value&&String(row.getCell(1).value)===String(row.getCell(1).value).toLocaleUpperCase('pt-BR')&&!String(row.getCell(1).value).includes('=')){row.font={name:'Arial',size:12,bold:true};row.height=24;}else row.height=20;});
     totals.pageSetup={paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0};
     if(sorted.some(row=>row.modelo||row.cor||!['Kit','Camiseta','Calção'].includes(row.produto))){
       const details=workbook.addWorksheet('Dados do pedido');
       details.addRow([...fields.map(([,label])=>label),'Peça / kit','Modelo','Cor']);
-      sorted.forEach(row=>details.addRow([...LIST_FIELDS.map(([field])=>field==='quantidade'?row.quantidade:(String(row[field]??'')||null)),row.produto,row.modelo,row.cor]));
-      formatSheet(details,[25,32,13,21,21,16,32,18,25,20]);
+      sorted.forEach(row=>details.addRow([...fields.map(([field])=>cellValue(row,field)),row.produto,row.modelo,row.cor]));
+      formatSheet(details,[...widths,18,25,20]);
       for(const column of [1,2,3,4,5,7,8,9,10])details.getColumn(column).numFmt='@';
     }
   }
@@ -117,7 +129,7 @@ function addTemplateInstructions(workbook,fields,defaults){
   sheet.addRows([
     ['Como preencher'],
     ['Peça / kit',product],
-    ['Preenchimento','Preencha somente a aba Pedido, a partir da linha 2. Mantenha os sete títulos.'],
+    ['Preenchimento','Preencha somente a aba Pedido, a partir da linha 2. Mantenha os títulos das colunas.'],
     ['Nome vazio','A peça vai sem nome. O nome da linha anterior não é repetido.'],
     ['Número vazio','A peça vai sem número. Nome e número podem ficar vazios na mesma linha.'],
     ['Adicional','Opcional: cargo, tipo sanguíneo ou outro texto a aplicar na peça. Vazio = sem adicional; nunca repete a linha anterior.'],
@@ -135,6 +147,7 @@ function addTemplateInstructions(workbook,fields,defaults){
     ['1 - Linha',null,null,isBottom?null:'P',kit||isBottom?'M':null,3,null],
     ['2 - Goleiro',null,'0',isBottom?null:'TAM10',kit||isBottom?'TAM12':null,1,'O+'],
   ]);
+  if(defaults.catalogVersion===3)sheet.addRows([[],['Quantidades independentes','Qtd. Camiseta e Qtd. Calção: vazio usa Quantidade; 0 retira só essa peça do item. Ex.: Quantidade=1, Qtd. Camiseta=2, Qtd. Calção=1 produz 3 peças.'],['Modelagens independentes','Informe MASCULINA, FEMININA ou INFANTIL por peça. Vazio usa o tamanho: BL = feminina; TAM = infantil; demais = masculina. As grades são validadas pela ficha.'],['Nome Calção','Nos kits, informe separadamente. Vazio produz o calção SEM NOME; o nome da camiseta não é repetido.'],['Sem número por peça','SIM remove o número apenas daquela peça. NÃO ou vazio usa o Número comum; quando as duas peças têm número, o número deve ser igual.'],['Tamanhos especiais','Use ESPECIAL; escolha MEDIDAS FORNECIDAS ou PEÇA FÍSICA DE AMOSTRA e descreva as instruções da respectiva peça. Limite de 3 unidades de camiseta e 3 de calção por pedido completo.'],['Catálogo','Somente Camiseta CAM-001, Calção CAL-001 e Kit estão cadastrados nesta versão.']]);
   [25,83,13,21,21,16,32].forEach((width,index)=>{sheet.getColumn(index+1).width=width;});
   for(const column of [1,2,3,4,5,7])sheet.getColumn(column).numFmt='@';
   sheet.views=[{showGridLines:false}];

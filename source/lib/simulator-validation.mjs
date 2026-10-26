@@ -3,6 +3,8 @@ import {COLORS,UNIFORM_FONTS,paletteColor,DEFAULT_INK} from '../public/simulador
 import {ELITE_PANELS,ELITE_MODEL} from '../public/simulador/elite.js';
 import {GRAPHIC_IDS} from '../public/simulador/graphics.js';
 import {normalizeText} from '../public/simulador/core.js';
+import {normalizeSymmetry} from '../public/simulador/symmetry.js';
+import {drawingLayers} from '../public/simulador/layers.js';
 const fail=message=>{throw new AppError(400,message);};
 const text=(v,max,empty=true)=>{if(typeof v!=='string'||v.length>max||/[\u0000-\u001f\u007f]/.test(v)||(!empty&&!v.trim()))fail('Confira os nomes e textos do uniforme.');return v;};
 const number=(v,a,b)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<a||v>b)fail('Confira o tamanho, a posição e a rotação dos elementos.');return v;};
@@ -34,10 +36,12 @@ export function validateSimulatorState(input){
   for(const l of p.layers){if(++count>200||!l||!['text','pattern','image','badge'].includes(l.type))fail('Use até 200 elementos por uniforme.');const layerId=id(l.id);if(layers.has(layerId))fail('Há elementos repetidos no desenho.');layers.add(layerId);
    const clean={id:layerId,type:l.type,name:text(l.name,80,false),x:number(l.x,0,1),y:number(l.y,0,1),w:number(l.w,.035,1.8),h:number(l.h,.015,2),rotation:number(l.rotation,-180,180),opacity:number(l.opacity,.1,1),locked:Boolean(l.locked),...(l.type==='image'?{color:DEFAULT_INK.hex,colorId:DEFAULT_INK.id}:color(l.color,l.colorId))};
    if(l.type==='text'){if(!UNIFORM_FONTS.some(f=>f.id===l.font))fail('Escolha uma das fontes de uniforme disponíveis.');clean.text=text(l.text,80);clean.font=l.font;if(['player-name','player-number'].includes(l.personalization))clean.personalization=l.personalization;normalizeText(clean);}
-   if(l.type==='pattern'){if(!GRAPHIC_IDS.has(l.pattern))fail('Escolha um grafismo da biblioteca.');clean.pattern=l.pattern;}
+   if(l.copyKey!==undefined)clean.copyKey=id(l.copyKey);
+   if(l.type==='pattern'){if(!GRAPHIC_IDS.has(l.pattern))fail('Escolha um grafismo da biblioteca.');clean.pattern=l.pattern;if(l.mirrorX!==undefined){if(typeof l.mirrorX!=='boolean')fail('Confira o espelhamento do grafismo.');clean.mirrorX=l.mirrorX;}}
    if(l.type==='image')Object.assign(clean,logo(l.src));next.layers.push(clean);
-  }out.panels.push(next);
+  }next.layers=drawingLayers(next);out.panels.push(next);
  }
+ if(input.symmetry!==undefined){try{out.symmetry=normalizeSymmetry(input.symmetry);}catch(error){fail(error.message);}}
  if(seen.has(input.active))out.active=input.active;if(out.panels.find(p=>p.id===out.active)?.layers.some(l=>l.id===input.selected))out.selected=input.selected;
  if(JSON.stringify(out).length>10*1024*1024)throw new AppError(413,'O desenho excede 10 MB. Reduza as logos.');return out;
 }

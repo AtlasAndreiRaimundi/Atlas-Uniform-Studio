@@ -29,6 +29,36 @@ Cada versão salva do uniforme abre um único projeto de apresentação; cliques
 
 `tests/simulator-presentation.test.mjs` verifica cada vértice e UV dos três modelos, fontes/logos no renderizador compartilhado, peças isoladas, concorrência, versões, privacidade, repetição após falha e preservação de apresentações editadas.
 
+## Guia de primeiros passos
+
+Após carregar o criador, o primeiro acesso de cada conta/navegador recebe o convite **Quer aprender a criar seu uniforme?**, com **Sim, quero aprender** e **Agora não**. O botão **Como usar** no cabeçalho reabre o convite a qualquer momento. A preferência fica no armazenamento local, separada por conta; falhas nesse armazenamento não interrompem o editor.
+
+O guia tem 12 etapas: modelo/peças, seleção de painel, visualização, cores, substituição/adição de grafismos, ordem de camadas, ajustes, textos, logos/qualidade, cópia/simetria, salvamento/histórico e conferência/apresentação/pedido. Ele abre a aba da ferramenta e destaca o controle real; Voltar/Próximo, setas do teclado, Pular e Escape permitem navegar ou sair. Os textos explicam JOGADOR/00, proporção travada, prioridade da identidade e simetria ativa com cores independentes.
+
+O guia não chama operações de edição, salvamento de uniforme, criação de pedido ou apresentação. Ao sair/concluir, restaura a ferramenta e a rolagem anteriores. Não altera peças, camadas, cores, seleção, histórico ou câmera. O realce acompanha rolagem e redimensionamento e o cartão mantém a navegação dentro da tela. `tutorial.js`/`tutorial.css` isolam o comportamento e `tests/simulator-tutorial.test.mjs` verifica posicionamento e persistência tolerante a falhas.
+
+## Grafismos por camada e prioridade de identidade
+
+A biblioteca troca o grafismo em edição a cada escolha, preservando ID, cor, posição, tamanho, rotação, opacidade, inversão e vínculo de simetria. O seletor **Grafismo em edição** e a lista **Grafismos** identificam qual camada será trocada; quando uma logo/texto está selecionada, vale o último grafismo editado daquele painel (ou o superior existente). Em um painel sem grafismos, a primeira escolha cria uma camada. **Adicionar outro grafismo** prepara uma única nova camada; depois da escolha, os próximos cliques voltam a substituir. Cancelar, mudar de painel, selecionar um elemento ou abrir outro uniforme encerra essa intenção de adicionar. Grafismos fixados exigem desfixar antes da troca.
+
+O inspetor separa **Escudos e personalização** e **Grafismos**, mostrando a ordem de cima para baixo. Todos os escudos, logos PNG/SVG e textos (incluindo JOGADOR/00) permanecem acima de todos os grafismos. Subir/Descer atua apenas dentro do grupo escolhido. `layers.js` define a ordem estável usada pelo pintor compartilhado, seleção por clique, validação/salvamento e mapas de apresentação; a prioridade também vale para desenhos antigos, independentemente da ordem original de suas camadas.
+
+## Cópia e simetria opcional entre lados
+
+O botão **Copiar entre lados / simetria**, abaixo de Elementos do painel, abre dois modos, com origem, destino e prévia 2D: **Cópia única** e **Tempo real**. Os pares são mangas, filetes de manga, lados do calção e recortes laterais, filtrados pelas peças em uso. Nos novos uniformes, a simetria começa ligada nos quatro pares, espelhando grafismos e mantendo cores/fundos independentes. Ao editar um painel de um par ativo, um lembrete abaixo da seleção identifica o par e o outro painel; **Desligar simetria** desativa somente aquele par imediatamente. Uniformes já salvos preservam suas configurações, inclusive pares desligados, sem aplicar o padrão novamente ao abrir ou recarregar.
+
+Na cópia única, a pessoa pode espelhar horizontalmente ou manter as posições proporcionais; preservar as cores dos elementos equivalentes no destino, copiar as cores da origem ou escolher outra cor; selecionar camadas; copiar o fundo opcionalmente; atualizar/adicionar ou substituir todos os elementos do destino. Elementos novos sem equivalente usam a cor da origem quando a opção é preservar cores. As cópias têm camadas e identificadores independentes.
+
+Em Tempo real, a prévia mostra o desenho que será usado para iniciar/atualizar o par. É possível sincronizar somente grafismos ou todos os elementos. Cores dos detalhes e fundos são independentes por padrão, com caixas separadas para ligá-los também. Mover, redimensionar, girar grafismos, adicionar, excluir e reorganizar elementos em qualquer lado atualiza o outro nos eventos de entrada, inclusive antes de terminar o gesto. Novos elementos começam com a cor da origem; equivalentes mantêm sua cor quando as cores são independentes. As logos PNG/SVG mantêm as cores do próprio arquivo.
+
+O painel mostra quais pares estão ligados. **Desligar atualização deste par** preserva o desenho e as cores dos dois lados. As configurações por par e os equivalentes persistem ao salvar/reabrir. Desfazer/Refazer restaura também a ligação; pedidos mantêm sua cópia congelada da versão conferida. Uma cópia única com opções diferentes exige desligar antes o tempo real daquele par.
+
+O espelhamento usa o UV local normalizado do KIT ELITE 27 e reflete posições/grafismos, preservando o sentido de leitura de textos e logos. JOGADOR/00 permanecem retos e com proporção travada. O controle de inversão horizontal aparece somente para grafismos. A geometria do molde não é alterada; a prévia orienta conferir as posições no 3D, inclusive em painéis com dimensões físicas diferentes.
+
+`public/simulador/symmetry.js` contém as operações de cópia e sincronização; `symmetry-ui.js` controla as duas opções e as prévias. A validação do servidor aceita somente os pares/configurações aprovados e mantém os limites de camadas e tamanho. O renderizador compartilhado preserva os grafismos espelhados também nos mapas usados para apresentação.
+
+`tests/simulator-symmetry.test.mjs` cobre edição bidirecional durante gestos, cores independentes ou compartilhadas, grafismos/todos, novas camadas, remoção, ordem, desligar, Desfazer/Refazer, quotas, legibilidade e salvamento/reabertura/pedido.
+
 ## Administração e proteção
 
 O editor do cliente não oferece upload de GLB. Há somente o KIT ELITE 27 aprovado; o servidor recusa IDs arbitrários de modelagem. A navegação administrativa usa `/admin/molds`, já protegido pela identidade estável `ADMIN_USER_ID`. O link também fica oculto para clientes.

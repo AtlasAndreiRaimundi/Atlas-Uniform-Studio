@@ -1,7 +1,7 @@
 import {createAnnotationEditor} from './order-annotation-editor.js?v=4';
-import {buildSheets,sheetSVG,PAPER} from './production-sheet.js?v=13';
+import {buildSheets,sheetSVG,PAPER} from './production-sheet.js?v=14';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=10';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=11';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');
@@ -16,7 +16,7 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
  function currentTransform(){return imageTransform(shared()?edit.page.visual?.transform:selected().imageTransforms?.[Number(find('[data-target]').value)]);}
  function writeTransform(value){if(shared())edit.page.visual.transform=value;else{const p=selected(),slot=Number(find('[data-target]').value);p.imageTransforms||=[];p.imageTransforms[slot]=value;}}
  function render(){
-  const draft={...edit.header,pages:[edit.page]},sheets=buildSheets(draft,getAssets()),sheet=sheets.find(s=>s.anchors?.some(a=>a.id===edit.productId))||sheets[0];draftSheet=sheet;find('[data-preview]').innerHTML=sheet?sheetSVG(sheet).replace('</svg>',annotations.overlay()+'</svg>'):'';
+  const draft={...edit.header,pages:[edit.page]},sheets=buildSheets(draft,getAssets(),{draft:true}),sheet=sheets.find(s=>s.anchors?.some(a=>a.id===edit.productId))||sheets[0];draftSheet=sheet;find('[data-preview]').innerHTML=sheet?sheetSVG(sheet).replace('</svg>',annotations.overlay()+'</svg>'):'';
   const t=currentTransform(),art=currentArt();find('[data-transform="scale"]').value=String(Math.round(t.scale*100));find('[data-scale-label]').textContent=Math.round(t.scale*100)+'%';for(const key of ['x','y']){const input=find('[data-position="'+key+'"]');if(document.activeElement!==input)input.value=art?String(Math.round(art[key]*25.4/72*10)/10):'';}const width=find('[data-image-width]');if(document.activeElement!==width)width.value=art?String(Math.round(art.w*25.4/72*10)/10):'';find('[data-apply]').disabled=edit.loading;
  }
  function changeTarget(){
@@ -71,7 +71,7 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
  function openFinalPreview({mode='final',sheet=0}={}){
   if(!['draft','review','final'].includes(mode))return;let issues=[];if(mode==='final')issues=finalPreviewProblems(getOrder());else if(mode==='review'&&canEdit())issues=releaseProblems(getOrder());
   if(issues.length)return onError('Conclua antes da prévia final: '+issues.slice(0,8).join(' '));
-  finalSheets=buildSheets(getOrder(),getAssets());if(!finalSheets.length)return onError('Adicione uma peça antes de abrir a prévia.');previewMode=mode;currentSheet=Number.isSafeInteger(sheet)?sheet:0;
+  finalSheets=buildSheets(getOrder(),getAssets(),{draft:true});if(!finalSheets.length)return onError('Adicione uma peça antes de abrir a prévia.');previewMode=mode;currentSheet=Number.isSafeInteger(sheet)?sheet:0;
   out('[data-title]').textContent=mode==='draft'?'Prévia durante o preenchimento':'Conferência do pedido';out('[data-description]').textContent=mode==='draft'?'Prévia de trabalho. A conferência fica disponível depois que os campos obrigatórios estiverem completos.':'Confira todas as folhas. Ao fechar, marque as conferências de arte, lista e dados técnicos no pedido.';out('[data-close]').textContent=mode==='draft'?'Voltar ao preenchimento · Esc':'Voltar à conferência · Esc';out('[data-pdf]').hidden=mode==='draft';
   out('[data-zoom]').value='100';out('[data-sheet]').replaceChildren(...finalSheets.map((sheet,index)=>{const option=document.createElement('option');option.value=String(index);option.textContent=(index+1)+' de '+finalSheets.length+' · '+sheet.title;return option;}));final.showModal();renderFinal();final.requestFullscreen?.().catch(()=>{});
  }

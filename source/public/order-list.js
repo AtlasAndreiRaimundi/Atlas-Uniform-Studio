@@ -1,3 +1,4 @@
+import {CATALOG_LIST_FIELDS,normalizeCatalogList,catalogListProblems,catalogPieceData} from './catalog-list.js';
 import {ORDER_LIMITS, PIECE_TYPES, JACKET_KIT, kitComponents, validProductType, isBottomProduct, normalizeKey, quantityValue, typeValue, delimiterFor, parseDelimited, parseFreeText} from './order-core.js?v=3';
 
 export {ORDER_LIMITS, PIECE_TYPES};
@@ -6,7 +7,7 @@ export const LIST_FIELDS=Object.freeze([
 ]);
 export const LIST_TEMPLATE_ID='atlas.order-list';
 export const LIST_TEMPLATE_VERSION=2;
-export function listFields(rows=[]){
+function legacyListFields(rows=[]){
   const products=[...new Set(rows.map(row=>row.produto).filter(Boolean))],parts=products.length===1?kitComponents(products[0]):null;
   if(parts&&products[0]!=='Kit'&&products[0]!==JACKET_KIT)return LIST_FIELDS.map(([key,label])=>[key,key==='tamanhoCamiseta'?'Tam. Peça 1 · '+parts[0]:key==='tamanhoCalcao'?'Tam. Peça 2 · '+parts[1]:label]);
   if(products.length>1&&products.some(product=>!PIECE_TYPES.includes(product)))return LIST_FIELDS.map(([key,label])=>[key,key==='tamanhoCamiseta'?'Tam. Peça 1':key==='tamanhoCalcao'?'Tam. Peça 2':label]);
@@ -15,6 +16,7 @@ export function listFields(rows=[]){
   const mixed=rows.some(row=>row.produto!==JACKET_KIT);
   return LIST_FIELDS.map(([key,label])=>[key,key==='tamanhoCamiseta'?(mixed?'Tam. Camiseta / Jaqueta':'Tam. Jaqueta'):key==='tamanhoCalcao'?(mixed?'Tam. Calção / Calça':'Tam. Calça'):label]);
 }
+export function listFields(rows=[]){const base=legacyListFields(rows);return rows.some(r=>r.catalogVersion===3)?[...base,...CATALOG_LIST_FIELDS]:base;}
 export const GROUP_TYPES=Object.freeze(['1 - Linha','2 - Goleiro','3 - Torcida','4 - Comissão Téc.','5 - Staff','6 - Outro']);
 export const LIST_SIZES=Object.freeze(['PP','P','M','G','GG','EG','EXG','4G','5G','6G','7G','BLPP','BLP','BLM','BLG','BLGG','BLEG','BLEXG','TAM01','TAM02','TAM04','TAM06','TAM08','TAM10','TAM12','TAM14','TAM16','ESP1','ESP2','ESP3','ESP4']);
 const collator=new Intl.Collator('pt-BR',{numeric:true,sensitivity:'base'});
@@ -62,7 +64,7 @@ export function normalizeListRow(input={},defaults={},source=input.source||{}) {
     else if(shorts)produto=kit?kit[1]:bottom(produto)?produto:'Calção';
   }
   const rawGroup=String(input.grupo??'').trim();
-  return {grupo:rawGroup?(groupValue(rawGroup)||rawGroup):(groupValue(defaults.grupo)||GROUP_TYPES[0]),
+  const extras=normalizeCatalogList(input,defaults);if(extras.modelagemCamiseta==='FEMININA'&&top&&!/^BL|^ESP/.test(top))top='BL'+top;if(extras.modelagemCalcao==='FEMININA'&&shorts&&!/^BL|^ESP/.test(shorts))shorts='BL'+shorts;return {...extras,grupo:rawGroup?(groupValue(rawGroup)||rawGroup):(groupValue(defaults.grupo)||GROUP_TYPES[0]),
     // Personalization belongs to this row. A blank never inherits another name or number.
     nome:String(input.nome??'').trim(),numero:String(input.numero??'').trim().replace(/^(?:n[º°o.]?|numero|número)\s*[:#-]?\s*/i,''),adicional:String(input.adicional??'').trim(),
     tamanhoCamiseta:top,tamanhoCalcao:shorts,quantidade:quantityValue(String(input.quantidade??'').trim()||defaults.quantidade||1),produto,
@@ -77,19 +79,19 @@ export function listProblems(row) {
   if(String(row.adicional??'').length>200)errors.push('Adicional: use até 200 caracteres ou deixe vazio.');
   const kit=kitComponents(row.produto);
   if(kit){
-    if(!row.tamanhoCamiseta)errors.push(`Falta o tamanho da ${kit[0].toLowerCase()} do kit.`);
-    if(!row.tamanhoCalcao)errors.push(`Falta o tamanho ${kit[1]==='Calção'?'do calção':'da '+kit[1].toLowerCase()} do kit.`);
+    if(!row.tamanhoCamiseta&&row.quantidadeCamiseta!==0)errors.push(`Falta o tamanho da ${kit[0].toLowerCase()} do kit.`);
+    if(!row.tamanhoCalcao&&row.quantidadeCalcao!==0)errors.push(`Falta o tamanho ${kit[1]==='Calção'?'do calção':'da '+kit[1].toLowerCase()} do kit.`);
   }else if(bottom(row.produto)){
-    if(!row.tamanhoCalcao)errors.push(`Falta o tamanho de ${row.produto.toLowerCase()}.`);
+    if(!row.tamanhoCalcao&&row.quantidadeCalcao!==0)errors.push(`Falta o tamanho de ${row.produto.toLowerCase()}.`);
     if(row.tamanhoCamiseta)errors.push('Há dois tamanhos: selecione Kit ou remova o tamanho da camiseta.');
   }else{
-    if(!row.tamanhoCamiseta)errors.push(`Falta o tamanho de ${String(row.produto).toLowerCase()}.`);
+    if(!row.tamanhoCamiseta&&row.quantidadeCamiseta!==0)errors.push(`Falta o tamanho de ${String(row.produto).toLowerCase()}.`);
     if(row.tamanhoCalcao)errors.push('Há dois tamanhos: selecione Kit ou remova o tamanho do calção.');
   }
   for(const [key,label] of listFields([row]).filter(([key])=>key==='tamanhoCamiseta'||key==='tamanhoCalcao'))if(row[key]&&!knownSize(row[key]))errors.push(`${label}: confira o tamanho “${row[key]}”.`);
   if(row.notes?.some(note=>note.startsWith('A modelagem')))errors.push('A modelagem e o tamanho da origem são diferentes; confira a linha.');
   if(row.notes?.some(note=>note.startsWith('Tipo não reconhecido')))errors.push('Confira a categoria de peça informada no texto de origem.');
-  return errors;
+  errors.push(...catalogListProblems(row));return [...new Set(errors)];
 }
 const categories=['Masculina','Baby Look','Infantil'];
 const adultSizes=['PP','P','M','G','GG','EG','GGG','EXG','GGGG','XG','XGG','XXG','XXXG','4G','5G','6G','7G'];
@@ -98,8 +100,8 @@ export function sortListRows(rows){return [...rows].sort((a,b)=>sizeRank(a.taman
 export function listPieces(row) {
   if(listProblems(row).length)return [];
   const kit=kitComponents(row.produto);
-  if(kit)return [{product:kit[0],size:row.tamanhoCamiseta},{product:kit[1],size:row.tamanhoCalcao}];
-  return [{product:row.produto,size:bottom(row.produto)?row.tamanhoCalcao:row.tamanhoCamiseta}];
+  if(kit)return [catalogPieceData(row,0,kit[0],row.tamanhoCamiseta),catalogPieceData(row,1,kit[1],row.tamanhoCalcao)].filter(p=>p.quantity===undefined||p.quantity>0);
+  return [catalogPieceData(row,bottom(row.produto)?1:0,row.produto,bottom(row.produto)?row.tamanhoCalcao:row.tamanhoCamiseta)].filter(p=>p.quantity===undefined||p.quantity>0);
 }
 export function listSummary(rows) {
   const products=new Map();let pieces=0,kits=0,invalid=0,units=0;
@@ -107,13 +109,13 @@ export function listSummary(rows) {
     if(listProblems(row).length){invalid++;continue;}
     units+=row.quantidade;if(kitComponents(row.produto))kits+=row.quantidade;
     for(const item of listPieces(row)){
-      const info=sizeInfo(item.size);pieces+=row.quantidade;
+      const info=item.fit==='FEMININA'?{category:'Baby Look',size:item.size.replace(/^BL/,'')}:item.fit==='INFANTIL'?{category:'Infantil',size:item.size}:sizeInfo(item.size);pieces+=item.quantity??row.quantidade;
       if(!products.has(item.product))products.set(item.product,new Map());
       const variants=products.get(item.product),variant=JSON.stringify([normalizeKey(row.modelo),normalizeKey(row.cor),normalizeKey(row.grupo)]);
       if(!variants.has(variant))variants.set(variant,{modelo:row.modelo,cor:row.cor,grupo:row.grupo,categories:new Map(),quantity:0});
-      const target=variants.get(variant);target.quantity+=row.quantidade;
+      const target=variants.get(variant);target.quantity+=item.quantity??row.quantidade;
       if(!target.categories.has(info.category))target.categories.set(info.category,new Map());
-      const sizes=target.categories.get(info.category);sizes.set(info.size,(sizes.get(info.size)||0)+row.quantidade);
+      const sizes=target.categories.get(info.category);sizes.set(info.size,(sizes.get(info.size)||0)+(item.quantity??row.quantidade));
     }
   }
   const sections=[];
@@ -133,7 +135,7 @@ export function listSummary(rows) {
   return {sections,text:sections.map(s=>s.text).join('\n\n'),pieces,kits,units,invalid};
 }
 
-const fieldAliases={
+const fieldAliases=Object.fromEntries(CATALOG_LIST_FIELDS.map(([key,label])=>[key,[normalizeKey(label),normalizeKey(key)]]));Object.assign(fieldAliases,{
   adicional:['adicional','adicionais','informacao adicional','informacoes adicionais','cargo','tipo sanguineo'],
   grupo:['tipo','tipo de uniforme','funcao','grupo'],nome:['nome','nome completo','atleta','jogador','jogadora','personalizacao'],
   numero:['numero','num','n','no','numero camisa','numero da camisa'],quantidade:['quantidade','qtd','qtde','qt','quant','quantidades'],
@@ -141,8 +143,8 @@ const fieldAliases={
   tamanhoCalcao:['tam calcao','tamanho calcao','calcao','shorts','tam calca','tamanho calca','tam shorts','tam calcao calca'],
   tamanho:['tamanho','tam','size'],categoria:['categoria','modelagem','grade','publico'],
   produto:['peca kit','peca ou kit','produto','peca','tipo de peca','kit ou peca'],modelo:['modelo','uniforme','descricao'],cor:['cor','cores','color'],
-};
-export const IMPORT_FIELDS=Object.freeze([...LIST_FIELDS,['produto','Peça / kit'],['modelo','Modelo'],['cor','Cor'],['tamanho','Tamanho único (lista antiga)'],['categoria','Modelagem (lista antiga)']]);
+});
+export const IMPORT_FIELDS=Object.freeze([...LIST_FIELDS,...CATALOG_LIST_FIELDS,['produto','Peça / kit'],['modelo','Modelo'],['cor','Cor'],['tamanho','Tamanho único (lista antiga)'],['categoria','Modelagem (lista antiga)']]);
 export function detectListHeader(rows){
   let best={row:-1,mapping:{},score:0};
   rows.slice(0,30).forEach((cells,index)=>{
@@ -176,7 +178,8 @@ export function needsListMapping(source){
 }
 export function parseListMatrix(sheet,defaults={}){
   const records=[],unresolved=[],notes=[];
-  if(sheet.template)defaults={...defaults,...sheet.template.defaults,grupo:GROUP_TYPES[0],quantidade:1};
+  if(sheet.template&&sheet.template.version<3){defaults={...defaults};delete defaults.catalogVersion;}
+  if(sheet.template)defaults={...defaults,...sheet.template.defaults,...(sheet.template.version===3?{catalogVersion:3}:{}),grupo:GROUP_TYPES[0],quantidade:1};
   const topHeader=normalizeKey(sheet.rows[sheet.headerRow]?.[sheet.mapping.tamanhoCamiseta]);
   if(!sheet.template&&(topHeader==='tam jaqueta'||topHeader==='tamanho jaqueta'))defaults={...defaults,produto:JACKET_KIT};
   sheet.rows.forEach((cells,index)=>{

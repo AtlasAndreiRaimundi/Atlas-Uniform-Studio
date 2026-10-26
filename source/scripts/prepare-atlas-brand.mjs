@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import path from 'node:path';
+import {writeAtlasFavicons} from './prepare-atlas-favicons.mjs';
 const require=createRequire(import.meta.url),sharp=createRequire(require.resolve('next/package.json'))('sharp');
 const input=process.argv[2];if(!input)throw Error('Provide the supplied Atlas SVG.');
 const source=(await fs.readFile(input,'utf8')).replace(/\r\n?/g,'\n');
@@ -18,6 +19,7 @@ for(const [i,name] of ['dark','light'].entries()){
 await fs.copyFile(path.join(out,'atlas-logo-light.png'),path.join(out,'atlas-logo-print.png'));
 const iconDefs=defs.replace('#201E1E','#FEFEFE'),icon=`<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="-800 -800 10800 10800"><rect x="-800" y="-800" width="10800" height="10800" rx="1400" fill="#171c1d"/><defs><clipPath id="atlasSymbol"><path d="M-30 6500 4200 -10H5400L9400 6500Z"/></clipPath></defs>${iconDefs}<g transform="translate(0 1000)" clip-path="url(#atlasSymbol)">${groups[0]}</g></svg>`;
 await fs.writeFile('public/favicon.svg',icon);await sharp(Buffer.from(icon)).resize(256,256).png().toFile(path.join(out,'atlas-symbol.png'));
+await writeAtlasFavicons(icon);
 const mark=icon.replace(/<rect[^>]+\/>/,'');await fs.writeFile(path.join(out,'atlas-mark.svg'),mark);await sharp(Buffer.from(mark)).resize(512,512).png().toFile(path.join(out,'atlas-mark.png'));
 const paths=[...groups[0].matchAll(/<path class="fil([01])" d="([^"]+)"/g)];
 const module=`// Original vector geometry from the supplied ATLAS logo, clipped to its A symbol.\nconst INK=${JSON.stringify(paths.find(p=>p[1]==='0')[2])};\nconst ACCENT=${JSON.stringify(paths.find(p=>p[1]==='1')[2])};\nexport function drawAtlasMark(ctx,w,h,color,aspect=1){ctx.save();const s=Math.min(w/9400,h/(6500*aspect));ctx.scale(s,s*aspect);ctx.translate(-4700,-3250);ctx.beginPath();ctx.moveTo(-30,6500);ctx.lineTo(4200,-10);ctx.lineTo(5400,-10);ctx.lineTo(9400,6500);ctx.closePath();ctx.clip();ctx.fillStyle=color;ctx.fill(new Path2D(INK));const g=ctx.createLinearGradient(600,0,6843,0);g.addColorStop(0,'#8b9063');g.addColorStop(1,'#bcbc88');ctx.fillStyle=g;ctx.fill(new Path2D(ACCENT));ctx.restore();}\n`;

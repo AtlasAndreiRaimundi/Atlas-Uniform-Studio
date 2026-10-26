@@ -1,13 +1,16 @@
+import {setupCatalogListForm} from './catalog-list-ui.js';
+import {FITS} from './product-catalog.js';
 import {createWorkflowGuide,workflowChoose,workflowOrders,canonicalWorkflowPath} from './workflow-guide.js?v=3';
 import {workflowRoute,canAttachToOrder,linkedWorkflowOrders,suggestListName} from './workflow-contract.js?v=2';
-import {LIST_FIELDS, listFields, IMPORT_FIELDS, GROUP_TYPES, LIST_SIZES, ORDER_LIMITS, PIECE_TYPES, normalizeListRow, listProblems, sortListRows, listSummary, prepareListText, prepareListSheets, needsListMapping, parseListMatrix, parseListFreeText, detectListHeader} from './order-list.js?v=6';
+import {LIST_FIELDS, listFields, listPieces, IMPORT_FIELDS, GROUP_TYPES, LIST_SIZES, ORDER_LIMITS, PIECE_TYPES, normalizeListRow, listProblems, sortListRows, listSummary, prepareListText, prepareListSheets, needsListMapping, parseListMatrix, parseListFreeText, detectListHeader} from './order-list.js?v=7';
 import {normalizeKey,kitComponents,isBottomProduct} from './order-core.js?v=3';
-import {loadExcelLibrary, readOrderWorkbook, writeListWorkbook} from './order-files.js?v=4';
+import {loadExcelLibrary, readOrderWorkbook, writeListWorkbook} from './order-files.js?v=5';
 
 const $=selector=>document.querySelector(selector),$$=selector=>[...document.querySelectorAll(selector)];
 const EXAMPLE='Tipo;Nome;Número;Tam. Camiseta;Tam. Calção;Quantidade;Adicional\nLinha;João;07;P;M;2;CAPITÃO\nLinha;Carlos;10;M;M;4;\nLinha;Ana;09;BLP;P;1;PROFESSORA\nGoleiro;Pedro;01;TAM10;TAM12;3;O+';
 let mode='manual',records=[],unresolved=[],fileSource=null,mappingSource=null,organizedSource=null,busy=false,page=0,editing=null,detailsId=null,lastAction=null,dirty=false,draftDirty=false,toastTimer;
 const PAGE_SIZE=50,urls={},disabledControls=new Map();
+const catalogManual=setupCatalogListForm($('#manualForm'));
 const listParams=new URLSearchParams(location.search);let orderTarget=listParams.get('order'),orderContext=null;
 let listChecked=false,listOrders=[],listProjects=[];
 let listSourceName='',savedListId=null,savedListVersion=0,listRevision=0,listSavePromise=null,listAutoTimer,listConflict=false,listAccount=null;
@@ -17,7 +20,7 @@ const id=()=>globalThis.crypto?.randomUUID?.()||`list-${Date.now().toString(36)}
 const node=(tag,className,text)=>{const e=document.createElement(tag);if(className)e.className=className;if(text!==undefined)e.textContent=String(text);return e;};
 const opt=(value,label=value)=>{const e=node('option','',label);e.value=String(value);return e;};
 const button=(text,style,action)=>{const e=node('button',style,text);e.type='button';e.addEventListener('click',action);return e;};
-const defaults=()=>({produto:$('#orderProduct').value,modelo:$('#orderModel').value.trim(),cor:$('#orderColor').value.trim(),grupo:$('#manualGroup').value,quantidade:1});
+const defaults=()=>({catalogVersion:3,produto:$('#orderProduct').value,modelo:$('#orderModel').value.trim(),cor:$('#orderColor').value.trim(),grupo:$('#manualGroup').value,quantidade:1});
 function toast(text){clearTimeout(toastTimer);$('#orderToast').textContent=text;$('#orderToast').hidden=false;toastTimer=setTimeout(()=>$('#orderToast').hidden=true,5000);}
 function sourceError(message=''){$('#sourceError').textContent=message;$('#sourceError').hidden=!message;}
 function markChanged(){listChecked=false;listGuide.hide();dirty=true;listRevision++;queueListSave();$('#exportFileLink').hidden=true;if(urls.export){URL.revokeObjectURL(urls.export);delete urls.export;}}
@@ -26,12 +29,12 @@ function setMode(next){mode=next;for(const tab of $$('[data-input]')){const acti
 function setBusy(value){busy=value;if(value){for(const control of $$('button,input,select,textarea')){disabledControls.set(control,control.disabled);control.disabled=true;}}else{for(const [control,disabled] of disabledControls)control.disabled=disabled;disabledControls.clear();syncProduct();}$('#organizeBtn').textContent=value?'Preparando…':'Organizar lista →';renderStats();}
 function sizeSelect(select){
   select.append(opt('','Selecione'));
-  for(const [label,test] of [['Masculina',s=>!s.startsWith('BL')&&!s.startsWith('TAM')&&!s.startsWith('ESP')],['Baby Look',s=>s.startsWith('BL')],['Infantil',s=>s.startsWith('TAM')],['Especial',s=>s.startsWith('ESP')]]){
-    const group=node('optgroup');group.label=label;LIST_SIZES.filter(test).forEach(size=>group.append(opt(size)));select.append(group);
-  }
+  for(const fit of FITS){const group=node('optgroup');group.label=fit.shirt;for(const size of fit.sizes){const value=fit.id==='FEMININA'?'BL'+size:size.replaceAll(' ','');group.append(opt(value));}select.append(group);}
+  select.append(opt('ESPECIAL','TAMANHO ESPECIAL'));
 }
 function setSelect(select,value){if(value&&![...select.options].some(o=>o.value===value))select.append(opt(value));select.value=value||'';}
 function syncProduct(clear=false){
+  catalogManual.sync($('#orderProduct').value);
   const product=$('#orderProduct').value,isBottom=isBottomProduct(product),kit=kitComponents(product),shirtKit=['Camiseta','Calção','Kit'].includes(product);
   $('#manualTop').disabled=busy||isBottom&&!shirtKit;$('#manualBottom').disabled=busy||!isBottom&&!kit&&!shirtKit;
   $('#topSizeLabel').textContent=`Tam. ${kit?kit[0]:!isBottom?product:'Camiseta'}`;
@@ -43,11 +46,11 @@ function detectManualKit(){
   const select=$('#orderProduct');
   if(['Camiseta','Calção'].includes(select.value)&&$('#manualTop').value&&$('#manualBottom').value){select.value='Kit';syncProduct();toast('Kit de camiseta + calção selecionado. Cada peça mantém seu tamanho.');}
 }
-function resetManual(){editing=null;draftDirty=false;$('#manualName').value='';$('#manualNumber').value='';$('#manualAdditional').value='';$('#manualQuantity').value='1';$('#manualError').hidden=true;$('#cancelEditBtn').hidden=true;$('#addManualBtn').textContent='Adicionar';$('#manualHint').textContent='Preencha camiseta e calção para montar um kit automaticamente. Nome, número e adicional são opcionais. BL = Baby Look. TAM = Infantil.';renderStats();}
-function manualRow(){return normalizeListRow({grupo:$('#manualGroup').value,nome:$('#manualName').value,numero:$('#manualNumber').value,adicional:$('#manualAdditional').value,tamanhoCamiseta:$('#manualTop').value,tamanhoCalcao:$('#manualBottom').value,quantidade:$('#manualQuantity').value,produto:$('#orderProduct').value,modelo:$('#orderModel').value,cor:$('#orderColor').value},{},{sheet:'Criação manual',text:'Item preenchido manualmente.'});}
+function resetManual(){catalogManual.reset();catalogManual.sync($('#orderProduct').value);editing=null;draftDirty=false;$('#manualName').value='';$('#manualNumber').value='';$('#manualAdditional').value='';$('#manualQuantity').value='1';$('#manualError').hidden=true;$('#cancelEditBtn').hidden=true;$('#addManualBtn').textContent='Adicionar';$('#manualHint').textContent='Preencha camiseta e calção para montar um kit automaticamente. Nome, número e adicional são opcionais. BL = Baby Look. TAM = Infantil.';renderStats();}
+function manualRow(){return normalizeListRow({...catalogManual.read(),grupo:$('#manualGroup').value,nome:$('#manualName').value,numero:$('#manualNumber').value,adicional:$('#manualAdditional').value,tamanhoCamiseta:$('#manualTop').value,tamanhoCalcao:$('#manualBottom').value,quantidade:$('#manualQuantity').value,produto:$('#orderProduct').value,modelo:$('#orderModel').value,cor:$('#orderColor').value},{},{sheet:'Criação manual',text:'Item preenchido manualmente.'});}
 function editRow(row){
   if(draftDirty&&editing!==row.id)return toast('Salve ou descarte o item em preenchimento antes de editar outro.');
-  editing=row.id;setMode('manual');setSelect($('#orderProduct'),row.produto);$('#orderModel').value=row.modelo;$('#orderColor').value=row.cor;syncProduct();
+  editing=row.id;catalogManual.restore(row);setMode('manual');setSelect($('#orderProduct'),row.produto);$('#orderModel').value=row.modelo;$('#orderColor').value=row.cor;syncProduct();
   setSelect($('#manualGroup'),row.grupo);$('#manualName').value=row.nome;$('#manualNumber').value=row.numero;$('#manualAdditional').value=row.adicional||'';setSelect($('#manualTop'),row.tamanhoCamiseta);setSelect($('#manualBottom'),row.tamanhoCalcao);$('#manualQuantity').value=row.quantidade??'';
   $('#addManualBtn').textContent='Salvar item';$('#cancelEditBtn').hidden=false;$('#manualHint').textContent='Editando o item selecionado. Salve para atualizar a lista e o resumo.';$('#manualError').hidden=true;draftDirty=true;renderStats();$('#manualForm').scrollIntoView({behavior:'smooth',block:'center'});$('#manualName').focus();
 }
@@ -60,7 +63,7 @@ function renderRows(){
     const tr=node('tr'),problems=listProblems(row);tr.classList.toggle('has-issues',!!problems.length);
     for(const [field] of LIST_FIELDS){const td=node('td','',field==='numero'?(row.numero||'Sem número'):row[field]??'—');if(field==='nome'){
       td.replaceChildren(node('span','',row.nome||'Sem nome'));
-      const context=[row.produto,row.modelo,row.cor].filter(Boolean).join(' · ');td.append(node('small','row-context',context));
+      const context=[row.produto,row.modelo,row.cor,...(row.catalogVersion===3?[listPieces(row).map(p=>(p.quantity??row.quantidade)+' '+p.product.toLowerCase()+'(s)').join(' / '),row.modelagemCamiseta,row.modelagemCalcao,...(row.produto==='Kit'?['Calção: '+(row.nomeCalcao||'sem nome')+' / '+(row.semNumeroCalcao?'sem número':row.numero||'sem número')]:[]),...(row.semNumeroCamiseta?['Camiseta sem número']:[])]:[])].filter(Boolean).join(' · ');td.append(node('small','row-context',context));
     }tr.append(td);}
     const actions=node('td','simple-row-actions');actions.append(button('Editar','text-link',()=>editRow(row)),button('Detalhes','text-link',()=>showDetails(row)),button('×','remove-order',()=>{
       if(editing===row.id)resetManual();saveUndo();records=records.filter(item=>item.id!==row.id);markChanged();render();toast('Item removido. Você pode desfazer.');
@@ -77,7 +80,7 @@ function renderStats(){
   $('#recordCount').textContent=`${records.length} ${records.length===1?'item':'itens'}`;$('#pieceCount').textContent=summary.pieces;$('#kitCount').textContent=summary.kits;$('#issueCount').textContent=`${pending} pendência(s)`;
   for(const control of $$('[data-export-orders]'))control.disabled=busy||!records.length||!!pending||draftDirty;
   $('#copySummaryBtn').disabled=busy||!records.length||!!pending||draftDirty;
-  $('#exportHelp').textContent=draftDirty?'Há um item em preenchimento. Clique em Adicionar ou Salvar item antes de baixar.':pending?'Ajuste os itens em Conferência para liberar o Excel e o resumo.':records.length?'O Excel segue o modelo de 7 colunas e inclui o resumo das peças. A busca não reduz a exportação.':'Comece adicionando um item.';
+  $('#exportHelp').textContent=draftDirty?'Há um item em preenchimento. Clique em Adicionar ou Salvar item antes de baixar.':pending?'Ajuste os itens em Conferência para liberar o Excel e o resumo.':records.length?'O Excel inclui os campos por peça e o resumo de produção. A busca não reduz a exportação.':'Comece adicionando um item.';
   return summary;
 }
 function renderSummary(){
@@ -140,7 +143,7 @@ function organize(){
 }
 function download(bytes,name,target){if(urls[target])URL.revokeObjectURL(urls[target]);const url=URL.createObjectURL(new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));urls[target]=url;const link=$(`#${target}FileLink`);link.href=url;link.download=name;link.hidden=false;const a=node('a');a.href=url;a.download=name;a.hidden=true;document.body.append(a);a.click();a.remove();}
 
-for(const selector of ['#orderProduct','#detailProduct'])PIECE_TYPES.forEach(p=>$(selector).append(opt(p,p==='Kit'?'Kit · camiseta + calção':p)));
+for(const selector of ['#orderProduct','#detailProduct'])['Camiseta','Calção','Kit'].forEach(p=>$(selector).append(opt(p,p==='Kit'?'Kit · camiseta + calção':p)));
 GROUP_TYPES.forEach(g=>$('#manualGroup').append(opt(g)));sizeSelect($('#manualTop'));sizeSelect($('#manualBottom'));syncProduct();
 $$('[data-input]').forEach(tab=>tab.addEventListener('click',()=>setMode(tab.dataset.input)));
 function draftChanged(){listGuide.hide();clearTimeout(listAutoTimer);detectManualKit();draftDirty=true;$('#cancelEditBtn').hidden=false;$('#cancelEditBtn').textContent=editing?'Cancelar edição':'Descartar preenchimento';renderStats();renderSummary();}
