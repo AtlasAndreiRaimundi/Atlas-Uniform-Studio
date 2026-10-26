@@ -19,6 +19,7 @@ const params=new URLSearchParams(location.search);
 let orderGeneration=0,viewingRelease=false;
 let technicalBusy=false,complementPending=null;
 let savedOrders=[],orderDeletion=null;
+let orderReset=null,pageRemoval=null,bootReady=false,draftWriteQueue=Promise.resolve();
 let orderPickerPage=0;
 let displayedOrderThumbnail=null;
 const ORDER_PICKER_SIZE=12;
@@ -91,7 +92,7 @@ async function api(path,options){const r=await fetch(path,{...options,cache:'no-
 async function database(){return new Promise((resolve,reject)=>{const request=indexedDB.open('meinerz-production',1);request.onupgradeneeded=()=>request.result.createObjectStore('drafts');request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});}
 async function localDraft(value){const db=await database();return new Promise((resolve,reject)=>{const tx=db.transaction('drafts',value?'readwrite':'readonly'),store=tx.objectStore('drafts'),r=value?store.put(value,draftKey):store.get(draftKey);let result;r.onsuccess=()=>{result=r.result;};tx.oncomplete=()=>{db.close();resolve(result);};tx.onerror=()=>{db.close();reject(tx.error);};});}
 function snapshot(){return {id,version,document:structuredClone(doc),dirty,updatedAt:new Date().toISOString()};}
-async function persist(){if(example||!profile)return;try{await localDraft(snapshot());}catch{error('Não foi possível guardar o rascunho neste navegador. Salve no estúdio ou baixe a cópia .json.');}}
+async function persist(force=false){if(example||!profile||orderReset&&!force)return true;const value=snapshot(),write=draftWriteQueue.catch(()=>{}).then(()=>localDraft(value));draftWriteQueue=write;try{await write;return true;}catch{error('Não foi possível guardar o rascunho neste navegador. Salve no estúdio ou baixe a cópia .json.');return false;}}
 function status(text){$('#saveStatus').textContent=text;}
 function changed(){if(doc.workflow?.status==='released'||viewingRelease)return;for(const e of $$('#releaseChecks input'))e.checked=false;dirty=true;revision++;clearTimeout(draftTimer);draftTimer=setTimeout(persist,200);clearTimeout(autoTimer);if(profile&&!example)autoTimer=setTimeout(()=>save(false),1600);status(example?'Exemplo · clique em Salvar para guardar uma cópia':'Alterações no rascunho…');renderPreview();}
 async function refreshSavedLists(){const {lists}=await api('/api/order-lists');$('#savedOrderLists').innerHTML='<option value="">Selecione uma lista salva…</option>'+lists.filter(list=>list.reviewed).map(list=>`<option value="${esc(list.id)}">${esc(list.title)} · ${list.rowCount} itens</option>`).join('');}
@@ -172,6 +173,7 @@ $('#confirmOrderDeletion').addEventListener('click',confirmOrderDeletion);
 $('#deleteOrderDialog').addEventListener('cancel',event=>{event.preventDefault();cancelOrderDeletion();});
 $('#deleteOrderDialog').addEventListener('close',cancelOrderDeletion);
 async function save(explicit=true){
+ if(orderReset)return false;
  if(technicalBusy){if(explicit)error('Aguarde o envio do arquivo técnico terminar.');return false;}
  if(orderDeletion?.id===id)return false;
  if(savePromise){const ok=await savePromise;if(ok&&dirty&&explicit)return save(true);return ok;}
@@ -189,17 +191,17 @@ async function continueToList(){
  if(!orderEditable())return error('Abra uma revisão em preparação antes de montar a lista.');
  if(!doc.title.trim()||/^novo pedido$/i.test(doc.title.trim())){showOrderStage('identity');error('Dê um nome ao pedido para criar a lista com o mesmo nome.');$('[data-order="title"]').focus();return;}
  if(!doc.client.trim()){showOrderStage('identity');error('Preencha o cliente antes de continuar para a lista.');$('[data-order="client"]').focus();return;}
- continuingToList=true;$('#orderEditor').disabled=true;$('#continueOrderList').disabled=true;
+ continuingToList=true;renderOrderEditActions();$('#orderEditor').disabled=true;$('#continueOrderList').disabled=true;
  try{
   if(!await save(true))return;const destination=id,generation=orderGeneration;
   const {list}=await api('/api/production-orders/'+encodeURIComponent(id)+'/list',{method:'POST'});
   if(id!==destination||generation!==orderGeneration)throw new Error('O pedido mudou. Abra a lista pelo pedido correto.');
   if(dirty&&!await save(true))return;
   window.top.location.href=workflowRoute('list',{orderId:destination,listId:list.id});
- }catch(e){error(e.message);}finally{continuingToList=false;$('#orderEditor').disabled=!orderEditable();$('#continueOrderList').disabled=!orderEditable();}
+ }catch(e){error(e.message);}finally{continuingToList=false;renderOrderEditActions();$('#orderEditor').disabled=!orderEditable();$('#continueOrderList').disabled=!orderEditable();}
 }
 async function canSwitch(){if(technicalBusy){error('Aguarde a operação dos arquivos técnicos terminar.');return false;}clearTimeout(autoTimer);if(dirty&&!example)return save(true);return true;}
-async function replaceDocument(value,meta={}){clearTimeout(autoTimer);clearTimeout(draftTimer);for(const e of $$('#releaseChecks input'))e.checked=false;orderGeneration++;viewingRelease=Boolean(meta.viewingRelease);doc=value;if(meta.tracking)doc.factoryTracking=meta.viewingRelease?{...meta.tracking,stage:'checked',revision:doc.workflow?.revision}:meta.tracking;id=meta.id||null;version=meta.version||0;dirty=false;conflict=false;pageIndex=productIndex=sheetIndex=0;pendingAnchor=null;orderStage=orderEditable()?'identity':'review';productStage='model';previewOpen=false;imageSources.clear();$('.order-management').open=false;revision++;render();renderSavedOrders(meta.id||'');await persist();}
+async function replaceDocument(value,meta={}){clearTimeout(autoTimer);clearTimeout(draftTimer);for(const e of $$('#releaseChecks input'))e.checked=false;orderGeneration++;viewingRelease=Boolean(meta.viewingRelease);doc=value;if(meta.tracking)doc.factoryTracking=meta.viewingRelease?{...meta.tracking,stage:'checked',revision:doc.workflow?.revision}:meta.tracking;id=meta.id||null;version=meta.version||0;dirty=false;conflict=false;pageIndex=productIndex=sheetIndex=0;pendingAnchor=null;orderStage=orderEditable()?'identity':'review';productStage='model';previewOpen=false;imageSources.clear();$('.order-management').open=false;revision++;render();renderSavedOrders(meta.id||'');return persist(Boolean(meta.resetDraft));}
 async function applyOrderList(rows,source){
  if(doc.workflow?.status==='released'||viewingRelease)throw new Error('Inicie uma nova revisão antes de aplicar a lista.');
  const destination=doc,start=revision,next=applyListToOrder(doc,rows,source);
@@ -238,7 +240,7 @@ function render(){
  $$('[data-order]').forEach(e=>{if(e.type==='checkbox')e.checked=Boolean(doc[e.dataset.order]);else e.value=doc[e.dataset.order]??'';});
  $('#techniques').innerHTML=[...new Set([...TECHNIQUES,...doc.techniques])].map(s=>`<label><input type="checkbox" data-technique="${esc(s)}"${doc.techniques.includes(s)?' checked':''}>${esc(s)}</label>`).join('');
  $('#pageTabs').innerHTML=doc.pages.map((p,i)=>`<button data-page-index="${i}" class="${i===pageIndex?'active':''}" aria-pressed="${i===pageIndex}">${i+1}. ${esc(p.title||p.products.map(x=>x.type).join(' + '))}</button>`).join('');
- $$('[data-page]').forEach(e=>e.value=page()[e.dataset.page]||'');$('#pageUp').disabled=pageIndex===0;$('#pageDown').disabled=pageIndex===doc.pages.length-1;$('#removePage').disabled=doc.pages.length===1;
+ $$('[data-page]').forEach(e=>e.value=page()[e.dataset.page]||'');$('#pageUp').disabled=pageIndex===0;$('#pageDown').disabled=pageIndex===doc.pages.length-1;renderOrderEditActions();
  $('#productTabs').innerHTML=page().products.map((p,i)=>`<button type="button" data-product-index="${i}" class="${i===productIndex?'active':''}" aria-pressed="${i===productIndex}">${esc(p.type||'Peça '+(i+1))}</button>`).join('');$('#productTabs').hidden=page().products.length<2;$('#pageTabs').hidden=doc.pages.length<2;renderProduct();const found=buildSheets(doc,assets,{draft:true}).findIndex(s=>s.anchors.some(a=>a.id===product().id));if(found>=0)sheetIndex=found;renderPreview();
 }
 function renderProduct(){
@@ -332,8 +334,74 @@ $('#addProduct').addEventListener('click',()=>{
 });
 $('#addPage').addEventListener('click',()=>{if(!orderEditable())return;if(doc.pages.length>=50)return toast('Use até 50 páginas de edição por pedido.');doc.pages.push(newPage());pageIndex=doc.pages.length-1;productIndex=0;finishAddingPiece('Nova página adicionada.');});
 $('#duplicatePage').addEventListener('click',()=>{if(doc.pages.length>=50)return;const copy=structuredClone(page());copy.id=newId();const ids=new Map();copy.products.forEach(p=>{const previous=p.id;p.id=newId();ids.set(previous,p.id);});copy.annotations=(copy.annotations||[]).map(a=>({...a,id:newId(),productId:ids.get(a.productId)||''}));doc.pages.splice(pageIndex+1,0,copy);pageIndex++;productIndex=0;changed();render();});
-$('#removePage').addEventListener('click',()=>{if(doc.pages.length===1)return;doc.pages.splice(pageIndex,1);pageIndex=Math.max(0,pageIndex-1);productIndex=0;changed();render();});
+$('#removePage').addEventListener('click',requestPageRemoval);
 for(const [key,offset]of [['pageUp',-1],['pageDown',1]])$('#'+key).addEventListener('click',()=>{const next=pageIndex+offset;if(next<0||next>=doc.pages.length)return;[doc.pages[pageIndex],doc.pages[next]]=[doc.pages[next],doc.pages[pageIndex]];pageIndex=next;changed();render();});
+
+function renderOrderEditActions(){
+ const blocked=!bootReady||technicalBusy||continuingToList||Boolean(orderDeletion)||Boolean(orderReset)||Boolean(pageRemoval);
+ $('#newOrder').disabled=blocked;$('#removePage').disabled=blocked||!orderEditable();
+ $('#activePageLabel').textContent='Página '+(pageIndex+1)+' de '+doc.pages.length+(page().title?' · '+page().title:'');
+}
+function hidePrintedCopy(){
+ $('#pdfLink').hidden=true;if(pdfURL){URL.revokeObjectURL(pdfURL);pdfURL=undefined;}
+}
+function hasOrderInput(){
+ return Boolean(id||dirty||!initialCompositionState().editable||doc.title&&doc.title!=='Novo pedido'||['number','client','contact','contactPhone','phone','registration','payment','notes','previousOrder','complementChanges'].some(key=>doc[key])||doc.technicalFiles?.length||doc.simulatorDesign);
+}
+function cancelPageRemoval(){if(!pageRemoval)return;pageRemoval=null;if($('#removePageDialog').open)$('#removePageDialog').close();renderOrderEditActions();}
+function requestPageRemoval(){
+ if(!bootReady||!orderEditable()||technicalBusy||continuingToList||orderDeletion||orderReset||pageRemoval)return;
+ pageRemoval={document:doc,generation:orderGeneration,revision,pageId:page().id};
+ $('#removePageName').textContent='Página '+(pageIndex+1)+(page().title?' · '+page().title:'');
+ $('#removePageItems').textContent=page().products.map(p=>[p.type,p.model,Number(p.quantity||0)+' un.'].filter(Boolean).join(' · ')).join(' / ');
+ $('#removeLastPageNote').hidden=doc.pages.length!==1;renderOrderEditActions();$('#removePageDialog').showModal();
+}
+function confirmPageRemoval(){
+ const state=pageRemoval;if(!state)return;
+ if(!orderEditable()||state.document!==doc||state.generation!==orderGeneration||state.revision!==revision){cancelPageRemoval();return error('O pedido mudou. Selecione a página e confira novamente antes de excluir.');}
+ const index=doc.pages.findIndex(p=>p.id===state.pageId);if(index<0){cancelPageRemoval();return error('A página não está mais neste pedido.');}
+ const last=doc.pages.length===1;if(last)doc.pages=[newPage()];else doc.pages.splice(index,1);
+ pageIndex=Math.max(0,Math.min(index-1,doc.pages.length-1));productIndex=sheetIndex=0;productStage='model';pendingAnchor=null;orderGeneration++;
+ cancelPageRemoval();hidePrintedCopy();changed();render();showOrderStage('pieces',{focus:false});
+ toast(last?'Página excluída. Uma página vazia está pronta para preencher.':'Página excluída do pedido.');
+}
+$('#cancelPageRemoval').addEventListener('click',cancelPageRemoval);
+$('#confirmPageRemoval').addEventListener('click',confirmPageRemoval);
+$('#removePageDialog').addEventListener('cancel',event=>{event.preventDefault();cancelPageRemoval();});
+$('#removePageDialog').addEventListener('close',cancelPageRemoval);
+function cancelOrderReset(){
+ const state=orderReset;if(!state||state.busy)return;orderReset=null;if($('#resetOrderDialog').open)$('#resetOrderDialog').close();renderOrderEditActions();
+ if(state.fromNavigation)canonicalWorkflowPath(workflowRoute('order',{orderId:id||''}));
+ if(dirty){draftTimer=setTimeout(persist,200);if(profile&&!example&&!conflict&&orderEditable())autoTimer=setTimeout(()=>save(false),1600);}
+}
+async function requestOrderReset({fromNavigation=false}={}){
+ if(!bootReady||orderReset||pageRemoval||orderDeletion)return;
+ if(technicalBusy||continuingToList)return error('Aguarde a operação em andamento terminar para começar outro pedido.');
+ const populated=hasOrderInput();orderReset={document:doc,generation:orderGeneration,fromNavigation,busy:false};clearTimeout(autoTimer);clearTimeout(draftTimer);
+ $('#resetOrderName').textContent=doc.title||'Pedido sem nome';$('#resetOrderMeta').textContent=[doc.number,doc.client].filter(Boolean).join(' · ');
+ $('#resetSavedOrderNote').hidden=!id&&!savePromise;$('#resetOrderStatus').hidden=true;$('#confirmOrderReset').disabled=$('#cancelOrderReset').disabled=false;
+ renderOrderEditActions();if(!populated)return confirmOrderReset();$('#resetOrderDialog').showModal();
+}
+async function confirmOrderReset(){
+ const state=orderReset;if(!state||state.busy)return;state.busy=true;$('#confirmOrderReset').disabled=$('#cancelOrderReset').disabled=true;$('#resetOrderStatus').hidden=!savePromise;
+ try{
+  // Finish only an existing request; discarding never initiates a save of the old form.
+  if(savePromise)await savePromise;
+  if(doc!==state.document||orderGeneration!==state.generation)throw new Error('O pedido aberto mudou. Confira novamente antes de descartar.');
+  clearTimeout(autoTimer);clearTimeout(draftTimer);const next=newOrder();if(profile)next.seller=next.artist=profile.displayName;
+  $('#initialSecondType').value=$('#newKitSecondType').value='Calção';$('#newKitFirstType').value=$('#newProductType').value='Camiseta';$('#newProductSamePage').checked=false;
+  example=false;const stored=await replaceDocument(next,{resetDraft:true});canonicalWorkflowPath(workflowRoute('order'));hidePrintedCopy();$('#incomingProject').hidden=true;
+  orderReset=null;if($('#resetOrderDialog').open)$('#resetOrderDialog').close();status('Novo pedido · preencha os dados');showOrderStage('identity');
+  if(stored)error();else error('Novo pedido aberto. Não foi possível atualizar o rascunho deste navegador; salve o novo pedido no estúdio antes de sair.');
+  $('[data-order="title"]').focus();toast('Novo pedido iniciado. Preenchimento anterior descartado.');
+ }catch(e){state.busy=false;orderReset=state;$('#resetOrderStatus').hidden=true;$('#confirmOrderReset').disabled=$('#cancelOrderReset').disabled=false;error(e.message);}
+ finally{renderOrderEditActions();}
+}
+$('#cancelOrderReset').addEventListener('click',cancelOrderReset);
+$('#confirmOrderReset').addEventListener('click',confirmOrderReset);
+$('#resetOrderDialog').addEventListener('cancel',event=>{event.preventDefault();cancelOrderReset();});
+$('#resetOrderDialog').addEventListener('close',cancelOrderReset);
+
 $('#sheetSelect').addEventListener('change',e=>{sheetIndex=Number(e.target.value);renderPreview();});$('#previousSheet').addEventListener('click',()=>{sheetIndex--;renderPreview();});$('#nextSheet').addEventListener('click',()=>{sheetIndex++;renderPreview();});
 $('#saveOrder').addEventListener('click',()=>save(true));
 $('#importOrderList').addEventListener('click',()=>$('#orderListFile').click());
@@ -350,7 +418,8 @@ $('#orderListFile').addEventListener('change',async event=>{
  }catch(e){error(e.message);}finally{button.disabled=false;event.target.value='';}
 });
 $('#continueOrderList').addEventListener('click',continueToList);
-$('#newOrder').addEventListener('click',async()=>{if(!await canSwitch())return;example=false;await replaceDocument(newOrder());if(profile){doc.seller=doc.artist=profile.displayName;render();}status('Novo pedido · preencha os dados');showOrderStage('identity');});
+$('#newOrder').addEventListener('click',()=>requestOrderReset());
+$('[data-nav-id="create-order"]')?.addEventListener('click',event=>{event.preventDefault();requestOrderReset();});
 $('#example').addEventListener('click',async()=>{if(!await canSwitch())return;example=true;await replaceDocument(demoOrder());status('Exemplo · clique em Salvar para guardar uma cópia');});
 $('#openOrder').addEventListener('click',async()=>{const selected=$('#savedOrders').value;if(!selected||!await canSwitch())return;try{await openSavedOrder(selected);showOrderStage(orderStage);}catch(e){error(e.message);}});
 function download(bytes,name,type,link=null){const blob=new Blob([bytes],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();if(link){if(pdfURL)URL.revokeObjectURL(pdfURL);pdfURL=url;link.href=url;link.download=name;link.hidden=false;}else setTimeout(()=>URL.revokeObjectURL(url),60000);}
@@ -378,6 +447,7 @@ function renderTechnicalFiles(){
  $('#startComplement').disabled=!profile||!id||viewingRelease||technicalBusy;
  $('#complementOrigin').hidden=!doc.origin;
  if(doc.origin)$('#complementOrigin').innerHTML='Complemento do pedido <a href="/pedidos?order='+encodeURIComponent(doc.origin.id)+'" target="_top">'+esc(doc.origin.number||doc.origin.title)+'</a> · revisão '+esc(doc.origin.revision)+'. O pedido original permanece preservado.';
+ renderOrderEditActions();
  $('#complementChangesWrap').hidden=!doc.origin&&!/^COMPLEMENTO/.test(doc.type);$('[data-order="previousOrder"]').readOnly=Boolean(doc.origin);$('[data-order="type"]').querySelector('option').disabled=Boolean(doc.origin);
 }
 async function applyTechnicalResponse(order,target,generation,start){
@@ -426,6 +496,7 @@ $('#confirmComplement').addEventListener('click',async()=>{
 });
 
 async function boot(){
+ let requestFreshAtBoot=false;
  $('#productOptions').innerHTML=PRODUCTS.map(s=>'<option value="'+s+'">').join('');
  $('#techniqueOptions').innerHTML=TECHNIQUES.map(s=>'<option value="'+esc(s)+'">').join('');
  $('#fabricOptions').innerHTML=FABRICS.map(s=>'<option value="'+s+'">').join('');
@@ -435,7 +506,7 @@ async function boot(){
  catch{status(example?'Exemplo de pedido':'Entre no estúdio para salvar seus pedidos.');}
  if(example)doc=demoOrder();
  const requestedOrder=params.get('order');let targetReady=!requestedOrder;
- if((params.get('new')==='1'||params.get('list')||params.get('attach')==='1')&&!requestedOrder){if(!await canSwitch())throw new Error('Salve o rascunho anterior antes de criar outro pedido.');example=false;await replaceDocument(newOrder());if(profile)doc.seller=doc.artist=profile.displayName;}
+ if((params.get('new')==='1'||params.get('list')||params.get('attach')==='1')&&!requestedOrder){const standaloneNew=params.get('new')==='1'&&!['list','attach','project','import'].some(key=>params.has(key));if(standaloneNew)requestFreshAtBoot=hasOrderInput();else{if(!await canSwitch())throw new Error('Salve o rascunho anterior antes de criar outro pedido.');example=false;await replaceDocument(newOrder());if(profile)doc.seller=doc.artist=profile.displayName;}}
  if(requestedOrder){try{if(dirty&&!await save(true))throw new Error('Não foi possível salvar o rascunho atual antes de abrir o pedido solicitado.');await openSavedOrder(requestedOrder);targetReady=true;}catch(e){error(e.message);}}
  if(params.get('import')==='1'&&targetReady){try{const raw=sessionStorage.getItem('meinerz-production-import');if(raw){const data=JSON.parse(raw),target=data.orderId||null;if(target&&requestedOrder&&target!==requestedOrder)throw new Error('A lista pertence a outro pedido. Abra novamente a lista pelo pedido correto.');if(dirty&&!await save(true))throw new Error('Salve o rascunho atual antes de importar a lista.');if(target&&id!==target)await openSavedOrder(target);
    if(target){if(!await applyOrderList(data.rows,data.source))throw new Error('Importação cancelada. A lista permanece salva na conta.');}else{doc=applyListToOrder(newOrder(),data.rows,data.source);doc.title=data.title||'Pedido importado';id=null;version=0;}
@@ -444,7 +515,7 @@ async function boot(){
  const requestedItem=params.get('item');if(requestedItem)for(let pi=0;pi<doc.pages.length;pi++){const index=doc.pages[pi].products.findIndex(p=>p.id===requestedItem);if(index>=0){pageIndex=pi;productIndex=index;break;}}
  const requested=projects.find(p=>p.id===params.get('project'));if(requested){$('#incomingProject').hidden=false;$('#incomingProject').textContent='Apresentação selecionada: '+requested.name+'. Você pode criar um novo pedido ou abrir um pedido salvo acima. Depois, escolha a peça e clique em Vincular apresentação.';}
  if(params.get('attach')==='1'&&targetReady){if(!requested)error('A apresentação selecionada não está disponível nesta conta.');else try{if(await attachWorkflowProject(requested.id,params.get('item')))$('#incomingProject').textContent='Apresentação anexada: '+requested.name+'. Continue com a lista ou com os dados técnicos do pedido.';}catch(e){error(e.message);}}
- if(profile&&!doc.seller&&!id)doc.seller=doc.artist=profile.displayName;if(!orderEditable())orderStage='review';else if(targetReady&&(params.get('list')||params.get('import')==='1'||params.get('project'))){orderStage='pieces';productStage='art';}render();if(dirty&&!example)await persist();if(params.get('import')==='1'&&profile&&!example&&dirty)autoTimer=setTimeout(()=>save(false),1000);
+ if(profile&&!doc.seller&&!id)doc.seller=doc.artist=profile.displayName;if(!orderEditable())orderStage='review';else if(targetReady&&(params.get('list')||params.get('import')==='1'||params.get('project'))){orderStage='pieces';productStage='art';}bootReady=true;render();if(requestFreshAtBoot)await requestOrderReset({fromNavigation:true});if(dirty&&!example)await persist();if(params.get('import')==='1'&&profile&&!example&&dirty)autoTimer=setTimeout(()=>save(false),1000);
 
 }
 boot().catch(e=>error(e.message));

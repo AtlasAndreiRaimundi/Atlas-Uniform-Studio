@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "6ee6dd626bdbab2fe2406b4ba2887cf0f3c550f9",
-  "exported_at": "2026-10-26T20:54:06.056946+00:00",
+  "source_commit": "9acb1b516331ac1e562dfd1cb29f5ca444f03425",
+  "exported_at": "2026-10-26T21:23:49.651540+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -787,6 +787,11 @@
       "path": "docs/homepage-assets.md",
       "size": 3382,
       "sha256": "1cc0e4b222070d5020c0c84c4c14468aa004121698f07199f37d2516650debd2"
+    },
+    {
+      "path": "docs/pedidos-edicao.md",
+      "size": 3064,
+      "sha256": "ea09fbd0a7ca227c23d20303a767ac8b36e4e18a7d2270bd233863652668dfea"
     },
     {
       "path": "docs/pedidos-producao.md",
@@ -1580,8 +1585,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 28056,
-      "sha256": "f79b0cbd276802444d0f45a19387176903c5a79b19e8726a523da2d9f602b444"
+      "size": 30220,
+      "sha256": "2a529a8537428b3d032c117a1815d5a3c3d16ebf5d8dffb0d0e4b3bd51c9c814"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1620,13 +1625,13 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 89361,
-      "sha256": "328e954844b6c4a0ff0d1ea4dffd10f665956e017ff42026ed28011f14527d9a"
+      "size": 95700,
+      "sha256": "8b356f2e0dfd8d6f46ed456c4d3c965921f4201836397f2cadb2f7bbb1b62c6d"
     },
     {
       "path": "public/production.css",
-      "size": 46964,
-      "sha256": "e954c4c40b2c43b3531e480509218768bdc6f9dd6f58f84b2286b92a52beb8cc"
+      "size": 48917,
+      "sha256": "b667a1798e531896cdec7f68234ad3ac0e92a43c1ba55727e56953de60fb3eb1"
     },
     {
       "path": "public/project-session.js",
@@ -2200,8 +2205,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 44607,
-      "sha256": "0b38915c3a522ee620ecaea70dc53704a3989ceca96dd64aa144b63e8c36f58f"
+      "size": 54717,
+      "sha256": "44f397138a5f35d89936520890b159989bca8f8747498a692e3f2fc4afdaaf09"
     },
     {
       "path": "tests/order-list.test.mjs",

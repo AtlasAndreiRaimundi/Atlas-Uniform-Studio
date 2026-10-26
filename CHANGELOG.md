@@ -38,3 +38,12 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - 299 testes aprovados (1 referência antiga ausente), TypeScript, build, conferência visual e varredura de padrões de segredo. A suíte de catálogo sem dependências foi adicionada ao workflow existente.
 - Artefato publicado: SHA-256 `95aba47d28bda87081ed0d1efb81bcc27bd6b8d41b14c2b6a1cc46a387df1a29`. Manifesto por arquivo em `source-manifest.json`.
 - Detalhes e limites: [sincronização das fichas](docs/implementacao-fichas-2026-10-26.md).
+
+## 2026-10-26 — Excluir páginas e descartar preenchimento (v59)
+
+- Excluir página fica visível junto ao indicador de páginas; confirmação identifica os dados afetados. A única página pode ser excluída e substituída por uma vazia, mantendo a identidade do pedido.
+- Novo pedido fica no cabeçalho e permite descartar sem iniciar salvamento do formulário anterior. O menu Criar pedido e a recuperação com new=1 oferecem a mesma escolha; pedidos já salvos continuam disponíveis.
+- Protege respostas de salvamento em andamento e a ordem das gravações locais; preserva revisões bloqueadas. Invalida a prévia PDF anterior.
+- Nove novos casos de regressão; 308 testes completos aprovados e 1 referência antiga ausente; TypeScript/build e navegador aprovados. O workflow passa a incluir os testes de fluxo da montagem.
+- Origem Sites: `9acb1b516331ac1e562dfd1cb29f5ca444f03425`, 469 arquivos verificados; artefato publicado SHA-256 `440fc99c1bfaf723b4d0287d4cb5dca0cc61e2e9b7dc5a7c6fcfed364b73e52f`.
+- [Documentação junto ao código](source/docs/pedidos-edicao.md).
