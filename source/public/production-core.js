@@ -1,10 +1,13 @@
-import {normalizeListRow,listProblems,listPieces} from './order-list.js?v=6';
+import {newRecordId} from './record-id.js';
+import {preserveCatalogList} from './catalog-list.js';
+import {catalogProblems,attachCatalog,fitOfSize} from './product-catalog.js';
+import {normalizeListRow,listProblems,listPieces} from './order-list.js?v=7';
 export const SCHEMA=1;
 export const TECHNIQUES=['TRANSFER','DTF','BORDADO / APLIQUE','TPU ALTO RELEVO','TERMOCOLANTE','SERIGRAFIA'];
 export const EXTRA_APPLICATIONS=['TPU ALTO RELEVO','DTF','TERMOCOLANTE','APLIQUE BORDADO','BORDADO'];
 export const PRODUCTS=['Camiseta','Colete','Jaqueta','Polo','Bermuda','Puffer','Agasalho','Calça','Calção','Regata','Corta vento','Top','Legging','Baby look','Camiseta de pesca'];
 export const FABRICS=['DRY','ELASTIC','JACQUARD','JACQUARD ELITE','ABSTRAT','MANCHESTER','STRECH'];
-export const newId=()=>crypto.randomUUID();
+export const newId=newRecordId;
 export function newProduct(type='Camiseta'){return {id:newId(),type,model:'',fabric:'',fabricColor:'',detailColor:'',print:'TRANSFER',quantity:0,grade:'',extraApplications:[],components:[],images:[],names:[],notes:''};}
 export function newPage(type='Camiseta'){return {id:newId(),title:'',label:'',mode:'individual',visualLayout:'stacked',notes:'',products:[newProduct(type)]};}
 export const kitTitle=types=>('KIT · '+types.map((type,i)=>type||'Peça '+(i+1)).join(' + ').toLocaleUpperCase('pt-BR')).slice(0,160);
@@ -64,13 +67,13 @@ export function validateOrder(order){
    if(g.groups.length&&g.total!==Number(p.quantity))errors.push(prefix+'a grade soma '+g.total+' e a quantidade está em '+p.quantity+'.');
    if(p.names?.length){const sum=p.names.reduce((s,n)=>s+Number(n.quantity),0);if(sum!==Number(p.quantity))errors.push(prefix+'a lista de nomes soma '+sum+' e a quantidade está em '+p.quantity+'.');const expected=parseGrade(namesToGrade(p.names,p.type),p.type);const normalize=grade=>grade.groups.flatMap(g=>g.rows.map(r=>g.category+'|'+r.size+'|'+r.quantity)).sort().join('\n');if(g.groups.length&&normalize(g)!==normalize(expected))errors.push(prefix+'os tamanhos da lista de nomes diferem da grade.');}
   }
- }return errors;
+ }errors.push(...catalogProblems(order,{release:true,parseGrade}));return [...new Set(errors)];
 }
-export function importList(rows,title){
+export function importList(rows,title,config={}){
  const order=newOrder();order.title=title||'Pedido importado';order.pages=[];const pages=new Map();
- for(const input of rows){const r=normalizeListRow({...input,produto:input.produto||'Camiseta'}),parts=[r.modelo||'',r.cor||'',r.grupo||''],group=parts.filter(Boolean).join(' · '),groupKey=JSON.stringify(parts.map(key));let page=pages.get(groupKey);if(!page){page=newPage();page.products=[];page.title=group;page.listGroup=r.grupo||'';page.mode='avulsas';pages.set(groupKey,page);order.pages.push(page);}
+ for(const [rowIndex,input]of rows.entries()){const r=normalizeListRow({...input,produto:input.produto||'Camiseta'},config.catalog?{catalogVersion:3}:{}),parts=[r.modelo||'',r.cor||'',r.grupo||''],group=parts.filter(Boolean).join(' · '),groupKey=JSON.stringify(parts.map(key));let page=pages.get(groupKey);if(!page){page=newPage();page.products=[];page.title=group;page.listGroup=r.grupo||'';page.mode='avulsas';pages.set(groupKey,page);order.pages.push(page);}
   const pieces=listPieces(r);if(!pieces.length)throw new Error('Confira os tipos de peça, os tamanhos e as quantidades da lista.');const repeated=pieces.length===2&&productKey(pieces[0].product)===productKey(pieces[1].product);
-  for(const [slot,{product:type,size}] of pieces.entries()){const listKey=JSON.stringify([type,...parts,...(repeated?['kit-part-'+slot]:[])].map(key));let p=page.products.find(p=>p.listKey===listKey);if(!p){p=newProduct(type);p.model=r.modelo||'';p.fabricColor=r.cor||'';p.listKey=listKey;if(repeated)p.kitSlot=slot;page.products.push(p);}if(!size)throw new Error('Há uma peça sem tamanho na lista. Confira no organizador.');p.names.push({name:r.nome||'',number:String(r.numero??''),additional:r.adicional||'',size,quantity:Number(r.quantidade??1)});}
+  for(const [slot,piece]of pieces.entries()){const {product:type,size}=piece,modern=config.catalog||r.catalogVersion===3,fit=piece.fit||fitOfSize(size)||'MASCULINA',listKey=JSON.stringify([type,...parts,...(modern?['fit-'+fit]:[]),...(repeated?['kit-part-'+slot]:[])].map(key));let p=page.products.find(p=>p.listKey===listKey);if(!p){p=newProduct(type);p.model=r.modelo||'';p.fabricColor=r.cor||'';p.listKey=listKey;if(modern)attachCatalog(p,{designId:page.id,fit});if(r.produto==='Kit')p.kitGroupId=page.id;if(repeated)p.kitSlot=slot;page.products.push(p);}if(r.produto==='Kit')p.kitGroupId=page.id;if(!size)throw new Error('Há uma peça sem tamanho na lista. Confira no organizador.');const athleteId=r.id||'linha-'+rowIndex;p.names.push({name:piece.name??r.nome??'',number:piece.number??String(r.numero??''),additional:piece.additional??r.adicional??'',size,quantity:Number(piece.quantity??r.quantidade??1),...(modern?{athleteId,...(r.produto==='Kit'?{kitId:athleteId}:{}),specialReference:piece.specialReference||'',specialDescription:piece.specialDescription||''}:{})});}
  }
  for(const page of order.pages){if(page.products.length===1)page.mode='individual';for(const p of page.products){p.grade=namesToGrade(p.names,p.type);p.quantity=p.names.reduce((sum,n)=>sum+n.quantity,0);}}
  if(!order.pages.length)throw new Error('Adicione itens na lista antes de gerar o pedido.');return order;
@@ -79,29 +82,29 @@ const key=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'
 const productKey=value=>key(value).replace(/^camisa polo$/,'polo');
 function emptyProduct(p){return !p.quantity&&!p.grade&&!p.model&&!p.fabric&&!p.fabricColor&&!p.detailColor&&!p.notes&&!p.namesRaw&&!p.names?.length&&!p.images?.some(Boolean)&&!p.components?.length&&!p.extraApplications?.length&&!p.projectRef;}
 export function applyListToOrder(current,rows,source={}){
- const normalized=rows.map(row=>normalizeListRow(row));
+ const normalized=rows.map(row=>normalizeListRow(row,current.technicalCatalogVersion?{catalogVersion:3}:{}));
  if(!normalized.length||normalized.length>5000||normalized.some(row=>listProblems(row).length))throw new Error('Corrija os itens da lista antes de aplicá-la ao pedido. Use até 5.000 linhas.');
- const imported=importList(normalized,current.title),next=structuredClone(current);
+ const imported=importList(normalized,current.title,{catalog:Boolean(current.technicalCatalogVersion)}),next=structuredClone(current);
  next.pages=next.pages.filter(page=>page.title||page.label||page.notes||page.visual?.image||page.annotations?.length||page.products.length!==1||!emptyProduct(page.products[0]));
  const existing=next.pages.flatMap(page=>page.products.map(product=>({page,product}))),used=new Set(),added=new Map();
  const incoming=imported.pages.flatMap(page=>page.products.map(product=>({page,product})));
  for(const item of incoming){const p=item.product;
   let match=existing.find(entry=>entry.product.listKey===p.listKey&&!used.has(entry.product.id));
   if(!match){
-   let candidates=existing.filter(entry=>!used.has(entry.product.id)&&!entry.product.listKey&&productKey(entry.product.type)===productKey(p.type)&&(!entry.product.model||!p.model||key(entry.product.model)===key(p.model))&&(!entry.product.fabricColor||!p.fabricColor||key(entry.product.fabricColor)===key(p.fabricColor))&&(!entry.page.listGroup||key(entry.page.listGroup)===key(item.page.listGroup)));
+   let candidates=existing.filter(entry=>!used.has(entry.product.id)&&!entry.product.listKey&&productKey(entry.product.type)===productKey(p.type)&&(!entry.product.technical?.fit||!p.technical?.fit||entry.product.technical.fit===p.technical.fit)&&(!entry.product.model||!p.model||key(entry.product.model)===key(p.model))&&(!entry.product.fabricColor||!p.fabricColor||key(entry.product.fabricColor)===key(p.fabricColor))&&(!entry.page.listGroup||key(entry.page.listGroup)===key(item.page.listGroup)));
    const kitPage=candidates[0]?.page;if(p.kitSlot!==undefined&&kitPage?.mode==='conjunto'&&kitPage.products.length===2&&candidates.every(entry=>entry.page===kitPage)&&kitPage.products.every(product=>productKey(product.type)===productKey(p.type)))candidates=candidates.filter(entry=>entry.page.products.indexOf(entry.product)===p.kitSlot);
-   if(!candidates.length&&existing.some(entry=>!used.has(entry.product.id)&&!entry.product.listKey&&productKey(entry.product.type)===productKey(p.type)))throw new Error('O modelo ou a cor de '+p.type+' na lista não corresponde à peça do pedido. Confira esses campos antes de importar.');
+   if(!candidates.length&&existing.some(entry=>!used.has(entry.product.id)&&!entry.product.listKey&&productKey(entry.product.type)===productKey(p.type)))throw new Error('O modelo, a cor ou a modelagem de '+p.type+' na lista não corresponde à peça do pedido. Confira esses campos antes de importar.');
    if(candidates.length>1||p.kitSlot===undefined&&candidates.length===1&&incoming.filter(other=>productKey(other.product.type)===productKey(p.type)).length>1&&!candidates[0].product.model&&!candidates[0].product.fabricColor&&!candidates[0].page.listGroup)throw new Error('Há mais de uma variação de '+p.type+'. Identifique modelo e cor nas peças do pedido para associar a lista corretamente.');
    match=candidates[0];
   }
-  if(match){Object.assign(match.product,{quantity:p.quantity,grade:namesToGrade(p.names,match.product.type),names:p.names,namesRaw:'',listKey:p.listKey,listMissing:false});if(!match.product.model)match.product.model=p.model;if(!match.product.fabricColor)match.product.fabricColor=p.fabricColor;if(!match.page.listGroup)match.page.listGroup=item.page.listGroup;used.add(match.product.id);}
+  if(match){if(match.product.technical&&!match.product.technical.fit&&p.technical?.fit)match.product.technical.fit=p.technical.fit;Object.assign(match.product,{quantity:p.quantity,grade:namesToGrade(p.names,match.product.type),names:p.names,namesRaw:'',listKey:p.listKey,listMissing:false});if(!match.product.model)match.product.model=p.model;if(!match.product.fabricColor)match.product.fabricColor=p.fabricColor;if(!match.page.listGroup)match.page.listGroup=item.page.listGroup;used.add(match.product.id);}
   else{let page=added.get(item.page.id);if(!page){page={...item.page,mode:'individual',products:[]};next.pages.push(page);added.set(item.page.id,page);}page.products.push(p);}
  }
  for(const {product} of existing)if(product.listKey&&!used.has(product.id))product.listMissing=true;
  if(next.pages.length>50)throw new Error('A lista excede o limite de 50 páginas de edição. Divida o pedido.');
  if(next.pages.some(page=>page.products.length>8||page.products.some(p=>p.quantity>99999)))throw new Error('A lista excede o limite de peças por página ou de 99.999 unidades por peça.');
  const fields=['grupo','nome','numero','adicional','tamanhoCamiseta','tamanhoCalcao','quantidade','produto','modelo','cor'];
- next.listSource={...(source.id&&Number.isSafeInteger(source.version)&&source.version>0?{id:source.id,version:source.version}:{}),name:String(source.name||'Lista do organizador').slice(0,200),importedAt:source.importedAt||new Date().toISOString(),rows:normalized.map(row=>Object.fromEntries(fields.map(field=>[field,row[field]])))};
+ next.listSource={...(source.id&&Number.isSafeInteger(source.version)&&source.version>0?{id:source.id,version:source.version}:{}),name:String(source.name||'Lista do organizador').slice(0,200),importedAt:source.importedAt||new Date().toISOString(),rows:normalized.map(row=>({...preserveCatalogList(row),...Object.fromEntries(fields.map(field=>[field,row[field]]))}))};
  return next;
 }
 export function demoOrder(){const d=newOrder();Object.assign(d,{title:'Modelo de pedido · demonstração',number:'0000-00-ATL',client:'EQUIPE DEMONSTRAÇÃO',contact:'CONTATO DO CLIENTE',seller:'ANDREI',artist:'ANDREI'});const p=d.pages[0];p.title='UNIFORME DE JOGO';p.label='ETIQUETA PRETA';const item=p.products[0];Object.assign(item,{model:'Raglan · Gola Elite',fabric:'JACQUARD ELITE',fabricColor:'TRANSFER',detailColor:'PRETO',quantity:8,grade:'CAMISETA\nP = 2\nM = 4\n\nBABY LOOK\nP = 1\n\nINFANTIL\nTAM 10 = 1',components:[{name:'Gola',material:'Poliéster',finish:'Gola pronta preta',position:'Gola',anchor:{x:.28,y:.14}},{name:'Escudo',material:'TPU',finish:'Alto relevo',position:'Peito esquerdo',anchor:{x:.38,y:.28}}]});return d;}

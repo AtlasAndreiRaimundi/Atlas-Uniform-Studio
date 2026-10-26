@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import Excel from 'exceljs';
+import * as catalog from '../public/product-catalog.js';
 import * as list from '../public/order-list.js';
 import * as core from '../public/order-core.js';
 import * as files from '../public/order-files.js';
@@ -36,7 +37,7 @@ async function organizer({search='',fetcher}={}){
   constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.dataset={};this.listeners={};this.disabled=false;this.hidden=false;this._value='';this.classList={toggle(){},add(){},remove(){}};}
   get options(){return this.children.flatMap(child=>child.tagName==='OPTION'?[child]:child.options);}
   get value(){return this._value||(this.tagName==='SELECT'?this.options[0]?.value||'':'');}set value(value){this._value=String(value);}
-  get lastChild(){return this.children.at(-1);}append(...nodes){this.children.push(...nodes);}replaceChildren(...nodes){this.children=nodes;}
+  get lastChild(){return this.children.at(-1);}get lastElementChild(){if(!this.children.length)this.append(new Element('div'));return this.children.at(-1);}before(...nodes){this.parent?.children.splice(this.parent.children.indexOf(this),0,...nodes);}querySelector(selector){return this.querySelectorAll(selector)[0]||null;}querySelectorAll(selector){return this.children.flatMap(child=>[...(selector==='fieldset'?child.tagName==='FIELDSET':selector==='[data-catalog-list-field]'?Boolean(child.dataset.catalogListField):selector==='.manual-actions'?false:false)?[child]:[],...child.querySelectorAll(selector)]);}append(...nodes){for(const node of nodes)node.parent=this;this.children.push(...nodes);}replaceChildren(...nodes){this.children=nodes;}
   setAttribute(){}removeAttribute(){}scrollIntoView(){}focus(){}close(){this.open=false;}showModal(){this.open=true;}
   addEventListener(type,handler){(this.listeners[type]||=[]).push(handler);}async emit(type){for(const handler of this.listeners[type]||[])await handler({preventDefault(){},target:this});}
  }
@@ -47,7 +48,8 @@ async function organizer({search='',fetcher}={}){
  }
  elements.set('.pagination',new Element('div'));
  const document={createElement:tag=>new Element(tag),querySelector:selector=>{assert.ok(elements.has(selector),'missing UI element '+selector);return elements.get(selector);},querySelectorAll(selector){return [...elements.values()].filter(element=>selector==='[data-input]'?element.dataset.input:selector==='[data-export-orders]'?'exportOrders' in element.dataset:['BUTTON','INPUT','SELECT','TEXTAREA'].includes(element.tagName));}};
- const destination={location:{href:''}},storage=new Map(),context=vm.createContext({...list,...core,...files,document,crypto,URL,URLSearchParams,structuredClone,Blob,TextDecoder,location:{search,origin:'https://studio.test'},setTimeout:()=>1,clearTimeout(){},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},window:{top:destination,addEventListener(){}},createWorkflowGuide:()=>({update(){},hide(){}}),workflowOrders:async()=>[],workflowRoute:(kind,{orderId='',listId=''}={})=>(kind==='order'?'/pedidos':'/organizador')+'?order='+orderId+'&list='+listId,canonicalWorkflowPath(){},canAttachToOrder:()=>true,linkedWorkflowOrders:()=>[],fetch:fetcher||(async path=>({ok:true,json:async()=>path==='/api/profile'?{profile:{displayName:'Designer',email:'owner@test'}}:{lists:[],orders:[]}})),loadExcelLibrary:async()=>Excel});
+ const destination={location:{href:''}},storage=new Map(),context=vm.createContext({...list,...catalog,...core,...files,CATALOG_LIST_FIELDS:(await import('../public/catalog-list.js')).CATALOG_LIST_FIELDS,document,crypto,URL,URLSearchParams,structuredClone,Blob,TextDecoder,location:{search,origin:'https://studio.test'},setTimeout:()=>1,clearTimeout(){},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},window:{top:destination,addEventListener(){}},createWorkflowGuide:()=>({update(){},hide(){}}),workflowOrders:async()=>[],workflowRoute:(kind,{orderId='',listId=''}={})=>(kind==='order'?'/pedidos':'/organizador')+'?order='+orderId+'&list='+listId,canonicalWorkflowPath(){},canAttachToOrder:()=>true,linkedWorkflowOrders:()=>[],fetch:fetcher||(async path=>({ok:true,json:async()=>path==='/api/profile'?{profile:{displayName:'Designer',email:'owner@test'}}:{lists:[],orders:[]}})),loadExcelLibrary:async()=>Excel});
+ const catalogForm=(await readFile(new URL('../public/catalog-list-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'');Object.assign(context,vm.runInContext('(function(){'+catalogForm+';return {setupCatalogListForm};})()',context));
  const script=(await readFile(new URL('../public/organizer-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'');vm.runInContext(script,context);
  for(let i=0;i<6;i++)await new Promise(setImmediate);
  return {elements,destination,run:code=>vm.runInContext(code,context)};

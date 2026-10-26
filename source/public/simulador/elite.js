@@ -1,5 +1,6 @@
 import {DEFAULT_BASE,DEFAULT_ACCENT,DEFAULT_INK} from './catalog.js';
 import {makeState,layer,FONTS} from './core.js';
+import {defaultLiveSymmetry} from './symmetry.js';
 export const ELITE_MODEL='kit-elite-27';
 export const ELITE_ASSET='./models/kit-elite-27.glb';
 export const ELITE_COMPATIBLE_ASSET='./models/kit-elite-27-compatible.glb';
@@ -39,5 +40,5 @@ export function eliteState(panels=ELITE_PANELS){
  const front=state.panels.find(p=>p.id==='front'),back=state.panels.find(p=>p.id==='back');
  front.layers.push(layer('pattern',{name:'Faixas diagonais',pattern:'diagonal',color:DEFAULT_ACCENT.hex,colorId:DEFAULT_ACCENT.id,x:.82,y:.76,w:.72,h:.8}),layer('badge',{name:'Escudo de exemplo',x:.7,y:.28,w:.145,h:.11}),layer('text',{name:'Nome do time',text:'SEU TIME',font:FONTS[0].id,x:.5,y:.47,w:.63,h:.065}),layer('text',{name:'Número da frente',text:'00',personalization:'player-number',font:FONTS[0].id,x:.5,y:.65,w:.21,h:.14}));
  back.layers.push(layer('text',{name:'Nome do atleta',text:'JOGADOR',personalization:'player-name',font:FONTS[0].id,x:.5,y:.24,w:.62,h:.065}),layer('text',{name:'Número das costas',text:'00',personalization:'player-number',font:FONTS[0].id,x:.5,y:.55,w:.5,h:.31}));
- state.selected=front.layers[1].id;return state;
+ state.symmetry=defaultLiveSymmetry(state);state.selected=front.layers[1].id;return state;
 }

@@ -3,11 +3,11 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; documentação preliminar criada em 24/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v58 em 26/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Exportação autorizada de 24/10/2026: 439 arquivos, com manifesto SHA-256 e revisão limitada documentada.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 26/10/2026: 468 arquivos, Site v58, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
-## Módulos previstos / em desenvolvimento
+## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
 - Montagem de pedidos técnicos.
 - Gestão e importação de listas de personalização.
@@ -16,7 +16,7 @@ Software em desenvolvimento para criação, apresentação e gestão de uniforme
 
 Consultar [funcionalidades](docs/funcionalidades.md), [arquitetura](docs/arquitetura.md), [titularidade e riscos](docs/propriedade-intelectual.md) e [histórico](CHANGELOG.md).
 
-## Próximos passos
+## Planejamento inicial (24/10/2026)
 1. Exportar o código-fonte real da versão atual do site de modo autorizado.
 2. Verificar segredos, senhas, tokens, dados pessoais e materiais confidenciais antes de subir arquivos.
 3. Importar o código, descrever dependências e validar execução/testes.
@@ -24,6 +24,10 @@ Consultar [funcionalidades](docs/funcionalidades.md), [arquitetura](docs/arquite
 5. Configurar workflow de documentação e verificação de integridade para novas versões.
 
 **Aviso:** informação técnica e organização de evidências, não parecer jurídico ou registro de programa no INPI.
+
+## Fichas técnicas de produção
+
+As fichas CAM-001 e CAL-001 estão versionadas com o código, incluindo catálogos, listas com quantidades independentes, validações e impressão A4. Veja [implementação, testes e pendências](docs/implementacao-fichas-2026-10-26.md) e as [especificações originais](source/docs/produtos/00_LEIA_PRIMEIRO_WORK.md).
 
 ## Código importado e atualizações
 

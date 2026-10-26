@@ -4,11 +4,12 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#121314"><meta name="robots" content="noindex,nofollow">
   <title>Lista de pedidos — Atlas Uniform Studio</title>
-  <link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/organizer.css?v=7">
-  <script type="module" src="/organizer-ui.js?v=12"></script>
+  <link rel="icon" href="/favicon.ico?v=atlas-20261024" type="image/x-icon" sizes="16x16 32x32 48x48 64x64"><link rel="icon" href="/atlas-favicon-32.png?v=atlas-20261024" type="image/png" sizes="32x32"><link rel="icon" href="/atlas-favicon.svg?v=atlas-20261024" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=atlas-20261024" sizes="180x180"><link rel="stylesheet" href="/organizer.css?v=7">
+  <script type="module" src="/organizer-ui.js?v=13"></script>
 <link rel="stylesheet" href="/interface-theme.css?v=1"><script src="/interface-theme.js?v=1"></script>
 <link rel="stylesheet" href="/studio-navigation.css?v=1"><script type="module" src="/studio-navigation-init.js?v=1"></script>
-<link rel="stylesheet" href="/atlas-brand.css?v=1"></head>
+<link rel="stylesheet" href="/atlas-brand.css?v=1"><link rel="stylesheet" href="/product-catalog.css?v=1">
+</head>
 <body>
   <aside class="tool-nav studio-sidebar">
     <a class="brand" href="/projects" target="_top" aria-label="Atlas Uniform Studio"><span class="atlas-logo" aria-hidden="true"><img class="atlas-logo-light" src="/assets/atlas/atlas-logo-light.svg" alt="" width="1200" height="338"><img class="atlas-logo-dark" src="/assets/atlas/atlas-logo-dark.svg" alt="" width="1200" height="339"></span></a>
@@ -80,7 +81,7 @@
       <section id="reviewPanel" class="list-review" hidden aria-label="Itens para conferir"><div class="section-heading"><h2>Confira antes de baixar</h2><span id="issueCount"></span></div><div id="reviewList"></div></section>
       <section class="quantity-summary" aria-label="Resumo das peças">
         <div class="section-heading"><div><p class="eyebrow">QUANTIDADES PARA PRODUÇÃO</p><h2>Resumo das peças</h2></div><button id="copySummaryBtn" class="outline-button" disabled>Copiar resumo</button></div>
-        <div class="summary-metrics"><span><strong id="pieceCount">0</strong> peças</span><span><strong id="kitCount">0</strong> kits</span><p>Kits: camiseta + calção ou jaqueta + calça. Cada peça entra na própria grade.</p></div>
+        <div class="summary-metrics"><span><strong id="pieceCount">0</strong> peças</span><span hidden><strong id="kitCount">0</strong> kits</span><p>Cada peça tem tamanho, modelagem e quantidade próprios. O resumo soma kits e avulsos.</p></div>
         <p id="summaryNotice" class="helper">Adicione itens para ver as quantidades por tamanho.</p><div id="summaryCards" class="summary-cards"></div>
         <details id="summaryPlain"><summary>Ver resumo em texto</summary><textarea id="summaryText" readonly aria-label="Resumo para copiar" spellcheck="false"></textarea></details>
       </section>

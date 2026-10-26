@@ -1,3 +1,4 @@
+import {catalogOrder} from '../public/product-catalog.js';
 import {AppError} from './project-service.mjs';
 import {validateSimulatorState,simulatorPNG,describeSimulatorColors} from './simulator-validation.mjs';
 import {newOrder,newPage,newKitPage} from '../public/production-core.js';
@@ -43,6 +44,7 @@ export class SimulatorService{
   try{return await this.production.get(user,orderId);}catch(e){if(e.status!==404)throw e;}
   const document=newOrder();document.title=saved.title.slice(0,100);document.client=customer;document.notes=notes;const kit=saved.state.product==='kit',type=saved.state.product==='shorts'?'Calção':'Camiseta',page=kit?newKitPage():newPage(type);document.pages=[page];page.title='KIT ELITE 27';page.visual={mode:'shared',image:saved.preview,transform:{scale:1,x:.5,y:.5}};
   for(const p of page.products){const piece=p.type==='Calção'?'shorts':'shirt',colors=describeSimulatorColors(saved.state,piece);p.model='KIT ELITE 27';p.quantity=input.quantity;p.fabricColor=(colors[0]||'').slice(0,200);p.detailColor=colors.slice(1).join(' · ').slice(0,200);p.notes=('Cores: '+colors.join(' · ')+'\nFontes: '+[...new Set(saved.state.panels.filter(p=>p.piece===piece).flatMap(p=>p.layers.filter(l=>l.type==='text').map(l=>UNIFORM_FONTS.find(f=>f.id===l.font)?.label)))].filter(Boolean).join(' · ')).slice(0,3500);}
+  catalogOrder(document);
   document.simulatorDesign={schema:1,id:saved.id,version:saved.version,confirmedAt:new Date().toISOString(),state:saved.state};
   try{const created=await this.production.save(user,null,{document},{newId:orderId});return this.production.get(user,created.id);}catch(e){try{return await this.production.get(user,orderId);}catch{await this.db.prepare('UPDATE uniform_designs SET order_id=NULL,order_version=NULL WHERE id=? AND owner_id=? AND order_id=? AND order_version=?').bind(id,owner,orderId,saved.version).run();throw e;}}
  }

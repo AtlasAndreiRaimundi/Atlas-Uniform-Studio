@@ -1,3 +1,4 @@
+import {preserveCatalogList} from '../public/catalog-list.js';
 import {boundedJSON} from './request-security.mjs';
 import {AppError} from './project-service.mjs';
 import {normalizeListRow,listProblems} from '../public/order-list.js';
@@ -9,6 +10,7 @@ const source=value=>({sheet:text(value?.sheet||'',200),row:Number.isSafeInteger(
 export function validateList(value){
  if(!value||value.schema!==1||!Array.isArray(value.rows)||value.rows.length>5000||!Array.isArray(value.unresolved||[])||(value.unresolved||[]).length>5000)throw new AppError(400,'Use uma lista com até 5.000 itens.');
  const document={schema:1,title:text(value.title||'Nova lista',100),sourceName:text(value.sourceName||'',200),defaults:{},rows:[],unresolved:[],links:{orderId:text(value.links?.orderId||'',100),projectId:text(value.links?.projectId||'',100)}};
+ if(value.defaults?.catalogVersion!==undefined){if(value.defaults.catalogVersion!==3)throw new AppError(400,'Versão do catálogo da lista inválida.');document.defaults.catalogVersion=3;}
  for(const key of ['produto','modelo','cor','grupo'])document.defaults[key]=text(value.defaults?.[key]||'',200);
  document.rows=value.rows.map(row=>{
   if(!row||typeof row!=='object')throw new AppError(400,'Confira os itens da lista.');
@@ -16,7 +18,7 @@ export function validateList(value){
   for(const key of ['grupo','nome','numero','adicional','tamanhoCamiseta','tamanhoCalcao','produto','modelo','cor'])out[key]=text(row[key]??'',key==='nome'?120:200);
   out.produto=normalizeListRow(out).produto;
   if(row.quantidade!==null&&(!Number.isInteger(row.quantidade)||Math.abs(row.quantidade)>99999))throw new AppError(400,'Confira a quantidade de um dos itens.');
-  out.quantidade=row.quantidade;out.source=source(row.source);
+  try{Object.assign(out,preserveCatalogList(row));}catch(e){throw new AppError(400,e.message);}out.quantidade=row.quantidade;out.source=source(row.source);
   if(!Array.isArray(row.notes||[])||(row.notes||[]).length>20)throw new AppError(400,'Confira as observações da lista.');
   out.notes=(row.notes||[]).map(note=>text(note,500));return out;
  });
@@ -45,7 +47,7 @@ export class ListService{
   const listId='pedido-'+orderId;
   const first=document.pages[0],types=document.pages.flatMap(p=>p.products.map(p=>p.type)),produto=first.mode==='conjunto'&&first.products.length===2?kitLabel(first.products.map(p=>p.type)):types.includes('Camiseta')&&types.includes('Calção')?'Kit':types[0]||'Camiseta';
   if(!validProductType(produto)||types.some(type=>!type.trim()))throw new AppError(400,'Defina os nomes das peças antes de montar a lista. Use até 80 caracteres por peça do kit.');
-  try{await this.save(user,null,{document:{schema:1,title:document.title.slice(0,100),sourceName:document.listSource?.name||'',defaults:{produto},rows:document.listSource?.rows||[],unresolved:[],links:{orderId}}},listId);}
+  try{await this.save(user,null,{document:{schema:1,title:document.title.slice(0,100),sourceName:document.listSource?.name||'',defaults:{produto,...(document.technicalCatalogVersion?{catalogVersion:3}:{})},rows:document.listSource?.rows||[],unresolved:[],links:{orderId}}},listId);}
   catch(error){const concurrent=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=?').bind(listId,owner,orderId).first();if(!concurrent)throw error;}
   return this.get(user,listId);
  }

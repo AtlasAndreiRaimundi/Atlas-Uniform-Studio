@@ -1,8 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_version": 51,
-  "source_commit": "d88265ccff069ea40ddbc36255191d1aefbb46d8",
-  "export_date": "2026-10-24",
+  "source_commit": "6ee6dd626bdbab2fe2406b4ba2887cf0f3c550f9",
+  "exported_at": "2026-10-26T20:54:06.056946+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -161,8 +160,8 @@
     },
     {
       "path": "app/api/production-orders/route.ts",
-      "size": 601,
-      "sha256": "50624f834d980b2694586a9923ec8d38ccb3ee3a04a559425636bbdc16492546"
+      "size": 946,
+      "sha256": "8404fd72bc80891407f88b0a598a745cb7a4bf5e5710f80f4dc2f179c0035824"
     },
     {
       "path": "app/api/profile/photo/route.ts",
@@ -310,6 +309,11 @@
       "sha256": "968e159fc35aed43209c2e88395ce5cb512b71c2febdd6dbcf279966064d9b93"
     },
     {
+      "path": "app/catalogo-tecnico/page.tsx",
+      "size": 384,
+      "sha256": "1928463730da4cf9a5772040946a8ae55de92a9fd1371d06bf5204e4641f086f"
+    },
+    {
       "path": "app/chatgpt-auth.ts",
       "size": 2550,
       "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
@@ -321,8 +325,8 @@
     },
     {
       "path": "app/layout.tsx",
-      "size": 910,
-      "sha256": "7f30afeb6056ff5fe729eacd341eeb6e339a217834ceadcda2fccf654f5e6052"
+      "size": 1343,
+      "sha256": "a1d3ed5fc2d56f00f6ba3a0a2caaf1bfee9e1597e69d6a1486215dcd59ed05d1"
     },
     {
       "path": "app/login/hero-composition.tsx",
@@ -790,14 +794,39 @@
       "sha256": "787a7156847cdad4efcf6efecd6c946a8651aff4628b8b47b3212dc1d23f85fb"
     },
     {
+      "path": "docs/produtos/00_LEIA_PRIMEIRO_WORK.md",
+      "size": 5582,
+      "sha256": "a70e41e1c37022f7348f48fe121ba46b42c8a8a039728046d5f09961680a2863"
+    },
+    {
+      "path": "docs/produtos/CAL-001_CALCAO_DE_JOGO.md",
+      "size": 12870,
+      "sha256": "834fc66c9b058292d709d303c6dc3c67a6678ce5f7cc73d406b2d2aa97d8d2dd"
+    },
+    {
+      "path": "docs/produtos/CAM-001_CAMISETA_SUBLIMADA_TRANSFER.md",
+      "size": 14218,
+      "sha256": "ad45bfddd8cbe8daf9162c2e2aa067f455853cfe54548e23e75944fdc4325f57"
+    },
+    {
+      "path": "docs/produtos/IMPLEMENTACAO-2026-10-26.md",
+      "size": 9348,
+      "sha256": "b79a5502e2bacaeaff06dff4463bfad30ef6d6e8132789a7099d9522f8aee024"
+    },
+    {
+      "path": "docs/produtos/ROTEIRO-DE-HOMOLOGACAO.md",
+      "size": 4557,
+      "sha256": "53dd264b10e68f5a62fffee3eec9b747e447d1d20b88cda40a7b8b838afbf4db"
+    },
+    {
       "path": "docs/revisao-seguranca-2026-10-24.md",
       "size": 11561,
       "sha256": "25f00f5cf20f6772ade0c99720d19d0af3d8a9242e68aea06b4efe00429fdf1f"
     },
     {
       "path": "docs/simulador-uniformes.md",
-      "size": 7205,
-      "sha256": "fdd9dd5ca5a03d97bd4e07809a80c094f28841ecfc6675ec06dd4130ef3e1964"
+      "size": 13103,
+      "sha256": "70755d227d84e746cb601f88e721a665be5dbdf718d50a797e96c93389f504d4"
     },
     {
       "path": "drizzle.config.ts",
@@ -996,8 +1025,8 @@
     },
     {
       "path": "lib/list-service.mjs",
-      "size": 8407,
-      "sha256": "2f6a34cf40bcee53ef1931eec36d0abb8c40d4ebf71c7022da1de09ff03b77f1"
+      "size": 8812,
+      "sha256": "20ec4d2e184b8570f422613d4edce93e09c14c56349a2b14db4c54928631c060"
     },
     {
       "path": "lib/order-technical-service.mjs",
@@ -1011,8 +1040,8 @@
     },
     {
       "path": "lib/production-service.mjs",
-      "size": 17427,
-      "sha256": "3957344ae50723606cdb651033cbb50a6ca9d547f48181146e780b5ed27b6d58"
+      "size": 19734,
+      "sha256": "71d3230d3f4eef774a353f5810fdfaa2076ac04febb2c23bcbe28538231f0fd9"
     },
     {
       "path": "lib/project-service.mjs",
@@ -1036,13 +1065,13 @@
     },
     {
       "path": "lib/simulator-service.mjs",
-      "size": 8142,
-      "sha256": "13e62afed15a96d29240114636d29e153aa2a28f7657e3bc65d8e55d882e9da8"
+      "size": 8227,
+      "sha256": "cab5b3ca4fd0d262d20fd5abea7bd1023da47a7e384b1cdd8391a9039e68b442"
     },
     {
       "path": "lib/simulator-validation.mjs",
-      "size": 7178,
-      "sha256": "26342faedfc2999bf2d24e43171624c635527155aefd27572634bd852a36cf9a"
+      "size": 7642,
+      "sha256": "9890ebda6cf96a7059b2aada09f2a258532d64346ef4b09965530fd20decb906"
     },
     {
       "path": "lib/template-generator.mjs",
@@ -1101,13 +1130,18 @@
     },
     {
       "path": "public/acervo.html",
-      "size": 8054,
-      "sha256": "417f1e6e14d69d42dd520ba9f83fb74d1b45fd6cefa62ffed04738de38519028"
+      "size": 8401,
+      "sha256": "e1b8507d90e327f71907670f8ef84093c521160ac4cf91c9c70fa8d72b040d89"
     },
     {
       "path": "public/app.js",
       "size": 34837,
       "sha256": "0e5f5ab3d8f937a0d6670d797c853513916605b0a95f08a81fb825f233029e3a"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "size": 5721,
+      "sha256": "e3d379e3686973ba99ee7395db34bca8831d0d1610f0446a03abb0a97b50ab19"
     },
     {
       "path": "public/assets/atlas/atlas-logo-dark.png",
@@ -1355,6 +1389,16 @@
       "sha256": "7055671ac9b86c39b401299043c0681de2052c6b391c0f175b6d4f584083a0c7"
     },
     {
+      "path": "public/atlas-favicon-32.png",
+      "size": 919,
+      "sha256": "3201dde302d5017034cfe5160f9a6a89c7c91cadb04a74fbcbcbaba0f5063f68"
+    },
+    {
+      "path": "public/atlas-favicon.svg",
+      "size": 10230,
+      "sha256": "eedad9d1adc0c9adc43483cf448c3946df9e3cb7918c9e8cbe5c0383d6cf307e"
+    },
+    {
       "path": "public/atlas-layout.js",
       "size": 2333,
       "sha256": "602b875f1bfe4cf683f9cf3e1c3a74aac979a723af77c9a0ed3e302c4c67095f"
@@ -1368,6 +1412,21 @@
       "path": "public/brand-assets.js",
       "size": 376,
       "sha256": "97e902def04352e6dcf9aac24eafd5d9f2ad31c3a292f5ed74c18544d2fd3b46"
+    },
+    {
+      "path": "public/catalog-list-ui.js",
+      "size": 4384,
+      "sha256": "75b8f295e1c826df59fe2e90fe2e551c07e21c07907e2df53cd7ea5b0d2402e6"
+    },
+    {
+      "path": "public/catalog-list.js",
+      "size": 4525,
+      "sha256": "cd6872c6bc1fbdb018744b1e3f68e476772dd373f4c8f6463645f555bef12304"
+    },
+    {
+      "path": "public/catalog-reference.js",
+      "size": 5052,
+      "sha256": "f8830d8dabd9d391f1454ed02c33ed189a3ea5522bade5cb641e9c7b1f83aee2"
     },
     {
       "path": "public/court-backdrop.css",
@@ -1398,6 +1457,11 @@
       "path": "public/fabric-interior.js",
       "size": 1967,
       "sha256": "d95f3cc52e4314859958b4014fe8f44514ebab8c2aa9e25bb3b52c0cd3fb635f"
+    },
+    {
+      "path": "public/favicon.ico",
+      "size": 4746,
+      "sha256": "2935d163300e7a4cc8e59d6560cb9da5da1623b8eec5b291c186d044389361b2"
     },
     {
       "path": "public/favicon.svg",
@@ -1462,7 +1526,7 @@
     {
       "path": "public/order-annotation-editor.js",
       "size": 9493,
-      "sha256": "61e9f195a0eb3ef4b76281f7e117f45bde5b5c5f26eb05c497d36cb953e9a0b2"
+      "sha256": "5618271ec7d7043186aa2f9ffdaca8a30cca5dfcb0b6fe8788afaf3e7bc072ea"
     },
     {
       "path": "public/order-annotations.js",
@@ -1477,12 +1541,12 @@
     {
       "path": "public/order-delivery.js",
       "size": 3097,
-      "sha256": "678556a7dd511b0c15e8d73a495222da839260980f8183bcc765afe42025878b"
+      "sha256": "93bfab7fbc0c17400d59f2171d633a70d8caf4f8cfde99f1740cb14f4efb8025"
     },
     {
       "path": "public/order-files.js",
-      "size": 16774,
-      "sha256": "e66016c8c8e706f033ae1b093a135a09cba997c00a70cee25d31577f697c50ff"
+      "size": 19746,
+      "sha256": "e9faf889ecad3d67ed66a1983fb20328289f9b434cc79684fd281d0d1450764c"
     },
     {
       "path": "public/order-image-layout.js",
@@ -1491,23 +1555,23 @@
     },
     {
       "path": "public/order-list.js",
-      "size": 19003,
-      "sha256": "7ddffed9c28ca53275ed2759afa972a6613adcc484fc8d704db7ebfab5eecee9"
+      "size": 20307,
+      "sha256": "b48863aa7d1be2fc36b007957347eed2a7d3b4e358e4886ed56b626ece615f6e"
     },
     {
       "path": "public/order-visual-tools.js",
-      "size": 13763,
-      "sha256": "9eb333f155ac99deec9c1212ff5fe17abb85ff75d8398c7dfebbedf430b7e620"
+      "size": 13789,
+      "sha256": "4f0361b562561c5b4927fe63e492f4f2a3dc8958c1ea78e6e5ed951a06bf785f"
     },
     {
       "path": "public/organizador.html",
-      "size": 16834,
-      "sha256": "3d50a4ab5c289b9acb3c1a99ee2c4b8a7fbee0ce3f341ca069c9f77065ddceb0"
+      "size": 17249,
+      "sha256": "1aa7f64e117d7aba54447ccacec215d0cffbdb55493dd4224239d04f8bf8778a"
     },
     {
       "path": "public/organizer-ui.js",
-      "size": 38795,
-      "sha256": "603b4e05bbcce78094248bf5b44b44b5da748cd63e0631e521047a7960c24081"
+      "size": 39446,
+      "sha256": "83af53deb049bf9b9c74737badc6b2d4c94f16524160add29c38a57c1bbfc169"
     },
     {
       "path": "public/organizer.css",
@@ -1516,8 +1580,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 27548,
-      "sha256": "63d28397572f4573defc271e48dbbd4ba9d929b86c45025be3ef4438c3d0e38d"
+      "size": 28056,
+      "sha256": "f79b0cbd276802444d0f45a19387176903c5a79b19e8726a523da2d9f602b444"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1530,19 +1594,34 @@
       "sha256": "3c9b3d45d12ff364ce5848912ed6b0f7508d8de4205d7f1d16e0c5cd1a1edb6d"
     },
     {
+      "path": "public/product-catalog-ui.js",
+      "size": 17523,
+      "sha256": "ad66e24c07f272b867fd5b649b2ef1881fb3420ed4a966de64a3a59eb0512c61"
+    },
+    {
+      "path": "public/product-catalog.css",
+      "size": 5342,
+      "sha256": "f45ef494b5eaef20ff329d89da26d2fe71d15a383f19acda4cebea79fb4f920b"
+    },
+    {
+      "path": "public/product-catalog.js",
+      "size": 30944,
+      "sha256": "c337e3e632dcb7932394222bf76070fe8475d7981c0b0cb2e04bad1c2c04eadf"
+    },
+    {
       "path": "public/production-core.js",
-      "size": 18478,
-      "sha256": "2f070a6c03c4075b2c1a62e987bab7ed3f56542601268448336aaa54b6ae4ce2"
+      "size": 19684,
+      "sha256": "cc4aae73ead905111bd3ed94a24d0118bdc35f6d9e42696cbb23857cc36a149a"
     },
     {
       "path": "public/production-sheet.js",
-      "size": 26427,
-      "sha256": "8b0dc8d1735d5e0897f4f8b2d0293bccc12ab154d2c2f932866f32b609092c94"
+      "size": 30031,
+      "sha256": "c5adbf9329895e563d503794a1de78386b79e54e16ce01099f386b8f8c1f0201"
     },
     {
       "path": "public/production-ui.js",
-      "size": 86853,
-      "sha256": "cce977332f23aabf63de6621875cdd44ad95254ff6166218b22705f14b1c7b6b"
+      "size": 89361,
+      "sha256": "328e954844b6c4a0ff0d1ea4dffd10f665956e017ff42026ed28011f14527d9a"
     },
     {
       "path": "public/production.css",
@@ -1566,18 +1645,28 @@
     },
     {
       "path": "public/proposta.html",
-      "size": 4113,
-      "sha256": "934873d879590daa0c0a6ad656a6921b7bfc5fe84754dd856cdf1f8b5a020dcf"
+      "size": 4460,
+      "sha256": "076f4cdd368b69b6932c44a47a37d98e52538a3bf3047e314dc9fe293c1e43c7"
+    },
+    {
+      "path": "public/record-id.js",
+      "size": 532,
+      "sha256": "76562d2a3c7d870612ee92d5fe4c6f854f0b2f3eb06807ffbfc50facf7720ca1"
+    },
+    {
+      "path": "public/referencia-producao.html",
+      "size": 1019,
+      "sha256": "d91edade16ab7f0f79908057a03e67879fb124399a8b3eb424ce8c17ca326ed2"
     },
     {
       "path": "public/simulador/app.js",
-      "size": 37173,
-      "sha256": "8f801fd67d8b9a5582f83ff7838c63b4ba9cc1abd907eb7fcdb23fdb4d91faa6"
+      "size": 43365,
+      "sha256": "ed6b0c894cae7831ade882324d2a91008299f9eb997d620dacee9520b1c398d0"
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 16898,
-      "sha256": "c31bd2b875a3e4cf1fd89d1fd378c2f02130adaead24d166480f2f7bc9bf6251"
+      "size": 23237,
+      "sha256": "6d4ad54a134ccfea5c8b32c5662b5060646e21dfd27d1ff9e159326cc0d5e3ec"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1601,13 +1690,13 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 22175,
-      "sha256": "1a52e5fc08d48ad2ce5765eb2e021f219df7efa808a74a7a8fff7be8929ff24d"
+      "size": 31354,
+      "sha256": "0f83f108278ed69059891be577d6b2dba5e9be85bb62e8692775beff40685bfc"
     },
     {
       "path": "public/simulador/elite.js",
-      "size": 4518,
-      "sha256": "f76927fdf408c5ffc94cf2e4bc8fed33f4d92c721863c012e32733f575c91d5d"
+      "size": 4611,
+      "sha256": "04a6d2367577789e4d73ec4246c8989cf5317ffd464b0d22dc6192cfd9dc516e"
     },
     {
       "path": "public/simulador/fonts/LICENSE.txt",
@@ -1650,6 +1739,11 @@
       "sha256": "5f4863f2571db9ddd614df21c21c28681336c9fbad4d3f7a419262e307c109c8"
     },
     {
+      "path": "public/simulador/layers.js",
+      "size": 2593,
+      "sha256": "9b3592a3401314f6012a9226f8439554edcaaf514bba687fa6fa3bed8ebab5c6"
+    },
+    {
       "path": "public/simulador/models/kit-elite-27-compatible.glb",
       "size": 244896,
       "sha256": "ab9deb92e2f768ff7b04258ee9ffd5511baefecbc9acd978a6020c19e579d490"
@@ -1666,8 +1760,8 @@
     },
     {
       "path": "public/simulador/paint.js",
-      "size": 2743,
-      "sha256": "3c09f2202b1fc6c66c4c79644a840858b7cb27bd25db06eb56370ba7eeef49ee"
+      "size": 2825,
+      "sha256": "ca34cc2c4796d2e125f3ec152df39010b0e711afc5896d953e63ee362c63cfb2"
     },
     {
       "path": "public/simulador/paleta-sublimacao-2026.xml",
@@ -1693,6 +1787,26 @@
       "path": "public/simulador/style.css",
       "size": 21248,
       "sha256": "f62f07f634119aa055faae3e1f21400e4731a92d82d8df73b381e8333ceb25bc"
+    },
+    {
+      "path": "public/simulador/symmetry-ui.js",
+      "size": 7462,
+      "sha256": "e31fa82aa5195f00b6157c0c79cda0443d967e1a2b00aedfa99ebc06347781dd"
+    },
+    {
+      "path": "public/simulador/symmetry.js",
+      "size": 8734,
+      "sha256": "8ec3ec7f179fc2add48ac2c9063f3174d7c3bacfc443f6e10efedbd01b33a967"
+    },
+    {
+      "path": "public/simulador/tutorial.css",
+      "size": 5171,
+      "sha256": "a0e9ca609784957a654f0bd6a37ab00b9ba0c3f4c67858e4587b0c367a4d6004"
+    },
+    {
+      "path": "public/simulador/tutorial.js",
+      "size": 11226,
+      "sha256": "74895894d20932afdd10ee57e057125b08460b5aa08f0f2902612801b7381f91"
     },
     {
       "path": "public/simulador/vendor/BufferGeometryUtils.js",
@@ -1876,8 +1990,8 @@
     },
     {
       "path": "public/viewer.html",
-      "size": 24597,
-      "sha256": "b1ea9b1c8c94b1d4b9c498f2a4d1e152ccc24520e06b19f659119bf4d1c71d24"
+      "size": 24944,
+      "sha256": "4b80fbc9c29dc7514f29d27ccec26f0dc5971512d562f111f9da38204f3001f3"
     },
     {
       "path": "public/workflow-contract.js",
@@ -1971,8 +2085,13 @@
     },
     {
       "path": "scripts/prepare-atlas-brand.mjs",
-      "size": 3525,
-      "sha256": "8a592818107cbf993be6fb8b9aaeb780e796b71ffa5ac1e0cdcc1116665cc7ea"
+      "size": 3622,
+      "sha256": "122729c419fd55da23a642b0829fb6ef4874f710ec774393bf79a083a6308157"
+    },
+    {
+      "path": "scripts/prepare-atlas-favicons.mjs",
+      "size": 1457,
+      "sha256": "0558387f281fb7f4ce411f4f648017c3faaad8b729e8b64236c8a2e675fecb65"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -2066,8 +2185,8 @@
     },
     {
       "path": "tests/kit-import.test.mjs",
-      "size": 9494,
-      "sha256": "e7bb03f87e8e2c195909733003540eb04a6a6fadb741a72454dc8d68814e3195"
+      "size": 10523,
+      "sha256": "63eed8e54207feb78220477f8dc18646baa0d8ca154713c36bb1ad2377a69c3c"
     },
     {
       "path": "tests/list-workflow.test.mjs",
@@ -2081,8 +2200,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 43474,
-      "sha256": "a9ce384938aee5a9075599e747e0be4ac807888c6120dd7666787e600ab87b89"
+      "size": 44607,
+      "sha256": "0b38915c3a522ee620ecaea70dc53704a3989ceca96dd64aa144b63e8c36f58f"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2120,6 +2239,16 @@
       "sha256": "86f7889e6f9de87c355e0865683ee41041714c8faa9980b5e72147a884367230"
     },
     {
+      "path": "tests/product-catalog-files.test.mjs",
+      "size": 5045,
+      "sha256": "1da946a23cf706c8549a9a1a56538d2f81b68861531d2d446f0e02fb35d4684e"
+    },
+    {
+      "path": "tests/product-catalog.test.mjs",
+      "size": 20187,
+      "sha256": "efad47ea04efc6c0807dba82ca863e970c4eab06aed6fb264f240bc2b9a840a8"
+    },
+    {
       "path": "tests/production.test.mjs",
       "size": 31103,
       "sha256": "e54c98cd8c9b29607ac7d56b7e0eb8020433c11fd4053fb8ee7726117b5a95f7"
@@ -2135,9 +2264,24 @@
       "sha256": "4d0d0bc0ba37261b7a5cab163f5743fa568a4b6a97b2aa697ab586c84bae2c4d"
     },
     {
+      "path": "tests/simulator-layers.test.mjs",
+      "size": 6949,
+      "sha256": "ac7f1ed62882eb42f7fa288837f87e79ee520a0dc74e61a03fc6ac9e6df37775"
+    },
+    {
       "path": "tests/simulator-presentation.test.mjs",
       "size": 10297,
       "sha256": "32ff145e2feb06313592c6af36d97213124b8a041fcbe3a172fc45b6dda23841"
+    },
+    {
+      "path": "tests/simulator-symmetry.test.mjs",
+      "size": 13585,
+      "sha256": "92bab16b8a464b80e68acb088b25df9d0bcdd98713687f60034682c5624d1b7c"
+    },
+    {
+      "path": "tests/simulator-tutorial.test.mjs",
+      "size": 2774,
+      "sha256": "106bdf9a5e8de1c5fbae2a2764cc81521c8c1a3dd7ed171768209769e085f74c"
     },
     {
       "path": "tests/simulator.test.mjs",
