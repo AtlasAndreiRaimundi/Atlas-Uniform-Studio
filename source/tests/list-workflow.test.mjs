@@ -10,6 +10,8 @@ import {readOrderWorkbook,writeListWorkbook} from '../public/order-files.js';
 import {newOrder,newKitPage,PRODUCTS,applyListToOrder,parseNames,validateOrder} from '../public/production-core.js';
 import {isBottomProduct,kitComponents} from '../public/order-core.js';
 import {buildSheets} from '../public/production-sheet.js';
+import {catalogOrder} from '../public/product-catalog.js';
+import {KIT_PRESETS,createOrderProduct} from '../public/order-composition.js';
 
 function setup(){
  const sql=new DatabaseSync(':memory:');for(const migration of migrations)sql.exec(migration);
@@ -19,6 +21,12 @@ function setup(){
 }
 const user={userId:'alice'},row=fields=>normalizeListRow({produto:'Kit',grupo:'Linha',nome:'João',numero:'07',adicional:'CAPITÃO · O+',tamanhoCamiseta:'M',tamanhoCalcao:'G',quantidade:1,...fields});
 const document=rows=>({schema:1,title:'Equipe A',defaults:{produto:'Kit'},sourceName:'Cliente.xlsx',rows,unresolved:[]});
+
+test('the new kit presets persist their correct technical mode and open a compatible named list, while an independent pair stays independent',async()=>{
+ const {lists,orders}=setup();
+ for(const preset of KIT_PRESETS){const doc=catalogOrder(newOrder());doc.compositionKind='kit';doc.title='KIT '+preset.id;const page=doc.pages[0];page.mode='conjunto';page.products=preset.types.map(type=>{const p=createOrderProduct(type,page.id);p.kitGroupId=page.id;return p;});const saved=await orders.save(user,null,{document:doc}),order=await orders.get(user,saved.id),list=await lists.forOrder(user,saved.id);assert.equal(order.document.compositionKind,'kit');assert.deepEqual(order.document.pages[0].products.map(p=>p.type),preset.types);assert.equal(list.title,doc.title);assert.equal(Boolean(list.document.defaults.catalogVersion),preset.id==='jogo');}
+ const doc=catalogOrder(newOrder());doc.compositionKind='pair';doc.pages[0].mode='avulsas';doc.pages[0].products.push(createOrderProduct('Calção','independent'));const saved=await orders.save(user,null,{document:doc}),list=await lists.forOrder(user,saved.id);assert.equal(list.document.defaults.produto,'Camiseta');assert.equal((await orders.get(user,saved.id)).document.pages[0].products.some(p=>p.kitGroupId),false);
+});
 
 test('order first creates one durable list with the order name and ownership, then reopens its completed content',async()=>{
  const {lists,orders}=setup(),doc=newOrder();doc.title='KIT EDGE 2027 · Equipe A';doc.client='Equipe A';

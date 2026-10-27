@@ -1,7 +1,7 @@
-import {createAnnotationEditor} from './order-annotation-editor.js?v=5';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=15';
+import {createAnnotationEditor} from './order-annotation-editor.js?v=6';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=16';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=12';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=13';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');
@@ -45,9 +45,9 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
  function openImageEditor(){
   if(!canEdit())return onError('Abra uma revisão em preparação para editar o layout.');const page=getPage(),product=getProduct();
   edit={header:getOrder(),page:structuredClone(page),productId:product.id,generation:getGeneration(),originalMode:page.mode,sourceChanged:false,loading:false};annotations.reset();
-  const options=[['0','Imagem principal desta peça'],['1','Imagem complementar desta peça (opcional)']];if(page.products.length===2)options.push(['shared','Uma imagem única do kit / conjunto']);
+  const options=[['0','Imagem principal desta peça'],['1','Imagem complementar desta peça (opcional)']];if(page.products.length===2||page.mode==='conjunto'||page.visual?.mode==='shared')options.push(['shared','Uma imagem única do kit / conjunto']);
   const select=find('[data-target]');select.replaceChildren(...options.map(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;return option;}));
-  const isKit=page.products.length===2&&(page.mode==='conjunto'||[['Camiseta','Calção'],['Jaqueta','Calça']].some(pair=>pair.every(type=>page.products.some(p=>p.type===type))));
+  const isKit=page.mode==='conjunto'||page.products.length===2&&(page.mode==='conjunto'||[['Camiseta','Calção'],['Jaqueta','Calça']].some(pair=>pair.every(type=>page.products.some(p=>p.type===type))));
   const useShared=page.visual?page.visual.mode==='shared':isKit&&page.products.filter(p=>p.images.some(Boolean)).length<=1;
   select.value=useShared?'shared':'0';select.disabled=false;find('[data-file]').value='';changeTarget();editor.showModal();
  }

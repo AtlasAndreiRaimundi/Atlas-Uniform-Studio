@@ -47,6 +47,7 @@ export function attachCatalog(product,{designId='',fit='',legacy=false}={}){
  product.technical=t;product.fabric=MATERIALS[t.fabricId]?.label||'';product.print='TRANSFER';product.extraApplications=[];return product;
 }
 export function catalogOrder(order){order.technicalCatalogVersion=CATALOG_VERSION;order.shirtSleeveCut??='';for(const page of order.pages)for(const product of page.products){attachCatalog(product,{designId:page.id});if(page.mode==='conjunto'&&page.products.length===2)product.kitGroupId=page.id;}return order;}
+export const usesCatalogList=order=>Boolean(order.technicalCatalogVersion)&&order.pages.every(pg=>pg.products.every(p=>Boolean(productCodeFor(p.type))));
 export function fitOfSize(size){const s=norm(size).replace(/\s+/g,'');return /^BL|^BABY/.test(s)?'FEMININA':/^TAM|^\d+$/.test(s)?'INFANTIL':null;}
 export function canonicalSize(size){let s=norm(size).replace(/^BABY\s*LOOK\s*|^BL\s*/,'');if(/^(TAM\s*)?\d+$/.test(s))return 'TAM '+s.replace(/\D/g,'').padStart(2,'0');return s.replace(/\s+/g,'');}
 export const isSpecialSize=size=>/^(?:TAMANHO\s*)?(?:ESPECIAL|ESP\s*[1-9]\d*)$/.test(norm(size));
@@ -69,6 +70,9 @@ export function technicalFieldChange(product,field,value){
  const mold=moldFor(t);if(t.productCode==='CAL-001'&&!mold?.filet&&t.hemFinish!=='BARRA COMUM'){t.hemFinish='BARRA COMUM';notices.push('Este molde não aceita filete opcional.');}if(t.productCode==='CAL-001'&&!mold?.cut)t.sideCutFabric='MESMO TECIDO DA PEÇA';
  if(t.productCode==='CAL-001'&&field==='moldId'){t.biasColorNote='';if(mold?.pockets===false&&t.pocketRequest){t.pocketRequest='';notices.push('Solicitação de bolsos removida: o novo molde não permite bolsos.');}}
  product.fabric=MATERIALS[t.fabricId]?.label||'';return {before,notices};
+}
+export function cloneFitVariant(product,fit){
+ const clone=copy(product);clone.id=newRecordId();Object.assign(clone,{quantity:0,grade:'',names:[],namesRaw:'',listKey:'',listMissing:false,extraApplications:[]});clone.technical.specialReference=clone.technical.specialDescription='';clone.technical.applications=[];technicalFieldChange(clone,'fit',fit);return clone;
 }
 export function cleanTechnical(input){
  if(!input||input.version!==CATALOG_VERSION||!productDefinition(input.productCode))throw Error('Versão ou produto da ficha técnica inválido.');
@@ -122,8 +126,8 @@ function applicationSignature(t){return t.applications.map(a=>[a.role,a.type,a.p
 export function productionSignature(product,{sleeve=true}={}){const t=product.technical;if(!t)return null;return JSON.stringify(t.productCode==='CAM-001'?[t.fabricId,t.collarModel,t.collarFinish,t.ribanaId,t.vConstruction,t.buttons,t.hasSideCut,t.sideCutFabric,t.hemShape,applicationSignature(t),...(sleeve?[t.sleeveLength,t.sleeveFinish,t.filetMaterial]:[])]:[t.fabricId,t.moldId,t.hemFinish,t.sideCutFabric,Boolean(t.pocketRequest),applicationSignature(t)]);}
 export function pageCompatibility(page){
  const errors=[],shirts=new Map(),shorts=page.products.filter(p=>p.technical?.productCode==='CAL-001');
- if(new Set(shorts.map(p=>p.technical.fabricId)).size>1||new Set(shorts.map(p=>p.technical.moldId)).size>1)errors.push('Cada página deve ter um único molde e tecido principal de calção.');
- const designs=new Map();for(const p of page.products){if(!p.technical)continue;const t=p.technical,key=t.productCode+'|'+designKey(p,page),base=productionSignature(p,{sleeve:false}),found=designs.get(key);if(found&&found!==base)errors.push('Mesmo desenho com tecido, gola, recortes, bolsos ou aplicações diferentes exige outra página.');designs.set(key,base);if(t.productCode==='CAM-001'){const k=key+'|'+t.sleeveLength,sig=productionSignature(p),old=shirts.get(k);if(old&&old!==sig)errors.push('Filetes/acabamentos diferentes do mesmo desenho e comprimento de manga exigem outra página.');shirts.set(k,sig);}}
+ for(const fit of FITS){const same=shorts.filter(p=>p.technical.fit===fit.id);if(new Set(same.map(p=>p.technical.fabricId)).size>1||new Set(same.map(p=>p.technical.moldId)).size>1)errors.push('Cada modelagem da página deve ter um único molde e tecido principal de calção.');}
+ const designs=new Map();for(const p of page.products){if(!p.technical)continue;const t=p.technical,key=t.productCode+'|'+t.fit+'|'+designKey(p,page),base=productionSignature(p,{sleeve:false}),found=designs.get(key);if(found&&found!==base)errors.push('Mesmo desenho com tecido, gola, recortes, bolsos ou aplicações diferentes exige outra página.');designs.set(key,base);if(t.productCode==='CAM-001'){const k=key+'|'+t.sleeveLength,sig=productionSignature(p),old=shirts.get(k);if(old&&old!==sig)errors.push('Filetes/acabamentos diferentes do mesmo desenho e comprimento de manga exigem outra página.');shirts.set(k,sig);}}
  return [...new Set(errors)];
 }
 export function catalogProblems(order,{release=false,parseGrade}={}){
@@ -131,12 +135,12 @@ export function catalogProblems(order,{release=false,parseGrade}={}){
  if(order.technicalCatalogVersion&&order.technicalCatalogVersion!==CATALOG_VERSION)errors.push('Versão do catálogo do pedido não reconhecida.');
  for(const [i,page]of (order.pages||[]).entries()){
   errors.push(...pageCompatibility(page).map(s=>'Página '+(i+1)+': '+s));if(release&&page.groupingReviewRequired)errors.push('Página '+(i+1)+': confira imagens e apontamentos após reorganizar as peças.');
-  for(const p of page.products||[]){const t=p.technical;if(!t){if(order.technicalCatalogVersion)errors.push('Página '+(i+1)+' · '+p.type+': aplique uma ficha técnica cadastrada.');continue;}
+  for(const p of page.products||[]){const t=p.technical;if(p.manualTechnical&&productCodeFor(p.type))errors.push(p.type+': use a ficha técnica cadastrada deste produto.');if(!t){if(order.technicalCatalogVersion&&!p.manualTechnical)errors.push('Página '+(i+1)+' · '+p.type+': aplique uma ficha técnica cadastrada.');continue;}
    errors.push(...technicalProblems(p,order,release).map(s=>'Página '+(i+1)+' · '+p.type+': '+s));
    const entries=p.names?.length?p.names:parseGrade?parseGrade(p.grade,p.type).groups.flatMap(g=>g.rows.map(r=>({...r,size:(/BABY|FEMIN/i.test(g.category)?'BL':/INFANTIL/i.test(g.category)?'TAM ':'')+r.size}))):[];
    for(const row of entries){if(isSpecialSize(row.size)){special[t.productCode]+=row.quantity;const reference=row.specialReference||t.specialReference,description=row.specialDescription||t.specialDescription;if(reference&&!['MEDIDAS FORNECIDAS','PEÇA FÍSICA DE AMOSTRA'].includes(reference))errors.push(p.type+': referência de tamanho especial inválida.');if(release&&(!reference||!description?.trim()))errors.push(p.type+': TAMANHO ESPECIAL exige referência por medidas ou peça física e descrição.');}
     else if(t.fit){const fit=fitOfSize(row.size);if(fit&&fit!==t.fit||!FITS.find(f=>f.id===t.fit)?.sizes.includes(canonicalSize(row.size)))errors.push(p.type+': tamanho '+row.size+' incompatível com '+fitLabel(t.productCode,t.fit)+'.');}}
-   if(t.productCode==='CAM-001'){const key=designKey(p,page)+'|'+productionSignature(p,{sleeve:false});let group=groups.get(key);if(!group){group=[];groups.set(key,group);}group.push({p,page});}
+   if(t.productCode==='CAM-001'){const key=designKey(p,page)+'|'+t.fit+'|'+productionSignature(p,{sleeve:false});let group=groups.get(key);if(!group){group=[];groups.set(key,group);}group.push({p,page});}
   }
  }
  for(const [code,n]of Object.entries(special))if(n>3)errors.push(productDefinition(code).type+': até 3 UNIDADES em TAMANHO ESPECIAL por pedido; encontrados '+n+'.');
@@ -174,7 +178,7 @@ export function technicalLines(product,order={}){
 }
 export function catalogSheetGroups(page){
  if(!page.products.some(p=>p.technical))return null;const remaining=[...page.products],groups=[];
- while(remaining.length){const first=remaining.shift(),group=[first];if(first.technical?.productCode==='CAM-001'){const i=remaining.findIndex(p=>p.technical?.productCode==='CAM-001'&&designKey(p,page)===designKey(first,page)&&p.technical.sleeveLength!==first.technical.sleeveLength);if(i>=0)group.push(remaining.splice(i,1)[0]);}
+ while(remaining.length){const first=remaining.shift(),group=[first];if(first.technical?.productCode==='CAM-001'){const i=remaining.findIndex(p=>p.technical?.productCode==='CAM-001'&&designKey(p,page)===designKey(first,page)&&p.technical.fit===first.technical.fit&&p.technical.sleeveLength!==first.technical.sleeveLength);if(i>=0)group.push(remaining.splice(i,1)[0]);}
   while(remaining.length&&group.length<3){let i=first.kitGroupId?remaining.findIndex(p=>p.kitGroupId===first.kitGroupId):0;if(i<0)i=0;group.push(remaining.splice(i,1)[0]);}groups.push(group);
  }return groups;
 }

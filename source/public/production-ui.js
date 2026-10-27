@@ -1,18 +1,19 @@
-import {createOrderVisualTools} from './order-visual-tools.js?v=9';
-import {createProductionPackage,loadDeliveryLibraries} from './order-delivery.js?v=2';
+import {ORDER_PRODUCTS,KIT_PRESETS,createOrderProduct,prepareOrderProduct} from './order-composition.js';
+import {createOrderVisualTools} from './order-visual-tools.js?v=10';
+import {createProductionPackage,loadDeliveryLibraries} from './order-delivery.js?v=3';
 import {createWorkflowGuide,workflowChoose,canonicalWorkflowPath} from './workflow-guide.js?v=3';
 import {workflowRoute} from './workflow-contract.js?v=2';
-import {TECHNIQUES,PRODUCTS as LEGACY_PRODUCTS,FABRICS,newId,newOrder as legacyNewOrder,newPage as legacyNewPage,newProduct as legacyNewProduct,newKitPage as legacyNewKitPage,kitTitle,demoOrder,parseGrade,validateOrder,releaseProblems,compareOrders,applyListToOrder} from './production-core.js?v=12';
-import {buildSheets,sheetSVG,createPDF,PAPER,sheetLabel} from './production-sheet.js?v=15';
+import {TECHNIQUES,PRODUCTS as LEGACY_PRODUCTS,FABRICS,newId,newOrder as legacyNewOrder,newPage as legacyNewPage,newProduct as legacyNewProduct,newKitPage as legacyNewKitPage,kitTitle,demoOrder,parseGrade,validateOrder,releaseProblems,compareOrders,applyListToOrder} from './production-core.js?v=13';
+import {buildSheets,sheetSVG,createPDF,PAPER,sheetLabel} from './production-sheet.js?v=16';
 import {loadExcelLibrary,readOrderWorkbook} from './order-files.js?v=5';
 import {prepareListSheets,prepareListText,parseListMatrix,needsListMapping,listProblems,listSummary} from './order-list.js?v=7';
-import {CATALOG_VERSION,catalogOrder,attachCatalog,productCodeFor,productionSummary,fitOfSize} from './product-catalog.js';
-import {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor} from './product-catalog-ui.js';
-const PRODUCTS=['Camiseta','Calção'];
-const newOrder=()=>catalogOrder(legacyNewOrder());
-const newPage=(type='Camiseta')=>{const page=legacyNewPage(type);for(const p of page.products)attachCatalog(p,{designId:page.id});return page;};
-const newProduct=(type='Camiseta')=>{if(!productCodeFor(type))throw Error('Produto sem ficha técnica cadastrada.');return attachCatalog(legacyNewProduct(type));};
-const newKitPage=(types=['Camiseta','Calção'])=>{if(types.some(type=>!productCodeFor(type)))throw Error('Use produtos com ficha técnica cadastrada nas duas peças do kit.');const page=legacyNewKitPage(types);for(const p of page.products){attachCatalog(p,{designId:page.id});p.kitGroupId=page.id;}return page;};
+import {CATALOG_VERSION,catalogOrder,attachCatalog,productCodeFor,productionSummary,fitOfSize,fitLabel} from './product-catalog.js?v=2';
+import {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor} from './product-catalog-ui.js?v=2';
+const PRODUCTS=ORDER_PRODUCTS;
+const newOrder=()=>catalogOrder({...legacyNewOrder(),compositionKind:''});
+const newPage=(type='Camiseta')=>{const page=legacyNewPage(type);for(const p of page.products)prepareOrderProduct(p,page.id);return page;};
+const newProduct=(type='Camiseta')=>createOrderProduct(type);
+const newKitPage=(types=['Camiseta','Calção'])=>{const page=legacyNewKitPage(types);for(const p of page.products){prepareOrderProduct(p,page.id);p.kitGroupId=page.id;}return page;};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const params=new URLSearchParams(location.search);
@@ -27,7 +28,7 @@ const ORDER_STATE_LABELS={draft:'Em preparação',checked:'Conferido · não env
 let doc=newOrder(),pageIndex=0,productIndex=0,sheetIndex=0,sheets=[],assets={},id=null,version=0,profile=null,projects=[],dirty=false,example=params.get('exemplo')==='1',conflict=false,savePromise=null,autoTimer,draftTimer,toastTimer,pendingAnchor=null,draftKey='demo',pdfURL,revision=0;
 const page=()=>doc.pages[pageIndex],product=()=>page().products[productIndex];
 const ORDER_STAGES=[
- {id:'identity',title:'Dados do pedido',description:'Escolha uma peça ou um kit e preencha os dados do cliente.',next:'Continuar para peças →'},
+ {id:'identity',title:'Dados do pedido',description:'Escolha como começar e depois preencha os dados do cliente.',next:'Continuar para peças →'},
  {id:'pieces',title:'Peças e kits',description:'Escolha a peça e preencha um assunto por vez. Você pode voltar a qualquer etapa.',next:'Continuar para a lista →'},
  {id:'list',title:'Lista do pedido',description:'Monte a lista vinculada ou anexe uma que já esteja pronta.',next:'Concluir preenchimento e revisar →'},
  {id:'review',title:'Conferência e impressão',description:'Confira os dados, veja todas as folhas e finalize esta revisão.'}
@@ -36,30 +37,33 @@ const PRODUCT_STAGES=[{id:'model',title:'Modelo',description:'Identifique a peç
 let orderStage='identity',productStage='model',previewOpen=false;
 const imageSources=new Map();
 function initialCompositionState(){
- const first=doc.pages[0],types=first.products.map(p=>p.type),kind=types.length===1?'single':types.length===2&&first.mode==='conjunto'?'kit':'other';
- const empty=doc.pages.length===1&&!doc.listSource&&!first.visual&&!first.annotations?.length&&first.products.every(p=>!p.quantity&&!p.images.some(Boolean)&&!p.components.length&&!p.names.length&&!p.extraApplications?.length&&!p.projectRef&&!p.listKey&&(!p.print||p.print==='TRANSFER')&&['model','fabricColor','detailColor','grade','namesRaw','notes'].every(key=>!p[key])&&(!p.fabric||p.technical?.productCode==='CAL-001'&&p.technical.fabricId==='DRY_CALCAO'&&!p.technical.fit));
+ const first=doc.pages[0],seen=new Set(),logical=first.products.filter(p=>{const key=p.technical?p.technical.productCode+'|'+p.technical.designId:p.id;if(seen.has(key))return false;seen.add(key);return true;}),types=logical.map(p=>p.type),kind=doc.compositionKind===''?'unselected':doc.compositionKind||(types.length===1?'single':types.length===2&&first.mode==='conjunto'?'kit':types.length===2&&first.mode==='avulsas'?'pair':'other');
+ const empty=first.products.length===logical.length&&first.products.every(p=>!p.technical?.fit)&&doc.pages.length===1&&!doc.listSource&&!first.visual&&!first.annotations?.length&&first.products.every(p=>!p.quantity&&!p.images.some(Boolean)&&!p.components.length&&!p.names.length&&!p.extraApplications?.length&&!p.projectRef&&!p.listKey&&(!p.print||p.print==='TRANSFER')&&['model','fabricColor','detailColor','grade','namesRaw','notes'].every(key=>!p[key])&&(!p.fabric||p.technical?.productCode==='CAL-001'&&p.technical.fabricId==='DRY_CALCAO'&&!p.technical.fit));
  return {kind,types,editable:kind!=='other'&&empty&&orderEditable()};
 }
 function renderInitialComposition(){
- const state=initialCompositionState();$$('[data-initial-kind]').forEach(input=>{input.checked=input.dataset.initialKind===state.kind;input.disabled=!state.editable;input.closest('label').classList.toggle('selected',input.checked);});
- $('#initialFirstTypeLabel').textContent=state.kind==='kit'?'1ª peça do kit':'Tipo da peça';$('#initialSecondTypeField').hidden=state.kind!=='kit';
- for(const [i,selector]of ['#initialFirstType','#initialSecondType'].entries()){const input=$(selector);if(document.activeElement!==input&&(i===0||state.types.length===2)){const value=state.types[i]||'';if(value&&input.options&&![...input.options].some(o=>o.value===value))input.add(new Option(value+' · cadastro antigo',value));input.value=value;}input.disabled=!state.editable;}
- $('#initialCompositionHelp').textContent=state.editable?'Escolha um produto com ficha técnica cadastrada. Camiseta e calção têm quantidades e tamanhos independentes.':'Peças já configuradas. Altere os itens na etapa Peças e kits.';
+ const state=initialCompositionState(),two=['kit','pair'].includes(state.kind);$$('[data-initial-kind]').forEach(input=>{input.checked=input.dataset.initialKind===state.kind;input.disabled=!state.editable;input.closest('label').classList.toggle('selected',input.checked);});
+ $('#initialOrderDetails').hidden=state.kind==='unselected';$('#initialProductTypes').hidden=state.kind==='unselected';$('#initialKitPresetField').hidden=state.kind!=='kit';
+ $('#initialFirstTypeLabel').textContent=two?'1ª peça':'Tipo da peça';$('#initialSecondTypeLabel').textContent=state.kind==='pair'?'2ª peça independente':'2ª peça do kit';$('#initialSecondTypeField').hidden=!two;
+ for(const [i,selector]of ['#initialFirstType','#initialSecondType'].entries()){const input=$(selector);if(document.activeElement!==input&&(i===0||two)){const value=state.types[i]||'';if(value&&input.options&&![...input.options].some(o=>o.value===value))input.add(new Option(value+' · cadastro antigo',value));input.value=value;}input.disabled=!state.editable;}
+ const preset=KIT_PRESETS.find(p=>p.types.every((type,i)=>type===state.types[i]));$('#initialKitPreset').value=preset?.id||'';$('#initialKitPreset').disabled=!state.editable;
+ $('#initialCompositionHelp').textContent=state.kind==='unselected'?'Escolha como começar. Você poderá adicionar outras peças depois.':state.editable?(state.kind==='pair'?'Duas peças independentes: quantidades, modelos e personalizações próprios, sem vínculo de kit.':'Cada peça pode incluir modelagens masculina, Baby Look e infantil no mesmo pedido.'):'Peças já configuradas. Altere os itens na etapa Peças e kits.';
 }
 function chooseInitialComposition(kind){
- const state=initialCompositionState();if(!state.editable||!['single','kit'].includes(kind))return renderInitialComposition();if(state.kind===kind)return;
+ const state=initialCompositionState();if(!state.editable||!['single','kit','pair'].includes(kind))return renderInitialComposition();if(state.kind===kind)return;
  const current=doc.pages[0],first=current.products[0],automaticTitle=!current.title||current.title===kitTitle(state.types);
- current.products=kind==='kit'?[first,newProduct($('#initialSecondType').value.trim()||'Calção')]:[first];current.mode=kind==='kit'?'conjunto':'individual';if(automaticTitle)current.title=kind==='kit'?kitTitle(current.products.map(p=>p.type)):'';
+ current.products=kind==='single'?[first]:[first,newProduct($('#initialSecondType').value.trim()||'Calção')];current.mode=kind==='kit'?'conjunto':kind==='pair'?'avulsas':'individual';doc.compositionKind=kind;
+ for(const p of current.products){if(p.technical)p.technical.designId=p.id;if(kind==='kit')p.kitGroupId=current.id;else delete p.kitGroupId;}if(automaticTitle)current.title=kind==='kit'?kitTitle(current.products.map(p=>p.type)):'';
  pageIndex=productIndex=sheetIndex=0;productStage='model';changed();render();
 }
 $$('[data-initial-kind]').forEach(input=>input.addEventListener('change',()=>{if(input.checked)chooseInitialComposition(input.dataset.initialKind);}));
-for(const [i,selector]of ['#initialFirstType','#initialSecondType'].entries())$(selector).addEventListener('input',event=>{
- const state=initialCompositionState(),current=doc.pages[0];if(!state.editable||!current.products[i])return renderInitialComposition();const type=event.target.value.trim();if(!productCodeFor(type))return error('Escolha Camiseta ou Calção, as fichas cadastradas nesta versão.');
- const automaticTitle=current.title===kitTitle(state.types);current.products[i].type=type;delete current.products[i].technical;attachCatalog(current.products[i],{designId:current.id});if(automaticTitle)current.title=kitTitle(current.products.map(p=>p.type));changed();render();
-});
+function setInitialType(i,type){const state=initialCompositionState(),current=doc.pages[0];if(!state.editable||!current.products[i])return false;if(!ORDER_PRODUCTS.includes(type))return error('Escolha um tipo de peça disponível.');const automaticTitle=current.title===kitTitle(state.types),p=current.products[i];p.type=type;if(p.technical)p.fabric='';delete p.technical;delete p.manualTechnical;if(!productCodeFor(type))p.id=newId();prepareOrderProduct(p,p.id);if(automaticTitle)current.title=kitTitle(current.products.map(p=>p.type));return true;}
+for(const [i,selector]of ['#initialFirstType','#initialSecondType'].entries())$(selector).addEventListener('input',event=>{if(setInitialType(i,event.target.value.trim())){changed();render();}});
+$('#initialKitPreset').addEventListener('change',event=>{const preset=KIT_PRESETS.find(p=>p.id===event.target.value);if(!preset||!initialCompositionState().editable)return;preset.types.forEach((type,i)=>setInitialType(i,type));changed();render();});
+
 function renderSectionState(){
  renderInitialComposition();
- const ready=reviewReady();
+ const ready=reviewReady();$('#stageNext').disabled=orderStage==='identity'&&initialCompositionState().kind==='unselected';
  if(orderStage==='review'&&!ready){orderStage='list';for(const input of $$('#releaseChecks input'))input.checked=false;}
  const index=ORDER_STAGES.findIndex(s=>s.id===orderStage),stage=ORDER_STAGES[index];
  $$('[data-order-stage]').forEach(panel=>panel.hidden=panel.dataset.orderStage!==orderStage);
@@ -67,15 +71,15 @@ function renderSectionState(){
  $('#productionMain').dataset.activeStage=orderStage;$('#stageEyebrow').textContent='ETAPA '+(index+1)+' DE 4';$('#stageTitle').textContent=stage.title;$('#stageDescription').textContent=stage.description;
  $('#stageBack').hidden=index===0;$('#stageBack').textContent='← '+(ORDER_STAGES[index-1]?.title||'Voltar');$('#stageNext').hidden=['pieces','review'].includes(orderStage);$('#stageNext').textContent=stage.next||'';$('#stageNext').classList.toggle('gold-button',orderStage==='identity');$('#stageNext').classList.toggle('outline-button',orderStage!=='identity');
  const showPreview=orderStage==='review'||orderStage==='pieces'&&previewOpen;$('#orderPreview').hidden=!showPreview;$('#orderWorkspace').classList.toggle('has-preview',showPreview);$('#toggleOrderPreview').hidden=orderStage!=='pieces';$('#toggleOrderPreview').textContent='Ver prévia ampliada';$('#reviewGateStatus').hidden=ready||orderStage==='review';$('#openFinalPreview').textContent=orderStage==='review'?'Revisar em tela cheia':'Ampliar prévia';$$('[data-review-only]').forEach(el=>el.hidden=orderStage!=='review');
- const count=doc.pages.reduce((n,p)=>n+p.products.length,0);$('#piecesStageSummary').textContent=count+' '+(count===1?'peça':'peças')+' no pedido';$('#listStageSummary').textContent=doc.listSource?doc.listSource.rows.length+' itens vinculados':'Tamanhos e personalização';
+ const variants=doc.pages.reduce((n,p)=>n+p.products.length,0),count=doc.pages.reduce((n,pg)=>n+new Set(pg.products.map(p=>p.technical?p.technical.productCode+'|'+p.technical.designId:p.id)).size,0);$('#piecesStageSummary').textContent=count+' '+(count===1?'peça':'peças')+' no pedido'+(variants>count?' · '+variants+' configurações':'');$('#listStageSummary').textContent=doc.listSource?doc.listSource.rows.length+' itens vinculados':'Tamanhos e personalização';
  renderProductStage();
 }
 function reviewReady(){return !orderEditable()||releaseProblems(doc).length===0;}
-function showOrderStage(value,{focus=true}={}){if(!ORDER_STAGES.some(s=>s.id===value))return;if(value==='review'&&!reviewReady()){error('Antes de revisar: '+releaseProblems(doc).slice(0,5).join(' '));$('#error').scrollIntoView({behavior:'smooth',block:'nearest'});return;}orderStage=value;if(value==='review')sheetIndex=0;error();renderPreview();if(focus){$('#stageTitle').focus({preventScroll:true});$('#stageTitle').scrollIntoView({behavior:'smooth',block:'start'});if(value==='review')visualTools.openFinalPreview({mode:'review',sheet:sheetIndex});}}
+function showOrderStage(value,{focus=true}={}){if(value!=='identity'&&initialCompositionState().kind==='unselected'){error('Escolha primeiro: Kit, Peça avulsa ou 2 peças independentes.');return;}if(!ORDER_STAGES.some(s=>s.id===value))return;if(value==='review'&&!reviewReady()){error('Antes de revisar: '+releaseProblems(doc).slice(0,5).join(' '));$('#error').scrollIntoView({behavior:'smooth',block:'nearest'});return;}orderStage=value;if(value==='review')sheetIndex=0;error();renderPreview();if(focus){$('#stageTitle').focus({preventScroll:true});$('#stageTitle').scrollIntoView({behavior:'smooth',block:'start'});if(value==='review')visualTools.openFinalPreview({mode:'review',sheet:sheetIndex});}}
 function renderProductStage(){
  if(!$('#productStepTitle'))return;const index=PRODUCT_STAGES.findIndex(s=>s.id===productStage),stage=PRODUCT_STAGES[index];
  $$('[data-product-panel]').forEach(panel=>panel.hidden=panel.dataset.productPanel!==productStage);$$('[data-product-step]').forEach(button=>{const active=button.dataset.productStep===productStage;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
- $('#currentProductName').textContent=product().type;$('#productStepTitle').textContent=stage.title+' · '+product().type;$('#productStepHelp').textContent=stage.description;$('#productStepCount').textContent=(index+1)+' de '+PRODUCT_STAGES.length;$('#productStepBack').hidden=index===0;$('#productStepNext').textContent=index<PRODUCT_STAGES.length-1?'Continuar →':productIndex<page().products.length-1?'Próxima peça: '+page().products[productIndex+1].type+' →':'Continuar para a lista →';
+ $('#currentProductName').textContent=product().type+(product().technical?.fit?' · '+fitLabel(product().technical.productCode,product().technical.fit):'');$('#productStepTitle').textContent=stage.title+' · '+product().type;$('#productStepHelp').textContent=stage.description;$('#productStepCount').textContent=(index+1)+' de '+PRODUCT_STAGES.length;$('#productStepBack').hidden=index===0;$('#productStepNext').textContent=index<PRODUCT_STAGES.length-1?'Continuar →':productIndex<page().products.length-1?'Próxima peça: '+page().products[productIndex+1].type+' →':'Continuar para a lista →';
  const source=imageSources.get(product().id)||(product().projectRef?'presentation':'manual');$$('[data-image-source-panel]').forEach(panel=>panel.hidden=panel.dataset.imageSourcePanel!==source);$$('[data-image-source]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.imageSource===source)));
 }
 function showProductStage(value){if(!PRODUCT_STAGES.some(s=>s.id===value))return;productStage=value;renderProductStage();$('#productStepTitle').focus({preventScroll:true});$('#productStepTitle').scrollIntoView({behavior:'smooth',block:'nearest'});}
@@ -241,10 +245,10 @@ function render(){
  $('#techniques').innerHTML=[...new Set([...TECHNIQUES,...doc.techniques])].map(s=>`<label><input type="checkbox" data-technique="${esc(s)}"${doc.techniques.includes(s)?' checked':''}>${esc(s)}</label>`).join('');
  $('#pageTabs').innerHTML=doc.pages.map((p,i)=>`<button data-page-index="${i}" class="${i===pageIndex?'active':''}" aria-pressed="${i===pageIndex}">${i+1}. ${esc(p.title||p.products.map(x=>x.type).join(' + '))}</button>`).join('');
  $$('[data-page]').forEach(e=>e.value=page()[e.dataset.page]||'');$('#pageUp').disabled=pageIndex===0;$('#pageDown').disabled=pageIndex===doc.pages.length-1;renderOrderEditActions();
- $('#productTabs').innerHTML=page().products.map((p,i)=>`<button type="button" data-product-index="${i}" class="${i===productIndex?'active':''}" aria-pressed="${i===productIndex}">${esc(p.type||'Peça '+(i+1))}</button>`).join('');$('#productTabs').hidden=page().products.length<2;$('#pageTabs').hidden=doc.pages.length<2;renderProduct();const found=buildSheets(doc,assets,{draft:true}).findIndex(s=>s.anchors.some(a=>a.id===product().id));if(found>=0)sheetIndex=found;renderPreview();
+ $('#productTabs').innerHTML=page().products.map((p,i)=>`<button type="button" data-product-index="${i}" class="${i===productIndex?'active':''}" aria-pressed="${i===productIndex}">${esc((p.type||'Peça '+(i+1))+(p.technical?.fit?' · '+fitLabel(p.technical.productCode,p.technical.fit):''))}</button>`).join('');$('#productTabs').hidden=page().products.length<2;$('#pageTabs').hidden=doc.pages.length<2;renderProduct();const found=buildSheets(doc,assets,{draft:true}).findIndex(s=>s.anchors.some(a=>a.id===product().id));if(found>=0)sheetIndex=found;renderPreview();
 }
 function renderProduct(){
- const p=product(),shared=page().visual?.mode==='shared',kit=page().products.length===2,upload=(i)=>`<div><label for="image${i}">${p.images[i]?`<img src="${esc(p.images[i])}" alt="${i===0?'Imagem principal':'Imagem complementar'} de ${esc(p.type)}">`:i===0?'＋ Escolher imagem principal':'＋ Escolher imagem complementar'}<input id="image${i}" data-image="${i}" type="file" accept="image/png,image/jpeg,image/webp" hidden></label>${p.images[i]?`<button type="button" data-action="remove-image" data-slot="${i}">Remover imagem</button>`:''}</div>`;
+ const p=product(),shared=page().visual?.mode==='shared',kit=page().mode==='conjunto',upload=(i)=>`<div><label for="image${i}">${p.images[i]?`<img src="${esc(p.images[i])}" alt="${i===0?'Imagem principal':'Imagem complementar'} de ${esc(p.type)}">`:i===0?'＋ Escolher imagem principal':'＋ Escolher imagem complementar'}<input id="image${i}" data-image="${i}" type="file" accept="image/png,image/jpeg,image/webp" hidden></label>${p.images[i]?`<button type="button" data-action="remove-image" data-slot="${i}">Remover imagem</button>`:''}</div>`;
  $('#productEditor').innerHTML=`<div class="product-card">
  <div class="product-card-heading"><div><p class="eyebrow">EDITANDO ESTA PEÇA</p><h3 id="currentProductName">${esc(p.type)}</h3></div><details class="product-actions"><summary>Mais opções</summary><div><button type="button" class="text-link" data-action="duplicate-product">Duplicar peça</button><button type="button" class="text-link" data-action="remove-product"${page().products.length===1?' disabled':''}>Remover peça</button></div></details></div>
  ${p.listMissing?'<p class="list-missing">Esta peça não consta na lista atual. Confira os dados na etapa Quantidades.</p>':''}
@@ -284,7 +288,7 @@ $('#productEditor').addEventListener('change',async e=>{
  const shared='sharedImage' in e.target.dataset;if(!shared&&!e.target.dataset.image||!e.target.files?.[0]||!orderEditable())return;
  const productId=product().id,pageId=page().id,slot=Number(e.target.dataset.image),generation=orderGeneration;
  try{const image=await imageData(e.target.files[0]),target=doc.pages.find(page=>page.id===pageId),p=target?.products.find(item=>item.id===productId);if(generation!==orderGeneration||!p||!orderEditable())throw new Error('O pedido ou a peça mudou. Anexe a imagem novamente na peça correta.');
-  if(shared){if(target.products.length!==2)throw new Error('Use uma imagem única em um kit com duas peças.');target.mode='conjunto';target.visual={mode:'shared',image,transform:{scale:1,x:.5,y:.5}};for(const item of target.products){delete item.projectRef;for(const component of item.components)delete component.anchor;imageSources.set(item.id,'manual');}}
+  if(shared){if(target.products.length!==2&&target.mode!=='conjunto')throw new Error('Use uma imagem única em um kit com duas peças.');target.mode='conjunto';target.visual={mode:'shared',image,transform:{scale:1,x:.5,y:.5}};for(const item of target.products){delete item.projectRef;for(const component of item.components)delete component.anchor;imageSources.set(item.id,'manual');}}
   else{p.images[slot]=image;if(slot===0)delete p.projectRef;}
   changed();render();
  }catch(err){error(err.message);}finally{e.target.value='';}
@@ -319,7 +323,7 @@ $('#sheet').addEventListener('click',e=>{if(!pendingAnchor)return;const svg=$('#
 $('#cancelAnchor').addEventListener('click',()=>{pendingAnchor=null;renderPreview();});
 function blankPage(current){return current.products.length===1&&current.products[0].type==='Camiseta'&&!current.title&&!current.label&&!current.notes&&!current.visual?.image&&!current.annotations?.length&&!current.products[0].extraApplications?.length&&['model','fabric','fabricColor','detailColor','grade','namesRaw','notes'].every(key=>!current.products[0][key])&&!current.products[0].quantity&&!current.products[0].images.some(Boolean)&&!current.products[0].components.length&&!current.products[0].names.length;}
 function addPieceError(message){$('#addPieceError').textContent=message;$('#addPieceError').hidden=false;}
-function finishAddingPiece(message){productStage='model';orderStage='pieces';$('#addPieceDialog').close();changed();render();showOrderStage('pieces',{focus:false});$('#productStepTitle').focus({preventScroll:true});$('#productStepTitle').scrollIntoView({behavior:'smooth',block:'nearest'});toast(message);}
+function finishAddingPiece(message){if(doc.compositionKind==='')doc.compositionKind=page().mode==='conjunto'?'kit':page().products.length===2?'pair':'single';productStage='model';orderStage='pieces';$('#addPieceDialog').close();changed();render();showOrderStage('pieces',{focus:false});$('#productStepTitle').focus({preventScroll:true});$('#productStepTitle').scrollIntoView({behavior:'smooth',block:'nearest'});toast(message);}
 $('#openAddPiece').addEventListener('click',()=>{if(!orderEditable())return;$('#addPieceError').hidden=true;$('#newProductType').value='Camiseta';$('#newKitFirstType').value='Camiseta';$('#newKitSecondType').value='Calção';$('#newProductSamePage').checked=false;$('#addPieceDialog').showModal();});
 $('#closeAddPiece').addEventListener('click',()=>$('#addPieceDialog').close());
 $('#addKit').addEventListener('click',()=>{
@@ -497,6 +501,7 @@ $('#confirmComplement').addEventListener('click',async()=>{
 
 async function boot(){
  let requestFreshAtBoot=false;
+ for(const selector of ['#initialFirstType','#initialSecondType','#newProductType','#newKitFirstType','#newKitSecondType'])$(selector).innerHTML=ORDER_PRODUCTS.map(type=>'<option value="'+type+'">'+type+'</option>').join('');$('#initialSecondType').value=$('#newKitSecondType').value='Calção';
  $('#productOptions').innerHTML=PRODUCTS.map(s=>'<option value="'+s+'">').join('');
  $('#techniqueOptions').innerHTML=TECHNIQUES.map(s=>'<option value="'+esc(s)+'">').join('');
  $('#fabricOptions').innerHTML=FABRICS.map(s=>'<option value="'+s+'">').join('');

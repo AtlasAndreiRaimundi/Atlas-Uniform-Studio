@@ -1,3 +1,4 @@
+import {usesCatalogList} from '../public/product-catalog.js';
 import {preserveCatalogList} from '../public/catalog-list.js';
 import {boundedJSON} from './request-security.mjs';
 import {AppError} from './project-service.mjs';
@@ -45,9 +46,9 @@ export class ListService{
   if(document.listSource?.id){const linked=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=?').bind(document.listSource.id,owner,orderId).first();if(linked)return this.get(user,linked.id);}
   const previous=await this.db.prepare('SELECT id FROM order_lists WHERE owner_id=? AND order_id=? ORDER BY updated_at DESC LIMIT 1').bind(owner,orderId).first();if(previous)return this.get(user,previous.id);
   const listId='pedido-'+orderId;
-  const first=document.pages[0],types=document.pages.flatMap(p=>p.products.map(p=>p.type)),produto=first.mode==='conjunto'&&first.products.length===2?kitLabel(first.products.map(p=>p.type)):types.includes('Camiseta')&&types.includes('Calção')?'Kit':types[0]||'Camiseta';
+  const first=document.pages[0],types=document.pages.flatMap(p=>p.products.map(p=>p.type)),produto=first.mode==='conjunto'&&first.products.length===2?kitLabel(first.products.map(p=>p.type)):document.compositionKind!=='pair'&&types.includes('Camiseta')&&types.includes('Calção')?'Kit':types[0]||'Camiseta';
   if(!validProductType(produto)||types.some(type=>!type.trim()))throw new AppError(400,'Defina os nomes das peças antes de montar a lista. Use até 80 caracteres por peça do kit.');
-  try{await this.save(user,null,{document:{schema:1,title:document.title.slice(0,100),sourceName:document.listSource?.name||'',defaults:{produto,...(document.technicalCatalogVersion?{catalogVersion:3}:{})},rows:document.listSource?.rows||[],unresolved:[],links:{orderId}}},listId);}
+  try{await this.save(user,null,{document:{schema:1,title:document.title.slice(0,100),sourceName:document.listSource?.name||'',defaults:{produto,...(usesCatalogList(document)?{catalogVersion:3}:{})},rows:document.listSource?.rows||[],unresolved:[],links:{orderId}}},listId);}
   catch(error){const concurrent=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=?').bind(listId,owner,orderId).first();if(!concurrent)throw error;}
   return this.get(user,listId);
  }
