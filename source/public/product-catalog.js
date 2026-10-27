@@ -193,12 +193,11 @@ export function productDisplayName(product){
  if(t.productCode==='CAM-001')return product.type+(t.collarModel?' gola '+t.collarModel:'')+(t.hasSideCut?' com recorte':'')+(t.sleeveLength==='LONGA'?' · manga longa':'');
  const mold=moldFor(t);return 'Calção de jogo'+(mold?.cut?' com recorte':'')+(mold?.label?' · '+mold.label.replace(/\s*\(PADRÃO\)/,''):'');
 }
-export function finishSummary(product,order={}){
- const t=product.technical;if(!t)return product.detailColor||'';const rib=ribbonOptions(t).find(r=>r.id===t.ribanaId),lines=[product.detailColor];
- if(t.productCode==='CAM-001')lines.push(order.shirtSleeveCut,t.sleeveFinish==='FILETE COSTURADO'?'Filete: tecido da camiseta':t.sleeveFinish,t.collarFinish,rib?.displayColorName,t.buttons!==null?t.buttons+' botões':'',t.vConstruction,t.hasSideCut?'Recorte: '+t.sideCutFabric:'',t.hemShape);
- else lines.push(t.hemFinish,moldFor(t)?.cut?'Recorte: '+t.sideCutFabric:'',t.drawstringColor?'Cordão: '+t.drawstringColor:'',t.biasColorNote);
- return lines.filter(Boolean).join(' · ');
+export function finishSummary(product){
+ const print=String(product.print||'').replace(/TRANSFER/gi,'SUBLIMAÇÃO'),types=[...new Set([...physicalApplications(product).map(a=>a.type),...(product.extraApplications||[])])];
+ return [print,...types].filter(Boolean).join(' · ');
 }
+
 export function detectedTechniques(order,products=order.pages.flatMap(pg=>pg.products)){
  const result=new Set((order.techniques||[]).filter(t=>!['TPU ALTO RELEVO','DTF','TERMOCOLANTE','BORDADO / APLIQUE'].includes(t))),add=value=>{const v=String(value||'').toUpperCase();if(/SUBLIM|TRANSFER/.test(v))result.add('TRANSFER');if(/TPU/.test(v))result.add('TPU ALTO RELEVO');if(/TERMOCOLANTE/.test(v))result.add('TERMOCOLANTE');if(/DTF/.test(v))result.add('DTF');if(/BORDADO|APLIQUE/.test(v))result.add('BORDADO / APLIQUE');if(/SERIGRAF/.test(v))result.add('SERIGRAFIA');};
  for(const p of products){add(p.print);for(const a of physicalApplications(p))add(a.type);for(const a of p.extraApplications||[])add(a);for(const c of p.components||[])add([c.name,c.finish,c.material].join(' '));}return [...result];

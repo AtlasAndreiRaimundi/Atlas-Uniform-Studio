@@ -1,7 +1,7 @@
 import {syncApplicationArrows,syncFamilyCharacteristics} from './order-linked-applications.js?v=3';
 import {ORDER_PRODUCTS,modelFamily,toggleModelFit} from './order-composition.js';
 import {newRecordId} from './record-id.js';
-import {CATALOG_VERSION,PRODUCT_CATALOG,MATERIALS,FITS,COLLARS,SHORT_MOLDS,DRAWSTRINGS,CATALOG_PENDING,productDefinition,productCodeFor,attachCatalog,technicalFieldChange,technicalProblems,pageCompatibility,technicalWarnings,collarFinishes,needsRibbon,ribbonOptions,moldFor,sleeveFinishes,filetMaterials,suggestPageGrouping,physicalApplications,productionSummary,fitLabel,productDisplayName} from './product-catalog.js?v=5';
+import {CATALOG_VERSION,PRODUCT_CATALOG,MATERIALS,FITS,COLLARS,SHORT_MOLDS,DRAWSTRINGS,CATALOG_PENDING,productDefinition,productCodeFor,attachCatalog,technicalFieldChange,technicalProblems,pageCompatibility,technicalWarnings,collarFinishes,needsRibbon,ribbonOptions,moldFor,sleeveFinishes,filetMaterials,suggestPageGrouping,physicalApplications,productionSummary,fitLabel,productDisplayName} from './product-catalog.js?v=6';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const option=(id,label,current)=>`<option value="${esc(id)}"${String(id)===String(current)?' selected':''}>${esc(label)}</option>`;
 function select(label,key,value,items){return `<label>${label}<select data-tech="${key}">${option('','Selecione…',value)}${items.map(item=>typeof item==='string'?option(item,item,value):option(item.id,item.label,value)).join('')}</select></label>`;}

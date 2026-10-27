@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "8bca631db833f37da908d7121ca39c7e3e41c9e7",
-  "exported_at": "2026-10-27T17:35:42.847825+00:00",
+  "source_commit": "cf576f90743818fd4226e0e8c41bc76002dffe2a",
+  "exported_at": "2026-10-27T17:51:14.899940+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -790,8 +790,8 @@
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
-      "size": 2589,
-      "sha256": "7ca289f84642e4b308f5fccf0d5aacde21f2ef737544f27a6211fa5017c10488"
+      "size": 3025,
+      "sha256": "1d96148dc3f94ff4fbe2f9e1581f12ffbdf130a56d7a24ed7afcfc00c59085dd"
     },
     {
       "path": "docs/pedidos-composicao-modelagens.md",
@@ -1476,7 +1476,7 @@
     {
       "path": "public/catalog-list.js",
       "size": 4529,
-      "sha256": "912813d0345d5f891fb63bbffa5985f82afc6b643c705ebe419ba73675fd8167"
+      "sha256": "5c0313ec0df168b662f5197fecadf880160900cc86da4620918bcbbcd9f755cb"
     },
     {
       "path": "public/catalog-reference.js",
@@ -1581,7 +1581,7 @@
     {
       "path": "public/order-annotation-editor.js",
       "size": 10095,
-      "sha256": "3e78f7c9376fbd06a4fbe77e9c46e264417fd34a18786d1a82a6e0f223d37ee1"
+      "sha256": "c83673aa41ee08c439cdee97653eac2014c7155e2adf4bf71139a859fb191ace"
     },
     {
       "path": "public/order-annotations.js",
@@ -1596,7 +1596,7 @@
     {
       "path": "public/order-composition.js",
       "size": 2688,
-      "sha256": "c918753ac32796a380ac41cba511ef70bfc37cc453b899fa709d2142bc0a3aac"
+      "sha256": "5539a65475bdada2c565e859ae0b8d8562587c5239d36ffb9b0a286a4820f37e"
     },
     {
       "path": "public/order-core.js",
@@ -1606,7 +1606,7 @@
     {
       "path": "public/order-delivery.js",
       "size": 3097,
-      "sha256": "99b2d5205eb0285f415c1b075b0353122a4689b87ecf4e022f34b7d87f558c81"
+      "sha256": "58da8a4f7a11b5afc89c39153489d10887ea664c816051a5c30ba43ac4873433"
     },
     {
       "path": "public/order-files.js",
@@ -1636,7 +1636,7 @@
     {
       "path": "public/order-visual-tools.js",
       "size": 18823,
-      "sha256": "19ec40a87c8e83905f36f24f2c7ee29b480d0b74a0c385885522ed3d89cbb2eb"
+      "sha256": "c7811b46076bb30d9626441d9850bc08b9d8db7552a28727051ab52bd1a21e40"
     },
     {
       "path": "public/organizador.html",
@@ -1671,7 +1671,7 @@
     {
       "path": "public/product-catalog-ui.js",
       "size": 18305,
-      "sha256": "6b8a800b63175d61498e8663422f8865fbc8e59f1cb1653f2408b0da9961f104"
+      "sha256": "420b5d4b81e64b1f3ae2910ba09dff562cb946c3e31aff86d2021397eebd7eee"
     },
     {
       "path": "public/product-catalog.css",
@@ -1680,23 +1680,23 @@
     },
     {
       "path": "public/product-catalog.js",
-      "size": 33910,
-      "sha256": "9f21cb3b1a40bff83e64ee846876b3d0a7972e013ba69daddcd7bb06c31d7423"
+      "size": 33510,
+      "sha256": "88a1f91466ab0e87da412260f9e17338dbd15c524caba820ef2825f9ae22c8f9"
     },
     {
       "path": "public/production-core.js",
       "size": 21197,
-      "sha256": "16b8708a6d723c624f114cf5184c5710715adb5fc0783645aedecc830f8a142d"
+      "sha256": "5959d40233c8f629178c77ac28c9884d3572707c2a88c618995cf7517b690a86"
     },
     {
       "path": "public/production-sheet.js",
-      "size": 30912,
-      "sha256": "bc6c9612a3b8f5144f3ffb9b8f72f11537a2117c8f9d406d52b386104d5b4476"
+      "size": 30944,
+      "sha256": "647e03c57b659fec899166a71dd9e614c8f91e8f3895b0e4adcfc4758faa8ae7"
     },
     {
       "path": "public/production-ui.js",
       "size": 107777,
-      "sha256": "4e8a320776be43dd2eef3c81399e70d97df55c3ab54bd33174f443d8d3033a56"
+      "sha256": "85263630e9393b3954cbd7a62bd609c567f6a30e244d3346dc49bbbf1580edf5"
     },
     {
       "path": "public/production.css",
@@ -2340,8 +2340,8 @@
     },
     {
       "path": "tests/product-catalog.test.mjs",
-      "size": 20291,
-      "sha256": "82a560d58346f764e11e04722a2df52339628f914a914e24eb7cad5c1a258e93"
+      "size": 21086,
+      "sha256": "58cafe5adc87162358d7eae7cf18ac9d412188858db20e250127473e05654f20"
     },
     {
       "path": "tests/production.test.mjs",

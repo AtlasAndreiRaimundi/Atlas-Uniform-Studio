@@ -104,3 +104,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - CDR obrigatório após a lista, conferência única e oferta de PDF + CDR; validação de propriedade no servidor.
 - Fonte canônica: `8bca631db833f37da908d7121ca39c7e3e41c9e7` (488 arquivos).
 - Validação: 339 testes aprovados, 1 ignorado preexistente, nenhum erro; TypeScript e build concluídos.
+
+## v68 — 2026-10-27
+- Quadro lateral mostra apenas estampa e aplicações; cor do cordão na linha do calção, inclusive sem aplicação física.
+- Fonte: `cf576f90743818fd4226e0e8c41bc76002dffe2a` (488 arquivos).
+- 29 testes de catálogo e impressão aprovados; build concluído.

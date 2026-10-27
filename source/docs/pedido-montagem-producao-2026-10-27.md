@@ -13,3 +13,6 @@ Decisões expressas do responsável pelo sistema, posteriores às fichas origina
 - Após concluir a conferência única, o sistema oferece baixar o pacote PDF com listas incorporadas + CDRs da mesma revisão. O envio à fábrica continua separado.
 
 As especificações originais estão preservadas em `docs/produtos`. Este adendo prevalece sobre as regras antigas de material do filete.
+
+## Simplificação do quadro lateral
+O quadro Estampa e aplicações mostra apenas a técnica de estampa (TRANSFER apresentado como SUBLIMAÇÃO) e os tipos de aplicações físicas. Corte, filete, gola, recorte e acabamento de barra não são repetidos nesse quadro. A cor do cordão aparece na linha de aplicações da peça, inclusive quando o calção não tem aplicação física. Os dados técnicos de cadastro são preservados.
