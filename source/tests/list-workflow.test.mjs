@@ -1,3 +1,4 @@
+import {attachFixtureCDR} from './technical-fixture.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
@@ -15,7 +16,7 @@ import {KIT_PRESETS,createOrderProduct} from '../public/order-composition.js';
 
 function setup(){
  const sql=new DatabaseSync(':memory:');for(const migration of migrations)sql.exec(migration);
- const db={prepare(query){const stmt=sql.prepare(query);let args=[];return {bind(...values){args=values;return this;},async first(){return stmt.get(...args)||null;},async all(){return {results:stmt.all(...args)};}};}};
+ const db={prepare(query){const stmt=sql.prepare(query);let args=[];return {bind(...values){args=values;return this;},async first(){return stmt.get(...args)||null;},async all(){return {results:stmt.all(...args)};},async run(){stmt.run(...args);return {success:true};}};}};
  const objects=new Map(),bucket={async put(key,value){objects.set(key,value);},async get(key){return objects.has(key)?{json:async()=>JSON.parse(objects.get(key))}:null;},async delete(key){objects.delete(key);}};
  return {lists:new ListService(db,bucket),orders:new ProductionService(db,bucket),objects,sql};
 }
@@ -71,7 +72,7 @@ test('starting an order list keeps a previous list snapshot and protects checked
  assert.notEqual(linked.id,source.id);assert.equal(linked.title,'Pedido importado');assert.equal(linked.document.defaults.produto,'Kit');assert.equal(linked.document.rows[0].adicional,'CAPITÃO · O+');
  assert.equal((await lists.get(user,source.id)).orderId,null);
  Object.assign(doc,{number:'123',client:'Cliente',artist:'Designer',deliveryDate:'2026-11-30'});for(const p of doc.pages.flatMap(p=>p.products)){p.model='EDGE';p.fabric='DRY';}
- await orders.save(user,saved.id,{version:saved.version,document:doc,action:'release',checks:{art:true,list:true,technical:true}});
+ const uploaded=await attachFixtureCDR(orders,user,saved,doc);await orders.save(user,saved.id,{version:uploaded.version,document:doc,action:'release',checks:{art:true,list:true,technical:true}});
  await assert.rejects(lists.forOrder(user,saved.id),{status:400});
 });
 

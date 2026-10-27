@@ -53,7 +53,7 @@ export function canonicalSize(size){let s=norm(size).replace(/^BABY\s*LOOK\s*|^B
 export const isSpecialSize=size=>/^(?:TAMANHO\s*)?(?:ESPECIAL|ESP\s*[1-9]\d*)$/.test(norm(size));
 export const fitLabel=(code,fit)=>FITS.find(f=>f.id===fit)?.[code==='CAL-001'?'shorts':'shirt']||'Modelagem pendente';
 export function sleeveFinishes(t){return t.sleeveLength==='LONGA'?['BARRA COMUM','PUNHO']:['BARRA COMUM','FILETE COSTURADO'];}
-export function filetMaterials(t){return t.fabricId==='ELASTIC'?['DRY','RIBANA (EXCEÇÃO)']:['DRY','MESMO TECIDO DA CAMISETA'];}
+export function filetMaterials(){return ['MESMO TECIDO DA CAMISETA'];}
 export function technicalFieldChange(product,field,value){
  const t=product.technical;if(!t)throw Error('Aplique uma ficha técnica antes de editar.');const before=copy(t),notices=[];t[field]=value;
  const clear=(key,why)=>{if(t[key]!==''&&t[key]!==null){t[key]=key==='buttons'?null:'';notices.push(why);}};
@@ -64,11 +64,11 @@ export function technicalFieldChange(product,field,value){
  if(!needsRibbon(t)&&t.ribanaId)clear('ribanaId','Esta gola não utiliza o catálogo de ribana pronta.');
  if(needsRibbon(t)&&t.ribanaId&&!ribbonOptions(t).some(r=>r.id===t.ribanaId))clear('ribanaId','Selecione uma ribana do catálogo correto.');
  if(!sleeveFinishes(t).includes(t.sleeveFinish)){t.sleeveFinish='BARRA COMUM';notices.push('O acabamento anterior foi removido para o novo comprimento de manga.');}
- if(t.sleeveFinish!=='FILETE COSTURADO'){t.filetMaterial='';t.filetException='';}else if(t.fabricId==='ELASTIC'&&!filetMaterials(t).includes(t.filetMaterial)){t.filetMaterial='DRY';notices.push('No ELASTIC, o filete comum é DRY.');}
- if(field==='sleeveFinish'&&value==='FILETE COSTURADO'&&!t.filetMaterial)t.filetMaterial='DRY';
+ if(t.sleeveFinish!=='FILETE COSTURADO'){t.filetMaterial='';t.filetException='';}else{t.filetMaterial='MESMO TECIDO DA CAMISETA';t.filetException='';}
+ if(field==='hasSideCut'&&value===true)t.sideCutFabric='FLUENCE';
  if(t.productCode==='CAM-001'&&!t.hasSideCut){t.sideCutFabric='MESMO TECIDO DA PEÇA';if(t.hemShape!=='RETA')notices.push('Sem recorte lateral, a barra passa a ser reta.');t.hemShape='RETA';}
  const mold=moldFor(t);if(t.productCode==='CAL-001'&&!mold?.filet&&t.hemFinish!=='BARRA COMUM'){t.hemFinish='BARRA COMUM';notices.push('Este molde não aceita filete opcional.');}if(t.productCode==='CAL-001'&&!mold?.cut)t.sideCutFabric='MESMO TECIDO DA PEÇA';
- if(t.productCode==='CAL-001'&&field==='moldId'){t.biasColorNote='';if(mold?.pockets===false&&t.pocketRequest){t.pocketRequest='';notices.push('Solicitação de bolsos removida: o novo molde não permite bolsos.');}}
+ if(t.productCode==='CAL-001'&&field==='moldId'){if(mold?.cut)t.sideCutFabric='FLUENCE';t.biasColorNote='';if(mold?.pockets===false&&t.pocketRequest){t.pocketRequest='';notices.push('Solicitação de bolsos removida: o novo molde não permite bolsos.');}}
  product.fabric=MATERIALS[t.fabricId]?.label||'';return {before,notices};
 }
 export function cloneFitVariant(product,fit){
@@ -82,6 +82,7 @@ export function cleanTechnical(input){
   else if(typeof out[field]==='boolean'){if(typeof value!=='boolean')throw Error('Confira as opções da ficha técnica.');}
   else if(typeof value!=='string'||value.length>(['filetException','pocketRequest','specialDescription'].includes(field)?1000:200))throw Error('Campo inválido ou muito longo na ficha técnica.');out[field]=value;
  }
+ if(out.productCode==='CAM-001'&&out.sleeveFinish==='FILETE COSTURADO'){out.filetMaterial='MESMO TECIDO DA CAMISETA';out.filetException='';}
  if(!Array.isArray(input.applications)||input.applications.length>1000)throw Error('A ficha excede o limite de registros de aplicação.');
  out.applications=input.applications.map(a=>{if(!a||!['ESCUDO','MARCA MEINERZ','ETIQUETA OFICIAL'].includes(a.role)||!['TPU ALTO RELEVO','APLIQUE BORDADO','TERMOCOLANTE'].includes(a.type)||!Number.isSafeInteger(a.perUnit)||a.perUnit<1)throw Error('Confira tipo e quantidade das aplicações físicas.');const b={role:a.role,type:a.type,perUnit:a.perUnit};for(const field of ['id','position','exception']){if(typeof a[field]!=='string'||a[field].length>(field==='id'?80:1000))throw Error('Confira a identificação, posição e justificativa da aplicação.');b[field]=a[field];}return b;});if(new Set(out.applications.map(a=>a.id)).size!==out.applications.length)throw Error('Aplicações físicas com identificadores repetidos.');return out;
 }
@@ -102,7 +103,7 @@ export function technicalProblems(product,order={},release=false){
   else if(t.collarModel==='REDONDA COM PEITILHO'){if(release&&t.buttons===null)errors.push('Informe a quantidade de botões do peitilho, até 2.');if(t.buttons!==null&&(t.buttons<0||t.buttons>2))errors.push('Redonda com peitilho aceita no máximo 2 botões.');}else if(t.buttons!==null)errors.push('Botões não são opção para esta gola.');
   if(t.poloSideV)errors.push('Abertura em V nas duas laterais da Polo: compatibilidade dos moldes pendente de confirmação.');
   one(t.sleeveLength,['CURTA','LONGA'],'Comprimento de manga inválido.');need(t.sleeveLength,'Escolha o comprimento da manga.');one(t.sleeveFinish,sleeveFinishes(t),'Acabamento incompatível com o comprimento de manga.');need(t.sleeveFinish,'Escolha o acabamento da manga.');
-  if(t.sleeveFinish==='FILETE COSTURADO'){one(t.filetMaterial,filetMaterials(t),'Material do filete incompatível com o tecido principal.');need(t.filetMaterial,'Informe o material do filete.');if(t.filetMaterial==='RIBANA (EXCEÇÃO)')need(t.filetException.trim(),'Registre a solicitação excepcional do cliente para filete de ribana no ELASTIC.');}else if(t.filetMaterial||t.filetException)errors.push('Há material de filete preenchido sem filete de manga curta.');
+  if(t.sleeveFinish==='FILETE COSTURADO'){one(t.filetMaterial,filetMaterials(t),'Material do filete incompatível com o tecido principal.');need(t.filetMaterial,'Informe o material do filete.');}else if(t.filetMaterial||t.filetException)errors.push('Há material de filete preenchido sem filete de manga curta.');
   need(t.hemShape,'Escolha o formato da barra.');one(t.hemShape,t.hasSideCut?['RETA','ARREDONDADA']:['RETA'],'Barra arredondada exige recorte lateral.');if(!t.hasSideCut&&t.sideCutFabric!=='MESMO TECIDO DA PEÇA')errors.push('Tecido de recorte informado sem recorte lateral.');
  }else{
   const mold=moldFor(t);need(t.moldId,'Escolha o molde do calção.');if(t.moldId&&(!mold||mold.fit!==t.fit))errors.push('Molde incompatível com a modelagem do calção.');
@@ -170,7 +171,7 @@ export function technicalLines(product,order={}){
  if(t.productCode==='CAL-001'){const m=moldFor(t);lines.push('Molde: '+(m?.label||'PENDENTE'),m?.description||'',m?.stein?'VIÉS FIXO: DRY · COR: '+(t.biasColorNote||'PENDENTE'):t.hemFinish,'CORDÃO OBRIGATÓRIO: '+(t.drawstringColor||'PENDENTE'));}
  if(t.sleeveFinish==='FILETE COSTURADO')lines.push('Filete: '+t.filetMaterial+(t.filetException?' · EXCEÇÃO: '+t.filetException:''));
  if(t.hasSideCut||moldFor(t)?.cut)lines.push('RECORTE: '+t.sideCutFabric);if(t.productCode==='CAM-001')lines.push('Barra: '+t.hemShape);
- if(t.ribanaId){const rib=ribbonOptions(t).find(r=>r.id===t.ribanaId);if(rib)lines.push('RIBANA '+rib.id+': '+rib.displayColorName+' · FÁBRICA: '+rib.factoryColorRef.join(' + '));}
+ if(t.ribanaId){const rib=ribbonOptions(t).find(r=>r.id===t.ribanaId);if(rib)lines.push('Gola pronta: '+rib.displayColorName);}
  for(const a of physicalApplications(product))lines.push(a.role+' · '+a.type+' · '+a.perUnit+'/peça = '+a.quantity+' aplicações · '+a.position+(a.customerCharge===0?' · GRATUITA PARA O CLIENTE':'')+(a.exception?' · EXCEÇÃO: '+a.exception:''));
  if(!t.applications.length)lines.push('Escudos, marcas e personalização: SUBLIMADOS NA ARTE; sem aplicação física adicional.');
  if(t.specialReference||t.specialDescription)lines.push('TAMANHO ESPECIAL: '+t.specialReference+' · '+t.specialDescription);
@@ -186,3 +187,21 @@ export function productionSummary(order,parseGrade){
  const groups=new Map();for(const page of order.pages||[])for(const product of page.products||[]){const t=product.technical,fit=t?.fit||'',name=product.type.toUpperCase()+(fit?' · '+fitLabel(t.productCode,fit).toUpperCase():''),rows=product.names?.length?product.names:parseGrade(product.grade,product.type).groups.flatMap(g=>g.rows.map(r=>({...r,category:g.category})));for(const row of rows){const label=name+(!fit&&row.category&&row.category!==product.type.toUpperCase()?' · '+row.category:''),size=isSpecialSize(row.size)?'TAMANHO ESPECIAL':canonicalSize(row.size);if(!groups.has(label))groups.set(label,new Map());const group=groups.get(label);group.set(size,(group.get(size)||0)+Number(row.quantity||0));}}
  return [...groups].map(([product,sizes])=>({product,rows:[...sizes].map(([size,quantity])=>({size,quantity})),quantity:[...sizes.values()].reduce((a,b)=>a+b,0)}));
 }
+
+export function productDisplayName(product){
+ const t=product.technical;if(!t)return product.model||product.type;
+ if(t.productCode==='CAM-001')return product.type+(t.collarModel?' gola '+t.collarModel:'')+(t.hasSideCut?' com recorte':'')+(t.sleeveLength==='LONGA'?' · manga longa':'');
+ const mold=moldFor(t);return 'Calção de jogo'+(mold?.cut?' com recorte':'')+(mold?.label?' · '+mold.label.replace(/\s*\(PADRÃO\)/,''):'');
+}
+export function finishSummary(product,order={}){
+ const t=product.technical;if(!t)return product.detailColor||'';const rib=ribbonOptions(t).find(r=>r.id===t.ribanaId),lines=[product.detailColor];
+ if(t.productCode==='CAM-001')lines.push(order.shirtSleeveCut,t.sleeveFinish==='FILETE COSTURADO'?'Filete: tecido da camiseta':t.sleeveFinish,t.collarFinish,rib?.displayColorName,t.buttons!==null?t.buttons+' botões':'',t.vConstruction,t.hasSideCut?'Recorte: '+t.sideCutFabric:'',t.hemShape);
+ else lines.push(t.hemFinish,moldFor(t)?.cut?'Recorte: '+t.sideCutFabric:'',t.drawstringColor?'Cordão: '+t.drawstringColor:'',t.biasColorNote);
+ return lines.filter(Boolean).join(' · ');
+}
+export function detectedTechniques(order,products=order.pages.flatMap(pg=>pg.products)){
+ const result=new Set((order.techniques||[]).filter(t=>!['TPU ALTO RELEVO','DTF','TERMOCOLANTE','BORDADO / APLIQUE'].includes(t))),add=value=>{const v=String(value||'').toUpperCase();if(/SUBLIM|TRANSFER/.test(v))result.add('TRANSFER');if(/TPU/.test(v))result.add('TPU ALTO RELEVO');if(/TERMOCOLANTE/.test(v))result.add('TERMOCOLANTE');if(/DTF/.test(v))result.add('DTF');if(/BORDADO|APLIQUE/.test(v))result.add('BORDADO / APLIQUE');if(/SERIGRAF/.test(v))result.add('SERIGRAFIA');};
+ for(const p of products){add(p.print);for(const a of physicalApplications(p))add(a.type);for(const a of p.extraApplications||[])add(a);for(const c of p.components||[])add([c.name,c.finish,c.material].join(' '));}return [...result];
+}
+
+export function applyFactoryDefaults(order){let changed=false;for(const p of order.pages.flatMap(pg=>pg.products)){const t=p.technical;if(t?.productCode==='CAM-001'&&t.sleeveFinish==='FILETE COSTURADO'&&(t.filetMaterial!=='MESMO TECIDO DA CAMISETA'||t.filetException)){t.filetMaterial='MESMO TECIDO DA CAMISETA';t.filetException='';changed=true;}}return changed;}

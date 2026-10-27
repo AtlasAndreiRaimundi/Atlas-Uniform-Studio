@@ -25,20 +25,20 @@ test('factory catalogs retain stable IDs, exact ordered combinations and separat
 
 test('all eight shirt fabrics allow the nine collars and each ready-made catalog is exclusive',()=>{
  for(const fabricId of c.PRODUCT_CATALOG[0].fabrics)for(const collarModel of c.COLLARS){const p=item(),o=orderWith(p),t=p.technical;t.fabricId=fabricId;p.fabric=c.MATERIALS[fabricId].label;t.collarModel=collarModel;t.collarFinish=c.collarFinishes(collarModel)[0];if(c.needsRibbon(t))t.ribanaId=c.ribbonOptions(t)[0].id;if(collarModel==='V')t.vConstruction='TRADICIONAL';if(['POLO','REDONDA COM PEITILHO'].includes(collarModel))t.buttons=2;assert.deepEqual(c.technicalProblems(p,o,true),[],fabricId+' '+collarModel);}
- for(const rib of c.SHARED_RIBBONS){const p=item();Object.assign(p.technical,{collarModel:'EDGE',collarFinish:'PRONTA',ribanaId:rib.id});assert.deepEqual(c.technicalProblems(p,orderWith(p),true),[]);assert.match(c.technicalLines(p).join('\n'),new RegExp(rib.factoryColorRef[0]));}
+ for(const rib of c.SHARED_RIBBONS){const p=item();Object.assign(p.technical,{collarModel:'EDGE',collarFinish:'PRONTA',ribanaId:rib.id});assert.deepEqual(c.technicalProblems(p,orderWith(p),true),[]);assert.ok(c.technicalLines(p).join('\n').includes(rib.displayColorName));assert.ok(!c.technicalLines(p).join('\n').includes('FÁBRICA:'));}
  for(const rib of c.POLO_RIBBONS){const p=item();Object.assign(p.technical,{collarModel:'POLO',collarFinish:'PRONTA',ribanaId:rib.id,buttons:1});assert.deepEqual(c.technicalProblems(p,orderWith(p),true),[]);p.technical.ribanaId='COMP-01';assert.match(message(c.technicalProblems(p,{},false)),/catálogo desta gola/);}
  const p=item();Object.assign(p.technical,{collarModel:'EDGE',collarFinish:'SUBLIMADA'});assert.match(message(c.technicalProblems(p)),/incompatível/);
 });
 
 test('dependent shirt choices reset with notice and keep global cut independent of fit and sleeve length',()=>{
- const p=item();Object.assign(p.technical,{fabricId:'ELASTIC',sleeveFinish:'FILETE COSTURADO',filetMaterial:'MESMO TECIDO DA CAMISETA'});const result=c.technicalFieldChange(p,'fabricId','ELASTIC');assert.equal(p.technical.filetMaterial,'DRY');assert.ok(result.notices.length);
+ const p=item();Object.assign(p.technical,{fabricId:'ELASTIC',sleeveFinish:'FILETE COSTURADO',filetMaterial:'MESMO TECIDO DA CAMISETA'});const result=c.technicalFieldChange(p,'fabricId','ELASTIC');assert.equal(p.technical.filetMaterial,'MESMO TECIDO DA CAMISETA');
  c.technicalFieldChange(p,'sleeveLength','LONGA');assert.equal(p.technical.sleeveFinish,'BARRA COMUM');assert.equal(p.technical.filetMaterial,'');assert.deepEqual(c.sleeveFinishes(p.technical),['BARRA COMUM','PUNHO']);c.technicalFieldChange(p,'sleeveFinish','PUNHO');assert.match(c.technicalLines(p).join(' '),/RIBANA SUBLIMADA/);
  c.technicalFieldChange(p,'hasSideCut',true);c.technicalFieldChange(p,'sideCutFabric','FLUENCE');c.technicalFieldChange(p,'hemShape','ARREDONDADA');c.technicalFieldChange(p,'hasSideCut',false);assert.equal(p.technical.hemShape,'RETA');assert.equal(p.technical.sideCutFabric,'MESMO TECIDO DA PEÇA');
  Object.assign(p.technical,{collarModel:'POLO',collarFinish:'PRONTA',ribanaId:'POLO-01',buttons:3});c.technicalFieldChange(p,'fit','FEMININA');assert.equal(p.technical.buttons,null);c.technicalFieldChange(p,'collarModel','EDGE');assert.equal(p.technical.ribanaId,'');assert.equal(p.technical.collarFinish,'PRONTA');
 });
 
 test('sleeve filet exceptions and Polo fit limits are validated at save and release boundaries',()=>{
- const p=item(),o=orderWith(p);Object.assign(p.technical,{fabricId:'ELASTIC',sleeveFinish:'FILETE COSTURADO',filetMaterial:'RIBANA (EXCEÇÃO)'});p.fabric='ELASTIC';assert.match(message(c.technicalProblems(p,o,true)),/solicitação excepcional/);p.technical.filetException='Cliente solicitou explicitamente';assert.deepEqual(c.technicalProblems(p,o,true),[]);
+ const p=item(),o=orderWith(p);Object.assign(p.technical,{fabricId:'ELASTIC',sleeveFinish:'FILETE COSTURADO',filetMaterial:'RIBANA (EXCEÇÃO)'});p.fabric='ELASTIC';assert.match(message(c.technicalProblems(p,o,true)),/Material do filete/);c.technicalFieldChange(p,'sleeveFinish','FILETE COSTURADO');assert.equal(p.technical.filetMaterial,'MESMO TECIDO DA CAMISETA');assert.deepEqual(c.technicalProblems(p,o,true),[]);
  Object.assign(p.technical,{fit:'INFANTIL',collarModel:'POLO',collarFinish:'SUBLIMADA COM ENTRETELA',buttons:3});assert.match(message(c.technicalProblems(p,o)),/máximo 2/);assert.throws(()=>validateDocument(o),/máximo 2/);
  p.technical.buttons=2;p.technical.poloSideV=true;assert.match(message(c.technicalProblems(p,o)),/pendente/);
 });

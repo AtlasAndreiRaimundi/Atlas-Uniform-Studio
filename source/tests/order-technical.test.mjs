@@ -73,3 +73,8 @@ test('a failed attachment save cleans only the new file and failed complement co
  const originalSave=production.save.bind(production);production.save=async()=>{throw new Error('Save failed');};const count=objects.size;
  await assert.rejects(technical.attach(alice,source.id,source.version,cdr('outra.cdr')),/Save failed/);assert.equal(objects.size,count);assert.equal(sql.prepare('SELECT COUNT(*) AS count FROM order_technical_files').get().count,1);production.save=originalSave;
 });
+
+
+test('final release requires an owned CDR, while drafts remain editable before upload',async()=>{
+ const {production,saved,technical,release}=setup();let order=await saved();await assert.rejects(release(order),/CDR original/);await assert.rejects(production.save(alice,order.id,{version:order.version,document:{...order.document,technicalFiles:[{id:'forged'}]},action:'release',checks:{art:true,list:true,technical:true}}),{status:404});order=await technical.attach(alice,order.id,order.version,cdr());assert.equal((await release(order)).document.workflow.status,'released');
+});
