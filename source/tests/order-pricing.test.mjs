@@ -37,3 +37,5 @@ test('budget occupies the reserved rectangle, hides zero discount and enlarges t
 test('all order file names start with code, client and title while blocking path and control characters',()=>{
  assert.equal(orderFileStem(order()),'0001-10-MNZ - Equipe - Jogo 01');const stem=orderFileStem({number:'0001-10-MNZ',client:'A/B\\C',title:'Jogo: 01\nFinal'});assert.equal(stem,'0001-10-MNZ - A B C - Jogo 01 Final');assert.ok(!stem.includes('/'));assert.equal(orderFileStem({}),'SEM CODIGO - SEM CLIENTE - PEDIDO');
 });
+
+test('legacy text finishes never silently become free additions',()=>{const p=newProduct();p.fabric='JACQUARD ELITE';p.model='Raglan · Gola Elite';assert.equal(quoteProduct(p).unitCents,null);p.priceConfig={baseCents:7750};assert.equal(quoteProduct(p).unitCents,7750);});

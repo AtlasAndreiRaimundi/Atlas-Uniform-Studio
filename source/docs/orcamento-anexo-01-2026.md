@@ -49,3 +49,5 @@ A tabela é versionada. Em futuras alterações de preço, preservar o cálculo 
 Orçamento no retângulo inferior esquerdo da ficha A4 horizontal, sem reduzir a área das peças. Campos: quantidade, descrição, unitário líquido e total. Até quatro linhas por desenho; excedentes aparecem nos dados complementares. Pedidos com múltiplos desenhos mostram o subtotal do desenho e o total do pedido, quando couber; listas permanecem intercaladas após cada desenho.
 
 Código ampliado no cabeçalho à direita, com redução automática apenas para códigos longos. PDF, SVG, dados, ZIP e CDRs baixados começam com `código - cliente - nome do pedido`. Sufixos identificam folha, arquivo técnico e manifesto. Nomes são sanitizados e limitados para compatibilidade; o CDR original mantém bytes, hash e nome original no manifesto. O arquivo enviado pelo cliente não é regravado nem convertido.
+
+Cadastros antigos com gola, recorte ou filete descritos em texto livre exigem aplicar a ficha técnica ou informar o preço base já incluindo esses acabamentos. O sistema não considera automaticamente que um acabamento antigo é gratuito. Aplicações físicas continuam sendo somadas separadamente.

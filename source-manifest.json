@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "4888960f0ff02d5403c3ea12f6df795a72025daf",
-  "exported_at": "2026-10-27T18:12:28.480563+00:00",
+  "source_commit": "71421cae8de32457f31cfb3158c411a40a2ffb22",
+  "exported_at": "2026-10-27T18:18:27.495455+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -790,8 +790,8 @@
     },
     {
       "path": "docs/orcamento-anexo-01-2026.md",
-      "size": 4017,
-      "sha256": "c2b53173574eb1513db512a2447d723d8887e9dd6e813cf62be03168cf6b228a"
+      "size": 4320,
+      "sha256": "9de6e86febdade358d2e03e0c060e0a30352704357bcfc426a584e6598073406"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1645,8 +1645,8 @@
     },
     {
       "path": "public/order-pricing.js",
-      "size": 7379,
-      "sha256": "4aa059bf94f3df24e6b564528d98623d992b45ce8987195eb57142391a9e2928"
+      "size": 7635,
+      "sha256": "7464406eede006030ef18a49b27152515c47c1387e95832cf0e2aa8d47930993"
     },
     {
       "path": "public/order-visual-tools.js",
@@ -2300,8 +2300,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 65497,
-      "sha256": "ed1cc7e6d71ca2decb587be396f2a6ffc7ec45f34d08f511e402e3cb93f7f5bf"
+      "size": 66580,
+      "sha256": "e9e7fea9864af9d11ae494f9c66ca692b5b467533f36b9517f78d61f6162774a"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2320,8 +2320,8 @@
     },
     {
       "path": "tests/order-pricing.test.mjs",
-      "size": 6574,
-      "sha256": "5b9b9a21820a77f76cdd106c5f0e0b151adf042095093f39aecd26e7f9e17201"
+      "size": 6848,
+      "sha256": "559692599c08825ec2a9325a07a988db4ad1eff5e5dd1f15f7858d7e786782a3"
     },
     {
       "path": "tests/order-print-list.test.mjs",

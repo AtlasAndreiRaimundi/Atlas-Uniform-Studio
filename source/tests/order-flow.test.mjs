@@ -50,7 +50,7 @@ async function orderScreen({search='',initialDraft=null,chooseInitial=true}={}){
 
 async function savedOrderScreen(){
  const screen=await orderScreen(),{context,evaluate,calls}=screen,records=new Map();
- for(const key of ['A','B']){const document=core.demoOrder();document.title='Pedido '+key;document.client='Cliente '+key;records.set(key,{id:key,version:1,title:document.title,client:document.client,number:key+'-2027',tracking:{stage:'draft'},document});}
+ for(const key of ['A','B']){const document=core.demoOrder();document.pages[0].products[0].priceConfig={baseCents:7750};document.title='Pedido '+key;document.client='Cliente '+key;records.set(key,{id:key,version:1,title:document.title,client:document.client,number:key+'-2027',tracking:{stage:'draft'},document});}
  context.draftCopies=[];context.paths=[];context.canonicalWorkflowPath=path=>context.paths.push(path);
  evaluate('profile={email:"designer@test",displayName:"Designer"};localDraft=async(value)=>{if(value)draftCopies.push(structuredClone(value));};');
  context.fetch=async(path,options={})=>{
@@ -249,7 +249,7 @@ test('the review stays closed until required data is complete and opens a readab
  assert.equal(find('[data-order-step="review"]').disabled,true);assert.equal(visible(find('#releaseChecks')),false);
  await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');
  assert.equal(evaluate('orderStage'),'files');assert.equal(visible(find('#orderOverview')),false);assert.equal(previewCalls.length,0);
- const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01',technicalFiles:[{id:'cdr',name:'desenho.cdr'}]});const second=core.newOrder().pages[0];Object.assign(second.products[0],{type:'Calção',model:'Treino',fabric:'DRY',quantity:1,grade:'CALÇÃO\nM = 1'});complete.pages.push(second);context.complete=complete;await evaluate('replaceDocument(complete,{id:"COMPLETE",version:1})');
+ const complete=core.demoOrder();complete.pages[0].products[0].priceConfig={baseCents:7750};Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01',technicalFiles:[{id:'cdr',name:'desenho.cdr'}]});const second=core.newOrder().pages[0];Object.assign(second.products[0],{type:'Calção',model:'Treino',fabric:'DRY',quantity:1,grade:'CALÇÃO\nM = 1'});complete.pages.push(second);context.complete=complete;await evaluate('replaceDocument(complete,{id:"COMPLETE",version:1})');
  assert.equal(find('[data-order-step="review"]').disabled,false);assert.equal(evaluate('orderStage'),'identity');assert.equal(visible(find('#orderOverview')),false);assert.equal(previewCalls.length,0,'completing or recovering data never opens a modal automatically');
  await evaluate('pageIndex=1;productIndex=0;render()');assert.equal(evaluate('sheets[sheetIndex].sourcePage'),2);assert.equal(evaluate('sheets[sheetIndex].kind'),'sheet');const snapshot=evaluate('JSON.stringify(doc)'),revision=evaluate('revision');await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'files');await find('#stageNext').emit('click');
  assert.equal(evaluate('orderStage'),'review');assert.equal(visible(find('#orderPreview')),false);assert.equal(visible(find('#releaseChecks')),false);assert.equal(previewCalls.at(-1).mode,'review');assert.equal(previewCalls.at(-1).sheet,0,'the final review starts at the first sheet even after editing another piece');assert.ok(!find('#sheet').innerHTML.includes('MOCKUP'),'the completed review shows the same blank area as the printed sheet when the optional image is absent');
@@ -379,7 +379,7 @@ test('applications only appear in the unified step and an attached valid list of
  const {find,evaluate,click,context,visible,previewCalls}=await orderScreen();
  await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="art"]');
  assert.equal(find('#productEditor').innerHTML.includes('data-catalog-action="add-application"'),false);
- const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01',technicalFiles:[{id:'cdr',name:'desenho.cdr'}]});context.complete=complete;await evaluate('replaceDocument(complete,{id:"READY",version:1})');
+ const complete=core.demoOrder();complete.pages[0].products[0].priceConfig={baseCents:7750};Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01',technicalFiles:[{id:'cdr',name:'desenho.cdr'}]});context.complete=complete;await evaluate('replaceDocument(complete,{id:"READY",version:1})');
  assert.equal(find('#readyReviewDialog').open,false);
  await evaluate('applyOrderList([{produto:"Camiseta",modelo:"Raglan · Gola Elite",tamanho:"M",quantidade:8,nome:"",numero:"",adicional:""}],{name:"Lista pronta"})');
  assert.equal(find('#readyReviewDialog').open,true);assert.equal(previewCalls.length,0,'the popup asks before opening fullscreen');
@@ -399,4 +399,8 @@ test('saved lists show ready lists and drafts, and confirmed deletion preserves 
 
 test('the mandatory CDR step follows the list and piece artwork never exposes an early annotation editor',async()=>{
  const {find,all,evaluate,click}=await orderScreen();await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="art"]');assert.ok(!find('#productEditor').innerHTML.includes('data-action="edit-image"'));assert.ok(!find('#productEditor').innerHTML.includes('data-product="model"'));await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'files');assert.ok(all('[data-order-step]').findIndex(e=>e.dataset.orderStep==='files')>all('[data-order-step]').findIndex(e=>e.dataset.orderStep==='list'));assert.equal(evaluate('reviewReady()'),false);
+});
+
+test('the budget screen applies a customer discount and clears its notice when zeroed',async()=>{
+ const {context,find,evaluate}=await orderScreen();const document=core.demoOrder();document.pages[0].products[0].priceConfig={baseCents:7750};context.budgetDocument=document;await evaluate('replaceDocument(budgetDocument,{id:"BUDGET",version:1})');let input=find('[data-price-discount]');input.value='25';await find('#orderBudget').emit('change',{target:input});assert.equal(evaluate('doc.pricing.discountBps'),2500);assert.equal(evaluate('quoteOrder(doc).totalCents'),52504);assert.match(find('#orderBudget').innerHTML,/25% de desconto já aplicado/);input=find('[data-price-discount]');input.value='0';await find('#orderBudget').emit('change',{target:input});assert.equal(evaluate('quoteOrder(doc).totalCents'),70000);assert.ok(!find('#orderBudget').innerHTML.includes('% de desconto já aplicado'));
 });
