@@ -33,7 +33,7 @@ test('three designs count to 3 de 3 while lists, details and production summarie
  const sheets=buildSheets(order);assert.equal(sheets.filter(s=>s.kind==='sheet').length,3);assert.ok(sheets.some(s=>s.kind==='details'));
  for(const sheet of sheets){assert.equal(sheet.layoutCount,3);assert.equal(sheet.ops.find(op=>op.role==='layout-counter').text,sheet.sourcePage+' de 3');}
  assert.deepEqual(sheets.filter(s=>s.kind==='sheet').map(s=>s.ops.find(op=>op.role==='layout-counter').text),['1 de 3','2 de 3','3 de 3']);
- const typed=catalogOrder(layoutsFixture()),catalogSheets=buildSheets(typed,{}, {draft:true});assert.ok(catalogSheets.some(s=>s.kind==='summary'));for(const sheet of catalogSheets){if(sheet.kind==='summary')assert.ok(!sheet.ops.some(op=>op.role==='layout-counter'));else assert.equal(sheet.ops.find(op=>op.role==='layout-counter').text,'1 de 1');}
+ const typed=catalogOrder(layoutsFixture()),catalogSheets=buildSheets(typed,{}, {draft:true});assert.ok(!catalogSheets.some(s=>s.kind==='summary'));for(const sheet of catalogSheets){if(sheet.kind==='summary')assert.ok(!sheet.ops.some(op=>op.role==='layout-counter'));else assert.equal(sheet.ops.find(op=>op.role==='layout-counter').text,'1 de 1');}
 });
 
 test('the order code is right aligned above the right column in both SVG and PDF, leaving its old position empty',async()=>{

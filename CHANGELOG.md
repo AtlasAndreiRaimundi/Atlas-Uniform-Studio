@@ -115,3 +115,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Anexo 01/2026 versionado. Preços ausentes e acabamentos antigos não estruturados ficam pendentes até completar o cadastro ou informar o valor; validação no servidor e conferência final protegida.
 - Código ampliado à direita e padrão código - cliente - pedido para PDF, SVG, JSON, ZIP e CDRs, preservando os bytes originais.
 - Fonte final `71421cae8de32457f31cfb3158c411a40a2ffb22` (492 arquivos). 349 testes aprovados, 1 ignorado preexistente, zero falhas; TypeScript e build concluídos. PDF renderizado e inspecionado; desconto verificado na tela.
+
+## v71 — 2026-10-27
+- Remove o resumo geral final de kits e avulsos da conferência e dos arquivos; desenhos, listas, orçamento e dados complementares necessários são preservados.
+- Fonte: `4edc3679c7e554af7832d548032a6014fb9eb366` (492 arquivos).
+- 50 testes de fluxo, impressão e catálogo aprovados; build concluído; PDF de teste agora tem somente desenho e lista.
