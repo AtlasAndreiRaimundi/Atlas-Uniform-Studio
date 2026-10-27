@@ -1,5 +1,5 @@
-import {createAnnotationEditor} from './order-annotation-editor.js?v=6';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=16';
+import {createAnnotationEditor} from './order-annotation-editor.js?v=8';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=18';
 import {imageTransform} from './order-image-layout.js?v=3';
 import {finalPreviewProblems,releaseProblems} from './production-core.js?v=13';
 

@@ -65,3 +65,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - 326 testes aprovados e 1 referência XLSX antiga ausente; TypeScript e build aprovados; início, kits e seleção das três modelagens conferidos no navegador. Testes de composição adicionados ao workflow.
 - Origem Sites: `dbf024a8ab05e1a38b981905a9eefdee0df8ff39`, 477 arquivos verificados; artefato publicado SHA-256 `000febed0a3737e76f10c0e6dd8026d44ca450624417957881897a0747dabd6a`.
 - [Documentação junto ao código](source/docs/pedidos-composicao-modelagens.md).
+
+## 2026-10-27 — Peças agrupadas e aplicações vinculadas (v63)
+
+- Uma aba por peça/desenho reúne adulto, Baby Look e infantil; quantidades e impressão agrupadas, mantendo validações e exceções por modelagem.
+- Características comuns compartilhadas e seletor interno de conferência, sem criar abas adicionais por categoria.
+- Aplicações geram setas por unidade aplicada em cada peça, preservam posições ao editar e removem apenas apontamentos vinculados. Totais de aplicações respeitam as quantidades de cada modelagem.
+- 327 testes aprovados, 1 referência antiga ausente; TypeScript/build e conferência no navegador aprovados.
+- Origem Sites: `b9006c2b595b52fbe584cf3f3a7c037ea5f81b4e`, 480 arquivos. Documentação: source/docs/pedidos-pecas-agrupadas.md.

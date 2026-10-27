@@ -1,4 +1,5 @@
-import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize} from './product-catalog.js?v=2';
+import {pieceFamilies} from './order-linked-applications.js';
+import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize} from './product-catalog.js?v=3';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
 import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=13';
 import {placeOrderImage,ORDER_PAGE} from './order-image-layout.js?v=3';
@@ -89,7 +90,7 @@ function primary(order,page,products,assets,sourcePage=1){
   const visible=rows.slice(0,gradeLimit);visible.forEach((r,j)=>d.text(r.text,colX+5,464+j*gradeStep,gradeSize,color,r.bold));
   if(rows.length>gradeLimit){extra.push('QUANTIDADES · '+p.type,...rows.slice(gradeLimit).map(r=>r.text));d.text('Continua em detalhes',colX+5,532,5.8,C.muted);}
   if(!rows.length)d.text('Grade não informada',colX+5,466,7,C.muted);
-  if(p.notes)extra.push('OBSERVAÇÕES · '+p.type+': '+p.notes);if(p.technical)extra.push(...technicalLines(p,order).map(line=>'FICHA · '+p.type+': '+line));
+  if(p.familyMembers)extra.push(...p.familyMembers.flatMap(member=>technicalLines(member,order)));if(p.notes)extra.push('OBSERVAÇÕES · '+p.type+': '+p.notes);if(p.technical)extra.push(...technicalLines(p,order).map(line=>'FICHA · '+p.type+': '+line));
   (p.components||[]).forEach((c,j)=>{
    const value=[c.name,c.material,c.finish,c.position].filter(Boolean).join(' · ');const lines=wrap(value,slot-16,7.3);
    if(!applications&&!page.freeComponents&&page.imageArea!=='expanded'&&j<2&&lines.length<=2){lines.forEach((s,k)=>d.text(s,x+7,424+j*17+k*8,7.3,C.red,j===0));if(c.anchor&&(shared||images.length)){const a={x:area.x+c.anchor.x*area.w,y:area.y+c.anchor.y*area.h};d.line(x+18,415+j*17,a.x,a.y,C.red,.6);const line=d.ops.at(-1);d.rect(a.x-1,a.y-1,2,2,C.red,'none');componentArrows.push({line,tip:d.ops.at(-1),area,anchor:c.anchor});}}
@@ -189,7 +190,7 @@ export function orderPreviewSVG(order,assets={}){
  const {page,products}=groups[0],sheet=primary(order,page,products,assets);sheet.fonts=assets.fonts;layoutCounter(sheet,groups.length);
  return sheetSVG(sheet,{placeholders:false});
 }
-function layoutGroups(order){return (order.pages||[]).flatMap(page=>{const count=page.visual?.mode==='shared'?2:page.mode==='individual'?1:2;return (catalogSheetGroups(page)||Array.from({length:Math.ceil(page.products.length/count)},(_,i)=>page.products.slice(i*count,i*count+count))).map(products=>({page,products}));});}
+function layoutGroups(order){return (order.pages||[]).flatMap(original=>{const page={...original,products:pieceFamilies(original).map(f=>{if(f.length===1)return f[0];const p={...f[0],quantity:f.reduce((n,p)=>n+Number(p.quantity||0),0),names:f.flatMap(p=>p.names||[]),grade:f.map(p=>(p.technical?.fit?fitLabel(p.technical.productCode,p.technical.fit).toUpperCase()+'\n':'')+p.grade).join('\n\n'),notes:f.map(p=>(p.technical?.fit?fitLabel(p.technical.productCode,p.technical.fit)+': ':'')+(p.notes||'')).filter(Boolean).join('\n')};p.familyMembers=f;return p;})};const count=page.visual?.mode==='shared'?2:page.mode==='individual'?1:2;return (catalogSheetGroups(page)||Array.from({length:Math.ceil(page.products.length/count)},(_,i)=>page.products.slice(i*count,i*count+count))).map(products=>({page,products}));});}
 export function buildSheets(order,assets={},options={}){
  if(!options.draft){const errors=catalogProblems(order,{release:true,parseGrade});if(errors.length)throw Error(errors.join(' '));}
  const result=[],groups=layoutGroups(order);for(const [index,{page,products}] of groups.entries()){const sourcePage=index+1,main=primary(order,page,products,assets,sourcePage);result.push(main,...listSheets(order,page,products,assets,sourcePage));const lines=main.extra.flatMap(t=>wrap(t,280,7.7));for(let start=0;start<lines.length;start+=66){const details=continuation(order,'DESENHO '+sourcePage+' · '+main.title,lines.slice(start,start+66),assets);details.kind='details';details.sourcePage=sourcePage;result.push(details);}}
