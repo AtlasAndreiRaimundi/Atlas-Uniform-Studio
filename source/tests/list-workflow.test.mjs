@@ -77,7 +77,7 @@ test('a list can be saved before any order, reopened and applied later to a new 
  const existing=newOrder();existing.number='552';existing.client='Cliente';const p=existing.pages[0].products[0];p.fabric='JACQUARD';p.images=['data:image/png;base64,AAAA'];
  const first=await orders.save(user,null,{document:existing});const merged=applyListToOrder((await orders.get(user,first.id)).document,reopened.document.rows,source);
  await orders.save(user,first.id,{document:merged,version:first.version});const order=await orders.get(user,first.id);
- assert.equal((await orders.list(user)).length,1);assert.equal(order.document.number,'552');assert.equal(order.document.pages[0].products[0].fabric,'JACQUARD');assert.deepEqual(order.document.pages[0].products[0].images,p.images);
+ assert.equal((await orders.list(user)).length,1);assert.equal(order.document.number,first.number);assert.equal(order.document.pages[0].products[0].fabric,'JACQUARD');assert.deepEqual(order.document.pages[0].products[0].images,p.images);
  assert.equal(order.document.listSource.id,saved.id);assert.equal(order.document.listSource.version,1);assert.equal(order.document.pages[0].products[0].names[0].additional,'CAPITÃO · O+');
  await lists.save(user,saved.id,{version:1,document:document([row({adicional:'PROFESSOR'})])});
  assert.equal((await orders.get(user,first.id)).document.pages[0].products[0].names[0].additional,'CAPITÃO · O+','an order keeps its reviewed list snapshot');

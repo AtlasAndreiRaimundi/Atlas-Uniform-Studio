@@ -6,6 +6,7 @@ import {AppError} from './project-service.mjs';
 import {normalizeListRow,listProblems} from '../public/order-list.js';
 import {releaseProblems,EXTRA_APPLICATIONS,parseGrade} from '../public/production-core.js';
 import {simulatorSnapshot} from './simulator-validation.mjs';
+import {allocateOrderNumber} from './order-number.mjs';
 const MAX=16*1024*1024;
 const text=(value,max=200)=>{if(typeof value!=='string'||value.length>max)throw new AppError(400,'Um dos campos do pedido é inválido ou muito longo.');return value;};
 function imageValue(image){if(image===null||image==='')return '';if(typeof image!=='string'||image.length>3*1024*1024||!/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(image))throw new AppError(400,'Use imagens PNG ou JPG de até 2 MB.');return image;}
@@ -50,7 +51,7 @@ export async function productionInput(request){
 }
 
 export class ProductionService{
- constructor(db,bucket){this.db=db;this.bucket=bucket;}
+ constructor(db,bucket,numberOptions={}){this.db=db;this.bucket=bucket;this.numberOptions=numberOptions;}
  owner(user){if(!user?.userId)throw new AppError(401,'Entre na sua conta para abrir os pedidos.');return user.userId;}
  summary(row){return {id:row.id,title:row.title,client:row.client,number:row.order_number,version:row.version,updatedAt:row.updated_at,thumbnailUrl:'/api/order-tracking/'+encodeURIComponent(row.id)+'/thumbnail?version='+row.version,tracking:trackingOf(row)};}
  async list(user){const rows=await this.db.prepare('SELECT * FROM production_orders WHERE owner_id=? ORDER BY updated_at DESC LIMIT 200').bind(this.owner(user)).all();return rows.results.map(r=>this.summary(r));}
@@ -84,7 +85,10 @@ export class ProductionService{
   const stored=previous?(await this.get(user,id)).document:null;
   if(stored?.technicalCatalogVersion&&document.technicalCatalogVersion!==stored.technicalCatalogVersion)throw new AppError(400,'A ficha técnica não pode ser removida do pedido. Revise os campos do catálogo atual.');
   const typedIds=new Set((stored?.pages||[]).flatMap(page=>page.products.filter(p=>p.technical).map(p=>p.id)));if(document.pages.some(page=>page.products.some(p=>typedIds.has(p.id)&&!p.technical)))throw new AppError(400,'A ficha técnica de uma peça já cadastrada não pode ser removida.');
-  if(stored?.origin||trusted.origin){document.origin=stored?.origin||trusted.origin;document.previousOrder=document.origin.number;if(!document.number.trim()||document.number.trim().toLowerCase()===document.origin.number.trim().toLowerCase())throw new AppError(400,'Use um novo número, diferente do pedido original.');if(!['COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].includes(document.type))throw new AppError(400,'Mantenha o tipo de complemento neste pedido vinculado.');}
+  // The saved code is authoritative. New orders, imports and complements all
+  // receive a fresh server code; client-supplied numbers cannot overwrite it.
+  document.number=stored?.number||'';
+  if(stored?.origin||trusted.origin){document.origin=stored?.origin||trusted.origin;document.previousOrder=document.origin.number;if(!['COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].includes(document.type))throw new AppError(400,'Mantenha o tipo de complemento neste pedido vinculado.');}
   const tracking=previous?trackingOf(previous,stored):{stage:'draft',events:[],revision:1};
   if(['sent','accepted'].includes(tracking.stage))throw new AppError(400,tracking.stage==='accepted'?'Pedido aceito pela fábrica. Não pode ser alterado.':'Pedido enviado. Aguarde o aceite ou a devolução pela fábrica.');
   const action=input.action||'save';if(!['save','release','revise'].includes(action))throw new AppError(400,'Ação inválida.');
@@ -99,6 +103,7 @@ export class ProductionService{
    if(!previous)throw new AppError(400,'Salve o pedido antes de anexar arquivos técnicos.');
    const files=[];for(const file of document.technicalFiles){const row=await this.db.prepare('SELECT * FROM order_technical_files WHERE id=? AND order_id=? AND owner_id=?').bind(file.id,id,owner).first();if(!row)throw new AppError(404,'O arquivo técnico não pertence a este pedido.');files.push({id:row.id,name:row.file_name,label:row.label,size:row.size,sha256:row.sha256,createdAt:row.created_at});}document.technicalFiles=files;
   }
+  if(!document.number.trim())document.number=await allocateOrderNumber(this.db,this.numberOptions);
   if(action==='release'){
    const problems=releaseProblems(document);if(problems.length)throw new AppError(400,problems.join(' '));
    if(!input.checks||['art','list','technical'].some(key=>input.checks[key]!==true))throw new AppError(400,'Confirme arte, lista e dados técnicos separadamente.');

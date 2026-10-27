@@ -1,7 +1,7 @@
-import {createAnnotationEditor} from './order-annotation-editor.js?v=4';
-import {buildSheets,sheetSVG,PAPER} from './production-sheet.js?v=14';
+import {createAnnotationEditor} from './order-annotation-editor.js?v=5';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=15';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=11';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=12';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');
@@ -60,7 +60,7 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
   const pixels=zoom==='width'?width:zoom==='page'?Math.min(width,height*PAPER.width/PAPER.height):paperPixels*Number(zoom)/100;
   out('[data-final-sheet]').style.width=Math.round(pixels)+'px';
  }
- function renderFinal(){if(!finalSheets.length)return;currentSheet=Math.max(0,Math.min(currentSheet,finalSheets.length-1));out('[data-final-sheet]').innerHTML=sheetSVG(finalSheets[currentSheet],{placeholders:false});out('[data-sheet]').value=String(currentSheet);out('[data-prev]').disabled=currentSheet===0;out('[data-next]').disabled=currentSheet===finalSheets.length-1;out('[data-page-status]').textContent='Folha '+(currentSheet+1)+' de '+finalSheets.length+' · Use 100% ou mais para ler os detalhes.';resizeFinal();out('[data-scroll]').scrollTo?.({top:0,left:0});}
+ function renderFinal(){if(!finalSheets.length)return;currentSheet=Math.max(0,Math.min(currentSheet,finalSheets.length-1));out('[data-final-sheet]').innerHTML=sheetSVG(finalSheets[currentSheet],{placeholders:false});out('[data-sheet]').value=String(currentSheet);out('[data-prev]').disabled=currentSheet===0;out('[data-next]').disabled=currentSheet===finalSheets.length-1;out('[data-page-status]').textContent=sheetLabel(finalSheets[currentSheet])+' · Impressão: folha '+(currentSheet+1)+'/'+finalSheets.length+' · Use 100% ou mais para ler os detalhes.';resizeFinal();out('[data-scroll]').scrollTo?.({top:0,left:0});}
  function closeFinal(){if(document.fullscreenElement===final)document.exitFullscreen?.().catch(()=>{});final.close();}
  out('[data-close]').onclick=closeFinal;final.addEventListener('cancel',()=>{if(document.fullscreenElement===final)document.exitFullscreen?.().catch(()=>{});});
  final.addEventListener('close',()=>{if(previewMode==='review')onReviewClose?.();});
@@ -73,7 +73,7 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
   if(issues.length)return onError('Conclua antes da prévia final: '+issues.slice(0,8).join(' '));
   finalSheets=buildSheets(getOrder(),getAssets(),{draft:true});if(!finalSheets.length)return onError('Adicione uma peça antes de abrir a prévia.');previewMode=mode;currentSheet=Number.isSafeInteger(sheet)?sheet:0;
   out('[data-title]').textContent=mode==='draft'?'Prévia durante o preenchimento':'Conferência do pedido';out('[data-description]').textContent=mode==='draft'?'Prévia de trabalho. A conferência fica disponível depois que os campos obrigatórios estiverem completos.':'Confira todas as folhas. Ao fechar, marque as conferências de arte, lista e dados técnicos no pedido.';out('[data-close]').textContent=mode==='draft'?'Voltar ao preenchimento · Esc':'Voltar à conferência · Esc';out('[data-pdf]').hidden=mode==='draft';
-  out('[data-zoom]').value='100';out('[data-sheet]').replaceChildren(...finalSheets.map((sheet,index)=>{const option=document.createElement('option');option.value=String(index);option.textContent=(index+1)+' de '+finalSheets.length+' · '+sheet.title;return option;}));final.showModal();renderFinal();final.requestFullscreen?.().catch(()=>{});
+  out('[data-zoom]').value='100';out('[data-sheet]').replaceChildren(...finalSheets.map((sheet,index)=>{const option=document.createElement('option');option.value=String(index);option.textContent=sheetLabel(sheet);return option;}));final.showModal();renderFinal();final.requestFullscreen?.().catch(()=>{});
  }
  return {openImageEditor,openFinalPreview};
 }

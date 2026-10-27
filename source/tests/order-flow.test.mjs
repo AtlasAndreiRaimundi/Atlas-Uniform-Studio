@@ -62,6 +62,16 @@ async function savedOrderScreen(){
  return {...screen,records};
 }
 
+test('saving assigns the server code to the field, print preview and local draft while preserving newer edits',async()=>{
+ const {context,find,evaluate,calls}=await orderScreen();let finish;const pending=new Promise(resolve=>finish=resolve);
+ assert.ok('readonly' in find('[data-order="number"]').attributes);
+ context.draftCopies=[];evaluate('profile={email:"designer@test",displayName:"Designer"};doc.title="Pedido novo";doc.client="Equipe";localDraft=async(value)=>{if(value)draftCopies.push(structuredClone(value));};');
+ context.fetch=async(path,options={})=>{calls.push({path,options});if(options.method==='POST'){await pending;return {ok:true,json:async()=>({order:{id:'NEW',version:1,number:'0042-10-MNZ'}})};}return {ok:true,json:async()=>({orders:[]})};};
+ const save=evaluate('save(true)');await new Promise(setImmediate);evaluate('doc.notes="EDIÇÃO DURANTE O SALVAMENTO";changed();');finish();assert.equal(await save,true);
+ assert.equal(evaluate('doc.number'),'0042-10-MNZ');assert.equal(find('[data-order="number"]').value,'0042-10-MNZ');assert.match(find('#sheet').innerHTML,/Nº 0042-10-MNZ/);assert.equal(context.draftCopies.at(-1).document.number,'0042-10-MNZ');assert.equal(evaluate('dirty'),true);assert.equal(evaluate('doc.notes'),'EDIÇÃO DURANTE O SALVAMENTO');
+ assert.equal(JSON.parse(calls.find(call=>call.options.method==='POST').options.body).document.number,'');
+});
+
 test('the real order screen preserves existing piece data and saves before opening its named list',async()=>{
  const {context,find,evaluate,calls,destination}=await orderScreen();
  assert.ok(find('#continueOrderList').listeners.click.length);
@@ -212,7 +222,7 @@ test('the review stays closed until required data is complete and opens a readab
  assert.equal(find('[data-order-step="review"]').disabled,true);assert.equal(visible(find('#releaseChecks')),false);
  await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');
  assert.equal(evaluate('orderStage'),'list');assert.equal(visible(find('#orderOverview')),false);assert.equal(previewCalls.length,0);assert.match(find('#error').textContent,/Antes de revisar/);
- const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01'});const second=core.newOrder().pages[0];Object.assign(second.products[0],{type:'Calção',model:'Treino',fabric:'DRY',quantity:1,grade:'CALÇÃO\nM = 1'});complete.pages.push(second);context.complete=complete;await evaluate('replaceDocument(complete)');
+ const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01'});const second=core.newOrder().pages[0];Object.assign(second.products[0],{type:'Calção',model:'Treino',fabric:'DRY',quantity:1,grade:'CALÇÃO\nM = 1'});complete.pages.push(second);context.complete=complete;await evaluate('replaceDocument(complete,{id:"COMPLETE",version:1})');
  assert.equal(find('[data-order-step="review"]').disabled,false);assert.equal(evaluate('orderStage'),'identity');assert.equal(visible(find('#orderOverview')),false);assert.equal(previewCalls.length,0,'completing or recovering data never opens a modal automatically');
  await evaluate('pageIndex=1;productIndex=0;render()');assert.equal(evaluate('sheets[sheetIndex].sourcePage'),2);assert.equal(evaluate('sheets[sheetIndex].kind'),'sheet');const snapshot=evaluate('JSON.stringify(doc)'),revision=evaluate('revision');await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');
  assert.equal(evaluate('orderStage'),'review');assert.equal(visible(find('#orderPreview')),true);assert.equal(visible(find('#releaseChecks')),true);assert.equal(previewCalls.at(-1).mode,'review');assert.equal(previewCalls.at(-1).sheet,0,'the final review starts at the first sheet even after editing another piece');assert.ok(!find('#sheet').innerHTML.includes('MOCKUP'),'the completed review shows the same blank area as the printed sheet when the optional image is absent');
@@ -224,16 +234,16 @@ test('the review stays closed until required data is complete and opens a readab
 });
 
 
-test('the complement dialog names the source, requires a new number and creates a linked draft without changing the original',async()=>{
+test('the complement dialog names the source and receives a server generated code without changing the original',async()=>{
  const screen=await savedOrderScreen(),{find,evaluate,context,calls,records}=screen,source=structuredClone(records.get('A')),fetch=context.fetch;
  context.fetch=async(path,options={})=>{
   if(!path.endsWith('/complement'))return fetch(path,options);
-  calls.push({path,options});const input=JSON.parse(options.body),document=core.complementDocument(source.document,input);document.origin={id:'A',number:source.document.number,revision:1};document.workflow={status:'draft',revision:1,history:[]};const order={id:'C',version:1,number:document.number,title:document.title,document,tracking:{stage:'draft'}};records.set('C',order);return {ok:true,json:async()=>structuredClone({order})};
+  calls.push({path,options});const input=JSON.parse(options.body);assert.equal(input.number,undefined);const document=core.complementDocument(source.document,input);document.number='0002-10-MNZ';document.origin={id:'A',number:source.document.number,revision:1};document.workflow={status:'draft',revision:1,history:[]};const order={id:'C',version:1,number:document.number,title:document.title,document,tracking:{stage:'draft'}};records.set('C',order);return {ok:true,json:async()=>structuredClone({order})};
  };
- await find('#startComplement').emit('click');assert.equal(find('#complementDialog').open,true);assert.equal(find('#complementCopyList').checked,false);find('#complementNumber').value='';await find('#confirmComplement').emit('click');assert.equal(calls.filter(call=>call.path.endsWith('/complement')).length,0);assert.match(find('#complementError').textContent,/novo número/);
- find('#complementNumber').value='0001-02-MNZ';find('#complementType').value='COMPLEMENTO COM ALTERAÇÕES';await find('#confirmComplement').emit('click');assert.match(find('#complementError').textContent,/Descreva/);
+ await find('#startComplement').emit('click');assert.equal(find('#complementDialog').open,true);assert.equal(find('#complementCopyList').checked,false);assert.equal(screen.document.querySelector('#complementNumber'),null);
+ find('#complementType').value='COMPLEMENTO COM ALTERAÇÕES';await find('#confirmComplement').emit('click');assert.equal(calls.filter(call=>call.path.endsWith('/complement')).length,0);assert.match(find('#complementError').textContent,/Descreva/);
  find('#complementNotes').value='Acrescentar camisetas';await find('#confirmComplement').emit('click');
- assert.equal(evaluate('id'),'C');assert.equal(evaluate('doc.origin.id'),'A');assert.equal(evaluate('doc.workflow.status'),'draft');assert.equal(evaluate('orderStage'),'identity');assert.equal(find('#complementDialog').open,false);assert.equal(find('[data-order="previousOrder"]').readOnly,true);assert.equal(evaluate('doc.pages[0].products[0].quantity'),0);assert.deepEqual(records.get('A'),source);
+ assert.equal(evaluate('id'),'C');assert.equal(evaluate('doc.number'),'0002-10-MNZ');assert.equal(evaluate('doc.origin.id'),'A');assert.equal(evaluate('doc.workflow.status'),'draft');assert.equal(evaluate('orderStage'),'identity');assert.equal(find('#complementDialog').open,false);assert.equal(find('[data-order="previousOrder"]').readOnly,true);assert.equal(evaluate('doc.pages[0].products[0].quantity'),0);assert.deepEqual(records.get('A'),source);
 });
 
 test('cancelling a complement preserves the source and makes no creation request',async()=>{

@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v59 em 26/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v60 em 27/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 26/10/2026: 469 arquivos, Site v59, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 474 arquivos, Site v60, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -28,6 +28,8 @@ Consultar [funcionalidades](docs/funcionalidades.md), [arquitetura](docs/arquite
 ## Fichas técnicas de produção
 
 As fichas CAM-001 e CAL-001 estão versionadas com o código, incluindo catálogos, listas com quantidades independentes, validações e impressão A4. Veja [implementação, testes e pendências](docs/implementacao-fichas-2026-10-26.md) e as [especificações originais](source/docs/produtos/00_LEIA_PRIMEIRO_WORK.md).
+
+O código do pedido é gerado automaticamente no formato `0001-10-MNZ`, e a contagem impressa considera os desenhos, separando as folhas da lista. Veja [numeração e impressão](source/docs/pedidos-numeracao.md).
 
 A montagem permite excluir páginas e começar outro pedido descartando o preenchimento. Veja [ações de edição e proteção de dados](source/docs/pedidos-edicao.md).
 

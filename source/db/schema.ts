@@ -1,5 +1,10 @@
 import { sqliteTable, text, integer, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
+export const productionOrderSequences=sqliteTable('production_order_sequences',{
+  unit:text('unit').primaryKey(),
+  lastValue:integer('last_value').notNull(),
+});
+
 export const profiles = sqliteTable('profiles', {
   userId: text('user_id').primaryKey(),
   displayName: text('display_name').notNull(),
