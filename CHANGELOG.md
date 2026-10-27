@@ -47,3 +47,12 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Nove novos casos de regressão; 308 testes completos aprovados e 1 referência antiga ausente; TypeScript/build e navegador aprovados. O workflow passa a incluir os testes de fluxo da montagem.
 - Origem Sites: `9acb1b516331ac1e562dfd1cb29f5ca444f03425`, 469 arquivos verificados; artefato publicado SHA-256 `440fc99c1bfaf723b4d0287d4cb5dca0cc61e2e9b7dc5a7c6fcfed364b73e52f`.
 - [Documentação junto ao código](source/docs/pedidos-edicao.md).
+
+## 2026-10-27 — Código automático e contagem de desenhos (v60)
+
+- O indicador do pedido conta apenas layouts de desenho; listas e detalhes mantêm a identificação do desenho correspondente e têm paginação própria. O resumo não aumenta essa contagem.
+- Código gerado no servidor no primeiro salvamento, com quatro dígitos, mês da criação em São Paulo e unidade MNZ. Reserva atômica por unidade, códigos existentes preservados e códigos novos para importações/complementos; mês não é incrementado ao criar complemento.
+- Código alinhado à direita do cabeçalho em SVG, PDF, prévias e pacote de produção; antiga posição em branco. Migração aditiva da sequência, sem reescrever pedidos.
+- 318 testes aprovados e 1 referência antiga ausente; TypeScript/build aprovados. Prévia e lista conferidas no navegador. A suíte de numeração foi acrescentada ao workflow.
+- Origem Sites: `13ac07fd17ade36f67e9551af5a147c27255b28d`, 474 arquivos; artefato publicado SHA-256 `7d7fdc0bc4c0a0a1b30cae28f69f713be8d5743a2bf01a4d20ec06c33fff669e`.
+- [Documentação junto ao código](source/docs/pedidos-numeracao.md).

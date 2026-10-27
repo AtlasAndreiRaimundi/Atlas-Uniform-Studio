@@ -73,7 +73,7 @@ export class OrderTechnicalService{
   const source=await this.production.get(user,id);
   if(!source.document.number.trim())throw new AppError(400,'Defina o número do pedido original antes de criar um complemento.');
   if(!Number.isSafeInteger(input?.version)||input.version!==source.version)throw new AppError(409,'O pedido original mudou. Atualize antes de criar o complemento.');
-  let document;try{document=complementDocument(source.document,input);}catch(error){throw new AppError(400,error.message);}
+  let document;try{document=complementDocument(source.document,{...input,number:''});}catch(error){throw new AppError(400,error.message);}
   const origin={id,number:source.document.number,title:source.document.title,revision:source.document.workflow?.revision||1,version:source.version,createdAt:new Date().toISOString()};
   let created;
   try{
