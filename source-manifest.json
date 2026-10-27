@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "71421cae8de32457f31cfb3158c411a40a2ffb22",
-  "exported_at": "2026-10-27T18:18:27.495455+00:00",
+  "source_commit": "4edc3679c7e554af7832d548032a6014fb9eb366",
+  "exported_at": "2026-10-27T18:29:59.955332+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -795,8 +795,8 @@
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
-      "size": 3025,
-      "sha256": "1d96148dc3f94ff4fbe2f9e1581f12ffbdf130a56d7a24ed7afcfc00c59085dd"
+      "size": 3369,
+      "sha256": "e3caa9e8337bf0c0f794e953ffcdf10529038f62ee46955960a149b22ad3d4e3"
     },
     {
       "path": "docs/pedidos-composicao-modelagens.md",
@@ -1586,7 +1586,7 @@
     {
       "path": "public/order-annotation-editor.js",
       "size": 10095,
-      "sha256": "1910dd552b8e42ae11bbedcb0cd1a008634625b16c9edeb869fbf7f40cafe375"
+      "sha256": "2aeea0635c08db95a99e0c905274ab97c90625b5f02a41f289ed1adfac70a353"
     },
     {
       "path": "public/order-annotations.js",
@@ -1611,7 +1611,7 @@
     {
       "path": "public/order-delivery.js",
       "size": 3159,
-      "sha256": "99320fd1b25f636d16bd42ece273aa4e377625317f487fd98436de515ecd17e9"
+      "sha256": "50e89ee439dbd8130f97c3ad12a422d2aeac244832561898164a906c7552250a"
     },
     {
       "path": "public/order-files.js",
@@ -1651,7 +1651,7 @@
     {
       "path": "public/order-visual-tools.js",
       "size": 18823,
-      "sha256": "4e1ba1feced5972516c41d93dca89c80e0f2bd63c9f620c466e024efa2a9630d"
+      "sha256": "8a3d1883e5f5c245f9e9a445e0cab35de1a297c6502b9b5f76008a0295469077"
     },
     {
       "path": "public/organizador.html",
@@ -1671,7 +1671,7 @@
     {
       "path": "public/pedido.html",
       "size": 33547,
-      "sha256": "dbaf763bfc44b39a2764f3d4a6f10f55e8551431f714578a43512e98081d7b21"
+      "sha256": "45f5a78ef479b45c290bde7290473d2fd5107f638d246ae6efbbfe7eeea1f91d"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1705,13 +1705,13 @@
     },
     {
       "path": "public/production-sheet.js",
-      "size": 33038,
-      "sha256": "dbc5433fbdfbef60daa56483f3113290a6e4020d4ca751d494faa6bd397673bc"
+      "size": 32597,
+      "sha256": "d2e0878ae88fa2e5657dcb053eeabac9b32624d51a9e87cdf5374038e2666051"
     },
     {
       "path": "public/production-ui.js",
-      "size": 107974,
-      "sha256": "bcd46a67b79683ac24c3d30eea7ddc9cbe07ff779773f60aa867f7879ed1b7d0"
+      "size": 107584,
+      "sha256": "bb7f825060304bd3aaa95e4951ed78245b92f23b1088f41b9da209682c1faa06"
     },
     {
       "path": "public/production.css",
@@ -2325,8 +2325,8 @@
     },
     {
       "path": "tests/order-print-list.test.mjs",
-      "size": 8896,
-      "sha256": "34de5798d2c1c2565bd5fae81d202c8459b81e5940118279209af4f3d07628b0"
+      "size": 8897,
+      "sha256": "26cca7165066731245c5c23a74a5fe93ef57eec77078c4fe9f00cd9021ee2d19"
     },
     {
       "path": "tests/order-reminder-ui.test.mjs",
@@ -2355,8 +2355,8 @@
     },
     {
       "path": "tests/product-catalog-files.test.mjs",
-      "size": 5045,
-      "sha256": "1da946a23cf706c8549a9a1a56538d2f81b68861531d2d446f0e02fb35d4684e"
+      "size": 5049,
+      "sha256": "0338074458d9eb65726fb8774e15b40b5285ffe9f10f774ceaa8f225fba637a4"
     },
     {
       "path": "tests/product-catalog.test.mjs",

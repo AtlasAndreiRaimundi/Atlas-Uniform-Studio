@@ -194,7 +194,6 @@ function layoutGroups(order){return (order.pages||[]).flatMap(original=>{const p
 export function buildSheets(order,assets={},options={}){
  if(!options.draft){const errors=catalogProblems(order,{release:true,parseGrade});if(errors.length)throw Error(errors.join(' '));}
  const result=[],groups=layoutGroups(order);for(const [index,{page,products}] of groups.entries()){const sourcePage=index+1,main=primary(order,page,products,assets,sourcePage);result.push(main,...listSheets(order,page,products,assets,sourcePage));const lines=main.extra.flatMap(t=>wrap(t,280,7.7));for(let start=0;start<lines.length;start+=66){const details=continuation(order,'DESENHO '+sourcePage+' · '+main.title,lines.slice(start,start+66),assets);details.kind='details';details.sourcePage=sourcePage;result.push(details);}}
- if(order.pages.some(page=>page.products.some(p=>p.technical))){const lines=productionSummary(order,parseGrade).flatMap(g=>[g.product,...g.rows.map(r=>r.size+' = '+r.quantity),'']);for(let start=0;start<lines.length;start+=66){const summary=continuation(order,'RESUMO GERAL DE PRODUÇÃO · KITS E AVULSOS SOMADOS',lines.slice(start,start+66),assets);summary.kind='summary';summary.title='Resumo geral de produção';result.push(summary);}}
  result.forEach(p=>{p.fonts=assets.fonts;layoutCounter(p,groups.length);});return result;
 }
 // Printed sheets define their own paint; UI icon styles must not outline the text.

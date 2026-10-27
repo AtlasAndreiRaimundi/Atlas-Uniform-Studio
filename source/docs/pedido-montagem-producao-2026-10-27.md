@@ -16,3 +16,6 @@ As especificações originais estão preservadas em `docs/produtos`. Este adendo
 
 ## Simplificação do quadro lateral
 O quadro Estampa e aplicações mostra apenas a técnica de estampa (TRANSFER apresentado como SUBLIMAÇÃO) e os tipos de aplicações físicas. Corte, filete, gola, recorte e acabamento de barra não são repetidos nesse quadro. A cor do cordão aparece na linha de aplicações da peça, inclusive quando o calção não tem aplicação física. Os dados técnicos de cadastro são preservados.
+
+## Encerramento sem resumo geral
+A conferência e os arquivos exportados não incluem a folha final de resumo geral de kits e avulsos nem o quadro redundante de resumo geral na tela. Cada desenho mantém as próprias quantidades e listas; o orçamento permanece no layout. Dados complementares efetivamente necessários continuam preservados.

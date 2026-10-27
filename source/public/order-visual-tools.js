@@ -1,7 +1,7 @@
 import {applicationChoices,beginApplication,applicationNotes,confirmApplication} from './order-application-flow.js?v=2';
 import {syncApplicationArrows} from './order-linked-applications.js?v=3';
 import {createAnnotationEditor} from './order-annotation-editor.js?v=9';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=21';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=22';
 import {imageTransform} from './order-image-layout.js?v=3';
 import {finalPreviewProblems,releaseProblems} from './production-core.js?v=15';
 
