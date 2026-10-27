@@ -35,7 +35,7 @@ async function orderScreen({search='',initialDraft=null,chooseInitial=true}={}){
   querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
  }
  const root=new Element();root.innerHTML=await readFile(new URL('../public/pedido.html',import.meta.url),'utf8');document={body:root,activeElement:null,createElement:tag=>new Element(tag),getElementById:id=>root.querySelector('#'+id),addEventListener(){},querySelector:s=>root.querySelector(s),querySelectorAll:s=>root.querySelectorAll(s)};
- const previewCalls=[],calls=[],timers=new Map(),destination={location:{href:''}};let timerId=0;const context=vm.createContext({...core,...catalog,...composition,...linked,newRecordId,legacyNewOrder:core.newOrder,legacyNewPage:core.newPage,legacyNewProduct:core.newProduct,legacyNewKitPage:core.newKitPage,LEGACY_PRODUCTS:core.PRODUCTS,...sheets,...workflow,...listTools,document,crypto,structuredClone,FormData,File,Blob,URL,URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},location:{search},window:{top:destination,addEventListener(){}},setTimeout:(handler,delay)=>{const key=++timerId;timers.set(key,{handler,delay});return key;},clearTimeout:key=>timers.delete(key),createOrderVisualTools:()=>({openImageEditor(){},openFinalPreview(options={}){previewCalls.push(structuredClone(options));}}),createWorkflowGuide:()=>({update(){}}),canonicalWorkflowPath(){},fetch:async path=>initialDraft&&path.startsWith('/api/')?{ok:true,json:async()=>path==='/api/profile'?{profile:{email:'designer@test',displayName:'Designer'}}:{orders:[],lists:[],projects:[]}}:{ok:false,json:async()=>({error:'Entre na conta'})}});
+ const previewCalls=[],calls=[],timers=new Map(),destination={location:{href:''}};let timerId=0;const context=vm.createContext({...core,...catalog,...composition,...linked,newRecordId,legacyNewOrder:core.newOrder,legacyNewPage:core.newPage,legacyNewProduct:core.newProduct,legacyNewKitPage:core.newKitPage,LEGACY_PRODUCTS:core.PRODUCTS,...sheets,...workflow,...listTools,document,crypto,structuredClone,FormData,File,Blob,URL,URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},location:{search},window:{top:destination,addEventListener(){}},setTimeout:(handler,delay)=>{const key=++timerId;timers.set(key,{handler,delay});return key;},clearTimeout:key=>timers.delete(key),createOrderVisualTools:()=>({openImageEditor(){previewCalls.push({mode:"layout"});},openFinalPreview(options={}){previewCalls.push(structuredClone(options));}}),createWorkflowGuide:()=>({update(){}}),canonicalWorkflowPath(){},fetch:async path=>initialDraft&&path.startsWith('/api/')?{ok:true,json:async()=>path==='/api/profile'?{profile:{email:'designer@test',displayName:'Designer'}}:{orders:[],lists:[],projects:[]}}:{ok:false,json:async()=>({error:'Entre na conta'})}});
  const catalogUI=(await readFile(new URL('../public/product-catalog-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'');Object.assign(context,vm.runInContext('(function(){'+catalogUI+';return {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor};})()',context));
  const code=(await readFile(new URL('../public/production-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'');vm.runInContext(code,context);if(initialDraft){context.recoveredDraft=structuredClone(initialDraft);context.draftCopies=[];vm.runInContext('localDraft=async(value)=>{if(value){draftCopies.push(structuredClone(value));return;}return recoveredDraft;};',context);}for(let i=0;i<8;i++)await new Promise(setImmediate);
  const find=s=>{const el=document.querySelector(s);assert.ok(el,'control exists: '+s);return el;},all=s=>document.querySelectorAll(s),evaluate=s=>vm.runInContext(s,context),click=async(container,selector)=>find(container).emit('click',{target:find(selector)}),input=async(selector,value)=>{const el=find(selector);el.value=value;await (selector.startsWith('[data-product')?find('#productEditor'):el).emit('input',{target:el});};
@@ -65,11 +65,11 @@ async function savedOrderScreen(){
  return {...screen,records};
 }
 
-test('the first question offers kit, single and independent pair before customer fields or later stages',async()=>{
+test('client comes first, composition is chosen in general information before pieces',async()=>{
  const {find,all,evaluate,visible,click}=await orderScreen({chooseInitial:false});
- assert.deepEqual(all('[data-initial-kind]').map(el=>el.dataset.initialKind),['kit','single','pair']);assert.ok(all('[data-initial-kind]').every(el=>!el.checked));assert.equal(visible(find('[data-order="client"]')),false);assert.equal(find('#stageNext').disabled,true);
- await click('#orderStages','[data-order-step="pieces"]');assert.equal(evaluate('orderStage'),'identity');assert.match(find('#error').textContent,/Escolha primeiro/);
- const pair=find('[data-initial-kind="pair"]');pair.checked=true;await pair.emit('change');assert.equal(evaluate('doc.compositionKind'),'pair');assert.equal(evaluate('page().mode'),'avulsas');assert.equal(evaluate('page().products.length'),2);assert.equal(evaluate('page().products.some(p=>p.kitGroupId)'),false);assert.equal(visible(find('[data-order="client"]')),true);assert.equal(visible(find('#initialKitPreset')),false);assert.equal(find('#stageNext').disabled,false);
+ assert.deepEqual(all('[data-initial-kind]').map(el=>el.dataset.initialKind),['kit','single','pair']);assert.ok(all('[data-initial-kind]').every(el=>!el.checked));assert.equal(visible(find('[data-order="client"]')),true);assert.equal(find('#stageNext').disabled,false);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'general');assert.equal(find('#stageNext').disabled,true);
+ await click('#orderStages','[data-order-step="pieces"]');assert.equal(evaluate('orderStage'),'general');assert.match(find('#error').textContent,/Escolha primeiro/);
+ const pair=find('[data-initial-kind="pair"]');pair.checked=true;await pair.emit('change');assert.equal(evaluate('doc.compositionKind'),'pair');assert.equal(evaluate('page().mode'),'avulsas');assert.equal(evaluate('page().products.length'),2);assert.equal(evaluate('page().products.some(p=>p.kitGroupId)'),false);assert.equal(visible(find('[data-order="client"]')),false);assert.equal(visible(find('#initialKitPreset')),false);assert.equal(find('#stageNext').disabled,false);
 });
 
 test('all three kit presets can be chosen without locking the blank form or inheriting another garment fabric',async()=>{
@@ -111,16 +111,16 @@ test('the real order screen preserves existing piece data and saves before openi
 
 test('order sectors and piece steps show one subject at a time and preserve inputs when navigating a kit',async()=>{
  const {find,all,evaluate,click,input,visible,previewCalls}=await orderScreen();
- assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['identity']);assert.equal(all('input').filter(visible).length,8);assert.equal(visible(find('#orderPreview')),false);
+ assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['identity']);assert.equal(all('input').filter(visible).length,5);assert.equal(visible(find('#orderPreview')),false);
  const initial=evaluate('JSON.stringify(doc)');await find('#openAddPiece').emit('click');assert.equal(find('#addPieceDialog').open,true);await find('#closeAddPiece').emit('click');assert.equal(evaluate('JSON.stringify(doc)'),initial,'opening and cancelling the chooser creates no piece');
  await find('#addKit').emit('click');assert.equal(evaluate('doc.pages.length'),1,'the empty placeholder is replaced by the kit');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['pieces']);assert.deepEqual(all('[data-product-panel]').filter(visible).map(el=>el.dataset.productPanel),['model']);
  await input('[data-product="model"]','KIT EDGE 2027');await find('#productEditor').emit('click',{target:find('[data-product-next]')});assert.deepEqual(all('[data-product-panel]').filter(visible).map(el=>el.dataset.productPanel),['fabric']);
  find('[data-tech="fabricId"]').value='DRY';await find('#productEditor').emit('change',{target:find('[data-tech="fabricId"]')});assert.equal(all('[data-extra-application]').length,0);
  await click('#productEditor','[data-product-step="art"]');assert.equal(visible(find('[data-image-source-panel="manual"]')),true);assert.equal(visible(find('[data-image-source-panel="presentation"]')),false);await click('#productEditor','[data-image-source="presentation"]');assert.equal(visible(find('[data-image-source-panel="manual"]')),false);assert.equal(visible(find('[data-image-source-panel="presentation"]')),true);
- await click('#productEditor','[data-product-step="quantities"]');await input('[data-product="quantity"]','1');await input('[data-product="grade"]','CAMISETA\nM = 1');
+ assert.equal(all('[data-product-step]').some(el=>el.dataset.productStep==='quantities'),false);
  await click('#productEditor','[data-product-next]');assert.equal(evaluate('product().type'),'Calção');assert.equal(evaluate('productStage'),'model');assert.equal(find('#currentProductName').textContent,'Calção');await input('[data-product="model"]','CALÇÃO EDGE');
- await click('#productEditor','[data-product-step="quantities"]');await input('[data-product="quantity"]','1');await input('[data-product="grade"]','CALÇÃO\nG = 1');await click('#productEditor','[data-product-next]');assert.equal(evaluate('orderStage'),'list');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['list']);
- assert.equal(evaluate('doc.pages[0].products[0].model'),'KIT EDGE 2027');assert.equal(evaluate('doc.pages[0].products[0].fabric'),'DRY');assert.equal(evaluate('doc.pages[0].products[0].extraApplications.length'),0);assert.equal(evaluate('doc.pages[0].products[1].grade'),'CALÇÃO\nG = 1');
+ await click('#productEditor','[data-product-step="art"]');await click('#productEditor','[data-product-next]');assert.equal(evaluate('orderStage'),'personalization');assert.equal(visible(find('[data-piece-art]')),false);assert.equal(visible(find('[data-piece-personalization]')),true);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'list');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['list']);
+ assert.equal(evaluate('doc.pages[0].products[0].model'),'KIT EDGE 2027');assert.equal(evaluate('doc.pages[0].products[0].fabric'),'DRY');assert.equal(evaluate('doc.pages[0].products[0].extraApplications.length'),0);assert.equal(evaluate('doc.pages[0].products[1].quantity'),0,'quantities await the list');
  const saved=evaluate('JSON.stringify(doc)'),revision=evaluate('revision');await click('#orderStages','[data-order-step="pieces"]');await find('#toggleOrderPreview').emit('click');assert.equal(visible(find('#orderPreview')),false);assert.equal(previewCalls.at(-1).mode,'draft');await click('#orderStages','[data-order-step="review"]');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['pieces']);assert.equal(visible(find('#orderOverview')),false);await click('#orderStages','[data-order-step="identity"]');assert.equal(visible(find('#orderPreview')),false);assert.equal(evaluate('JSON.stringify(doc)'),saved);assert.equal(evaluate('revision'),revision,'navigation must not dirty or save the order');
 });
 
@@ -145,7 +145,7 @@ test('the first step selects one shirt or a complete kit without duplicating pla
  await choose('kit');assert.equal(evaluate('orderStage'),'identity');assert.equal(evaluate('doc.pages.length'),1);assert.equal(evaluate('doc.pages[0].products.map(p=>p.type).join()'),'Camiseta,Calção');assert.equal(evaluate('page().mode'),'conjunto');assert.equal(evaluate('page().id'),pageId);assert.equal(find('#initialSecondTypeField').hidden,false);
  await input('#initialFirstType','Calção');await input('#initialSecondType','Camiseta');assert.equal(evaluate('page().products.map(p=>p.type).join()'),'Calção,Camiseta');
  await choose('single');assert.equal(evaluate('page().products.length'),1);assert.equal(evaluate('product().type'),'Calção');assert.equal(evaluate('page().mode'),'individual');assert.equal(find('#initialSecondTypeField').hidden,true);assert.equal(evaluate('doc.title'),'Equipe EDGE');assert.equal(evaluate('doc.client'),'Cliente A');
- await choose('kit');assert.equal(evaluate('page().products.length'),2);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'pieces');await input('[data-product="model"]','KIT EDGE 2027');
+ await choose('kit');assert.equal(evaluate('page().products.length'),2);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'general');await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'information');await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'pieces');await input('[data-product="model"]','KIT EDGE 2027');
  const prepared=evaluate('JSON.stringify(doc)');assert.equal(find('[data-initial-kind="single"]').disabled,true);await choose('single');assert.equal(evaluate('JSON.stringify(doc)'),prepared,'the initial selector cannot discard configured pieces');
  await evaluate('replaceDocument(newOrder())');assert.equal(find('[data-initial-kind="single"]').checked,false);assert.equal(find('[data-initial-kind="kit"]').disabled,false);
 });
@@ -156,7 +156,7 @@ test('names, numbers and additional text come from the list after the redundant 
  find('[data-initial-kind="kit"]').checked=true;await find('[data-initial-kind="kit"]').emit('change');
  await evaluate('applyOrderList([{produto:"Kit",grupo:"Linha",nome:"Ana",numero:"07",adicional:"CAPITÃ / O+",tamanhoCamiseta:"M",tamanhoCalcao:"G",quantidade:2}],{name:"Lista EDGE"})');
  assert.ok(evaluate('validateOrder(doc).length')>0,'new catalog data remains pending until technical choices are completed');assert.equal(evaluate('doc.pages.length'),1);assert.equal(evaluate('page().products.length'),2);assert.equal(evaluate('page().products[0].names[0].number'),'07');assert.equal(evaluate('page().products[1].names[0].additional'),'CAPITÃ / O+');assert.equal(evaluate('page().products[0].quantity'),2);
- await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="quantities"]');assert.equal(document.querySelector('#namesText'),null);assert.match(find('#productStepHelp').textContent,/ferramenta de listas/);
+ await click('#orderStages','[data-order-step="list"]');assert.equal(document.querySelector('#namesText'),null);assert.match(find('#stageDescription').textContent,/automaticamente/);
  const printed=evaluate('buildSheets(doc,{}, {draft:true}).flatMap(s=>s.ops.filter(o=>o.kind==="text").map(o=>o.text)).join(" ")');assert.match(printed,/Ana/);assert.match(printed,/07/);assert.match(printed,/CAPITÃ \/ O\+/);
 });
 
@@ -345,4 +345,23 @@ test('queued old local writes finish before the clean draft so reload cannot res
 test('the Create order navigation and new=1 recovery offer discarding without a forced save',async()=>{
  const first=await savedOrderScreen();first.evaluate('dirty=true;doc.notes="RASCUNHO";');await first.find('[data-nav-id="create-order"]').emit('click');assert.equal(first.find('#resetOrderDialog').open,true);assert.equal(first.calls.length,0);await first.find('#cancelOrderReset').emit('click');
  const doc=core.newOrder();doc.title='Rascunho incompleto';doc.notes='RECUPERAR SE CANCELAR';const {context,find,evaluate}=await orderScreen({search:'?new=1',initialDraft:{id:null,version:0,dirty:true,document:doc}});assert.equal(find('#resetOrderDialog').open,true);assert.equal(evaluate('doc.notes'),'RECUPERAR SE CANCELAR');await find('#confirmOrderReset').emit('click');assert.equal(evaluate('doc.title'),'Novo pedido');assert.equal(evaluate('doc.notes'),'');assert.equal(context.draftCopies.at(-1).document.title,'Novo pedido');
+});
+
+
+test('guided assembly skips a nonexistent second garment and opens linked arrows at application creation',async()=>{
+ const {find,all,evaluate,click,visible,previewCalls}=await orderScreen();
+ assert.equal(visible(find('[data-order-step="piece2"]')),false);
+ await click('#orderStages','[data-order-step="pieces"]');
+ await click('#productEditor','[data-product-step="art"]');
+ await click('#productEditor','[data-product-next]');
+ assert.equal(evaluate('orderStage'),'personalization');
+ assert.equal(visible(find('[data-piece-art]')),false);
+ assert.equal(visible(find('[data-piece-personalization]')),true);
+ assert.equal(visible(find('#familyVariant')),true,'fit exceptions remain accessible alongside physical applications');
+ await click('#productEditor','[data-catalog-action="add-application"]');
+ assert.equal(evaluate('product().technical.applications.length'),1);
+ assert.equal(evaluate('page().annotations.filter(a=>a.applicationId).length'),1);
+ assert.equal(previewCalls.at(-1).mode,'layout');
+ await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'list');
+ assert.equal(visible(find('#orderOverview')),false);
 });

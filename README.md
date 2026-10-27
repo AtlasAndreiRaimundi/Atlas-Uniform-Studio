@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v63 em 27/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v64 em 27/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 480 arquivos, Site v63, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 481 arquivos, Site v64, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -37,6 +37,8 @@ A montagem permite excluir páginas e começar outro pedido descartando o preenc
 
 Consulte [o relatório da importação](docs/importacao-2026-10-24.md) e [o procedimento de atualização](docs/atualizacoes-do-codigo.md). Execute `python3 scripts/restore_source.py` na raiz antes de usar o código. As verificações automáticas conferem integridade, padrões de segredos e testes críticos. Os próximos passos anteriores são preservados como planejamento inicial; a exportação e a importação foram realizadas, com limites de validação descritos no relatório.
 
-A primeira pergunta distingue kit, peça avulsa e duas peças independentes. As modelagens masculina, Baby Look e infantil podem coexistir no pedido. Veja [composição e modelagens](source/docs/pedidos-composicao-modelagens.md).
+Nas informações gerais, a composição distingue kit, peça avulsa e duas peças independentes. As modelagens masculina, Baby Look e infantil podem coexistir no pedido. Veja [composição e modelagens](source/docs/pedidos-composicao-modelagens.md).
 
 Peças do mesmo desenho reúnem todas as modelagens na mesma aba. Aplicações físicas geram setas vinculadas por peça. Veja [agrupamento e apontamentos](source/docs/pedidos-pecas-agrupadas.md).
+
+A montagem segue Cliente → Informações gerais → Pedido e observações → 1ª peça → 2ª peça → Personalizações e apontamentos → Lista → Conferência. Veja [fluxo guiado](source/docs/pedidos-fluxo-guiado.md).

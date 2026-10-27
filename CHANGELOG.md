@@ -73,3 +73,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Aplicações geram setas por unidade aplicada em cada peça, preservam posições ao editar e removem apenas apontamentos vinculados. Totais de aplicações respeitam as quantidades de cada modelagem.
 - 327 testes aprovados, 1 referência antiga ausente; TypeScript/build e conferência no navegador aprovados.
 - Origem Sites: `b9006c2b595b52fbe584cf3f3a7c037ea5f81b4e`, 480 arquivos. Documentação: source/docs/pedidos-pecas-agrupadas.md.
+
+## 2026-10-27 — Montagem guiada em etapas (v64)
+
+- Cliente, informações gerais e observações separados; configuração da 1ª e 2ª peças antes das aplicações e apontamentos.
+- Personalizações de ambas as peças na mesma etapa; criação de aplicação gera setas e abre o editor de layout.
+- Quantidades preenchidas pela lista, com resumo no retorno; conferência explícita ao final.
+- 328 testes aprovados, 1 referência antiga ausente; TypeScript, build e navegador verificados.
+- Origem Sites: `0aace28836709142e20565b6d9234be99b9fcc23`, 481 arquivos. Documentação: source/docs/pedidos-fluxo-guiado.md.
