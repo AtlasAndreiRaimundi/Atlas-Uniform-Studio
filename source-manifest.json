@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "b9006c2b595b52fbe584cf3f3a7c037ea5f81b4e",
-  "exported_at": "2026-10-27T11:54:13.523399+00:00",
+  "source_commit": "0aace28836709142e20565b6d9234be99b9fcc23",
+  "exported_at": "2026-10-27T12:45:26.194590+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -797,6 +797,11 @@
       "path": "docs/pedidos-edicao.md",
       "size": 3064,
       "sha256": "ea09fbd0a7ca227c23d20303a767ac8b36e4e18a7d2270bd233863652668dfea"
+    },
+    {
+      "path": "docs/pedidos-fluxo-guiado.md",
+      "size": 1418,
+      "sha256": "a74906cf6ac7ec187f71c9edd747f6c34a01cd05ab3f5447387964a51b9c9a5c"
     },
     {
       "path": "docs/pedidos-numeracao.md",
@@ -1625,8 +1630,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 30822,
-      "sha256": "8dfa572db0954964cc8e2fdb841b736fc92109874c957152b52fd0af43467f64"
+      "size": 31245,
+      "sha256": "40540f32daaac35f8286330ef9d1607e229975cd3d9eabaa0407ddcede7d4cab"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1640,8 +1645,8 @@
     },
     {
       "path": "public/product-catalog-ui.js",
-      "size": 19317,
-      "sha256": "2344df1a45ef8268a2637726f974cc3bdbf0f1866925bee665b5f93b8235b54c"
+      "size": 19745,
+      "sha256": "97ddd7a377112cf2f2ed866a6672c430027ded480f50f564e60dcc7316916625"
     },
     {
       "path": "public/product-catalog.css",
@@ -1665,13 +1670,13 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 99296,
-      "sha256": "410f008ba24124b6769ce4963119183a70841b184bc8656a508d9b1f57f88cc2"
+      "size": 100467,
+      "sha256": "2b1f54cd465bb3e6d7c837d9d090c4a3f2b48ad899b02045a237bd2d305b32b3"
     },
     {
       "path": "public/production.css",
-      "size": 50019,
-      "sha256": "c063184dc9953f7fdd0f47a49e17fa134772427b88429c08fc586724c5c46bdf"
+      "size": 50454,
+      "sha256": "b793e852ce70337a8e2c418c6bf3714b2615310f6deb9dd191273725628379bd"
     },
     {
       "path": "public/project-session.js",
@@ -2255,8 +2260,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 59596,
-      "sha256": "545faf0410039d78b6c8e653b9ea5619cc9476b772d25f055bf96540d693c38f"
+      "size": 61052,
+      "sha256": "3cc6d5ec93ff62f4d7e6182e7f518b118863b12a3272cc4338ca5c07e2f411ef"
     },
     {
       "path": "tests/order-list.test.mjs",
