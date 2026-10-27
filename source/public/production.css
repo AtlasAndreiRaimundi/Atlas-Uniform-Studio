@@ -161,3 +161,25 @@ fieldset.production-editor{border:0;padding:0;margin:0;min-width:0}#orderOvervie
 @media(max-width:520px){.order-stages{display:flex;overflow-x:auto;margin:0 16px 20px;padding-bottom:8px}.order-stages button{min-width:170px;flex:0 0 170px}}
 
 .budget-scroll{overflow-x:auto}.budget-table{border-collapse:collapse;width:100%;font-size:.85rem;margin:14px 0}.budget-table th,.budget-table td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line,#777)}.budget-table small{display:block;opacity:.7}.budget-table td:nth-last-child(-n+2),.budget-table th:last-child{white-space:nowrap;text-align:right}#orderBudget input{max-width:240px}
+
+/* Give new pricing and file blocks the same insets as the other order sections. */
+.order-list-section>#orderBudget{padding:24px;border-bottom:1px solid var(--ui-line);margin:0}
+#orderBudget h3{margin:0 0 12px;font-size:17px}
+#orderBudget>label,#orderBudget details label{display:grid;gap:8px;font-size:13px;line-height:1.5;margin:16px 0;min-width:0}
+#orderBudget details label{margin-inline:16px}
+#orderBudget :is(input,select){width:100%;max-width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--ui-line);border-radius:6px;background:var(--ui-input);color:var(--ui-text);font:inherit;box-sizing:border-box}
+#orderBudget>label{max-width:250px}
+#orderBudget .budget-table{font-size:13px;line-height:1.5;min-width:440px}
+#orderBudget .budget-table :is(th,td){padding:12px 10px}
+#orderBudget .budget-table th{color:var(--ui-text)}
+#orderBudget .budget-table small{margin-top:4px;font-size:11px;color:var(--ui-muted);opacity:1}
+#orderBudget .budget-table tfoot th{padding-top:16px;font-size:14px}
+#orderBudget .editor-subsection{margin:18px 0 0}
+#orderBudget :is(.helper,.catalog-warning){font-size:12px;line-height:1.7}
+#orderBudget details>ul{padding:0 20px 0 36px;line-height:1.8;font-size:13px}
+.order-stages button>span{min-width:0;overflow-wrap:anywhere}
+.order-stages button>b{flex-shrink:0}
+.order-stage-heading>div{min-width:0}
+#technicalFilesSection .technical-file{align-items:flex-start;gap:16px}
+.technical-file>div{min-width:0;overflow-wrap:anywhere}
+@media(max-width:700px){.order-list-section>#orderBudget{padding:20px 16px}.active-page-toolbar,.piece-library-heading{flex-wrap:wrap}.production-heading .heading-buttons{justify-content:flex-start}.order-stages{gap:8px}}

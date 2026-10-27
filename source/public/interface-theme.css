@@ -1,4 +1,16 @@
-/* UI tokens are defined only for the alternatives; the original dark palette is preserved. */
+/* Shared neutral surfaces. Gold is an accent, not a green cast on the UI. */
+:root,
+:root[data-interface-theme="dark"] {
+ --ui-scheme:dark;
+ --ui-bg:#101010; --ui-nav:#151515; --ui-panel:#1b1b1b;
+ --ui-input:#141414; --ui-raised:#252525; --ui-hover:#2b2b2b;
+ --ui-selected:#2b2720; --ui-row:#202020;
+ --ui-line:#414141; --ui-text:#eeeeee; --ui-muted:#b5b5b5;
+ --ui-accent:#c8ae77; --ui-danger:#efaaa0; --ui-danger-bg:#3b2323;
+ --ui-success:#bcd9c5; --ui-success-bg:#233128;
+ --ui-warning:#e5c48c; --ui-warning-bg:#362e21;
+ --ui-preview-muted:#c4c4c4;
+}
 :root[data-interface-theme="gray"] {
   --ui-scheme:dark;
   --ui-bg:#50545a; --ui-nav:#44494f; --ui-panel:#5c6168;
@@ -58,3 +70,20 @@
   .proposal-header>[data-static-theme-picker] {margin-left:auto;}
 }
 @media print { .interface-theme-control,[data-static-theme-picker] {display:none!important;} }
+
+/* Shared alignment fixes for tools that grow as new fields are introduced. */
+:where(.dashboard-main,.tool-main,.production-main,.production-workspace,.production-editor,.fields>*,.manual-grid>*,.catalog-grid>*){min-width:0}
+:where(.row-actions,.heading-buttons,.list-library-actions,.tracking-actions,.export-actions,.preview-controls){flex-wrap:wrap}
+:where(.row-actions,.heading-buttons,.list-library-actions,.tracking-actions,.export-actions) :is(button,a){max-width:100%;white-space:normal;overflow-wrap:anywhere}
+:where(.fields,.manual-grid,.catalog-section,.editor-subsection,.tracking-filters) :is(input,select,textarea){box-sizing:border-box;max-width:100%;min-width:0}
+:where(dialog){box-sizing:border-box;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto}
+:where(dialog>header,.tracking-dialog>header,.add-piece-dialog>header){gap:16px;min-width:0}
+:where(dialog>header>button){flex-shrink:0}
+:where(.section-heading,.piece-library-heading,.product-card-heading,.editor-section-heading){flex-wrap:wrap;min-width:0}
+@media(max-width:700px){
+ :where(.order-stage-heading,.tracking-heading,.simple-list-tools,.template-guide,.list-library){gap:16px;flex-wrap:wrap}
+ :where(.order-stage-heading>button,.simple-list-tools input,.list-library>label){min-width:0;max-width:100%}
+ :where(.order-stage-footer){flex-wrap:wrap}
+ :where(.order-stage-footer) button{flex:1 1 180px;white-space:normal}
+ :where(.interface-theme-control){max-width:100%}
+}

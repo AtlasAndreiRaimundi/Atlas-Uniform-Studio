@@ -13,7 +13,7 @@
     current = theme;
     document.documentElement.dataset.interfaceTheme = theme;
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = {dark:'#121314', gray:'#50545a', light:'#f2f4f6'}[theme];
+    if (meta) meta.content = {dark:'#101010', gray:'#50545a', light:'#f2f4f6'}[theme];
     if (persist) { try { localStorage.setItem(KEY, theme); } catch {} }
     document.querySelectorAll('[data-static-theme-picker] select').forEach(select => { select.value = theme; });
     window.dispatchEvent(new CustomEvent('studio-theme-change', {detail: {theme}}));

@@ -34,3 +34,13 @@ aside.site-nav.studio-sidebar{position:fixed;inset:0 auto 0 0;display:flex;width
 .graphic-workspace{padding:13px;background:var(--input);border:1px solid var(--line);border-radius:5px;margin:18px 0 24px}.graphic-workspace h2,.graphic-library-title{font-size:13px;line-height:1.5;font-weight:600;margin:0 0 14px;color:var(--text)}.graphic-workspace .field{margin-bottom:10px}.graphic-workspace .small-note{font-size:11px;line-height:1.65;margin:10px 0 13px}.graphic-workspace .button{font-size:11px;padding:10px 8px;line-height:1.5}.graphic-library-title{margin-bottom:12px}.pattern-card.active canvas{border:2px solid var(--accent);box-shadow:0 0 0 2px var(--surface)}.pattern-card.active>span{color:var(--accent)}.pattern-card span.graphic-card-action{display:inline-flex;padding:0;width:15px;min-width:15px;line-height:1;justify-content:center}.pattern-card:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}.layer-sector+.layer-sector{border-top:1px solid var(--line);padding-top:14px;margin-top:12px}.layer-sector h3{font-size:11px;color:var(--text);font-weight:600;line-height:1.5;margin:0 0 4px}.layer-sector-note{font-size:10px;line-height:1.5;color:var(--muted);margin:0 0 8px}.layer-sector .layer-row{margin:3px 0;font-size:11px;min-height:36px}.layer-priority-note{font-size:10px;line-height:1.7}.stack-actions button:disabled{opacity:.35;cursor:default}
 
 .graphic-workspace{position:sticky;top:0;z-index:3}
+/* Neutral UI backdrop; garment textures, palette and render lighting are unchanged. */
+:root[data-interface-theme=dark] .canvas-area{background:radial-gradient(ellipse at 50% 40%,#303030,#181818 85%)}
+:root[data-interface-theme=dark] .canvas-head select{background:#242424e6;color:#eeeeee;border-color:#626262}
+.canvas-head{gap:12px;flex-wrap:wrap}
+.canvas-head>div{min-width:0}
+.canvas-head select{max-width:min(225px,100%)}
+.graphic-workspace{min-width:0}
+@media(max-width:700px){.canvas-head select{max-width:170px}.side-copy-fields{min-width:0}.side-copy-fields select{min-width:0}}
+
+.graphic-workspace{position:relative;top:auto}.graphic-workspace .button{min-height:42px}.pattern-card{min-width:0}.pattern-card span{overflow-wrap:anywhere}

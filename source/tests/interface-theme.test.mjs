@@ -53,10 +53,10 @@ test('a browser that blocks preference storage can still switch the interface an
 const require=createRequire(import.meta.url),postcss=createRequire(require.resolve('vite'))('postcss');
 const luminance=hex=>hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0);
 function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
-test('gray and light text, labels, actions and alerts retain at least 4.5:1 contrast on the interface surfaces',async()=>{
+test('all themes keep text, labels, actions and alerts retain at least 4.5:1 contrast on the interface surfaces',async()=>{
   const css=postcss.parse(await readFile(new URL('../public/interface-theme.css',import.meta.url),'utf8'));
-  for(const theme of ['gray','light']){
-    const rule=css.nodes.find(n=>n.selector===`:root[data-interface-theme="${theme}"]`),tokens=Object.fromEntries(rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop.slice(5),n.value]));
+  for(const theme of ['dark','gray','light']){
+    const rule=css.nodes.find(n=>n.selector?.split(/,\s*/).includes(`:root[data-interface-theme="${theme}"]`)),tokens=Object.fromEntries(rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop.slice(5),n.value]));
     for(const foreground of ['text','muted','accent','danger','warning','success'])for(const background of ['bg','nav','panel','input','raised','hover','selected','row'])assert.ok(contrast(tokens[foreground],tokens[background])>=4.5,`${theme}: ${foreground} on ${background}`);
     for(const kind of ['danger','warning','success'])assert.ok(contrast(tokens[kind],tokens[kind+'-bg'])>=4.5,`${theme}: ${kind} alert`);
   }

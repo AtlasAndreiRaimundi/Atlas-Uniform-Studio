@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "4edc3679c7e554af7832d548032a6014fb9eb366",
-  "exported_at": "2026-10-27T18:29:59.955332+00:00",
+  "source_commit": "b943a89f86de42e7cef8323b488fbc7d36ffbd50",
+  "exported_at": "2026-10-27T22:39:30.847690+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -320,13 +320,13 @@
     },
     {
       "path": "app/globals.css",
-      "size": 42535,
-      "sha256": "03cc356d91381b51e1c1df8b9d8ada153ce56610cb06139259d3a7870e3dc8aa"
+      "size": 42912,
+      "sha256": "0e41e73e6bc655a327a0cac2da9510ba2375cdd7f29619d07ee3e3608b8e89b8"
     },
     {
       "path": "app/layout.tsx",
       "size": 1343,
-      "sha256": "a1d3ed5fc2d56f00f6ba3a0a2caaf1bfee9e1597e69d6a1486215dcd59ed05d1"
+      "sha256": "2fa61fa6643361e28bbbbc5648a34c22363f615a772f10b65b9b4e15f71ee559"
     },
     {
       "path": "app/login/hero-composition.tsx",
@@ -335,8 +335,8 @@
     },
     {
       "path": "app/login/home-hero.css",
-      "size": 13593,
-      "sha256": "a27dacde439208d0bec7c9f5be4781935e6ac145b2c777714ceb0f12802c7d6e"
+      "size": 14958,
+      "sha256": "849a353ee662e87c17bbe7f2d45d409ad0f1da062cdd2a1d1526b5965f1b242e"
     },
     {
       "path": "app/login/page.tsx",
@@ -859,6 +859,11 @@
       "sha256": "25f00f5cf20f6772ade0c99720d19d0af3d8a9242e68aea06b4efe00429fdf1f"
     },
     {
+      "path": "docs/revisao-visual-2026-10-27.md",
+      "size": 2480,
+      "sha256": "6b078bc8f52a3ab733f347b8e451226da6bcd10f435453658cbcb9cae83ff669"
+    },
+    {
       "path": "docs/simulador-uniformes.md",
       "size": 13103,
       "sha256": "70755d227d84e746cb601f88e721a665be5dbdf718d50a797e96c93389f504d4"
@@ -1191,7 +1196,7 @@
     {
       "path": "public/acervo.html",
       "size": 8401,
-      "sha256": "e1b8507d90e327f71907670f8ef84093c521160ac4cf91c9c70fa8d72b040d89"
+      "sha256": "93d64dfe403fc6cc892cce74fb7316846d8975223ae3d57ecc12e90241addd1b"
     },
     {
       "path": "public/app.js",
@@ -1565,13 +1570,13 @@
     },
     {
       "path": "public/interface-theme.css",
-      "size": 3246,
-      "sha256": "530191622e86a8415fc3f8eb70ed534a5656d84fa4f3d6d9088ac927cf01549a"
+      "size": 5182,
+      "sha256": "39f071d01ce3aa1050873c3fe131d232276b57c5f430472f5151107ba7120994"
     },
     {
       "path": "public/interface-theme.js",
       "size": 3055,
-      "sha256": "5f0ba540ea48c5875632d41d6c8f85567dd9f4207ee2a2ed0b44246a2f84562f"
+      "sha256": "87e0db823cf56a4cf2a66dd40cfbb252551a3ab69f2417af1a1a38b6ca5c767d"
     },
     {
       "path": "public/map-atlas.js",
@@ -1656,7 +1661,7 @@
     {
       "path": "public/organizador.html",
       "size": 17742,
-      "sha256": "9fa9aa222bb2c428c96674f68daade7fc13a840cee66321d149154abae303dd4"
+      "sha256": "2b71fcfdb6306d3bafa2be8a37c77f9bed6f9d97122cc5af4afbed05f1a7516a"
     },
     {
       "path": "public/organizer-ui.js",
@@ -1665,13 +1670,13 @@
     },
     {
       "path": "public/organizer.css",
-      "size": 32665,
-      "sha256": "e1ac6a6abf2f6b62a8a39ca1cb7f8dc1afe593103c738abd584b45fdba73b76b"
+      "size": 33411,
+      "sha256": "157659d0a4cf73c46d39cf7102c1809fcac699d80ebf0dd7863c5a71713e4cd1"
     },
     {
       "path": "public/pedido.html",
       "size": 33547,
-      "sha256": "45f5a78ef479b45c290bde7290473d2fd5107f638d246ae6efbbfe7eeea1f91d"
+      "sha256": "70ed8b3ce4ff68a1c889c15b36ae7b25e9bf633d74a385f2c5c81788f5430027"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1715,8 +1720,8 @@
     },
     {
       "path": "public/production.css",
-      "size": 50857,
-      "sha256": "37baeeb3a90e278f42baab1bd006f27ce2ec917fc897af8385390b2c0db018b1"
+      "size": 52557,
+      "sha256": "7a66fbfc042324f6ecdfb420376dd1a273ddf378f2087a1c0a42f06139895720"
     },
     {
       "path": "public/project-session.js",
@@ -1736,7 +1741,7 @@
     {
       "path": "public/proposta.html",
       "size": 4460,
-      "sha256": "076f4cdd368b69b6932c44a47a37d98e52538a3bf3047e314dc9fe293c1e43c7"
+      "sha256": "26d0eb442e0bc2e3871f388b8a0d6f7e1f5b7d95b565fa532e421f8742e2089e"
     },
     {
       "path": "public/record-id.js",
@@ -1746,7 +1751,7 @@
     {
       "path": "public/referencia-producao.html",
       "size": 1019,
-      "sha256": "d91edade16ab7f0f79908057a03e67879fb124399a8b3eb424ce8c17ca326ed2"
+      "sha256": "dd20595987d93b61c3d4b637fc54bd696cf36fa211dbd1ba44fdce94b2b407db"
     },
     {
       "path": "public/simulador/app.js",
@@ -1755,8 +1760,8 @@
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 23237,
-      "sha256": "6d4ad54a134ccfea5c8b32c5662b5060646e21dfd27d1ff9e159326cc0d5e3ec"
+      "size": 23984,
+      "sha256": "717ac2f99c834848f0c6fce1a6044ce79299088cbf9ccc80932a6bbcdddce9e5"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1781,7 +1786,7 @@
     {
       "path": "public/simulador/editor.html",
       "size": 31354,
-      "sha256": "0f83f108278ed69059891be577d6b2dba5e9be85bb62e8692775beff40685bfc"
+      "sha256": "d857d6d5c5a8d0dfff0142f522cebee09e64498a945d99449f928e858427cc87"
     },
     {
       "path": "public/simulador/elite.js",
@@ -2081,7 +2086,7 @@
     {
       "path": "public/viewer.html",
       "size": 24944,
-      "sha256": "4b80fbc9c29dc7514f29d27ccec26f0dc5971512d562f111f9da38204f3001f3"
+      "sha256": "b25d1ee432939887d1e6fd3dc7a50e3a29a57651e5b4993c76be9054ff349584"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2270,8 +2275,8 @@
     },
     {
       "path": "tests/interface-theme.test.mjs",
-      "size": 6183,
-      "sha256": "366e18ce2c80b92ef5862aeea654f7fc9910bb35207aa27638d301ab88553117"
+      "size": 6214,
+      "sha256": "6f8d3f4404865f1769715430622853dc3536aba6991cb16227918e28c1ee1715"
     },
     {
       "path": "tests/kit-import.test.mjs",
