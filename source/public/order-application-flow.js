@@ -1,5 +1,5 @@
 import {newRecordId} from './record-id.js';
-import {pieceFamilyKey,syncApplicationArrows} from './order-linked-applications.js';
+import {applicationGroups,syncApplicationArrows,syncConfirmedApplicationPositions} from './order-linked-applications.js?v=3';
 export const DRAWING_POSITION='Conforme seta no desenho';
 export function applicationChoices(product){
  const t=product.technical;if(!t)return [];
@@ -12,10 +12,10 @@ export function beginApplication(page,product,request={}){
  if(!product.technical)throw Error('Esta peça não tem uma ficha de aplicações. Use um apontamento livre.');
  let app=product.technical.applications.find(a=>a.id===request.applicationId);
  if(!app){if(!request.create)throw Error('Esta aplicação foi removida. Escolha outra.');app={id:newRecordId(),role:'ESCUDO',type:'TPU ALTO RELEVO',perUnit:1,position:'',exception:''};product.technical.applications.push(app);}
- syncApplicationArrows(page,product);return app;
+ syncApplicationArrows(page,product);syncConfirmedApplicationPositions(page);return app;
 }
 export function applicationNotes(page,product,app){
- const ids=new Set(page.products.filter(p=>pieceFamilyKey(p)===pieceFamilyKey(product)).flatMap(p=>(p.technical?.applications||[]).filter(a=>a.role===app.role&&a.type===app.type).map(a=>a.id)));
+ const group=applicationGroups(page,product).find(group=>group.some(x=>x.app.id===app.id))||[],ids=new Set(group.map(x=>x.app.id));
  return (page.annotations||[]).filter(a=>ids.has(a.applicationId));
 }
 export function confirmApplication(page,product,app){
@@ -24,5 +24,5 @@ export function confirmApplication(page,product,app){
  if(product.technical.fit==='INFANTIL'&&app.type==='TPU ALTO RELEVO'&&!app.exception.trim())throw Error('Informe por que este pedido infantil precisa de TPU.');
  if(app.role==='MARCA MEINERZ'&&product.technical.applications.filter(a=>a.role==='MARCA MEINERZ').reduce((n,a)=>n+a.perUnit,0)>1)throw Error('A marca Meinerz já foi adicionada. Edite a aplicação existente.');
  if(!app.position.trim())app.position=DRAWING_POSITION;
- return app;
+ syncConfirmedApplicationPositions(page);return app;
 }

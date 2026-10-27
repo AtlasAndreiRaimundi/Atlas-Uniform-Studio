@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "fd8ecb4f40a566af3ec33ed65f1692048d1bffd5",
-  "exported_at": "2026-10-27T16:21:29.303066+00:00",
+  "source_commit": "a9ae6228707574a44835d6bffac234dff8717fec",
+  "exported_at": "2026-10-27T16:53:04.048025+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -85,8 +85,8 @@
     },
     {
       "path": "app/api/order-lists/[id]/route.ts",
-      "size": 665,
-      "sha256": "058a077282deedab34cd96a4b3b840df016635a53cd7c4e9b9692b5a85ac6f34"
+      "size": 927,
+      "sha256": "e3b91e18676c9169cda0709690ed16532ceafc07932edfb7372529fff29e5a8e"
     },
     {
       "path": "app/api/order-lists/route.ts",
@@ -770,8 +770,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9393,
-      "sha256": "07e1fe13835a94a4a5c9bc890ee51dd9dc9c56362f64e2ffb5ab7ae59048b7d8"
+      "size": 9422,
+      "sha256": "f2ddd11a152e4698a4dd47d1ce651dab58cfbbd4dd85e8b0e6c57076b5749b87"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -800,8 +800,8 @@
     },
     {
       "path": "docs/pedidos-fluxo-guiado.md",
-      "size": 2460,
-      "sha256": "07daccef754d84639013316b69e0e7315530105ce53ac7f20a7deb7b2cf857cb"
+      "size": 4748,
+      "sha256": "0608d439905b31c23dbcc32754cb3034a6709c25135a522469979c4360325cd5"
     },
     {
       "path": "docs/pedidos-numeracao.md",
@@ -924,6 +924,11 @@
       "sha256": "6da82fb8caf99d4aa71d3804ecbbd03def9367aa29000690eaf960450ed7d4a6"
     },
     {
+      "path": "drizzle/0013_empty_power_man.sql",
+      "size": 48,
+      "sha256": "4faa19254c8c1a3f395cc3779c361e35534f249c65ce499dbee21dba851bb221"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -989,9 +994,14 @@
       "sha256": "2367d04e5318d53d2882a848887b74339ac4b98c1a02787ec70cbb558040b624"
     },
     {
+      "path": "drizzle/meta/0013_snapshot.json",
+      "size": 40819,
+      "sha256": "4b0ae228a465aada7ca20f6321f047cba27cce4a8f18775c777add4e58117c15"
+    },
+    {
       "path": "drizzle/meta/_journal.json",
-      "size": 1943,
-      "sha256": "b691487062c10d69431b5bbde0e6a8d670f81afd8c84b154c055fd0389982922"
+      "size": 2087,
+      "sha256": "c3faa9a09eccbfa75d9e7f7672f2cf0aff2251d720850f40bafe6a89c2d949ea"
     },
     {
       "path": "eslint.config.mjs",
@@ -1060,8 +1070,8 @@
     },
     {
       "path": "lib/list-service.mjs",
-      "size": 8902,
-      "sha256": "3d3e6ab5bfd8ba309a52fae090ee84009d860c8d2ca3e5bfbcc83bfc3890a0e2"
+      "size": 9892,
+      "sha256": "ca4678e5362b522836f2640c0e160786123d907df0997daa5a947ee27c18cdb3"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1575,8 +1585,8 @@
     },
     {
       "path": "public/order-application-flow.js",
-      "size": 2304,
-      "sha256": "939be9de3c57ac49af8a42d9a7227c30edc7732df743f7a6af4172d23be3bfc6"
+      "size": 2362,
+      "sha256": "c60d6b5a7a45d15592ff6463675adf1c9593e1003a50b57626caef0aa63df57d"
     },
     {
       "path": "public/order-composition.js",
@@ -1605,8 +1615,8 @@
     },
     {
       "path": "public/order-linked-applications.js",
-      "size": 2511,
-      "sha256": "cdc53f4be7e30aa418075f15780d2b90551bc041b06b5a6759d1ca4c52fe54fb"
+      "size": 3873,
+      "sha256": "3fd6d5f96672ff7f2196f3d3e6deb05deed95eae3aebf5642292ced3dceee6d7"
     },
     {
       "path": "public/order-list.js",
@@ -1615,18 +1625,18 @@
     },
     {
       "path": "public/order-visual-tools.js",
-      "size": 18005,
-      "sha256": "e551ff2060e7c3a2bbe89cea34cd611754809c8bb5b413d7568496b5382c0f73"
+      "size": 18805,
+      "sha256": "fc3d93b2b73c639a4c5583eda6848c1225959fab57f6c78b08afa72336aa6dbb"
     },
     {
       "path": "public/organizador.html",
-      "size": 17249,
-      "sha256": "1aa7f64e117d7aba54447ccacec215d0cffbdb55493dd4224239d04f8bf8778a"
+      "size": 17742,
+      "sha256": "9fa9aa222bb2c428c96674f68daade7fc13a840cee66321d149154abae303dd4"
     },
     {
       "path": "public/organizer-ui.js",
-      "size": 39446,
-      "sha256": "83af53deb049bf9b9c74737badc6b2d4c94f16524160add29c38a57c1bbfc169"
+      "size": 41015,
+      "sha256": "6b7d9a83cdae87f9c1a130c74a08ef536b95cee2c1f0b1aaadd8b983d84b0a0a"
     },
     {
       "path": "public/organizer.css",
@@ -1635,8 +1645,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 31256,
-      "sha256": "dbfef229fa5fc7036351651f9c6f936e1c94542de6a227e95f9b3491592c0f96"
+      "size": 32970,
+      "sha256": "c7c71258b9dc4b6af7233cc95de53fbdfed3c022b4d529ffec4849409b2defc2"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1650,8 +1660,8 @@
     },
     {
       "path": "public/product-catalog-ui.js",
-      "size": 18465,
-      "sha256": "fe563702f532f4d4f1254f6a0ed4613d174b939f560229b5d870e54b21f462ad"
+      "size": 18499,
+      "sha256": "21c5f0e9386bfb938ab7b6a0ef18bfd8cfb8360c45dc4af5ddfb068bd5702344"
     },
     {
       "path": "public/product-catalog.css",
@@ -1670,13 +1680,13 @@
     },
     {
       "path": "public/production-sheet.js",
-      "size": 31573,
-      "sha256": "66a5d72aa346a51eb02eb4326692e52deee1745a54824bec6cfc902f3a0a024d"
+      "size": 31577,
+      "sha256": "69b8825195e063f76b55f392a7f747f8e0204514944b52a23a3d997c7fa4695d"
     },
     {
       "path": "public/production-ui.js",
-      "size": 100892,
-      "sha256": "4e116c9812785e597e2b51aafbab6efa543e8692e61ea328c4a5c2e6f3a5b5e8"
+      "size": 105678,
+      "sha256": "227c9cf88b8255cd7056d84db5845fe3dcb1ed9aa4003be7e784023a79eafec3"
     },
     {
       "path": "public/production.css",
@@ -2245,13 +2255,13 @@
     },
     {
       "path": "tests/linked-applications.test.mjs",
-      "size": 1314,
-      "sha256": "8544716fb5e5e7cffcb2e44c190734ae1b204acf36400fdf3eec9f71412e0eb8"
+      "size": 3454,
+      "sha256": "b386ef8e9aff58da818e248d47f95b85a4549ff52c85ed3dac425d22d12942f9"
     },
     {
       "path": "tests/list-workflow.test.mjs",
-      "size": 17252,
-      "sha256": "c7c194473f4614011e826b592c2362c3b07922e1c4e399b52d13202cc9b2c376"
+      "size": 18737,
+      "sha256": "e3245ebbb6cdca79f9268397ceeabe4874b975d9ff4530450878b3c90b44f3ed"
     },
     {
       "path": "tests/migrations.mjs",
@@ -2265,8 +2275,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 61448,
-      "sha256": "6babc0d4bc854e090e83d00d176e0cf6accc50c7a8d6f04a36afbf81ff13459e"
+      "size": 64350,
+      "sha256": "68b36ed3d8a04d5443d7fd679d28b52ba25b1777aca458ba2738a213502c91c2"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2295,8 +2305,8 @@
     },
     {
       "path": "tests/order-visuals.test.mjs",
-      "size": 23344,
-      "sha256": "08d83d5d6f5e66e276aaebe7d48ec95795458e8a3081eda8dd7913dc9e6c0103"
+      "size": 23688,
+      "sha256": "a1f1086178e2a3847f7f152b2b8c49df2b797ccbd49e19a70ef9fa98dae0fc5e"
     },
     {
       "path": "tests/orders.test.mjs",

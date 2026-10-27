@@ -119,7 +119,7 @@ test('order sectors and piece steps show one subject at a time and preserve inpu
  await click('#productEditor','[data-product-step="art"]');assert.equal(visible(find('[data-image-source-panel="manual"]')),true);assert.equal(visible(find('[data-image-source-panel="presentation"]')),false);await click('#productEditor','[data-image-source="presentation"]');assert.equal(visible(find('[data-image-source-panel="manual"]')),false);assert.equal(visible(find('[data-image-source-panel="presentation"]')),true);
  assert.equal(all('[data-product-step]').some(el=>el.dataset.productStep==='quantities'),false);
  await click('#productEditor','[data-product-next]');assert.equal(evaluate('product().type'),'Calção');assert.equal(evaluate('productStage'),'model');assert.equal(find('#currentProductName').textContent,'Calção');await input('[data-product="model"]','CALÇÃO EDGE');
- await click('#productEditor','[data-product-step="art"]');await click('#productEditor','[data-product-next]');assert.equal(evaluate('orderStage'),'personalization');assert.equal(visible(find('[data-piece-art]')),false);assert.equal(visible(find('[data-piece-personalization]')),true);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'list');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['list']);
+ await click('#productEditor','[data-product-step="art"]');await click('#productEditor','[data-product-next]');assert.equal(evaluate('orderStage'),'personalization');assert.equal(visible(find('[data-piece-art]')),false);assert.equal(visible(find('#allApplications')),true);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'list');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['list']);
  assert.equal(evaluate('doc.pages[0].products[0].model'),'KIT EDGE 2027');assert.equal(evaluate('doc.pages[0].products[0].fabric'),'DRY');assert.equal(evaluate('doc.pages[0].products[0].extraApplications.length'),0);assert.equal(evaluate('doc.pages[0].products[1].quantity'),0,'quantities await the list');
  const saved=evaluate('JSON.stringify(doc)'),revision=evaluate('revision');await click('#orderStages','[data-order-step="pieces"]');await find('#toggleOrderPreview').emit('click');assert.equal(visible(find('#orderPreview')),false);assert.equal(previewCalls.at(-1).mode,'draft');await click('#orderStages','[data-order-step="review"]');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['pieces']);assert.equal(visible(find('#orderOverview')),false);await click('#orderStages','[data-order-step="identity"]');assert.equal(visible(find('#orderPreview')),false);assert.equal(evaluate('JSON.stringify(doc)'),saved);assert.equal(evaluate('revision'),revision,'navigation must not dirty or save the order');
 });
@@ -249,7 +249,7 @@ test('the review stays closed until required data is complete and opens a readab
  const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01'});const second=core.newOrder().pages[0];Object.assign(second.products[0],{type:'Calção',model:'Treino',fabric:'DRY',quantity:1,grade:'CALÇÃO\nM = 1'});complete.pages.push(second);context.complete=complete;await evaluate('replaceDocument(complete,{id:"COMPLETE",version:1})');
  assert.equal(find('[data-order-step="review"]').disabled,false);assert.equal(evaluate('orderStage'),'identity');assert.equal(visible(find('#orderOverview')),false);assert.equal(previewCalls.length,0,'completing or recovering data never opens a modal automatically');
  await evaluate('pageIndex=1;productIndex=0;render()');assert.equal(evaluate('sheets[sheetIndex].sourcePage'),2);assert.equal(evaluate('sheets[sheetIndex].kind'),'sheet');const snapshot=evaluate('JSON.stringify(doc)'),revision=evaluate('revision');await click('#orderStages','[data-order-step="list"]');await find('#stageNext').emit('click');
- assert.equal(evaluate('orderStage'),'review');assert.equal(visible(find('#orderPreview')),true);assert.equal(visible(find('#releaseChecks')),true);assert.equal(previewCalls.at(-1).mode,'review');assert.equal(previewCalls.at(-1).sheet,0,'the final review starts at the first sheet even after editing another piece');assert.ok(!find('#sheet').innerHTML.includes('MOCKUP'),'the completed review shows the same blank area as the printed sheet when the optional image is absent');
+ assert.equal(evaluate('orderStage'),'review');assert.equal(visible(find('#orderPreview')),false);assert.equal(visible(find('#releaseChecks')),false);assert.equal(previewCalls.at(-1).mode,'review');assert.equal(previewCalls.at(-1).sheet,0,'the final review starts at the first sheet even after editing another piece');assert.ok(!find('#sheet').innerHTML.includes('MOCKUP'),'the completed review shows the same blank area as the printed sheet when the optional image is absent');
  assert.equal(find('#checkArt').checked,false);assert.equal(find('#checkList').checked,false);assert.equal(find('#checkTechnical').checked,false);assert.equal(evaluate('JSON.stringify(doc)'),snapshot);assert.equal(evaluate('revision'),revision,'looking at the review never marks or sends the order');
  for(const id of ['checkArt','checkList','checkTechnical'])find('#'+id).checked=true;
  await click('#orderStages','[data-order-step="identity"]');await input('[data-order="deliveryDate"]','');
@@ -356,9 +356,9 @@ test('guided assembly skips a nonexistent second garment and opens linked arrows
  await click('#productEditor','[data-product-next]');
  assert.equal(evaluate('orderStage'),'personalization');
  assert.equal(visible(find('[data-piece-art]')),false);
- assert.equal(visible(find('[data-piece-personalization]')),true);
- assert.equal(visible(find('#familyVariant')),true,'fit exceptions remain accessible alongside physical applications');
- await click('#productEditor','[data-catalog-action="add-application"]');
+ assert.equal(visible(find('#allApplications')),true);
+ assert.equal(visible(find('#familyVariant')),false,'piece tabs are absent from the unified application screen');
+ await find('#addOrderApplication').emit('click');
  assert.equal(evaluate('product().technical.applications.length'),0,'new application is a draft until OK');
  assert.equal(previewCalls.at(-1).create,true);
  assert.equal(previewCalls.at(-1).mode,'layout');
@@ -369,4 +369,26 @@ test('guided assembly skips a nonexistent second garment and opens linked arrows
 
 test('the client suggests the order name without overwriting a custom title',async()=>{
  const {input,evaluate}=await orderScreen();await input('[data-order="client"]','Equipe A');assert.equal(evaluate('doc.title'),'Equipe A');await input('[data-order="title"]','Jogo 2');await input('[data-order="client"]','Equipe B');assert.equal(evaluate('doc.title'),'Jogo 2');
+});
+
+
+test('applications only appear in the unified step and an attached valid list offers one final fullscreen review',async()=>{
+ const {find,evaluate,click,context,visible,previewCalls}=await orderScreen();
+ await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="art"]');
+ assert.equal(find('#productEditor').innerHTML.includes('data-catalog-action="add-application"'),false);
+ const complete=core.demoOrder();Object.assign(complete,{orderDate:'2026-10-20',deliveryDate:'2026-11-01'});context.complete=complete;await evaluate('replaceDocument(complete,{id:"READY",version:1})');
+ assert.equal(find('#readyReviewDialog').open,false);
+ await evaluate('applyOrderList([{produto:"Camiseta",modelo:"Raglan · Gola Elite",tamanho:"M",quantidade:8,nome:"",numero:"",adicional:""}],{name:"Lista pronta"})');
+ assert.equal(find('#readyReviewDialog').open,true);assert.equal(previewCalls.length,0,'the popup asks before opening fullscreen');
+ await find('#reviewNow').emit('click');assert.equal(evaluate('orderStage'),'review');assert.equal(previewCalls.at(-1).mode,'review');assert.equal(visible(find('#releaseChecks')),false);assert.equal(visible(find('#orderPreview')),false);
+ assert.equal(find('#listComparison').open,false,'no separate list review is inserted before the final review');
+});
+
+
+test('saved lists show ready lists and drafts, and confirmed deletion preserves the attached order data',async()=>{
+ const {context,find,evaluate,click,calls}=await orderScreen();let lists=[{id:'list-one',title:'Equipe A · Jogo',rowCount:20,version:3,reviewed:true},{id:'draft-two',title:'Equipe B · Rascunho',rowCount:4,version:1,reviewed:false}];
+ context.fetch=async(path,options={})=>{calls.push({path,options});if(options.method==='DELETE'){assert.equal(path,'/api/order-lists/list-one');assert.equal(JSON.parse(options.body).version,3);lists=lists.filter(l=>l.id!=='list-one');return {ok:true,json:async()=>({deleted:true})};}return {ok:true,json:async()=>({lists})};};
+ await evaluate('refreshSavedLists()');assert.match(find('#savedListCards').innerHTML,/Equipe A/);assert.match(find('#savedListCards').innerHTML,/Equipe B/);assert.match(find('#savedListCards').innerHTML,/20 itens/);
+ evaluate('doc.listSource={id:"list-one",name:"Equipe A",rows:[]};');const before=evaluate('JSON.stringify(doc)');await click('#savedListCards','[data-delete-list="list-one"]');assert.equal(find('#deleteSavedListDialog').open,true);assert.equal(find('#deleteSavedListName').textContent,'Equipe A · Jogo');await find('#cancelSavedListDelete').emit('click');assert.equal(calls.some(c=>c.options.method==='DELETE'),false);
+ await click('#savedListCards','[data-delete-list="list-one"]');await find('#confirmSavedListDelete').emit('click');assert.equal(find('#deleteSavedListDialog').open,false);assert.equal(evaluate('JSON.stringify(doc)'),before);assert.ok(!find('#savedListCards').innerHTML.includes('Equipe A'));
 });

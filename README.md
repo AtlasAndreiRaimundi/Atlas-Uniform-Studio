@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v65 em 27/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v66 em 27/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 482 arquivos, Site v65, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 484 arquivos, Site v66, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -44,3 +44,5 @@ Peças do mesmo desenho reúnem todas as modelagens na mesma aba. Aplicações f
 A montagem segue Cliente → Informações gerais → Pedido e observações → 1ª peça → 2ª peça → Personalizações e apontamentos → Lista → Conferência. Veja [fluxo guiado](source/docs/pedidos-fluxo-guiado.md).
 
 Aplicação e seta são editadas e confirmadas juntas, sem redigitar a posição. O nome do pedido é sugerido pelo cliente. Veja [montagem guiada](source/docs/pedidos-fluxo-guiado.md).
+
+Aplicações ficam em uma única etapa do pedido. Listas salvas podem ser anexadas ou excluídas sem apagar snapshots dos pedidos. A conferência final única abre em tela cheia após o convite da lista. Veja [montagem guiada](source/docs/pedidos-fluxo-guiado.md).

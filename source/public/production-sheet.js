@@ -1,4 +1,4 @@
-import {pieceFamilies} from './order-linked-applications.js';
+import {pieceFamilies} from './order-linked-applications.js?v=3';
 import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize} from './product-catalog.js?v=4';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
 import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=13';

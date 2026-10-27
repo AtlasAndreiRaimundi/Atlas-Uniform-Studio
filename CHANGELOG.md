@@ -89,3 +89,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Controles opcionais recolhidos; textos simplificados; nome do pedido sugerido pelo cliente sem substituir título personalizado.
 - Regras por produto e modelagem preservadas. 329 testes aprovados, 1 referência antiga ausente; TypeScript, build e fluxo publicado verificados.
 - Origem Sites: `fd8ecb4f40a566af3ec33ed65f1692048d1bffd5`, 482 arquivos verificados.
+
+## 2026-10-27 — Aplicações unificadas, conferência final e listas salvas (v66)
+
+- Aplicações exclusivas da etapa Aplicações e setas, em lista única do pedido. Posição confirmada do layout inteiro preservada para todas as peças; aplicações distintas mantêm setas distintas.
+- Convite após anexar lista válida abre a única conferência em tela cheia; um botão confirma arte, lista e dados técnicos juntos. Validações e envio posterior preservados.
+- Listas salvas visíveis no pedido, com usar/abrir/excluir; exclusão também no organizador, com proprietário e versão verificados e snapshots de pedidos preservados.
+- Migração aditiva 0013: order_lists.deleted_at. Identidades novas impedem que abas antigas sobrescrevam listas substitutas.
+- 334 testes aprovados, 1 referência antiga ausente; TypeScript e build aprovados. Origem Sites `a9ae6228707574a44835d6bffac234dff8717fec`, 484 arquivos.
