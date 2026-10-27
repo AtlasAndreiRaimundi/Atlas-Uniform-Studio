@@ -1,0 +1,28 @@
+import {newRecordId} from './record-id.js';
+import {pieceFamilyKey,syncApplicationArrows} from './order-linked-applications.js';
+export const DRAWING_POSITION='Conforme seta no desenho';
+export function applicationChoices(product){
+ const t=product.technical;if(!t)return [];
+ const choices=[{role:'ESCUDO',type:'TPU ALTO RELEVO',label:'TPU alto relevo · escudo'}];
+ if(t.fit!=='INFANTIL')choices.push({role:'ESCUDO',type:'APLIQUE BORDADO',label:'Aplique bordado · escudo'});
+ if(t.productCode==='CAM-001')choices.push({role:'MARCA MEINERZ',type:'TPU ALTO RELEVO',label:'TPU alto relevo · marca Meinerz'},{role:'ETIQUETA OFICIAL',type:'TERMOCOLANTE',label:'Termocolante · etiqueta'},{role:'ETIQUETA OFICIAL',type:'TPU ALTO RELEVO',label:'TPU alto relevo · etiqueta'});
+ return choices;
+}
+export function beginApplication(page,product,request={}){
+ if(!product.technical)throw Error('Esta peça não tem uma ficha de aplicações. Use um apontamento livre.');
+ let app=product.technical.applications.find(a=>a.id===request.applicationId);
+ if(!app){if(!request.create)throw Error('Esta aplicação foi removida. Escolha outra.');app={id:newRecordId(),role:'ESCUDO',type:'TPU ALTO RELEVO',perUnit:1,position:'',exception:''};product.technical.applications.push(app);}
+ syncApplicationArrows(page,product);return app;
+}
+export function applicationNotes(page,product,app){
+ const ids=new Set(page.products.filter(p=>pieceFamilyKey(p)===pieceFamilyKey(product)).flatMap(p=>(p.technical?.applications||[]).filter(a=>a.role===app.role&&a.type===app.type).map(a=>a.id)));
+ return (page.annotations||[]).filter(a=>ids.has(a.applicationId));
+}
+export function confirmApplication(page,product,app){
+ const notes=applicationNotes(page,product,app);
+ if(notes.length<app.perUnit)throw Error('Falta uma seta. Volte ao tipo da aplicação para recriar e posicionar.');
+ if(product.technical.fit==='INFANTIL'&&app.type==='TPU ALTO RELEVO'&&!app.exception.trim())throw Error('Informe por que este pedido infantil precisa de TPU.');
+ if(app.role==='MARCA MEINERZ'&&product.technical.applications.filter(a=>a.role==='MARCA MEINERZ').reduce((n,a)=>n+a.perUnit,0)>1)throw Error('A marca Meinerz já foi adicionada. Edite a aplicação existente.');
+ if(!app.position.trim())app.position=DRAWING_POSITION;
+ return app;
+}

@@ -81,3 +81,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Quantidades preenchidas pela lista, com resumo no retorno; conferência explícita ao final.
 - 328 testes aprovados, 1 referência antiga ausente; TypeScript, build e navegador verificados.
 - Origem Sites: `0aace28836709142e20565b6d9234be99b9fcc23`, 481 arquivos. Documentação: source/docs/pedidos-fluxo-guiado.md.
+
+## 2026-10-27 — Aplicações e setas em uma confirmação (v65)
+
+- Editor único para tipo, quantidade e posição da aplicação. OK salva aplicação e setas juntos; cancelar descarta o rascunho.
+- Posição indicada pela seta preenche o dado técnico automaticamente, corrigindo o bloqueio de conferência por posição textual vazia.
+- Controles opcionais recolhidos; textos simplificados; nome do pedido sugerido pelo cliente sem substituir título personalizado.
+- Regras por produto e modelagem preservadas. 329 testes aprovados, 1 referência antiga ausente; TypeScript, build e fluxo publicado verificados.
+- Origem Sites: `fd8ecb4f40a566af3ec33ed65f1692048d1bffd5`, 482 arquivos verificados.
