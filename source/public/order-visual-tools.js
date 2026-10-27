@@ -1,9 +1,9 @@
 import {applicationChoices,beginApplication,applicationNotes,confirmApplication} from './order-application-flow.js?v=2';
 import {syncApplicationArrows} from './order-linked-applications.js?v=3';
 import {createAnnotationEditor} from './order-annotation-editor.js?v=9';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=20';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=21';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=14';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=15';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose,onConfirmReview}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');

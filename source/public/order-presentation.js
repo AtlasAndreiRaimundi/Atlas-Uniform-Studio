@@ -1,4 +1,4 @@
-import {newKitPage} from './production-core.js?v=14';
+import {newKitPage} from './production-core.js?v=15';
 import {createOrderProduct,prepareOrderProduct} from './order-composition.js';
 export function presentationGarments(template={}){
  if(!['conjunto','kit'].includes(String(template.category||'').toLowerCase()))return null;

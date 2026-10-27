@@ -159,3 +159,5 @@ fieldset.production-editor{border:0;padding:0;margin:0;min-width:0}#orderOvervie
 .order-stages{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:900px){.order-stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.order-stages{display:flex;overflow-x:auto;margin:0 16px 20px;padding-bottom:8px}.order-stages button{min-width:170px;flex:0 0 170px}}
+
+.budget-scroll{overflow-x:auto}.budget-table{border-collapse:collapse;width:100%;font-size:.85rem;margin:14px 0}.budget-table th,.budget-table td{padding:9px 7px;text-align:left;border-bottom:1px solid var(--line,#777)}.budget-table small{display:block;opacity:.7}.budget-table td:nth-last-child(-n+2),.budget-table th:last-child{white-space:nowrap;text-align:right}#orderBudget input{max-width:240px}

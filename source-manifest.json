@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "cf576f90743818fd4226e0e8c41bc76002dffe2a",
-  "exported_at": "2026-10-27T17:51:14.899940+00:00",
+  "source_commit": "71421cae8de32457f31cfb3158c411a40a2ffb22",
+  "exported_at": "2026-10-27T18:18:27.495455+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -789,6 +789,11 @@
       "sha256": "1cc0e4b222070d5020c0c84c4c14468aa004121698f07199f37d2516650debd2"
     },
     {
+      "path": "docs/orcamento-anexo-01-2026.md",
+      "size": 4320,
+      "sha256": "9de6e86febdade358d2e03e0c060e0a30352704357bcfc426a584e6598073406"
+    },
+    {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
       "size": 3025,
       "sha256": "1d96148dc3f94ff4fbe2f9e1581f12ffbdf130a56d7a24ed7afcfc00c59085dd"
@@ -1085,8 +1090,8 @@
     },
     {
       "path": "lib/order-technical-service.mjs",
-      "size": 8310,
-      "sha256": "d469bc07ba4742e712e78de382930acd62b6391551c967f7dd88c9433dcac795"
+      "size": 8483,
+      "sha256": "a7f76796e618f06ce97f0e23029e526cada7cafad87b0427e84d72c8ac1eda30"
     },
     {
       "path": "lib/order-tracking.mjs",
@@ -1095,8 +1100,8 @@
     },
     {
       "path": "lib/production-service.mjs",
-      "size": 20806,
-      "sha256": "29a706808950673a20bf2a7882d87290903256363ae441cf95c3f518abdedbb6"
+      "size": 21252,
+      "sha256": "d0d4fe6d0f231aca387cc8844dcd74392fecbc09a71864b0d86a71a4522e5680"
     },
     {
       "path": "lib/project-service.mjs",
@@ -1476,7 +1481,7 @@
     {
       "path": "public/catalog-list.js",
       "size": 4529,
-      "sha256": "5c0313ec0df168b662f5197fecadf880160900cc86da4620918bcbbcd9f755cb"
+      "sha256": "717691e861c957350b0293666157219d1e0cc868078e46b417649ea706fa9bc2"
     },
     {
       "path": "public/catalog-reference.js",
@@ -1581,7 +1586,7 @@
     {
       "path": "public/order-annotation-editor.js",
       "size": 10095,
-      "sha256": "c83673aa41ee08c439cdee97653eac2014c7155e2adf4bf71139a859fb191ace"
+      "sha256": "1910dd552b8e42ae11bbedcb0cd1a008634625b16c9edeb869fbf7f40cafe375"
     },
     {
       "path": "public/order-annotations.js",
@@ -1596,7 +1601,7 @@
     {
       "path": "public/order-composition.js",
       "size": 2688,
-      "sha256": "5539a65475bdada2c565e859ae0b8d8562587c5239d36ffb9b0a286a4820f37e"
+      "sha256": "a9cb3022be4eacbd2d93f1bcad8fbe4855b0743c2995e65109431b569aa94c9c"
     },
     {
       "path": "public/order-core.js",
@@ -1605,8 +1610,8 @@
     },
     {
       "path": "public/order-delivery.js",
-      "size": 3097,
-      "sha256": "58da8a4f7a11b5afc89c39153489d10887ea664c816051a5c30ba43ac4873433"
+      "size": 3159,
+      "sha256": "99320fd1b25f636d16bd42ece273aa4e377625317f487fd98436de515ecd17e9"
     },
     {
       "path": "public/order-files.js",
@@ -1631,12 +1636,22 @@
     {
       "path": "public/order-presentation.js",
       "size": 1517,
-      "sha256": "1ab69223c75935976be668c134947c4762911f036ff1f82478a429fac6cf8211"
+      "sha256": "723b7badae62c897c04351e01ff21514a4e7f6df217d2a6534450c9bb1de4473"
+    },
+    {
+      "path": "public/order-pricing-ui.js",
+      "size": 5194,
+      "sha256": "4dccc92e4c975d25e5a1ae469792032837d4b5e66948e7106f272ce1e73b0e06"
+    },
+    {
+      "path": "public/order-pricing.js",
+      "size": 7635,
+      "sha256": "7464406eede006030ef18a49b27152515c47c1387e95832cf0e2aa8d47930993"
     },
     {
       "path": "public/order-visual-tools.js",
       "size": 18823,
-      "sha256": "c7811b46076bb30d9626441d9850bc08b9d8db7552a28727051ab52bd1a21e40"
+      "sha256": "4e1ba1feced5972516c41d93dca89c80e0f2bd63c9f620c466e024efa2a9630d"
     },
     {
       "path": "public/organizador.html",
@@ -1655,8 +1670,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 33508,
-      "sha256": "c9bad6ede72e0ee2323993091f69ffc07cb69d07b09e86e930a791075ba806cd"
+      "size": 33547,
+      "sha256": "dbaf763bfc44b39a2764f3d4a6f10f55e8551431f714578a43512e98081d7b21"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1671,7 +1686,7 @@
     {
       "path": "public/product-catalog-ui.js",
       "size": 18305,
-      "sha256": "420b5d4b81e64b1f3ae2910ba09dff562cb946c3e31aff86d2021397eebd7eee"
+      "sha256": "e64e1c535821260be44387f66f71e9bf0b4d905a742a3331b3db8840d78fa968"
     },
     {
       "path": "public/product-catalog.css",
@@ -1680,28 +1695,28 @@
     },
     {
       "path": "public/product-catalog.js",
-      "size": 33510,
-      "sha256": "88a1f91466ab0e87da412260f9e17338dbd15c524caba820ef2825f9ae22c8f9"
+      "size": 33526,
+      "sha256": "5e2fc1a72f78273fa8ff7d89f109f76cc8bd0a4d253064edd1a2421457c7e291"
     },
     {
       "path": "public/production-core.js",
-      "size": 21197,
-      "sha256": "5959d40233c8f629178c77ac28c9884d3572707c2a88c618995cf7517b690a86"
+      "size": 21280,
+      "sha256": "7bc2a5c2e7c5ee77c5b6e82c0eafbe6f04aee5e6b3e3d71e886f745e50a2644e"
     },
     {
       "path": "public/production-sheet.js",
-      "size": 30944,
-      "sha256": "647e03c57b659fec899166a71dd9e614c8f91e8f3895b0e4adcfc4758faa8ae7"
+      "size": 33038,
+      "sha256": "dbc5433fbdfbef60daa56483f3113290a6e4020d4ca751d494faa6bd397673bc"
     },
     {
       "path": "public/production-ui.js",
-      "size": 107777,
-      "sha256": "85263630e9393b3954cbd7a62bd609c567f6a30e244d3346dc49bbbf1580edf5"
+      "size": 107974,
+      "sha256": "bcd46a67b79683ac24c3d30eea7ddc9cbe07ff779773f60aa867f7879ed1b7d0"
     },
     {
       "path": "public/production.css",
-      "size": 50454,
-      "sha256": "b793e852ce70337a8e2c418c6bf3714b2615310f6deb9dd191273725628379bd"
+      "size": 50857,
+      "sha256": "37baeeb3a90e278f42baab1bd006f27ce2ec917fc897af8385390b2c0db018b1"
     },
     {
       "path": "public/project-session.js",
@@ -2285,8 +2300,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 65364,
-      "sha256": "cf499b77c303da3ddefabf63e219c3a3b6a8ccdf1e7a3859254955885fee937a"
+      "size": 66580,
+      "sha256": "e9e7fea9864af9d11ae494f9c66ca692b5b467533f36b9517f78d61f6162774a"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2304,9 +2319,14 @@
       "sha256": "396426a606720b99c2c4d4cdbbadd38e66bbface9a8e460382f291a9cb689a8d"
     },
     {
+      "path": "tests/order-pricing.test.mjs",
+      "size": 6848,
+      "sha256": "559692599c08825ec2a9325a07a988db4ad1eff5e5dd1f15f7858d7e786782a3"
+    },
+    {
       "path": "tests/order-print-list.test.mjs",
-      "size": 8618,
-      "sha256": "349b88f2bcb61a6eeab4987fc3feacc66c87f4fdd6bcac14a900c3bc094db8a7"
+      "size": 8896,
+      "sha256": "34de5798d2c1c2565bd5fae81d202c8459b81e5940118279209af4f3d07628b0"
     },
     {
       "path": "tests/order-reminder-ui.test.mjs",
