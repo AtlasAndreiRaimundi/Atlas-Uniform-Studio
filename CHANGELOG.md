@@ -120,3 +120,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Remove o resumo geral final de kits e avulsos da conferência e dos arquivos; desenhos, listas, orçamento e dados complementares necessários são preservados.
 - Fonte: `4edc3679c7e554af7832d548032a6014fb9eb366` (492 arquivos).
 - 50 testes de fluxo, impressão e catálogo aprovados; build concluído; PDF de teste agora tem somente desenho e lista.
+
+## v72 — 2026-10-27
+- Paleta completa do escuro com preto e cinza neutros e destaques dourados; capa sem oliva e imagens decorativas monocromáticas.
+- Espaçamento do orçamento, barras de ações, campos em grades, nomes longos, diálogos e biblioteca de grafismos ajustados.
+- Cores de uniformes, texturas, paletas do cliente, iluminação 3D e PDFs preservados.
+- Fonte `b943a89f86de42e7cef8323b488fbc7d36ffbd50` (493 arquivos). 45 testes direcionados aprovados, incluindo contraste mínimo 4,5:1 nos três temas; TypeScript e build concluídos. Capa, pedido, organizador e editor isolado do simulador inspecionados na prévia; limites de áreas autenticadas registrados na documentação.
