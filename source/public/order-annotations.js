@@ -12,4 +12,4 @@ export function moveAnnotation(value,dx,dy,handle='move'){
  dx=Math.max(-Math.min(...xs),Math.min(NOTE_AREA.w-Math.max(...xs),dx));dy=Math.max(-Math.min(...ys),Math.min(NOTE_AREA.h-Math.max(...ys),dy));
  const end=notePoint({x:a.x2+dx,y:a.y2+dy});return {...a,x:a.x+dx,y:a.y+dy,x2:end.x,y2:end.y};
 }
-export function annotationVisible(a,products){return !a.productId||products.some(p=>p.id===a.productId);}
+export function annotationVisible(a,products){return !a.productId||products.some(p=>p.id===a.productId||p.familyMembers?.some(member=>member.id===a.productId));}

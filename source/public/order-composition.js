@@ -1,5 +1,5 @@
 import {PRODUCTS,newProduct,newId} from './production-core.js?v=13';
-import {FITS,productCodeFor,attachCatalog,technicalFieldChange,cloneFitVariant} from './product-catalog.js?v=2';
+import {FITS,productCodeFor,attachCatalog,technicalFieldChange,cloneFitVariant} from './product-catalog.js?v=3';
 
 export const ORDER_PRODUCTS=PRODUCTS;
 export const KIT_PRESETS=[

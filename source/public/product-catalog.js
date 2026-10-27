@@ -119,7 +119,7 @@ export function technicalProblems(product,order={},release=false){
   if(!Number.isSafeInteger(a.perUnit*Number(product.quantity||0)))errors.push('Quantidade de aplicações excede o limite numérico do pedido.');
  }return [...new Set(errors)];
 }
-export function physicalApplications(product){return (product.technical?.applications||[]).map(a=>({...a,quantity:a.perUnit*Number(product.quantity||0),...(a.role==='MARCA MEINERZ'?{customerCharge:0}:{})}));}
+export function physicalApplications(product){if(product.familyMembers)return product.familyMembers.flatMap(p=>physicalApplications(p));return (product.technical?.applications||[]).map(a=>({...a,quantity:a.perUnit*Number(product.quantity||0),...(a.role==='MARCA MEINERZ'?{customerCharge:0}:{})}));}
 export function technicalWarnings(product){const t=product.technical;if(!t)return ['Dados antigos: ficha técnica ainda não aplicada.'];const out=[],m=moldFor(t);if(m?.five)out.push(FIVE_PARTS_WARNING);if(t.fit==='INFANTIL'&&t.applications.some(a=>a.type==='TPU ALTO RELEVO'))out.push('TPU INFANTIL EXCEPCIONAL — conferir a justificativa técnica.');if(t.pocketRequest)out.push('BOLSOS PENDENTES DE HOMOLOGAÇÃO: '+t.pocketRequest);if(!t.legacyReviewed)out.push('Conversão do cadastro antigo aguardando conferência.');return out;}
 export function designKey(product,page){return product.technical?.designId||page?.id||product.id;}
 function applicationSignature(t){return t.applications.map(a=>[a.role,a.type,a.perUnit,a.position]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));}

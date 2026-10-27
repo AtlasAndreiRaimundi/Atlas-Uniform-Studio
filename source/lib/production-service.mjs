@@ -18,6 +18,7 @@ function annotations(value=[]){
  return value.map(a=>{
   if(!a||!['line','arrow','text','callout'].includes(a.type))throw new AppError(400,'Confira o tipo do apontamento.');
   const out={id:text(a.id,80),type:a.type,text:text(a.text||'',400),productId:text(a.productId||'',80),color:['#c52a36','#235394','#17202b'].includes(a.color)?a.color:'#c52a36'};
+  if(a.applicationId!==undefined){out.applicationId=text(a.applicationId,80);if(!Number.isSafeInteger(a.applicationSlot)||a.applicationSlot<0||a.applicationSlot>79)throw new AppError(400,'Confira a aplicação vinculada ao apontamento.');out.applicationSlot=a.applicationSlot;}
   for(const [key,min,max,fallback]of [['x',0,841.89,40],['y',0,595.28,180],['x2',0,841.89,160],['y2',0,595.28,250],['size',6,18,9],['width',.4,3,1]]){const n=a[key]??fallback;if(typeof n!=='number'||!Number.isFinite(n)||n<min||n>max)throw new AppError(400,'Mantenha os apontamentos dentro da folha A4.');out[key]=n;}
   return out;
  });
