@@ -1,6 +1,6 @@
 import {newRecordId} from './record-id.js';
 import {preserveCatalogList} from './catalog-list.js';
-import {catalogProblems,attachCatalog,fitOfSize,usesCatalogList,productCodeFor,cloneFitVariant} from './product-catalog.js?v=5';
+import {catalogProblems,attachCatalog,fitOfSize,usesCatalogList,productCodeFor,cloneFitVariant} from './product-catalog.js?v=6';
 import {normalizeListRow,listProblems,listPieces} from './order-list.js?v=7';
 export const SCHEMA=1;
 export const TECHNIQUES=['TRANSFER','DTF','BORDADO / APLIQUE','TPU ALTO RELEVO','TERMOCOLANTE','SERIGRAFIA'];

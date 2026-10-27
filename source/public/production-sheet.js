@@ -1,5 +1,5 @@
 import {pieceFamilies} from './order-linked-applications.js?v=3';
-import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=5';
+import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=6';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
 import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=14';
 import {placeOrderImage,ORDER_PAGE} from './order-image-layout.js?v=3';
@@ -67,7 +67,7 @@ function primary(order,page,products,assets,sourcePage=1){
  d.rect(421,65,190,46,'none',C.line,5);['PEDIDO NOVO','COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].forEach((s,i)=>{const chosen=order.type===s;d.text('('+ (chosen?'X':' ')+') '+s,427,79+i*12,6.8,chosen?C.red:C.muted,chosen);});
  const title=wrap(page.title||'',581,13);title.slice(0,2).forEach((s,i)=>d.text(s,24,132+i*15,13,C.red,true));if(title.length>2)extra.push('TÍTULO: '+page.title);
  const top=title.length>1?157:145,bottom=452,slot=595/products.length;
- const anchors=[],imageEntries=[],placeholderEntries=[],componentArrows=[],shared=page.visual?.mode==='shared'&&page.visual.image,applications=products.some(p=>p.technical?.applications.length||p.extraApplications?.length);
+ const anchors=[],imageEntries=[],placeholderEntries=[],componentArrows=[],shared=page.visual?.mode==='shared'&&page.visual.image,applications=products.some(p=>p.technical?.applications.length||p.extraApplications?.length||p.technical?.drawstringColor);
  const appTop=applications?458-products.length*20-3:458;
  const artBottom=applications?Math.min(bottom,appTop-16):bottom;
  const addImage=(src,frame,transform,key)=>{const box=placeOrderImage(src,frame,transform);d.image(src,box.x,box.y,box.w,box.h,ORDER_PAGE);d.ops.at(-1).imageKey=key;imageEntries.push({op:d.ops.at(-1),src,frame,transform});};
@@ -81,7 +81,7 @@ function primary(order,page,products,assets,sourcePage=1){
   field(d,'Modelo '+(i+1),p.technical?productDisplayName(p):[p.type,p.model!==p.type?p.model:''].filter(Boolean).join(' · '),colX,267,colW,34,extra,{color,size:8,max:3});
   field(d,'Tecido',p.fabric,colX,301,colW,30,extra,{color,size:8,max:2});
   field(d,'Cor do tecido',p.fabricColor,colX,331,colW,27,extra,{color,max:1});
-  if(p.technical)field(d,'Acabamentos',finishSummary(p,order),colX,358,colW,54,extra,{color,size:6.8,max:5});else{field(d,'Cor dos detalhes',p.detailColor,colX,358,colW,27,extra,{color,max:1});field(d,'Estampa em',p.print,colX,385,colW,27,extra,{color,max:1});}
+  field(d,'Estampa e aplicações',finishSummary(p),colX,358,colW,54,extra,{color,size:7.2,max:5});
   field(d,'Quantidade',String(p.quantity||0)+' UNIDADES',colX,412,colW,28,extra,{color,size:9,max:1});
   d.text('QUANTIDADES:',colX+5,452,7,color,true);
   const grade=parseGrade(p.grade,p.type),rows=[];grade.groups.forEach(g=>{rows.push({text:g.category,bold:true});g.rows.forEach(r=>rows.push({text:(isSpecialSize(r.size)?'TAMANHO ESPECIAL':r.size)+' = '+r.quantity,bold:isSpecialSize(r.size)}));});
@@ -147,11 +147,11 @@ function listSheets(order,page,products,assets,sourcePage){
  result.forEach((sheet,i)=>{sheet.listPage=i+1;sheet.listPageCount=result.length;sheet.title+=' · '+(i+1)+' de '+result.length;sheet.ops.push({kind:'text',text:'LISTA '+sheet.listPage+' DE '+sheet.listPageCount+' · DESENHO '+sourcePage,x:21,y:575,size:7,color:C.muted,bold:true});});return result;
 }
 function drawApplications(d,products,top){
- d.text('APLICAÇÕES EXTRAS',22,top-5,6.3,C.muted,true);
+ d.text(products.some(p=>p.technical?.drawstringColor)?'APLICAÇÕES E CORDÃO':'APLICAÇÕES EXTRAS',22,top-5,6.3,C.muted,true);
  d.rect(16,top,595,products.length*20,'none',C.line,2);
  const columns=[{x:111,w:112},{x:223,w:48},{x:271,w:120},{x:391,w:124},{x:515,w:96}];
  products.forEach((p,i)=>{const y=top+i*20,color=i===0?C.blue:C.red;if(i)d.line(16,y,611,y);const heading=fitFieldText(p.type,84,20,{size:7,minSize:5.5,max:1});d.text(heading.lines[0],22,y+13,heading.size,color,true);
-  if(p.technical){const totals=new Map();for(const a of physicalApplications(p))totals.set(a.role+' · '+a.type,(totals.get(a.role+' · '+a.type)||0)+a.quantity);const text=[...totals].map(([label,n])=>label+' = '+n).join(' · ')||'SOMENTE SUBLIMADOS NA ARTE';const fitted=fitFieldText(text,490,20,{size:6.7,minSize:5,max:2});fitted.lines.slice(0,2).forEach((line,j)=>d.text(line,116,y+9+j*7,fitted.size,color,true));return;}EXTRA_APPLICATIONS.forEach((label,j)=>{const x=columns[j].x;d.rect(x,y+7,7,7,'none',color);if(p.extraApplications?.includes(label)){d.line(x+1,y+8,x+6,y+13,color,.9);d.line(x+1,y+13,x+6,y+8,color,.9);}d.text(label,x+11,y+13,6.3,color);});
+  if(p.technical){const totals=new Map();for(const a of physicalApplications(p))totals.set(a.role+' · '+a.type,(totals.get(a.role+' · '+a.type)||0)+a.quantity);const text=[...[...totals].map(([label,n])=>label+' = '+n),p.technical.drawstringColor?'Cordão: '+p.technical.drawstringColor:''].filter(Boolean).join(' · ')||'SOMENTE SUBLIMADOS NA ARTE';const fitted=fitFieldText(text,490,20,{size:6.7,minSize:5,max:2});fitted.lines.slice(0,2).forEach((line,j)=>d.text(line,116,y+9+j*7,fitted.size,color,true));return;}EXTRA_APPLICATIONS.forEach((label,j)=>{const x=columns[j].x;d.rect(x,y+7,7,7,'none',color);if(p.extraApplications?.includes(label)){d.line(x+1,y+8,x+6,y+13,color,.9);d.line(x+1,y+13,x+6,y+8,color,.9);}d.text(label,x+11,y+13,6.3,color);});
  });
 }
 function drawAnnotations(d,annotations,products,extra){

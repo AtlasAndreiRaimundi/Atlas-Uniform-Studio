@@ -6,10 +6,10 @@ import {createProductionPackage,loadDeliveryLibraries} from './order-delivery.js
 import {createWorkflowGuide,workflowChoose,canonicalWorkflowPath} from './workflow-guide.js?v=3';
 import {workflowRoute} from './workflow-contract.js?v=2';
 import {TECHNIQUES,PRODUCTS as LEGACY_PRODUCTS,FABRICS,newId,newOrder as legacyNewOrder,newPage as legacyNewPage,newProduct as legacyNewProduct,newKitPage as legacyNewKitPage,kitTitle,demoOrder,parseGrade,validateOrder,releaseProblems,compareOrders,applyListToOrder} from './production-core.js?v=14';
-import {buildSheets,sheetSVG,createPDF,PAPER,sheetLabel} from './production-sheet.js?v=19';
+import {buildSheets,sheetSVG,createPDF,PAPER,sheetLabel} from './production-sheet.js?v=20';
 import {loadExcelLibrary,readOrderWorkbook} from './order-files.js?v=5';
 import {prepareListSheets,prepareListText,parseListMatrix,needsListMapping,listProblems,listSummary} from './order-list.js?v=7';
-import {CATALOG_VERSION,catalogOrder,attachCatalog,productCodeFor,productionSummary,fitOfSize,fitLabel,productDisplayName,applyFactoryDefaults} from './product-catalog.js?v=5';
+import {CATALOG_VERSION,catalogOrder,attachCatalog,productCodeFor,productionSummary,fitOfSize,fitLabel,productDisplayName,applyFactoryDefaults} from './product-catalog.js?v=6';
 import {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor} from './product-catalog-ui.js?v=7';
 const PRODUCTS=ORDER_PRODUCTS;
 const newOrder=()=>catalogOrder({...legacyNewOrder(),compositionKind:''});

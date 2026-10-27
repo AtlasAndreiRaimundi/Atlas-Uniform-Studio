@@ -1,4 +1,4 @@
-import {buildSheets,createPDF} from './production-sheet.js?v=19';
+import {buildSheets,createPDF} from './production-sheet.js?v=20';
 
 const safe=value=>String(value||'pedido').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_.-]+/g,'_').replace(/^\.+/,'').slice(0,100)||'pedido';
 let libraries;

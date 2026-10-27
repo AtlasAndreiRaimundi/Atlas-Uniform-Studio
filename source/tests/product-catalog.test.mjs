@@ -123,3 +123,11 @@ test('a saved typed order cannot remove its catalog or a product technical recor
 test('the signed-in catalog route has a distinct static reference filename',async()=>{
  const {readFile,access}=await import('node:fs/promises');const route=await readFile(new URL('../app/catalogo-tecnico/page.tsx',import.meta.url),'utf8');assert.match(route,/requireChatGPTUser\('\/catalogo-tecnico'\)/);assert.match(route,/src="\/referencia-producao.html"/);await access(new URL('../public/referencia-producao.html',import.meta.url));await assert.rejects(access(new URL('../public/catalogo-tecnico.html',import.meta.url)),{code:'ENOENT'});
 });
+
+test('printed summary keeps only print and applications, with drawstring beside the shorts application row',()=>{
+ const shirt=item(),shorts=item('CAL-001');shirt.print='TRANSFER';shirt.detailColor='VERDE';shirt.technical.applications=[application()];shorts.print='TRANSFER';shorts.technical.drawstringColor='BRANCO';
+ assert.equal(c.finishSummary(shirt),'SUBLIMAÇÃO · TPU ALTO RELEVO');assert.equal(c.finishSummary(shorts),'SUBLIMAÇÃO');
+ const sheet=buildSheets(orderWith(shirt,shorts))[0],texts=sheet.ops.filter(o=>o.kind==='text');
+ assert.ok(texts.some(o=>o.text==='ESTAMPA E APLICAÇÕES'));assert.ok(!texts.some(o=>o.text==='ACABAMENTOS'));
+ assert.ok(texts.some(o=>o.text.includes('Cordão: BRANCO')&&o.x<618));assert.ok(!texts.some(o=>o.text.includes('Cordão:')&&o.x>=618));
+});
