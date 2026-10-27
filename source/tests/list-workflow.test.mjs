@@ -136,3 +136,13 @@ test('list completion is explicit, durable, invalidated by edits and independent
  reopened.document.rows[0].adicional='PROFESSOR';const edited=await lists.save(user,draft.id,{document:reopened.document,version:unchanged.version});assert.equal(edited.reviewed,false);
  sql.exec('PRAGMA foreign_keys=ON');sql.prepare('DELETE FROM projects WHERE id=?').run('P');assert.equal((await lists.get(user,draft.id)).document.links.projectId,'','deleting a design keeps the independent list available');
 });
+
+
+test('saved list deletion checks owner and version, hides the list and preserves order snapshots',async()=>{
+ const {lists,orders}=setup(),doc=newOrder();doc.title='Pedido com lista';doc.client='Equipe';const order=await orders.save(user,null,{document:doc}),list=await lists.forOrder(user,order.id),filled=await lists.save(user,list.id,{version:list.version,document:{...list.document,rows:[row({})]},action:'complete'});
+ const applied=applyListToOrder((await orders.get(user,order.id)).document,[row({})],{id:filled.id,name:filled.title,version:filled.version});await orders.save(user,order.id,{version:order.version,document:applied});
+ await assert.rejects(lists.remove({userId:'bob'},filled.id,{version:filled.version}),{status:404});await assert.rejects(lists.remove(user,filled.id,{version:filled.version-1}),{status:409});
+ assert.equal((await lists.remove(user,filled.id,{version:filled.version})).deleted,true);assert.equal((await lists.list(user)).length,0);await assert.rejects(lists.get(user,filled.id),{status:404});await assert.rejects(lists.save(user,filled.id,{version:filled.version,document:list.document}),{status:404});
+ const preserved=await orders.get(user,order.id);assert.equal(preserved.document.listSource.rows.length,1);
+ const replacement=await lists.forOrder(user,order.id);assert.notEqual(replacement.id,filled.id);assert.equal((await lists.forOrder(user,order.id)).id,replacement.id);await assert.rejects(lists.get(user,filled.id),{status:404});
+});

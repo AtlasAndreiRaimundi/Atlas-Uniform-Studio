@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#121314"><meta name="robots" content="noindex,nofollow">
   <title>Lista de pedidos — Atlas Uniform Studio</title>
   <link rel="icon" href="/favicon.ico?v=atlas-20261024" type="image/x-icon" sizes="16x16 32x32 48x48 64x64"><link rel="icon" href="/atlas-favicon-32.png?v=atlas-20261024" type="image/png" sizes="32x32"><link rel="icon" href="/atlas-favicon.svg?v=atlas-20261024" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=atlas-20261024" sizes="180x180"><link rel="stylesheet" href="/organizer.css?v=7">
-  <script type="module" src="/organizer-ui.js?v=13"></script>
+  <script type="module" src="/organizer-ui.js?v=delete-13"></script>
 <link rel="stylesheet" href="/interface-theme.css?v=1"><script src="/interface-theme.js?v=1"></script>
 <link rel="stylesheet" href="/studio-navigation.css?v=1"><script type="module" src="/studio-navigation-init.js?v=1"></script>
 <link rel="stylesheet" href="/atlas-brand.css?v=1"><link rel="stylesheet" href="/product-catalog.css?v=1">
@@ -22,7 +22,7 @@
       <section class="tool-intro"><div><p class="eyebrow">DO PEDIDO À PRODUÇÃO</p><h1>Monte sua lista.</h1><p>Adicione os itens, importe uma planilha ou cole um texto. Comece por aqui ou volte depois. Salve a lista e vincule a um pedido quando quiser.</p></div><div class="organizer-heading-actions"><button id="exportOrdersTopBtn" data-export-orders class="gold-button" aria-describedby="exportHelp" disabled>Exportar planilha ↓</button><small>Excel (.xlsx) · lista + resumo</small><button id="loadExampleBtn" class="outline-button">Ver exemplo</button></div></section>
       <section id="workflowNextStep" aria-label="Próximo passo da lista" hidden></section><section class="list-library" aria-label="Guardar e reabrir listas">
         <label>Listas salvas<select id="savedLists"><option value="">Selecione uma lista…</option></select></label>
-        <div class="list-library-actions"><button id="openList" class="outline-button">Abrir lista</button><button id="newList" class="outline-button">+ Nova lista</button><button id="saveList" class="outline-button">Salvar rascunho</button><button id="completeList" class="gold-button">Concluir e conferir lista</button><button id="saveListCopy" class="text-link">Salvar como nova</button></div>
+        <div class="list-library-actions"><button id="openList" class="outline-button">Abrir lista</button><button id="deleteList" class="text-link">Excluir lista selecionada</button><button id="newList" class="outline-button">+ Nova lista</button><button id="saveList" class="outline-button">Salvar rascunho</button><button id="completeList" class="gold-button">Concluir e conferir lista</button><button id="saveListCopy" class="text-link">Salvar como nova</button></div>
         <p id="listSaveStatus" class="helper" role="status">Preparando suas listas…</p>
         <a class="text-link" id="continuePresentation" href="/projects" target="_top">Trabalhar na apresentação →</a>
       </section>
@@ -91,5 +91,6 @@
   <dialog id="rowDetails"><form id="detailsForm"><div class="section-heading"><h2>Detalhes do item</h2><button id="closeDetailsBtn" type="button" class="text-link" aria-label="Fechar detalhes">Fechar</button></div><div class="details-fields"><label>Peça / kit<select id="detailProduct"></select></label><label>Modelo<input id="detailModel" maxlength="100"></label><label>Cor<input id="detailColor" maxlength="100"></label></div><p id="detailSource" class="helper"></p><button class="gold-button" type="submit">Salvar detalhes</button></form></dialog>
   <dialog id="orderDestination"><form id="orderDestinationForm"><div class="section-heading"><h2>Usar esta lista em um pedido</h2><button id="closeOrderDestination" type="button" class="text-link">Fechar</button></div><p class="helper">Crie um pedido ou escolha um que já começou. A lista permanece salva separadamente.</p><label class="destination-label">Destino<select id="listOrderDestination"><option value="">Criar novo pedido</option></select></label><button class="gold-button" id="applyListDestination" type="submit">Continuar →</button></form></dialog>
   <div id="orderToast" class="toast" role="status" hidden></div>
+<dialog id="deleteListDialog" class="production-dialog"><h2>Excluir esta lista?</h2><strong id="deleteListName"></strong><p>Os dados já incorporados a pedidos continuam nos pedidos.</p><p id="deleteListError" role="alert"></p><button type="button" id="cancelListDelete" class="outline-button">Cancelar</button><button type="button" id="confirmListDelete" class="danger-button">Excluir lista</button></dialog>
 </body>
 </html>

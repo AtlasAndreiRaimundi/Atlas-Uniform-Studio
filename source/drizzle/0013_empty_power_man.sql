@@ -1,0 +1,1 @@
+ALTER TABLE `order_lists` ADD `deleted_at` text;

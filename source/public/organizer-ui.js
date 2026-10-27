@@ -13,6 +13,7 @@ const PAGE_SIZE=50,urls={},disabledControls=new Map();
 const catalogManual=setupCatalogListForm($('#manualForm'));
 const listParams=new URLSearchParams(location.search);let orderTarget=listParams.get('order'),orderContext=null;
 let listChecked=false,listOrders=[],listProjects=[];
+let savedListSummaries=[],pendingListDeletion=null;
 let listSourceName='',savedListId=null,savedListVersion=0,listRevision=0,listSavePromise=null,listAutoTimer,listConflict=false,listAccount=null;
 let localSequence=0,listLinkedOrders=[];
 const listGuide=createWorkflowGuide({mount:'#workflowNextStep',onAction:listWorkflowAction});
@@ -194,7 +195,7 @@ function queueListSave(){
  if(listAccount&&!listConflict)listAutoTimer=setTimeout(()=>saveList(false),1600);
 }
 async function refreshLists(){
- const {lists}=await listApi('/api/order-lists');$('#savedLists').replaceChildren(opt('','Selecione uma lista…'),...lists.map(list=>opt(list.id,`${list.title} · ${list.rowCount} itens`)));if(savedListId)$('#savedLists').value=savedListId;
+ const {lists}=await listApi('/api/order-lists');savedListSummaries=lists;$('#savedLists').replaceChildren(opt('','Selecione uma lista…'),...lists.map(list=>opt(list.id,`${list.title} · ${list.rowCount} itens`)));if(savedListId)$('#savedLists').value=savedListId;
 }
 async function saveList(explicit=true,complete=false){
  if(listSavePromise){const ok=await listSavePromise;return ok&&(complete||dirty&&explicit)?saveList(explicit,complete):ok;}
@@ -274,3 +275,7 @@ $('#refreshListLinks').addEventListener('click',()=>refreshListLinks().catch(err
 $('#completeList').addEventListener('click',async()=>{if(!await saveList(true,true))return;const linked=$('#listOrderLink').value||orderTarget;if(linked)return transferList(linked);$('#workflowNextStep').scrollIntoView({behavior:'smooth',block:'center'});});
 render();$('#orderProduct').value='Camiseta';syncProduct();
 bootLists();
+
+$('#deleteList').addEventListener('click',()=>{const list=savedListSummaries.find(l=>l.id===$('#savedLists').value);if(!list)return toast('Escolha uma lista salva para excluir.');pendingListDeletion={id:list.id,version:list.version};$('#deleteListName').textContent=list.title;$('#deleteListError').textContent='';$('#deleteListDialog').showModal();});
+$('#cancelListDelete').addEventListener('click',()=>{pendingListDeletion=null;$('#deleteListDialog').close();});
+$('#confirmListDelete').addEventListener('click',async()=>{const target=pendingListDeletion,b=$('#confirmListDelete');if(!target||b.disabled)return;b.disabled=true;try{if(listSavePromise)await listSavePromise;await listApi('/api/order-lists/'+encodeURIComponent(target.id),{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:target.version})});if(savedListId===target.id){clearTimeout(listAutoTimer);savedListId=null;savedListVersion=0;listConflict=false;listChecked=false;dirty=false;listRevision++;listGuide.hide();if(listAccount)localStorage.removeItem('meinerz-list-draft:'+listAccount);canonicalWorkflowPath(workflowRoute('list',{orderId:orderTarget||''}));$('#listSaveStatus').textContent='Lista excluída. O conteúdo aberto pode ser salvo como uma nova lista.';}pendingListDeletion=null;$('#deleteListDialog').close();await refreshLists();toast('Lista excluída. Pedidos preservados.');}catch(error){$('#deleteListError').textContent=error.message;}finally{b.disabled=false;}});

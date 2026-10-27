@@ -115,7 +115,7 @@ export const orderLists = sqliteTable('order_lists', {
   rowCount:integer('row_count').notNull().default(0),objectKey:text('object_key').notNull(),
   projectId:text('project_id').references(()=>projects.id,{onDelete:'set null'}),
   orderId:text('order_id').references(()=>productionOrders.id,{onDelete:'set null'}),
-  reviewedAt:text('reviewed_at').notNull().default(''),
+  reviewedAt:text('reviewed_at').notNull().default(''),deletedAt:text('deleted_at'),
   version:integer('version').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
 },t=>[index('order_lists_owner_updated_idx').on(t.ownerId,t.updatedAt)]);
 

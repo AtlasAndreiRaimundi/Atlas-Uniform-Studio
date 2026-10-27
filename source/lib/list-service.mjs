@@ -35,22 +35,28 @@ export class ListService{
  constructor(db,bucket){this.db=db;this.bucket=bucket;}
  owner(user){if(!user?.userId)throw new AppError(401,'Entre na sua conta para abrir as listas.');return user.userId;}
  summary(row){return {id:row.id,title:row.title,rowCount:row.row_count,version:row.version,updatedAt:row.updated_at,projectId:row.project_id||null,orderId:row.order_id||null,reviewed:Boolean(row.reviewed_at),reviewedAt:row.reviewed_at||''};}
- async list(user,projectId=''){const owner=this.owner(user),rows=projectId?await this.db.prepare('SELECT * FROM order_lists WHERE owner_id=? AND project_id=? ORDER BY updated_at DESC LIMIT 200').bind(owner,projectId).all():await this.db.prepare('SELECT * FROM order_lists WHERE owner_id=? ORDER BY updated_at DESC LIMIT 200').bind(owner).all();return rows.results.map(row=>this.summary(row));}
- async own(user,id){const row=await this.db.prepare('SELECT * FROM order_lists WHERE id=? AND owner_id=?').bind(id,this.owner(user)).first();if(!row)throw new AppError(404,'Lista não encontrada.');return row;}
+ async list(user,projectId=''){const owner=this.owner(user),rows=projectId?await this.db.prepare('SELECT * FROM order_lists WHERE owner_id=? AND project_id=? AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 200').bind(owner,projectId).all():await this.db.prepare('SELECT * FROM order_lists WHERE owner_id=? AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 200').bind(owner).all();return rows.results.map(row=>this.summary(row));}
+ async own(user,id){const row=await this.db.prepare('SELECT * FROM order_lists WHERE id=? AND owner_id=? AND deleted_at IS NULL').bind(id,this.owner(user)).first();if(!row)throw new AppError(404,'Lista não encontrada.');return row;}
  async get(user,id){const row=await this.own(user,id),object=await this.bucket.get(row.object_key);if(!object)throw new AppError(503,'A lista está indisponível. Tente novamente.');const document=await object.json();document.links={orderId:row.order_id||'',projectId:row.project_id||''};return {...this.summary(row),document};}
  async forOrder(user,orderId){
   const owner=this.owner(user),order=await this.db.prepare('SELECT * FROM production_orders WHERE id=? AND owner_id=?').bind(orderId,owner).first();
   if(!order)throw new AppError(404,'Pedido não encontrado.');
   const object=await this.bucket.get(order.object_key);if(!object)throw new AppError(503,'O pedido está indisponível. Tente novamente.');const document=await object.json();
   if(document.workflow?.status==='released'||['checked','sent','accepted'].includes(order.production_state))throw new AppError(400,'Abra uma revisão em preparação antes de montar a lista.');
-  if(document.listSource?.id){const linked=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=?').bind(document.listSource.id,owner,orderId).first();if(linked)return this.get(user,linked.id);}
-  const previous=await this.db.prepare('SELECT id FROM order_lists WHERE owner_id=? AND order_id=? ORDER BY updated_at DESC LIMIT 1').bind(owner,orderId).first();if(previous)return this.get(user,previous.id);
-  const listId='pedido-'+orderId;
+  if(document.listSource?.id){const linked=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=? AND deleted_at IS NULL').bind(document.listSource.id,owner,orderId).first();if(linked)return this.get(user,linked.id);}
+  const previous=await this.db.prepare('SELECT id FROM order_lists WHERE owner_id=? AND order_id=? AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 1').bind(owner,orderId).first();if(previous)return this.get(user,previous.id);
+  const prefix='pedido-'+orderId,prior=await this.db.prepare('SELECT COUNT(*) AS n FROM order_lists WHERE owner_id=? AND (id=? OR id LIKE ?)').bind(owner,prefix,prefix+'-%').first(),listId=prior.n?prefix+'-'+prior.n:prefix;
   const first=document.pages[0],types=document.pages.flatMap(p=>p.products.map(p=>p.type)),produto=first.mode==='conjunto'&&first.products.length===2?kitLabel(first.products.map(p=>p.type)):document.compositionKind!=='pair'&&types.includes('Camiseta')&&types.includes('Calção')?'Kit':types[0]||'Camiseta';
   if(!validProductType(produto)||types.some(type=>!type.trim()))throw new AppError(400,'Defina os nomes das peças antes de montar a lista. Use até 80 caracteres por peça do kit.');
   try{await this.save(user,null,{document:{schema:1,title:document.title.slice(0,100),sourceName:document.listSource?.name||'',defaults:{produto,...(usesCatalogList(document)?{catalogVersion:3}:{})},rows:document.listSource?.rows||[],unresolved:[],links:{orderId}}},listId);}
-  catch(error){const concurrent=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=?').bind(listId,owner,orderId).first();if(!concurrent)throw error;}
+  catch(error){const concurrent=await this.db.prepare('SELECT id FROM order_lists WHERE id=? AND owner_id=? AND order_id=? AND deleted_at IS NULL').bind(listId,owner,orderId).first();if(!concurrent)throw error;}
   return this.get(user,listId);
+ }
+ async remove(user,id,input){
+  const previous=await this.own(user,id);if(!Number.isSafeInteger(input?.version)||input.version!==previous.version)throw new AppError(409,'Esta lista mudou. Atualize as listas antes de excluir.');
+  const date=new Date().toISOString(),removed=await this.db.prepare('UPDATE order_lists SET deleted_at=?,updated_at=?,version=version+1 WHERE id=? AND owner_id=? AND version=? AND deleted_at IS NULL RETURNING id').bind(date,date,id,this.owner(user),input.version).first();
+  if(!removed)throw new AppError(409,'Esta lista mudou. Atualize as listas antes de excluir.');
+  return {id:removed.id,deleted:true};
  }
  async save(user,id,input,createdId=''){
   const owner=this.owner(user),previous=id?await this.own(user,id):null,document=validateList(input?.document);
@@ -64,7 +70,7 @@ export class ListService{
   }else if(previous?.reviewed_at){const old=await this.bucket.get(previous.object_key);if(old&&JSON.stringify(validateList(await old.json()))===JSON.stringify(document))reviewedAt=previous.reviewed_at;}
   document.review={state:reviewedAt?'checked':'draft',checkedAt:reviewedAt};
   await this.bucket.put(key,JSON.stringify(document),{httpMetadata:{contentType:'application/json'}});let row;
-  try{row=previous?await this.db.prepare('UPDATE order_lists SET title=?,row_count=?,object_key=?,project_id=?,order_id=?,reviewed_at=?,version=version+1,updated_at=? WHERE id=? AND owner_id=? AND version=? RETURNING *').bind(document.title,document.rows.length,key,document.links.projectId||null,document.links.orderId||null,reviewedAt,date,listId,owner,input.version).first():await this.db.prepare('INSERT INTO order_lists (id,owner_id,title,row_count,object_key,project_id,order_id,reviewed_at,version,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,1,?,?) RETURNING *').bind(listId,owner,document.title,document.rows.length,key,document.links.projectId||null,document.links.orderId||null,reviewedAt,date,date).first();if(!row)throw new AppError(409,'Esta lista mudou em outra aba. Sua edição foi mantida neste navegador.');}
+  try{row=previous?await this.db.prepare('UPDATE order_lists SET title=?,row_count=?,object_key=?,project_id=?,order_id=?,reviewed_at=?,version=version+1,updated_at=? WHERE id=? AND owner_id=? AND version=? AND deleted_at IS NULL RETURNING *').bind(document.title,document.rows.length,key,document.links.projectId||null,document.links.orderId||null,reviewedAt,date,listId,owner,input.version).first():await this.db.prepare('INSERT INTO order_lists (id,owner_id,title,row_count,object_key,project_id,order_id,reviewed_at,version,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,1,?,?) RETURNING *').bind(listId,owner,document.title,document.rows.length,key,document.links.projectId||null,document.links.orderId||null,reviewedAt,date,date).first();if(!row)throw new AppError(409,'Esta lista mudou em outra aba. Sua edição foi mantida neste navegador.');}
   catch(error){await this.bucket.delete(key);throw error;}
   return this.summary(row);
  }

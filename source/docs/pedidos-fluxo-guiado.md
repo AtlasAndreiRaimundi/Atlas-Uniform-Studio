@@ -17,3 +17,19 @@ O botão Adicionar aplicação e seta abre um rascunho isolado com tipo, quantid
 A criação e edição mantêm as regras de produto e modelagem. TPU infantil continua exigindo justificativa; a marca Meinerz continua limitada a uma por camiseta. A posição geométrica é preservada ao reabrir. O editor de imagens fica recolhido durante aplicações, e os controles de desenho livre ficam separados das opções essenciais da seta.
 
 O nome do pedido é sugerido pelo cliente, mas um nome personalizado nunca é substituído automaticamente. As quantidades continuam derivadas da lista.
+
+
+## Aplicações do pedido e conferência única
+
+Aplicações ficam exclusivamente na etapa Aplicações e setas, em uma lista única de todo o pedido. A peça de destino serve ao cálculo de produção e ao vínculo da seta; não há menus de aplicações dentro da primeira ou segunda peça. A escolha da aplicação e o posicionamento continuam na mesma confirmação.
+
+Setas de aplicações distintas não são fundidas apenas por terem o mesmo tipo. Modelagens equivalentes mantêm a confirmação da mesma aplicação sem pedir sua posição novamente. Ao aplicar o layout geral do kit, todas as setas correspondentes no desenho têm sua indicação registrada; no editor de uma aplicação, somente aquela aplicação é confirmada. Setas antigas que foram posicionadas e salvas podem recuperar a indicação de posição sem redigitação. Uma seta de camiseta não é tomada como seta de calção.
+
+Depois de anexar uma lista e completar os dados obrigatórios, um convite pergunta se é hora da conferência final. Só a escolha Revisar abre a tela cheia. A tela reúne desenhos e listas do pedido com navegação por todas as folhas. O único botão Conferi tudo confirma arte, lista e dados técnicos juntos, preservando as validações e registrando a revisão. O envio à fábrica continua sendo uma ação posterior. Alterações no pedido invalidam a conferência e convites antigos. Não há conferências individuais de peça ou confirmação intermediária da importação de lista.
+
+
+## Listas salvas
+
+A etapa Lista mostra nome, número de itens e situação das listas salvas. Listas prontas podem ser anexadas diretamente; rascunhos abrem no organizador. A exclusão pede confirmação identificando a lista e exige proprietário e versão atuais. Listas excluídas saem das listagens e não aceitam leitura ou gravação posterior; os objetos e registros são preservados como tombstones. Dados já incorporados ao pedido permanecem no seu snapshot, inclusive nas revisões conferidas. Uma nova lista vinculada ao mesmo pedido usa uma identidade diferente para impedir que uma aba antiga sobrescreva a substituta.
+
+A exclusão também está disponível na biblioteca do criador de planilhas. Migração aditiva: `0013_empty_power_man` (`order_lists.deleted_at`).
