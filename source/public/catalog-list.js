@@ -1,4 +1,4 @@
-import {FITS,productCodeFor,fitOfSize,canonicalSize,isSpecialSize} from './product-catalog.js?v=6';
+import {FITS,productCodeFor,fitOfSize,canonicalSize,isSpecialSize} from './product-catalog.js?v=7';
 export const CATALOG_LIST_FIELDS=Object.freeze([
  ['quantidadeCamiseta','Qtd. Camiseta'],['quantidadeCalcao','Qtd. Calção'],['modelagemCamiseta','Modelagem Camiseta'],['modelagemCalcao','Modelagem Calção'],['nomeCalcao','Nome Calção'],['semNumeroCamiseta','Sem Número Camiseta'],['semNumeroCalcao','Sem Número Calção'],['especialReferenciaCamiseta','Referência Especial Camiseta'],['especialDescricaoCamiseta','Instruções Especial Camiseta'],['especialReferenciaCalcao','Referência Especial Calção'],['especialDescricaoCalcao','Instruções Especial Calção'],
 ]);

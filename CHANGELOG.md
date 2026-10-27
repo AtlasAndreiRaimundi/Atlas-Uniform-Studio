@@ -109,3 +109,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Quadro lateral mostra apenas estampa e aplicações; cor do cordão na linha do calção, inclusive sem aplicação física.
 - Fonte: `cf576f90743818fd4226e0e8c41bc76002dffe2a` (488 arquivos).
 - 29 testes de catálogo e impressão aprovados; build concluído.
+
+## v69 — 2026-10-27
+- Orçamento automático de camisetas e calções: tecido, gola, recorte, filete e aplicações; unitário líquido, quantidades, total e desconto opcional.
+- Tabela Anexo 01/2026 versionada; preços ausentes ficam pendentes, sem valores presumidos. Validação no servidor e bloqueio da conferência com orçamento incompleto.
+- Código ampliado à direita; PDF, SVG, JSON, ZIP e CDRs começam com código - cliente - pedido.
+- Fonte canônica `4888960f0ff02d5403c3ea12f6df795a72025daf` (492 arquivos). 347 testes aprovados, 1 ignorado preexistente, zero falhas; TypeScript e build concluídos. PDF gerado e inspecionado visualmente.

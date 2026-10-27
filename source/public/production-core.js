@@ -1,6 +1,7 @@
+import {pricingProblems} from './order-pricing.js';
 import {newRecordId} from './record-id.js';
 import {preserveCatalogList} from './catalog-list.js';
-import {catalogProblems,attachCatalog,fitOfSize,usesCatalogList,productCodeFor,cloneFitVariant} from './product-catalog.js?v=6';
+import {catalogProblems,attachCatalog,fitOfSize,usesCatalogList,productCodeFor,cloneFitVariant} from './product-catalog.js?v=7';
 import {normalizeListRow,listProblems,listPieces} from './order-list.js?v=7';
 export const SCHEMA=1;
 export const TECHNIQUES=['TRANSFER','DTF','BORDADO / APLIQUE','TPU ALTO RELEVO','TERMOCOLANTE','SERIGRAFIA'];
@@ -127,7 +128,7 @@ export function dateProblems(order={}){
  if(valid.deliveryDate&&valid.dispatchDate&&valid.deliveryDate<valid.dispatchDate)errors.push('A entrega não pode ser anterior ao despacho.');return errors;
 }
 export function releaseProblems(order){
- const errors=validateOrder(order);
+ const errors=[...validateOrder(order),...pricingProblems(order)];
  if(order.origin&&order.type==='COMPLEMENTO COM ALTERAÇÕES'&&!String(order.complementChanges||'').trim())errors.push('Descreva as alterações deste complemento antes de conferir.');
  for(const [field,label] of [['number','Número do pedido'],['client','Cliente'],['orderDate','Data do pedido'],['deliveryDate','Previsão de entrega'],['artist','Responsável técnico']])if(!String(order[field]||'').trim())errors.push(label+': preencha antes de liberar.');
  for(const page of order.pages||[])for(const p of page.products||[])for(const [field,label] of [['model','modelo / molde'],['fabric','tecido principal'],['print','técnica de aplicação']])if(!(field==='model'&&String(p.type||'').trim())&&!String(p[field]||'').trim())errors.push(p.type+': informe '+label+'.');

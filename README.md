@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v68 em 27/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v69 em 27/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 488 arquivos, Site v68, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 492 arquivos, Site v69, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -48,3 +48,5 @@ Aplicação e seta são editadas e confirmadas juntas, sem redigitar a posição
 Aplicações ficam em uma única etapa do pedido. Listas salvas podem ser anexadas ou excluídas sem apagar snapshots dos pedidos. A conferência final única abre em tela cheia após o convite da lista. Veja [montagem guiada](source/docs/pedidos-fluxo-guiado.md).
 
 A montagem v67 prioriza as peças e exige o CDR antes da conferência final. Consulte [regras de montagem e produção](source/docs/pedido-montagem-producao-2026-10-27.md).
+
+O orçamento automático usa o Anexo 01/2026, com desconto por cliente e nomes de exportação iniciados pelo código do pedido. Veja [cálculo, tabela e pendências](source/docs/orcamento-anexo-01-2026.md).

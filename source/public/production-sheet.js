@@ -1,7 +1,8 @@
+import {quoteOrder,groupedQuoteRows,money} from './order-pricing.js';
 import {pieceFamilies} from './order-linked-applications.js?v=3';
-import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=6';
+import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=7';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
-import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=14';
+import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=15';
 import {placeOrderImage,ORDER_PAGE} from './order-image-layout.js?v=3';
 export const PAPER={width:841.89,height:595.28};
 const C={ink:'#17202b',muted:'#68717d',line:'#b9bec5',red:'#c52a36',blue:'#235394',light:'#f4f5f7',white:'#ffffff'};
@@ -13,7 +14,7 @@ export function wrap(text,width,size=8){
 }
 function canvas(){const ops=[];return {ops,rect:(x,y,w,h,fill='none',stroke=C.line,r=0)=>ops.push({kind:'rect',x,y,w,h,fill,stroke,r}),line:(x,y,x2,y2,color=C.line,width=.55)=>ops.push({kind:'line',x,y,x2,y2,color,width}),text:(text,x,y,size=8,color=C.ink,bold=false)=>ops.push({kind:'text',text:String(text??''),x,y,size,color,bold}),image:(src,x,y,w,h,clip)=>ops.push({kind:'image',src,x,y,w,h,...(clip?{clip}:{})})};}
 const date=s=>/^\d{4}-\d{2}-\d{2}$/.test(s)?s.split('-').reverse().join('/'):s||'';
-function base(order,assets,section=''){const d=canvas();d.rect(0,0,PAPER.width,PAPER.height,C.white,'none');d.rect(16,14,258,38,C.ink,'none',1.5);if(assets.logo)d.image(assets.logo,34,19,222,28);else d.text('ATLAS',37,43,27,C.white,true);d.text('PEDIDO',305,34,21,C.ink,true);d.text((order.factoryTracking?.stage==='accepted'?'ACEITO PELA FÁBRICA':order.factoryTracking?.stage==='sent'?'ENVIADO À FÁBRICA':order.workflow?.status==='released'?'CONFERIDO':'RASCUNHO')+' · R'+(order.workflow?.revision||1)+(section?' · '+section:''),305,61,6.5,C.muted,true);const number=order.number?'Nº '+order.number:'CÓDIGO GERADO AO SALVAR';d.text(number,826,39,order.number?Math.min(24,208/(number.length*.8)):9,C.ink,true);d.ops.at(-1).align='right';return d;}
+function base(order,assets,section=''){const d=canvas();d.rect(0,0,PAPER.width,PAPER.height,C.white,'none');d.rect(16,14,258,38,C.ink,'none',1.5);if(assets.logo)d.image(assets.logo,34,19,222,28);else d.text('ATLAS',37,43,27,C.white,true);d.text('PEDIDO',305,34,21,C.ink,true);d.text((order.factoryTracking?.stage==='accepted'?'ACEITO PELA FÁBRICA':order.factoryTracking?.stage==='sent'?'ENVIADO À FÁBRICA':order.workflow?.status==='released'?'CONFERIDO':'RASCUNHO')+' · R'+(order.workflow?.revision||1)+(section?' · '+section:''),305,61,6.5,C.muted,true);const number=order.number?'Nº '+order.number:'CÓDIGO GERADO AO SALVAR';d.text(number,826,39,order.number?fitFieldText(number,420,42,{size:32,minSize:10,max:1}).size:9,C.ink,true);d.ops.at(-1).align='right';return d;}
 function layoutCounter(sheet,total){
  sheet.layoutIndex=sheet.sourcePage||null;sheet.layoutCount=total;
  if(!sheet.layoutIndex)return;
@@ -97,13 +98,26 @@ function primary(order,page,products,assets,sourcePage=1){
   });
  });
  if(applications)drawApplications(d,products,appTop);
- d.line(16,458,611,458,C.line,1); // Automatic layout reserves the lower left for a budget.
+ d.line(16,458,611,458,C.line,1);
+ drawBudget(d,order,products,extra);
  const notes=[order.origin?'COMPLEMENTO DO PEDIDO '+order.origin.number+' · R'+order.origin.revision:'',order.complementChanges?'ALTERAÇÕES: '+order.complementChanges:'',page.notes,order.notes].filter(Boolean).join('\n');let noticeY=472,noticeSize=7.5,noticeMax=8;
  if(notes){const lines=wrap(notes,187,8.2),shown=lines.length>3?[...lines.slice(0,2),'(ver detalhes)']:lines;shown.forEach((s,i)=>d.text(s,420,472+i*10,8.2,C.red,true));if(lines.length>3)extra.push('OBSERVAÇÕES DO PEDIDO: '+notes);noticeY+=shown.length*10+5;noticeSize=7;noticeMax=Math.max(1,Math.floor((552-noticeY)/8.5));}
  const notice=wrap(order.notice,190,noticeSize),visibleNotice=notice.length>noticeMax?[...notice.slice(0,noticeMax-1),'(lembrete em detalhes)']:notice;visibleNotice.forEach((s,i)=>d.text(s,420,noticeY+i*8.5,noticeSize,C.red));if(notice.length>noticeMax)extra.push('LEMBRETE: '+order.notice);
  d.line(420,566,607,566,C.red,.7);d.text('ASSINATURA RESPONSÁVEL',445,578,7,C.red,true);
  drawAnnotations(d,page.annotations||[],products,extra);
  return {ops:d.ops,extra,anchors,title:page.title||products.map(p=>p.type).join(' + '),mode:page.mode,kind:'sheet',sourcePage};
+}
+
+function drawBudget(d,order,products,extra){
+ const quote=quoteOrder(order);if(!quote)return;const ids=new Set(products.flatMap(p=>(p.familyMembers||[p]).map(p=>p.id))),rows=groupedQuoteRows({...quote,rows:quote.rows.filter(r=>ids.has(r.id))});
+ const x=16,y=470,w=397,h=109,edges=[16,51,218,308,413],max=4,shown=rows.slice(0,max);d.rect(x,y,w,h,C.white,C.line,0);d.rect(x,y,w,13,C.ink,'none');
+ ['QUANT.','DESCRIÇÃO','VALOR UN.','TOTAL'].forEach((label,i)=>d.text(label,edges[i]+4,y+9,6.7,C.white,true));for(const edge of edges.slice(1,-1))d.line(edge,y+13,edge,y+83);
+ for(let i=0;i<max;i++){const r=shown[i],top=y+13+i*14;d.line(x,top+14,x+w,top+14);if(!r)continue;d.text(r.quantity,x+5,top+10,7,C.ink);const fit=fitFieldText(r.description,159,20,{size:7,minSize:5.5,max:1});d.text(fit.overflow?r.product.type:fit.lines[0],edges[1]+4,top+10,fit.size,C.ink);for(const [value,right]of [[r.unitCents,304],[r.totalCents,409]]){d.text(value===null?'A DEFINIR':money(value),right,top+10,7,C.ink);d.ops.at(-1).align='right';}}
+ let footer=y+81;if(rows.length>max){d.text('Demais itens: veja dados complementares',x+4,footer,6,C.muted);extra.push('ORÇAMENTO · ITENS DESTE DESENHO',...rows.slice(max).map(r=>r.quantity+' × '+r.description+' · '+(r.unitCents===null?'A DEFINIR':money(r.unitCents))+' · total '+(r.totalCents===null?'A DEFINIR':money(r.totalCents))));}
+ else if(order.pages.length>1){const subtotal=rows.some(r=>r.totalCents===null)?null:rows.reduce((sum,r)=>sum+(r.totalCents||0),0);d.text('Subtotal deste desenho: '+(subtotal===null?'A DEFINIR':money(subtotal)),x+4,footer,6.3,C.muted);}
+ d.line(x,y+85,x+w,y+85);d.text('TOTAL DO PEDIDO',x+5,y+96,7,C.ink,true);d.text(quote.totalCents===null?'A DEFINIR':money(quote.totalCents),x+w-4,y+96,8,C.ink,true);d.ops.at(-1).align='right';
+ if(quote.discountBps)d.text((quote.discountBps/100).toLocaleString('pt-BR')+'% de desconto já aplicado nos valores',x+5,y+106,6.2,C.ink,true);
+ if(quote.issues.length)extra.push('ORÇAMENTO PENDENTE',...quote.issues);
 }
 
 function printRows(product){
