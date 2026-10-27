@@ -97,3 +97,10 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Listas salvas visíveis no pedido, com usar/abrir/excluir; exclusão também no organizador, com proprietário e versão verificados e snapshots de pedidos preservados.
 - Migração aditiva 0013: order_lists.deleted_at. Identidades novas impedem que abas antigas sobrescrevam listas substitutas.
 - 334 testes aprovados, 1 referência antiga ausente; TypeScript e build aprovados. Origem Sites `a9ae6228707574a44835d6bffac234dff8717fec`, 484 arquivos.
+
+## v67 — 2026-10-27
+- Layout com prioridade às peças, nomes e técnicas automáticos; apresentação de conjunto reconhecida como kit.
+- Filete costurado no tecido da camiseta, recortes FLUENCE e cores informais de golas prontas.
+- CDR obrigatório após a lista, conferência única e oferta de PDF + CDR; validação de propriedade no servidor.
+- Fonte canônica: `8bca631db833f37da908d7121ca39c7e3e41c9e7` (488 arquivos).
+- Validação: 339 testes aprovados, 1 ignorado preexistente, nenhum erro; TypeScript e build concluídos.

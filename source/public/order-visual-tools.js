@@ -1,9 +1,9 @@
 import {applicationChoices,beginApplication,applicationNotes,confirmApplication} from './order-application-flow.js?v=2';
 import {syncApplicationArrows} from './order-linked-applications.js?v=3';
 import {createAnnotationEditor} from './order-annotation-editor.js?v=9';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=18';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=19';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=13';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=14';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose,onConfirmReview}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');
@@ -72,8 +72,8 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
   out('[data-final-sheet]').style.width=Math.round(pixels)+'px';
  }
  function renderFinal(){if(!finalSheets.length)return;currentSheet=Math.max(0,Math.min(currentSheet,finalSheets.length-1));out('[data-final-sheet]').innerHTML=sheetSVG(finalSheets[currentSheet],{placeholders:false});out('[data-sheet]').value=String(currentSheet);out('[data-prev]').disabled=currentSheet===0;out('[data-next]').disabled=currentSheet===finalSheets.length-1;out('[data-page-status]').textContent=sheetLabel(finalSheets[currentSheet])+' · Impressão: folha '+(currentSheet+1)+'/'+finalSheets.length+' · Use 100% ou mais para ler os detalhes.';resizeFinal();out('[data-scroll]').scrollTo?.({top:0,left:0});}
- function closeFinal(){if(document.fullscreenElement===final)document.exitFullscreen?.().catch(()=>{});final.close();}
- out('[data-confirm-review]').onclick=async()=>{const b=out('[data-confirm-review]');if(b.disabled)return;b.disabled=true;try{if(getGeneration()!==reviewGeneration||JSON.stringify(getOrder())!==reviewSnapshot)throw Error('O pedido mudou. Feche e abra a conferência novamente para ver a versão atual.');if(await onConfirmReview?.())closeFinal();}catch(error){out('[data-review-error]').textContent=error.message;}finally{b.disabled=false;}};
+ async function closeFinal(){if(document.fullscreenElement===final)await document.exitFullscreen?.().catch(()=>{});final.close();}
+ out('[data-confirm-review]').onclick=async()=>{const b=out('[data-confirm-review]');if(b.disabled)return;b.disabled=true;try{if(getGeneration()!==reviewGeneration||JSON.stringify(getOrder())!==reviewSnapshot)throw Error('O pedido mudou. Feche e abra a conferência novamente para ver a versão atual.');if(await onConfirmReview?.())await closeFinal();}catch(error){out('[data-review-error]').textContent=error.message;}finally{b.disabled=false;}};
  out('[data-close]').onclick=closeFinal;final.addEventListener('cancel',()=>{if(document.fullscreenElement===final)document.exitFullscreen?.().catch(()=>{});});
  final.addEventListener('close',()=>{if(previewMode==='review')onReviewClose?.();});
  out('[data-prev]').onclick=()=>{if(currentSheet>0){currentSheet--;renderFinal();}};out('[data-next]').onclick=()=>{if(currentSheet<finalSheets.length-1){currentSheet++;renderFinal();}};out('[data-sheet]').onchange=event=>{const next=Number(event.target.value);if(Number.isSafeInteger(next)){currentSheet=next;renderFinal();}};out('[data-zoom]').onchange=resizeFinal;out('[data-pdf]').onclick=onDownload;

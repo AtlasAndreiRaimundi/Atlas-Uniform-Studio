@@ -106,8 +106,9 @@ export class ProductionService{
   }
   if(!document.number.trim())document.number=await allocateOrderNumber(this.db,this.numberOptions);
   if(action==='release'){
+   if(!document.technicalFiles?.length)throw new AppError(400,'Anexe o CDR original do desenho antes de concluir a conferência.');
    const problems=releaseProblems(document);if(problems.length)throw new AppError(400,problems.join(' '));
-   if(!input.checks||['art','list','technical'].some(key=>input.checks[key]!==true))throw new AppError(400,'Confirme arte, lista e dados técnicos separadamente.');
+   if(!input.checks||['art','list','technical'].some(key=>input.checks[key]!==true))throw new AppError(400,'Confirme o pedido completo na conferência final.');
    const at=new Date().toISOString(),entry={revision:document.workflow.revision,at,by:user.userId,name:document.artist,version:(previous?.version||0)+1};
    document.workflow={...document.workflow,status:'released',checks:{art:true,list:true,technical:true},releasedAt:at,releasedBy:document.artist,history:[...(document.workflow.history||[]),entry]};
   }

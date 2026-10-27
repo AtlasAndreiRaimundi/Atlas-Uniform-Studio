@@ -1,7 +1,7 @@
 import {pieceFamilies} from './order-linked-applications.js?v=3';
-import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize} from './product-catalog.js?v=4';
+import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=5';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
-import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=13';
+import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=14';
 import {placeOrderImage,ORDER_PAGE} from './order-image-layout.js?v=3';
 export const PAPER={width:841.89,height:595.28};
 const C={ink:'#17202b',muted:'#68717d',line:'#b9bec5',red:'#c52a36',blue:'#235394',light:'#f4f5f7',white:'#ffffff'};
@@ -63,10 +63,10 @@ function metadata(d,o,extra){
 function primary(order,page,products,assets,sourcePage=1){
  const d=base(order,assets,'DESENHO '+sourcePage),extra=[];metadata(d,order,extra);
  d.rect(16,65,215,46,'none',C.line,5);const label=wrap(page.label||'',202,11);label.slice(0,2).forEach((s,i)=>d.text(s,23,85+i*14,11,C.red,true));if(label.length>2)extra.push('ETIQUETA / DESTAQUE: '+page.label);
- d.rect(237,65,178,46,'none',C.line,5);const techniques=order.techniques?.length?order.techniques:[];TECH_ROWS(d,techniques,extra);
+ d.rect(237,65,178,46,'none',C.line,5);const techniques=detectedTechniques(order,products);TECH_ROWS(d,techniques,extra);
  d.rect(421,65,190,46,'none',C.line,5);['PEDIDO NOVO','COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].forEach((s,i)=>{const chosen=order.type===s;d.text('('+ (chosen?'X':' ')+') '+s,427,79+i*12,6.8,chosen?C.red:C.muted,chosen);});
  const title=wrap(page.title||'',581,13);title.slice(0,2).forEach((s,i)=>d.text(s,24,132+i*15,13,C.red,true));if(title.length>2)extra.push('TÍTULO: '+page.title);
- const top=title.length>1?157:145,bottom=page.imageArea==='expanded'?452:411,slot=595/products.length;
+ const top=title.length>1?157:145,bottom=452,slot=595/products.length;
  const anchors=[],imageEntries=[],placeholderEntries=[],componentArrows=[],shared=page.visual?.mode==='shared'&&page.visual.image,applications=products.some(p=>p.technical?.applications.length||p.extraApplications?.length);
  const appTop=applications?458-products.length*20-3:458;
  const artBottom=applications?Math.min(bottom,appTop-16):bottom;
@@ -78,11 +78,10 @@ function primary(order,page,products,assets,sourcePage=1){
   if(!shared&&images.length){const iw=(area.w-10)/images.length;images.forEach(({src,slot},j)=>{const frame={x:area.x+5+j*iw,y:area.y,w:iw-4,h:Math.min(area.h-4,artBottom-area.y-4)};addImage(src,frame,p.imageTransforms?.[slot],p.id+':'+slot);});}
   else if(!shared){d.ops.push({kind:'placeholder',x:area.x+10,y:area.y+3,w:area.w-20,h:area.h-5,label:p.type});placeholderEntries.push(d.ops.at(-1));}
   const color=i===0?C.blue:C.red,colW=208/products.length,colX=618+i*colW;if(i)d.line(colX,267,colX,535);
-  field(d,'Modelo '+(i+1),[p.type,p.model,...(p.technical?[fitLabel(p.technical.productCode,p.technical.fit),p.technical.productCode==='CAL-001'?moldFor(p.technical)?.label:p.technical.sleeveLength+' · '+p.technical.collarModel]:[])].filter(Boolean).join(' · '),colX,267,colW,34,extra,{color,size:8,max:3});
+  field(d,'Modelo '+(i+1),p.technical?productDisplayName(p):[p.type,p.model!==p.type?p.model:''].filter(Boolean).join(' · '),colX,267,colW,34,extra,{color,size:8,max:3});
   field(d,'Tecido',p.fabric,colX,301,colW,30,extra,{color,size:8,max:2});
   field(d,'Cor do tecido',p.fabricColor,colX,331,colW,27,extra,{color,max:1});
-  field(d,'Cor dos detalhes',p.detailColor,colX,358,colW,27,extra,{color,max:1});
-  field(d,'Estampa em',p.print,colX,385,colW,27,extra,{color,max:1});
+  if(p.technical)field(d,'Acabamentos',finishSummary(p,order),colX,358,colW,54,extra,{color,size:6.8,max:5});else{field(d,'Cor dos detalhes',p.detailColor,colX,358,colW,27,extra,{color,max:1});field(d,'Estampa em',p.print,colX,385,colW,27,extra,{color,max:1});}
   field(d,'Quantidade',String(p.quantity||0)+' UNIDADES',colX,412,colW,28,extra,{color,size:9,max:1});
   d.text('QUANTIDADES:',colX+5,452,7,color,true);
   const grade=parseGrade(p.grade,p.type),rows=[];grade.groups.forEach(g=>{rows.push({text:g.category,bold:true});g.rows.forEach(r=>rows.push({text:(isSpecialSize(r.size)?'TAMANHO ESPECIAL':r.size)+' = '+r.quantity,bold:isSpecialSize(r.size)}));});
@@ -90,7 +89,7 @@ function primary(order,page,products,assets,sourcePage=1){
   const visible=rows.slice(0,gradeLimit);visible.forEach((r,j)=>d.text(r.text,colX+5,464+j*gradeStep,gradeSize,color,r.bold));
   if(rows.length>gradeLimit){extra.push('QUANTIDADES · '+p.type,...rows.slice(gradeLimit).map(r=>r.text));d.text('Continua em detalhes',colX+5,532,5.8,C.muted);}
   if(!rows.length)d.text('Grade não informada',colX+5,466,7,C.muted);
-  if(p.familyMembers)extra.push(...p.familyMembers.flatMap(member=>technicalLines(member,order)));if(p.notes)extra.push('OBSERVAÇÕES · '+p.type+': '+p.notes);if(p.technical)extra.push(...technicalLines(p,order).map(line=>'FICHA · '+p.type+': '+line));
+  if(p.notes)extra.push('OBSERVAÇÕES · '+p.type+': '+p.notes);for(const member of p.familyMembers||[p]){const t=member.technical;if(t?.specialDescription)extra.push('TAMANHO ESPECIAL · '+member.type+': '+t.specialReference+' · '+t.specialDescription);if(t?.pocketRequest)extra.push('BOLSOS · '+member.type+': '+t.pocketRequest);for(const a of t?.applications||[])if(a.exception)extra.push('EXCEÇÃO · '+member.type+' · '+a.type+': '+a.exception);}
   (p.components||[]).forEach((c,j)=>{
    const value=[c.name,c.material,c.finish,c.position].filter(Boolean).join(' · ');const lines=wrap(value,slot-16,7.3);
    if(!applications&&!page.freeComponents&&page.imageArea!=='expanded'&&j<2&&lines.length<=2){lines.forEach((s,k)=>d.text(s,x+7,424+j*17+k*8,7.3,C.red,j===0));if(c.anchor&&(shared||images.length)){const a={x:area.x+c.anchor.x*area.w,y:area.y+c.anchor.y*area.h};d.line(x+18,415+j*17,a.x,a.y,C.red,.6);const line=d.ops.at(-1);d.rect(a.x-1,a.y-1,2,2,C.red,'none');componentArrows.push({line,tip:d.ops.at(-1),area,anchor:c.anchor});}}
@@ -103,19 +102,6 @@ function primary(order,page,products,assets,sourcePage=1){
  if(notes){const lines=wrap(notes,187,8.2),shown=lines.length>3?[...lines.slice(0,2),'(ver detalhes)']:lines;shown.forEach((s,i)=>d.text(s,420,472+i*10,8.2,C.red,true));if(lines.length>3)extra.push('OBSERVAÇÕES DO PEDIDO: '+notes);noticeY+=shown.length*10+5;noticeSize=7;noticeMax=Math.max(1,Math.floor((552-noticeY)/8.5));}
  const notice=wrap(order.notice,190,noticeSize),visibleNotice=notice.length>noticeMax?[...notice.slice(0,noticeMax-1),'(lembrete em detalhes)']:notice;visibleNotice.forEach((s,i)=>d.text(s,420,noticeY+i*8.5,noticeSize,C.red));if(notice.length>noticeMax)extra.push('LEMBRETE: '+order.notice);
  d.line(420,566,607,566,C.red,.7);d.text('ASSINATURA RESPONSÁVEL',445,578,7,C.red,true);
- // Short details belong on this sheet. Only actual overflow needs a complement.
- const details=extra.flatMap(t=>wrap(t,177,7)),availableHeight=artBottom-top-12,maxDetailLines=Math.floor(availableHeight/9);
- if(details.length&&details.length<=maxDetailLines){
-  d.text('DETALHES / PERSONALIZAÇÃO',22,top+3,6.3,C.muted,true);
-  details.forEach((s,i)=>d.text(s,22,top+15+i*9,7,C.ink,/^(?:QUANTIDADES|PERSONALIZAÇÃO|OBSERVAÇÕES|COMPONENTE|NOME \|)/.test(s)));
-  extra.length=0;
-  // Explicit positions stay fixed when text changes; only automatic placements reflow.
-  const shift=x=>207+(x-16)*404/595;
-  for(const entry of imageEntries)if(!entry.transform?.frame){const frame={...entry.frame,x:shift(entry.frame.x),w:entry.frame.w*404/595};Object.assign(entry.op,placeOrderImage(entry.src,frame,entry.transform));}
-  for(const op of placeholderEntries){op.x=shift(op.x);op.w*=404/595;}
-  for(const area of anchors){area.x=shift(area.x);area.w*=404/595;}
-  for(const {line,tip,area,anchor} of componentArrows){line.x2=area.x+anchor.x*area.w;line.y2=area.y+anchor.y*area.h;tip.x=line.x2-1;tip.y=line.y2-1;}
- }
  drawAnnotations(d,page.annotations||[],products,extra);
  return {ops:d.ops,extra,anchors,title:page.title||products.map(p=>p.type).join(' + '),mode:page.mode,kind:'sheet',sourcePage};
 }
@@ -175,12 +161,12 @@ function drawAnnotations(d,annotations,products,extra){
    d.line(a.x,a.y,a.x2,a.y2,color,width);
    if(a.type==='arrow'||a.type==='callout'){const angle=Math.atan2(a.y2-a.y,a.x2-a.x),length=6+width;for(const delta of [-.45,.45])d.line(a.x2,a.y2,a.x2-length*Math.cos(angle+delta),a.y2-length*Math.sin(angle+delta),color,width);}
   }
-  if(a.text){const lines=wrap(a.text,Math.max(30,Math.min(190,PAPER.width-a.x-4)),size),available=Math.max(1,Math.floor((PAPER.height-5-a.y)/(size+2))+1);lines.slice(0,available).forEach((line,i)=>d.text(line,a.x,a.y+i*(size+2),size,color,true));if(lines.length>available)extra.push('APONTAMENTO · '+(products.find(p=>p.id===a.productId)?.type||'Página')+': '+a.text);}
+  if(a.text){const lines=wrap(a.text,Math.max(30,Math.min(190,PAPER.width-a.x-4)),size),available=Math.max(1,Math.floor((PAPER.height-5-a.y)/(size+2))+1);const shown=lines.slice(0,available),boxWidth=Math.min(PAPER.width-a.x-1,Math.max(...shown.map(line=>line.length))*size*.65+5);d.rect(Math.max(0,a.x-2),Math.max(0,a.y-size-2),boxWidth,shown.length*(size+2)+3,C.white,'none',1);shown.forEach((line,i)=>d.text(line,a.x,a.y+i*(size+2),size,color,true));if(lines.length>available)extra.push('APONTAMENTO · '+(products.find(p=>p.id===a.productId)?.type||'Página')+': '+a.text);}
   for(const op of d.ops.slice(start))op.clip={...NOTE_AREA};
  }
 }
 function TECH_ROWS(d,techniques,extra){
- const shown=techniques.slice(0,4);shown.forEach((s,i)=>d.text('(X) '+s,243,76+i*10,6.9,C.red,i===0));if(!shown.length)d.text('TÉCNICAS DE APLICAÇÃO',243,82,6.5,C.muted);if(techniques.length>4)extra.push('TÉCNICAS DE APLICAÇÃO: '+techniques.join(', '));
+ const shown=techniques.slice(0,6),step=shown.length>4?6.8:10;shown.forEach((s,i)=>d.text('(X) '+s,243,76+i*step,shown.length>4?5.8:6.9,C.red,i===0));if(!shown.length)d.text('TÉCNICAS DE APLICAÇÃO',243,82,6.5,C.muted);if(techniques.length>6)extra.push('TÉCNICAS DE APLICAÇÃO: '+techniques.join(', '));
 }
 function continuation(order,title,lines,assets){const d=base(order,assets),extra=[];metadata(d,order,extra);d.rect(16,65,595,39,C.light,C.line,5);d.text('DADOS COMPLEMENTARES',27,81,7,C.muted,true);wrap(title,568,11).slice(0,1).forEach(s=>d.text(s,27,97,11,C.ink,true));
  lines.forEach((s,i)=>{const col=i>=33?1:0,row=i%33;if(/^\[[X ]\] /.test(s)){const x=25+col*298,y=121+row*9.7;d.rect(x,y-7,7,7,'none',C.ink);if(s[1]==='X'){d.line(x+1,y-6,x+6,y-1,C.ink,.8);d.line(x+1,y-1,x+6,y-6,C.ink,.8);}d.text(s.slice(4),x+12,y,7.7);}else d.text(s,25+col*298,121+row*9.7,7.7,C.ink,/^(?:APLICAÇÕES EXTRAS|QUANTIDADES|PERSONALIZAÇÃO|OBSERVAÇÕES|COMPONENTE|NOME \|)/.test(s));});
@@ -200,7 +186,7 @@ export function buildSheets(order,assets={},options={}){
 // Printed sheets define their own paint; UI icon styles must not outline the text.
 export function sheetSVG(sheet,{placeholders=true}={}){const clips=[];const body=sheet.ops.map((o,index)=>{
  const clipped=html=>{if(!o.clip)return html;const id='clip-'+index,c=o.clip;clips.push(`<clipPath id="${id}"><rect x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}"/></clipPath>`);return `<g clip-path="url(#${id})">${html}</g>`;};
- if(o.kind==='rect')return `<rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="${o.r||0}" fill="${o.fill}" stroke="${o.stroke}" stroke-width=".55"/>`;
+ if(o.kind==='rect')return clipped(`<rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="${o.r||0}" fill="${o.fill}" stroke="${o.stroke}" stroke-width=".55"/>`);
  if(o.kind==='line')return clipped(`<line x1="${o.x}" y1="${o.y}" x2="${o.x2}" y2="${o.y2}" stroke="${o.color}" stroke-width="${o.width}"/>`);
  if(o.kind==='text')return clipped(`<text x="${o.x}" y="${o.y}"${o.align==='right'?' text-anchor="end"':''} font-size="${o.size}" fill="${o.color}" font-weight="${o.bold?700:400}">${esc(o.text)}</text>`);
  if(o.kind==='image')return clipped(`<image href="${esc(o.src)}" xlink:href="${esc(o.src)}" x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" preserveAspectRatio="xMidYMid meet"/>`);

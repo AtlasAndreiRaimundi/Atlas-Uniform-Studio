@@ -1,3 +1,4 @@
+import {attachFixtureCDR} from './technical-fixture.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
@@ -10,7 +11,7 @@ import {buildSheets,sheetSVG,createPDF,PAPER} from '../public/production-sheet.j
 import {ProductionService,validateDocument} from '../lib/production-service.mjs';
 import {ListService} from '../lib/list-service.mjs';
 import {migrations} from './migrations.mjs';
-function setup(){const sql=new DatabaseSync(':memory:');migrations.forEach(m=>sql.exec(m));sql.exec('PRAGMA foreign_keys=ON');const db={prepare(query){const stmt=sql.prepare(query);let args=[];return {bind(...values){args=values;return this;},async first(){return stmt.get(...args)||null;},async all(){return {results:stmt.all(...args)};}};}};const objects=new Map(),bucket={async put(key,value){objects.set(key,value);},async get(key){return objects.has(key)?{json:async()=>JSON.parse(objects.get(key))}:null;},async delete(key){for(const k of Array.isArray(key)?key:[key])objects.delete(k);},async list({prefix,cursor}){const keys=[...objects.keys()].filter(key=>key.startsWith(prefix)&&(!cursor||key>cursor)).sort(),page=keys.slice(0,2);return {objects:page.map(key=>({key})),truncated:keys.length>2,cursor:page.at(-1)};}};return {service:new ProductionService(db,bucket),objects,sql};}
+function setup(){const sql=new DatabaseSync(':memory:');migrations.forEach(m=>sql.exec(m));sql.exec('PRAGMA foreign_keys=ON');const db={prepare(query){const stmt=sql.prepare(query);let args=[];return {bind(...values){args=values;return this;},async first(){return stmt.get(...args)||null;},async all(){return {results:stmt.all(...args)};},async run(){stmt.run(...args);return {success:true};}};}};const objects=new Map(),bucket={async put(key,value){objects.set(key,value);},async get(key){return objects.has(key)?{json:async()=>JSON.parse(objects.get(key))}:null;},async delete(key){for(const k of Array.isArray(key)?key:[key])objects.delete(k);},async list({prefix,cursor}){const keys=[...objects.keys()].filter(key=>key.startsWith(prefix)&&(!cursor||key>cursor)).sort(),page=keys.slice(0,2);return {objects:page.map(key=>({key})),truncated:keys.length>2,cursor:page.at(-1)};}};return {service:new ProductionService(db,bucket),objects,sql};}
 test('quantity groups preserve adult, baby look and child totals without turning pieces into kits',()=>{const doc=demoOrder(),p=doc.pages[0].products[0],g=parseGrade(p.grade,p.type);assert.deepEqual(g.groups.map(g=>g.category),['CAMISETA','BABY LOOK','INFANTIL']);assert.equal(g.total,8);assert.deepEqual(validateOrder(doc),[]);p.quantity=9;assert.match(validateOrder(doc).join(' '),/soma 8/);p.quantity=8;p.grade+='\nGG = -1';assert.match(validateOrder(doc).join(' '),/TAMANHO = QUANTIDADE/);});
 test('name numbers retain zeroes and mismatches in sizes block production export',()=>{const parsed=parseNames('Nome;Número;Tamanho;Quantidade\nJoão;01;M;1\nAna;07;BLP;2\nPedro;09;TAM 10;1');assert.equal(parsed.rows[0].number,'01');assert.equal(parsed.rows[1].number,'07');const doc=newOrder(),p=doc.pages[0].products[0];p.names=parsed.rows;p.quantity=4;p.grade=namesToGrade(p.names);assert.deepEqual(validateOrder(doc),[]);p.grade='CAMISETA\nG = 1\nBABY LOOK\nP = 2\nINFANTIL\nTAM 10 = 1';assert.match(validateOrder(doc).join(' '),/diferem/);p.namesRaw='João;01';assert.match(validateOrder(doc).join(' '),/use Nome/);});
 test('organizer handoff keeps independent shirt and shorts sizes and counts',()=>{const doc=importList([{produto:'Kit',grupo:'Linha',modelo:'Jogo',cor:'Azul',nome:'João',numero:'07',tamanhoCamiseta:'M',tamanhoCalcao:'G',quantidade:2},{produto:'Camiseta',grupo:'Linha',modelo:'Jogo',cor:'Azul',nome:'Ana',numero:'01',tamanhoCamiseta:'BLP',tamanhoCalcao:'',quantidade:1}],'Equipe');const page=doc.pages[0];assert.equal(page.mode,'avulsas');assert.equal(page.products[0].quantity,3);assert.equal(page.products[1].quantity,2);assert.match(page.products[0].grade,/M = 2/);assert.match(page.products[1].grade,/G = 2/);assert.deepEqual(validateOrder(doc),[]);});
@@ -28,8 +29,9 @@ test('deletion removes only the chosen order and its snapshots, detaches its lis
  let saved=await service.save(user,null,{document});
  const linked=await lists.save(user,null,{document:{schema:1,title:'Lista da equipe',defaults:{},rows:[{grupo:'1 - Linha',produto:'Camiseta',nome:'Ana',numero:'07',adicional:'CAPITÃ',tamanhoCamiseta:'M',quantidade:1}],links:{orderId:saved.id,projectId:'art-a'}},action:'complete'});
  for(let i=0;i<3;i++)saved=await service.save(user,saved.id,{version:saved.version,document});
+ saved=await attachFixtureCDR(service,user,saved,document);
  saved=await service.save(user,saved.id,{version:saved.version,document,action:'release',checks:{art:true,list:true,technical:true}});
- const other=await service.save(user,null,{document}),otherKey=sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(other.id).object_key;
+ const other=await service.save(user,null,{document:{...document,technicalFiles:[]}}),otherKey=sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(other.id).object_key;
  objects.set('production-orders/'+saved.id+'-other/file.json','OUTRO PREFIXO');
  assert.ok([...objects.keys()].filter(k=>k.startsWith('production-orders/'+saved.id+'/')).length>2,'cleanup spans more than one object-list page');
  await service.remove(user,saved.id,{version:saved.version});
@@ -63,6 +65,7 @@ test('the owner can delete a sent order before factory acceptance and it leaves 
  const {OrderTrackingService}=await import('../lib/order-tracking.mjs');
  const {service,objects}=setup(),owner={userId:'alice'},factory={userId:'factory'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory'),lists=new ListService(service.db,service.bucket),document=demoOrder();Object.assign(document,{orderDate:'2026-10-22',deliveryDate:'2026-12-20',artist:'Designer'});
  let saved=await service.save(owner,null,{document});const list=await lists.forOrder(owner,saved.id);
+ saved=await attachFixtureCDR(service,owner,saved,document);
  saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version});
  assert.equal((await tracking.list(factory,{factory:true})).orders.length,1);const files=objects.size;
  await assert.rejects(service.remove(factory,saved.id,{version:saved.version}),{status:404});await assert.rejects(service.remove(owner,saved.id,{version:saved.version-1}),{status:409});assert.equal(objects.size,files);
@@ -75,6 +78,7 @@ test('order thumbnails show the saved first sheet, enforce ownership and factory
  let saved=await service.save(owner,null,{document});assert.match(saved.thumbnailUrl,new RegExp(encodeURIComponent(saved.id)+'/thumbnail\\?version=1$'));
  await assert.rejects(tracking.preview(null,saved.id),{status:401});await assert.rejects(tracking.preview(other,saved.id),{status:404});await assert.rejects(tracking.preview(other,saved.id,{factory:true}),{status:403});await assert.rejects(tracking.preview(factory,saved.id,{factory:true}),{status:404});
  const preview=await tracking.preview(owner,saved.id,{version:'1'});assert.match(preview,/<svg/);assert.match(preview,/Cliente A/);assert.match(preview,/data:image\/png;base64,AAAA/);assert.ok(!preview.includes('<script>'));assert.ok(preview.includes('&lt;script&gt;'));assert.ok(!preview.includes('MOCKUP'),'draft previews do not invent a garment image');
+ saved=await attachFixtureCDR(service,owner,saved,document);
  saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});await assert.rejects(tracking.preview(owner,saved.id,{version:'1'}),{status:409});
  saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version});assert.match(await tracking.preview(factory,saved.id,{factory:true,version:saved.version}),/Cliente A/);
  await service.remove(owner,saved.id,{version:saved.version});await assert.rejects(tracking.preview(owner,saved.id),{status:404});await assert.rejects(tracking.preview(factory,saved.id,{factory:true}),{status:404});
@@ -117,7 +121,9 @@ test('reimporting model and color labels with different capitalization updates t
 test('release requires completed technical data and independent checks; locked releases survive new revisions',async()=>{
  const {service}=setup(),user={userId:'alice'},document=demoOrder();document.deliveryDate='2026-12-20';document.orderDate='2026-10-22';document.artist='Andrei';
  let saved=await service.save(user,null,{document});
+ saved=await attachFixtureCDR(service,user,saved,document);
  await assert.rejects(service.save(user,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true}}),/Confirme/);
+ saved=await attachFixtureCDR(service,user,saved,document);
  saved=await service.save(user,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});
  const released=(await service.get(user,saved.id)).document;assert.equal(released.workflow.status,'released');assert.equal(released.workflow.revision,1);
  const forged=structuredClone(released);forged.client='ALTERADO';delete forged.workflow;
@@ -142,6 +148,7 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  const document=demoOrder();Object.assign(document,{deliveryDate:'2026-12-20',orderDate:'2026-10-22',artist:'Andrei'});
  let saved=await service.save(alice,null,{document});
  await assert.rejects(tracking.transition(alice,saved.id,{action:'send',version:saved.version}),/Confira/);
+ saved=await attachFixtureCDR(service,alice,saved,document);
  saved=await service.save(alice,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});
  const snapshot=JSON.stringify((await service.get(alice,saved.id)).document);
  await assert.rejects(tracking.transition(bob,saved.id,{action:'send',version:saved.version}),{status:404});
@@ -165,7 +172,7 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
 test('factory returns require reasons and allow a new reviewed revision without losing previous events',async()=>{
  const {OrderTrackingService}=await import('../lib/order-tracking.mjs');
  const {service}=setup(),owner={userId:'alice'},factory={userId:'factory'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory'),document=demoOrder();Object.assign(document,{deliveryDate:'2026-12-20',artist:'Andrei'});
- let order=await service.save(owner,null,{document,action:'release',checks:{art:true,list:true,technical:true}});
+ let order=await service.save(owner,null,{document});order=await attachFixtureCDR(service,owner,order,document);order=await service.save(owner,order.id,{document,version:order.version,action:'release',checks:{art:true,list:true,technical:true}});
  order=await tracking.transition(owner,order.id,{action:'send',version:order.version});
  await assert.rejects(tracking.transition(factory,order.id,{action:'return',version:order.version}),/motivo/);
  order=await tracking.transition(factory,order.id,{action:'return',version:order.version,note:'Conferir gola'});assert.equal(order.tracking.stage,'returned');
@@ -182,7 +189,7 @@ test('reminder eligibility starts the next Sao Paulo calendar day and excludes d
 test('reminders are owner isolated and dismissal persists across requests without changing order state',async()=>{
  const {OrderTrackingService,localDay}=await import('../lib/order-tracking.mjs');
  const {service,sql}=setup(),owner={userId:'alice'},other={userId:'bob'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory'),document=demoOrder();Object.assign(document,{deliveryDate:'2026-12-20',artist:'Andrei'});
- const saved=await service.save(owner,null,{document,action:'release',checks:{art:true,list:true,technical:true}});
+ let saved=await service.save(owner,null,{document});saved=await attachFixtureCDR(service,owner,saved,document);saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});
  const row=sql.prepare('SELECT tracking_json FROM production_orders WHERE id=?').get(saved.id),data=JSON.parse(row.tracking_json);data.checkedAt='2020-01-01T12:00:00Z';sql.prepare('UPDATE production_orders SET tracking_json=? WHERE id=?').run(JSON.stringify(data),saved.id);
  assert.equal((await tracking.reminders(owner)).show,true);assert.equal((await tracking.reminders(other)).show,false);
  await tracking.dismissReminder(owner);assert.equal((await tracking.reminders(owner)).show,false);assert.equal((await service.get(owner,saved.id)).tracking.stage,'checked');

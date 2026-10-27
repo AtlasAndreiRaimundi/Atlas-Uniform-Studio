@@ -57,9 +57,9 @@ test('long model names reduce their type size and extreme values stay complete o
  const face=fontkit.create(await readFile(new URL('../public/fonts/ChakraPetch-SemiBold.ttf',import.meta.url))),pdf=await PDF.PDFDocument.create(),fallback=await pdf.embedFont(PDF.StandardFonts.HelveticaBold);
  for(const model of ['KIT EDGE 2027 MASCULINO MANGA LONGA PERSONALIZADO','WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW','Nome completo do modelo com todas as especificações técnicas e acabamento especial '.repeat(2)]){
   const doc=completeKit();doc.pages[0].mode='conjunto';doc.pages[0].products[0].model=model;
-  const sheets=buildSheets(doc),ops=sheets[0].ops.filter(o=>o.kind==='text'&&o.x===623&&o.y>280&&o.y<301);assert.equal(sheets.filter(sheet=>sheet.kind!=='list').length,1,'short specifications still fit the technical sheet');assert.ok(ops.length);assert.ok(ops.some(o=>o.size<8));
+  const sheets=buildSheets(doc),ops=sheets[0].ops.filter(o=>o.kind==='text'&&o.x===623&&o.y>280&&o.y<301);assert.ok(sheets.every(sheet=>!sheet.ops.some(o=>o.kind==='text'&&o.text==='DETALHES / PERSONALIZAÇÃO')),'details never shrink the garment area');assert.ok(ops.length);assert.ok(ops.some(o=>o.size<8));
   for(const op of ops){assert.ok(fallback.widthOfTextAtSize(op.text,op.size)<=94);const width=face.layout(op.text).glyphs.reduce((sum,glyph)=>sum+glyph.advanceWidth,0)/face.unitsPerEm*op.size;assert.ok(width<=94,'the model cannot cross into the adjacent piece column');assert.ok(op.y<300);}
-  const text=sheets[0].ops.filter(o=>o.kind==='text').map(o=>o.text).join(' ').replace(/\s+/g,' ');if(ops.some(o=>o.text.includes('ver detalhes')))assert.ok(text.includes(model.trim()));else assert.equal(ops.map(o=>o.text).join('').replace(/\s/g,''),('Camiseta · '+model).replace(/\s/g,''));
+  const text=sheets.flatMap(sheet=>sheet.ops.filter(o=>o.kind==='text').map(o=>o.text)).join(' ').replace(/\s+/g,' ');if(ops.some(o=>o.text.includes('ver detalhes')))assert.ok(text.includes(model.trim()));else assert.equal(ops.map(o=>o.text).join('').replace(/\s/g,''),('Camiseta · '+model).replace(/\s/g,''));
  }
 });
 
@@ -142,4 +142,9 @@ test('the image editing guide previews and applies one resized kit image and ope
   doc.pages=[newKitPage(['Puffer','Legging'])];doc.pages[0].products[0].images=[image];tools.openImageEditor();assert.equal(find('[data-target]').value,'shared','custom kit compositions default to one image');find('[data-apply]').onclick();assert.deepEqual(applied.page.products.map(p=>p.type),['Puffer','Legging']);
   doc.pages[0]=applied.page;doc.pages[0].visual.mode='per-product';tools.openImageEditor();assert.equal(find('[data-target]').value,'0','an explicit choice of separate images remains selected');
  }finally{globalThis.document=prior;}
+});
+
+
+test('the garment keeps its full area and callout text masks the line behind it',()=>{
+ const doc=catalogOrder(newOrder()),pg=doc.pages[0];pg.visual={mode:'shared',image,transform:{scale:1,x:.5,y:.5}};const a=newAnnotation('callout',pg.products[0].id,{x:40,y:180});a.text='TPU no peito';a.x2=300;a.y2=300;pg.annotations=[a];const sheet=buildSheets(doc,{}, {draft:true})[0],art=sheet.ops.find(o=>o.imageKey==='shared');assert.equal(art.x,21);assert.ok(art.w>500);assert.ok(!sheet.ops.some(o=>o.text?.startsWith('FICHA ·')));assert.ok(!sheet.ops.some(o=>o.text==='DETALHES / PERSONALIZAÇÃO'));const text=sheet.ops.findIndex(o=>o.kind==='text'&&o.text==='TPU no peito'),mask=sheet.ops[text-1];assert.equal(mask.kind,'rect');assert.equal(mask.fill,'#ffffff');assert.ok(sheet.ops.slice(0,text-1).some(o=>o.kind==='line'&&o.x2===a.x2&&o.y2===a.y2));
 });
