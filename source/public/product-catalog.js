@@ -115,7 +115,7 @@ export function technicalProblems(product,order={},release=false){
   if(a.role==='ESCUDO'&&!['TPU ALTO RELEVO','APLIQUE BORDADO'].includes(a.type))errors.push('Escudos especiais: use TPU alto relevo ou aplique bordado.');
   if(a.role==='MARCA MEINERZ'){brand+=a.perUnit;if(t.productCode!=='CAM-001'||a.type!=='TPU ALTO RELEVO'||brand>1)errors.push('MEINERZ TPU: somente uma por camiseta; no calção a marca é sublimada.');}
   if(a.role==='ETIQUETA OFICIAL'&&(t.productCode!=='CAM-001'||!['TPU ALTO RELEVO','TERMOCOLANTE'].includes(a.type)))errors.push('Etiqueta oficial física só está disponível na camiseta, em TPU ou termocolante.');
-  if(t.fit==='INFANTIL'&&a.type==='APLIQUE BORDADO')errors.push('Aplique bordado infantil é proibido.');if(t.fit==='INFANTIL'&&a.type==='TPU ALTO RELEVO')need(a.exception.trim(),'TPU infantil é excepcional: registre a justificativa no pedido.');need(a.position.trim(),'Identifique manualmente a posição de cada aplicação física.');
+  if(t.fit==='INFANTIL'&&a.type==='APLIQUE BORDADO')errors.push('Aplique bordado infantil é proibido.');if(t.fit==='INFANTIL'&&a.type==='TPU ALTO RELEVO')need(a.exception.trim(),'TPU infantil é excepcional: registre a justificativa no pedido.');need(a.position.trim(),'Confirme a seta da aplicação em Aplicações e setas.');
   if(!Number.isSafeInteger(a.perUnit*Number(product.quantity||0)))errors.push('Quantidade de aplicações excede o limite numérico do pedido.');
  }return [...new Set(errors)];
 }
