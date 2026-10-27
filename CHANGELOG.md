@@ -56,3 +56,12 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - 318 testes aprovados e 1 referência antiga ausente; TypeScript/build aprovados. Prévia e lista conferidas no navegador. A suíte de numeração foi acrescentada ao workflow.
 - Origem Sites: `13ac07fd17ade36f67e9551af5a147c27255b28d`, 474 arquivos; artefato publicado SHA-256 `7d7fdc0bc4c0a0a1b30cae28f69f713be8d5743a2bf01a4d20ec06c33fff669e`.
 - [Documentação junto ao código](source/docs/pedidos-numeracao.md).
+
+## 2026-10-27 — Composição inicial e múltiplas modelagens (v61)
+
+- Pedidos novos começam pela escolha explícita entre kit, peça avulsa e duas peças independentes, antes dos dados do cliente. Kits: camiseta/calção, jaqueta/calça e polo/bermuda; cada peça mantém sua identidade.
+- As modelagens masculina, Baby Look e infantil podem ser selecionadas juntas, com configurações técnicas e quantidades independentes. Listas mistas preservam o desenho e o tecido, sem duplicar quantidades ou personalização.
+- Preserva as validações CAM-001/CAL-001 e os moldes por modelagem. Outros tipos usam detalhes técnicos manuais, sem criar catálogos homologados. O marcador manual não substitui ficha cadastrada. Pedidos antigos continuam legíveis.
+- 326 testes aprovados e 1 referência XLSX antiga ausente; TypeScript e build aprovados; início, kits e seleção das três modelagens conferidos no navegador. Testes de composição adicionados ao workflow.
+- Origem Sites: `dbf024a8ab05e1a38b981905a9eefdee0df8ff39`, 477 arquivos verificados; artefato publicado SHA-256 `000febed0a3737e76f10c0e6dd8026d44ca450624417957881897a0747dabd6a`.
+- [Documentação junto ao código](source/docs/pedidos-composicao-modelagens.md).

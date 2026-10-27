@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "13ac07fd17ade36f67e9551af5a147c27255b28d",
-  "exported_at": "2026-10-27T10:51:07.924191+00:00",
+  "source_commit": "dbf024a8ab05e1a38b981905a9eefdee0df8ff39",
+  "exported_at": "2026-10-27T11:22:45.266149+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -789,6 +789,11 @@
       "sha256": "1cc0e4b222070d5020c0c84c4c14468aa004121698f07199f37d2516650debd2"
     },
     {
+      "path": "docs/pedidos-composicao-modelagens.md",
+      "size": 3367,
+      "sha256": "c1a483199c40ba89b5395f4edb0773e250a84beda25f498e7332f7b842fe7f16"
+    },
+    {
       "path": "docs/pedidos-edicao.md",
       "size": 3064,
       "sha256": "ea09fbd0a7ca227c23d20303a767ac8b36e4e18a7d2270bd233863652668dfea"
@@ -1045,8 +1050,8 @@
     },
     {
       "path": "lib/list-service.mjs",
-      "size": 8812,
-      "sha256": "20ec4d2e184b8570f422613d4edce93e09c14c56349a2b14db4c54928631c060"
+      "size": 8902,
+      "sha256": "3d3e6ab5bfd8ba309a52fae090ee84009d860c8d2ca3e5bfbcc83bfc3890a0e2"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1065,8 +1070,8 @@
     },
     {
       "path": "lib/production-service.mjs",
-      "size": 19947,
-      "sha256": "8c409a3052f891ed623405ffc0b3e257f846da358f973e2234c3f19c1db1e764"
+      "size": 20400,
+      "sha256": "537db8e2b51bcaf443526faa947e772f2a49cfa55fdb70925c477be2a5a30141"
     },
     {
       "path": "lib/project-service.mjs",
@@ -1445,8 +1450,8 @@
     },
     {
       "path": "public/catalog-list.js",
-      "size": 4525,
-      "sha256": "cd6872c6bc1fbdb018744b1e3f68e476772dd373f4c8f6463645f555bef12304"
+      "size": 4529,
+      "sha256": "49f861d7b87cc7281cd9eb8019030d67abaf887a45156a0fa555ff089f201291"
     },
     {
       "path": "public/catalog-reference.js",
@@ -1551,12 +1556,17 @@
     {
       "path": "public/order-annotation-editor.js",
       "size": 9493,
-      "sha256": "2a61dd0ee5e1546f0934fa5a0e69417fb5b63d416f158404912cd865fa439265"
+      "sha256": "f8dadb48b6ecfb5d5a208ef941da83a8e2c4683fd18325d4f1c00d28187f91c6"
     },
     {
       "path": "public/order-annotations.js",
       "size": 1260,
       "sha256": "019df91ba2d25550eff91fa4195f4a16d65f0bb3124d9a73079257be7d115c59"
+    },
+    {
+      "path": "public/order-composition.js",
+      "size": 2688,
+      "sha256": "13aad09eac288fa943049e820905f63f8f85d8df2d45e799f37f0ed024059c46"
     },
     {
       "path": "public/order-core.js",
@@ -1566,7 +1576,7 @@
     {
       "path": "public/order-delivery.js",
       "size": 3097,
-      "sha256": "75590aa79c0ee9ef29530dc13812de607b0a1a4862fc4513444cb7af40634b40"
+      "sha256": "f24936b1786c4920d695c46b0e10e771e9b234a143ea85a3348de25fc6a908f9"
     },
     {
       "path": "public/order-files.js",
@@ -1585,8 +1595,8 @@
     },
     {
       "path": "public/order-visual-tools.js",
-      "size": 13814,
-      "sha256": "bb01263debcd02d795233c69f5c82fd09886867b0e312853c068e7dd01eb8ce7"
+      "size": 13892,
+      "sha256": "761ff8577d19d7b6798ab11cbe02a9a4771beeda36fb309dfb66dcc8a322e830"
     },
     {
       "path": "public/organizador.html",
@@ -1605,8 +1615,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 30392,
-      "sha256": "e075046d3c5664868df7a256a2944e06a98cd09fb0b9cbaf2de6d382f97c3390"
+      "size": 30822,
+      "sha256": "e192e6f26cd93a4d11849aaf33c0ad0dc604f83f74b912b132dfc99b34e58ec6"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1620,8 +1630,8 @@
     },
     {
       "path": "public/product-catalog-ui.js",
-      "size": 17523,
-      "sha256": "ad66e24c07f272b867fd5b649b2ef1881fb3420ed4a966de64a3a59eb0512c61"
+      "size": 18846,
+      "sha256": "5bead0dcb0524af3c9da2f504f35b3971e10369cd7a733e8dec6c035220a4408"
     },
     {
       "path": "public/product-catalog.css",
@@ -1630,28 +1640,28 @@
     },
     {
       "path": "public/product-catalog.js",
-      "size": 30944,
-      "sha256": "c337e3e632dcb7932394222bf76070fe8475d7981c0b0cb2e04bad1c2c04eadf"
+      "size": 31747,
+      "sha256": "7f90d7933c0bc62d7762c71487554bfd3bd16e772ee66f9567241c187995afc1"
     },
     {
       "path": "public/production-core.js",
-      "size": 19710,
-      "sha256": "19be653373587a778cdaee49e149470e784264b34d4c45fb1ac4cd8a648efa6d"
+      "size": 21150,
+      "sha256": "6ec41f7c816843d6c2104f6bb10340a14565e04feb6b9d728029ba1e15ca9065"
     },
     {
       "path": "public/production-sheet.js",
-      "size": 30919,
-      "sha256": "ba1c31fcf6a5d83d5005cc4c203480145150a31166f22132564579f75c6f8b01"
+      "size": 30923,
+      "sha256": "13facb0aef83a7c667eb4e0d2504abf09f1974b7c7876e5bc521ca81330a6464"
     },
     {
       "path": "public/production-ui.js",
-      "size": 95716,
-      "sha256": "6b91c0028317af8baf6a34e730b3edbec1e5c708149c8d88e4f8eccd8b639965"
+      "size": 98197,
+      "sha256": "74f29141facfa1bfb0ae718964b5dc197ec8431d0d4b177c298ca4abb6015c44"
     },
     {
       "path": "public/production.css",
-      "size": 48917,
-      "sha256": "b667a1798e531896cdec7f68234ad3ac0e92a43c1ba55727e56953de60fb3eb1"
+      "size": 50019,
+      "sha256": "c063184dc9953f7fdd0f47a49e17fa134772427b88429c08fc586724c5c46bdf"
     },
     {
       "path": "public/project-session.js",
@@ -2215,8 +2225,8 @@
     },
     {
       "path": "tests/list-workflow.test.mjs",
-      "size": 15843,
-      "sha256": "439b5ab183335caea651ffa90b1078e5b3e31bd451502ffcbb3f10be921403aa"
+      "size": 17252,
+      "sha256": "c7c194473f4614011e826b592c2362c3b07922e1c4e399b52d13202cc9b2c376"
     },
     {
       "path": "tests/migrations.mjs",
@@ -2224,9 +2234,14 @@
       "sha256": "e18c6806682eb1a5d446e9841d623bd87364729878c853c12b9bed7531541fe8"
     },
     {
+      "path": "tests/order-composition.test.mjs",
+      "size": 5437,
+      "sha256": "5499d5196cc46a4adad83f70577dbe9b961ebd72900620c6fd4043df87ea79ad"
+    },
+    {
       "path": "tests/order-flow.test.mjs",
-      "size": 56130,
-      "sha256": "a3ad5ee826cb217f18aaebca8b8fa2bc27b78484b0fe374c3c5c5428569dad57"
+      "size": 59659,
+      "sha256": "9fc10176e52370ce17ec5a37f78975a953b564946568809f74996194ee6c1398"
     },
     {
       "path": "tests/order-list.test.mjs",

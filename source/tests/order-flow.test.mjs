@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import * as core from '../public/production-core.js';
+import * as composition from '../public/order-composition.js';
 import * as sheets from '../public/production-sheet.js';
 import * as workflow from '../public/workflow-contract.js';
 import {newRecordId} from '../public/record-id.js';
@@ -11,7 +12,7 @@ import * as listTools from '../public/order-list.js';
 
 // A DOM fixture for the actual order page and controller. It honors ancestors,
 // hidden panels and closed details so navigation is tested beyond the HTML text.
-async function orderScreen({search='',initialDraft=null}={}){
+async function orderScreen({search='',initialDraft=null,chooseInitial=true}={}){
  let document;
  const decode=s=>s.replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
  class Element{
@@ -33,11 +34,12 @@ async function orderScreen({search='',initialDraft=null}={}){
   querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
  }
  const root=new Element();root.innerHTML=await readFile(new URL('../public/pedido.html',import.meta.url),'utf8');document={body:root,activeElement:null,createElement:tag=>new Element(tag),getElementById:id=>root.querySelector('#'+id),addEventListener(){},querySelector:s=>root.querySelector(s),querySelectorAll:s=>root.querySelectorAll(s)};
- const previewCalls=[],calls=[],timers=new Map(),destination={location:{href:''}};let timerId=0;const context=vm.createContext({...core,...catalog,newRecordId,legacyNewOrder:core.newOrder,legacyNewPage:core.newPage,legacyNewProduct:core.newProduct,legacyNewKitPage:core.newKitPage,LEGACY_PRODUCTS:core.PRODUCTS,...sheets,...workflow,...listTools,document,crypto,structuredClone,FormData,File,Blob,URL,URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},location:{search},window:{top:destination,addEventListener(){}},setTimeout:(handler,delay)=>{const key=++timerId;timers.set(key,{handler,delay});return key;},clearTimeout:key=>timers.delete(key),createOrderVisualTools:()=>({openImageEditor(){},openFinalPreview(options={}){previewCalls.push(structuredClone(options));}}),createWorkflowGuide:()=>({update(){}}),canonicalWorkflowPath(){},fetch:async path=>initialDraft&&path.startsWith('/api/')?{ok:true,json:async()=>path==='/api/profile'?{profile:{email:'designer@test',displayName:'Designer'}}:{orders:[],lists:[],projects:[]}}:{ok:false,json:async()=>({error:'Entre na conta'})}});
+ const previewCalls=[],calls=[],timers=new Map(),destination={location:{href:''}};let timerId=0;const context=vm.createContext({...core,...catalog,...composition,newRecordId,legacyNewOrder:core.newOrder,legacyNewPage:core.newPage,legacyNewProduct:core.newProduct,legacyNewKitPage:core.newKitPage,LEGACY_PRODUCTS:core.PRODUCTS,...sheets,...workflow,...listTools,document,crypto,structuredClone,FormData,File,Blob,URL,URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},location:{search},window:{top:destination,addEventListener(){}},setTimeout:(handler,delay)=>{const key=++timerId;timers.set(key,{handler,delay});return key;},clearTimeout:key=>timers.delete(key),createOrderVisualTools:()=>({openImageEditor(){},openFinalPreview(options={}){previewCalls.push(structuredClone(options));}}),createWorkflowGuide:()=>({update(){}}),canonicalWorkflowPath(){},fetch:async path=>initialDraft&&path.startsWith('/api/')?{ok:true,json:async()=>path==='/api/profile'?{profile:{email:'designer@test',displayName:'Designer'}}:{orders:[],lists:[],projects:[]}}:{ok:false,json:async()=>({error:'Entre na conta'})}});
  const catalogUI=(await readFile(new URL('../public/product-catalog-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'');Object.assign(context,vm.runInContext('(function(){'+catalogUI+';return {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor};})()',context));
  const code=(await readFile(new URL('../public/production-ui.js',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,'');vm.runInContext(code,context);if(initialDraft){context.recoveredDraft=structuredClone(initialDraft);context.draftCopies=[];vm.runInContext('localDraft=async(value)=>{if(value){draftCopies.push(structuredClone(value));return;}return recoveredDraft;};',context);}for(let i=0;i<8;i++)await new Promise(setImmediate);
  const find=s=>{const el=document.querySelector(s);assert.ok(el,'control exists: '+s);return el;},all=s=>document.querySelectorAll(s),evaluate=s=>vm.runInContext(s,context),click=async(container,selector)=>find(container).emit('click',{target:find(selector)}),input=async(selector,value)=>{const el=find(selector);el.value=value;await (selector.startsWith('[data-product')?find('#productEditor'):el).emit('input',{target:el});};
  const visible=el=>{for(let current=el;current;current=current.parent){if(current.hidden||current.tagName==='DIALOG'&&!current.open)return false;if(current.parent?.tagName==='DETAILS'&&!current.parent.open&&current!==current.parent.children.find(e=>e.tagName==='SUMMARY'))return false;}return true;};
+ if(chooseInitial&&evaluate('initialCompositionState().kind')==='unselected')await evaluate('chooseInitialComposition("single")');
  assert.ok(document.querySelector('#productStepTitle'),'the page completed initialization');
  return {context,document,find,all,evaluate,click,input,visible,calls,destination,timers,previewCalls};
 }
@@ -61,6 +63,27 @@ async function savedOrderScreen(){
  context.loaded=structuredClone(records.get('A'));await evaluate('replaceDocument(loaded.document,loaded)');await evaluate('refreshOrders()');calls.length=0;
  return {...screen,records};
 }
+
+test('the first question offers kit, single and independent pair before customer fields or later stages',async()=>{
+ const {find,all,evaluate,visible,click}=await orderScreen({chooseInitial:false});
+ assert.deepEqual(all('[data-initial-kind]').map(el=>el.dataset.initialKind),['kit','single','pair']);assert.ok(all('[data-initial-kind]').every(el=>!el.checked));assert.equal(visible(find('[data-order="client"]')),false);assert.equal(find('#stageNext').disabled,true);
+ await click('#orderStages','[data-order-step="pieces"]');assert.equal(evaluate('orderStage'),'identity');assert.match(find('#error').textContent,/Escolha primeiro/);
+ const pair=find('[data-initial-kind="pair"]');pair.checked=true;await pair.emit('change');assert.equal(evaluate('doc.compositionKind'),'pair');assert.equal(evaluate('page().mode'),'avulsas');assert.equal(evaluate('page().products.length'),2);assert.equal(evaluate('page().products.some(p=>p.kitGroupId)'),false);assert.equal(visible(find('[data-order="client"]')),true);assert.equal(visible(find('#initialKitPreset')),false);assert.equal(find('#stageNext').disabled,false);
+});
+
+test('all three kit presets can be chosen without locking the blank form or inheriting another garment fabric',async()=>{
+ const {find,evaluate}=await orderScreen({chooseInitial:false}),kit=find('[data-initial-kind="kit"]');kit.checked=true;await kit.emit('change');
+ for(const preset of composition.KIT_PRESETS){find('#initialKitPreset').value=preset.id;await find('#initialKitPreset').emit('change');assert.equal(evaluate('page().products.map(p=>p.type).join()'),preset.types.join());assert.equal(evaluate('page().mode'),'conjunto');assert.equal(find('#initialKitPreset').disabled,false);assert.equal(evaluate('page().products.every(p=>p.kitGroupId===page().id)'),true);}
+ assert.equal(evaluate('page().products.some(p=>p.fabric)'),false);assert.equal(evaluate('page().products.every(p=>p.manualTechnical)'),true);
+});
+
+test('the model panel selects all fits together, preserves quantities and identifies each editable variant',async()=>{
+ const {find,evaluate,click,all}=await orderScreen();await click('#orderStages','[data-order-step="pieces"]');
+ for(const fit of ['MASCULINA','FEMININA','INFANTIL']){const control=find('[data-model-fit="'+fit+'"]');control.checked=true;await find('#productEditor').emit('change',{target:control});}
+ assert.equal(evaluate('page().products.length'),3);assert.equal(all('[data-model-fit]').filter(el=>el.checked).length,3);assert.equal(evaluate('document.querySelector(\'[data-tech="fit"]\')'),null);
+ for(const label of ['Camiseta · Masculina','Camiseta · Baby Look (feminina)','Camiseta · Infantil (unissex)'])assert.ok(find('#productTabs').innerHTML.includes(label));
+ await click('#productTabs','[data-product-index="1"]');assert.match(find('#currentProductName').textContent,/Baby Look/);evaluate('product().quantity=2;product().grade="BABY LOOK\\nP = 2";render();');const before=evaluate('JSON.stringify(doc)');const selected=find('[data-model-fit="FEMININA"]');selected.checked=false;await find('#productEditor').emit('change',{target:selected});assert.equal(evaluate('JSON.stringify(doc)'),before);assert.match(find('#error').textContent,/quantidades ou personalizações/);
+});
 
 test('saving assigns the server code to the field, print preview and local draft while preserving newer edits',async()=>{
  const {context,find,evaluate,calls}=await orderScreen();let finish;const pending=new Promise(resolve=>finish=resolve);
@@ -87,7 +110,7 @@ test('the real order screen preserves existing piece data and saves before openi
 
 test('order sectors and piece steps show one subject at a time and preserve inputs when navigating a kit',async()=>{
  const {find,all,evaluate,click,input,visible,previewCalls}=await orderScreen();
- assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['identity']);assert.equal(all('input').filter(visible).length,7);assert.equal(visible(find('#orderPreview')),false);
+ assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['identity']);assert.equal(all('input').filter(visible).length,8);assert.equal(visible(find('#orderPreview')),false);
  const initial=evaluate('JSON.stringify(doc)');await find('#openAddPiece').emit('click');assert.equal(find('#addPieceDialog').open,true);await find('#closeAddPiece').emit('click');assert.equal(evaluate('JSON.stringify(doc)'),initial,'opening and cancelling the chooser creates no piece');
  await find('#addKit').emit('click');assert.equal(evaluate('doc.pages.length'),1,'the empty placeholder is replaced by the kit');assert.deepEqual(all('[data-order-stage]').filter(visible).map(el=>el.dataset.orderStage),['pieces']);assert.deepEqual(all('[data-product-panel]').filter(visible).map(el=>el.dataset.productPanel),['model']);
  await input('[data-product="model"]','KIT EDGE 2027');await find('#productEditor').emit('click',{target:find('[data-product-next]')});assert.deepEqual(all('[data-product-panel]').filter(visible).map(el=>el.dataset.productPanel),['fabric']);
@@ -123,7 +146,7 @@ test('the first step selects one shirt or a complete kit without duplicating pla
  await choose('single');assert.equal(evaluate('page().products.length'),1);assert.equal(evaluate('product().type'),'Calção');assert.equal(evaluate('page().mode'),'individual');assert.equal(find('#initialSecondTypeField').hidden,true);assert.equal(evaluate('doc.title'),'Equipe EDGE');assert.equal(evaluate('doc.client'),'Cliente A');
  await choose('kit');assert.equal(evaluate('page().products.length'),2);await find('#stageNext').emit('click');assert.equal(evaluate('orderStage'),'pieces');await input('[data-product="model"]','KIT EDGE 2027');
  const prepared=evaluate('JSON.stringify(doc)');assert.equal(find('[data-initial-kind="single"]').disabled,true);await choose('single');assert.equal(evaluate('JSON.stringify(doc)'),prepared,'the initial selector cannot discard configured pieces');
- await evaluate('replaceDocument(newOrder())');assert.equal(find('[data-initial-kind="single"]').checked,true);assert.equal(find('[data-initial-kind="kit"]').disabled,false);
+ await evaluate('replaceDocument(newOrder())');assert.equal(find('[data-initial-kind="single"]').checked,false);assert.equal(find('[data-initial-kind="kit"]').disabled,false);
 });
 
 test('names, numbers and additional text come from the list after the redundant forms are removed',async()=>{
@@ -178,11 +201,11 @@ test('a sent saved order can be deleted with a queue warning and a remotely dele
  await evaluate('verifyRecoveredOrder()');assert.equal(evaluate('JSON.stringify(doc)'),before,'temporary failures preserve the local copy');context.fetch=fetch;await evaluate('verifyRecoveredOrder()');assert.equal(evaluate('id'),null);assert.equal(evaluate('dirty'),false);assert.equal(evaluate('doc.title'),'Novo pedido');assert.equal(context.draftCopies.at(-1).id,null);assert.equal(records.has('B'),true);
 });
 
-test('new initial selection offers the two approved products while legacy garments remain readable',async()=>{
+test('initial selection offers garment types while catalog rules and legacy records remain readable',async()=>{
  const {context,find,evaluate,input,visible}=await orderScreen(),pieceId=evaluate('product().id');await input('[data-order="client"]','Equipe A');
  for(const type of ['Camiseta','Calção']){await input('#initialFirstType',type);assert.equal(evaluate('product().type'),type);assert.equal(evaluate('product().id'),pieceId);assert.equal(evaluate('doc.client'),'Equipe A');assert.equal(visible(find('#initialSecondType')),false);}
- assert.deepEqual(find('#initialFirstType').options.map(o=>o.value),['Camiseta','Calção']);
- const old=core.newOrder();old.pages[0].products[0].type='Puffer';context.previous=old;await evaluate('replaceDocument(previous,{id:"OLD",version:1})');assert.equal(evaluate('product().type'),'Puffer');assert.equal(find('#initialFirstType').value,'Puffer');assert.match(find('#productEditor').innerHTML,/cadastro antigo/);
+ assert.ok(['Camiseta','Calção','Jaqueta','Calça','Polo','Bermuda'].every(type=>find('#initialFirstType').options.some(o=>o.value===type)));
+ const old=core.newOrder();old.pages[0].products[0].type='Puffer';context.previous=old;await evaluate('replaceDocument(previous,{id:"OLD",version:1})');assert.equal(evaluate('product().type'),'Puffer');assert.equal(find('#initialFirstType').value,'Puffer');assert.match(find('#productEditor').innerHTML,/Cadastro anterior/);
 });
 
 test('both kit fields independently select registered products and retain saved references',async()=>{
@@ -194,7 +217,7 @@ test('both kit fields independently select registered products and retain saved 
 });
 
 test('a kit upload shares one image across both garments and the print, while stale uploads cannot modify another order',async()=>{
- const {context,find,evaluate,input,click}=await orderScreen();find('[data-initial-kind="kit"]').checked=true;await find('[data-initial-kind="kit"]').emit('change');await input('#initialFirstType','Camiseta');await input('#initialSecondType','Calção');evaluate('page().mode="avulsas";render();');await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="art"]');
+ const {context,find,evaluate,input,click}=await orderScreen();find('[data-initial-kind="kit"]').checked=true;await find('[data-initial-kind="kit"]').emit('change');await input('#initialFirstType','Camiseta');await input('#initialSecondType','Calção');evaluate('page().mode="conjunto";render();');await click('#orderStages','[data-order-step="pieces"]');await click('#productEditor','[data-product-step="art"]');
  const image='data:image/png;base64,AAAA';context.imageData=async()=>image;find('#sharedKitImage').files=[{name:'kit.png'}];await find('#productEditor').emit('change',{target:find('#sharedKitImage')});
  assert.equal(evaluate('page().visual.mode'),'shared');assert.equal(evaluate('page().visual.image'),image);assert.equal(evaluate('page().products.length'),2);assert.equal(evaluate('page().products.map(p=>p.type).join()'),'Camiseta,Calção');assert.equal(evaluate('buildSheets(doc,{}, {draft:true})[0].ops.filter(op=>op.imageKey==="shared").length'),1);assert.match(find('#overviewSummary').innerHTML,/Imagem única do kit/);
  await click('#productTabs','[data-product-index="1"]');assert.equal(evaluate('product().type'),'Calção');assert.equal(evaluate('page().visual.image'),image);await click('#productEditor','[data-action="use-individual-images"]');assert.equal(evaluate('page().visual.mode'),'per-product');assert.equal(evaluate('page().visual.image'),image,'switching modes retains the shared artwork for recovery');
