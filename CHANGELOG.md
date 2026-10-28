@@ -136,3 +136,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Adiciona seis versões somente camiseta dos kits EDGE 2027, ELITE 27, RAGLAN BÁSICO, NORMAL BÁSICO, RAGLAN ELITE e FIELD RAGLAN.
 - Agrupa camisetas e peças avulsas separadamente dos kits na criação de apresentação. Exclui calção e cós antes do enquadramento e exportação; mapas próprios preservam UVs e os projetos antigos.
 - Fonte `e8bc3d7bc66b636ad27555d07eed3ee22a8c12d5` (557 arquivos). 19 testes de modelos e apresentações aprovados; TypeScript e build concluídos. Simulador preservado.
+
+## v75 — 2026-10-28
+- Seletor de molde dentro da apresentação, com troca ao vivo no mesmo canvas e grupos de camisetas/peças avulsas e kits.
+- Arte compartilhada somente entre variantes explícitas do mesmo atlas; outros moldes recebem arte própria. Arquivos da sessão permitem voltar à arte anterior. Falha de carregamento mantém o modelo anterior.
+- Salvamento atômico de molde e arte com autorização, publicação e revisão; miniaturas incompatíveis são invalidadas. Clientes e propostas não recebem o seletor; links compartilhados acompanham a troca na próxima atualização.
+- Fonte `e19ff90bfda5c13f540ee7413380acf7dbb785f7` (559 arquivos). 352 testes de regressão e dois novos testes de interface aprovados, um pulado na bateria completa. TypeScript e build concluídos. WebGL indisponível neste ambiente.

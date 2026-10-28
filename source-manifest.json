@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "e8bc3d7bc66b636ad27555d07eed3ee22a8c12d5",
-  "exported_at": "2026-10-28T13:44:58.426800+00:00",
+  "source_commit": "e19ff90bfda5c13f540ee7413380acf7dbb785f7",
+  "exported_at": "2026-10-28T14:11:59.805533+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -795,8 +795,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 4169,
-      "sha256": "4f73b78f85f401b2431f4867a269d240b0cb13e1dfe5e0410e333443c74773d2"
+      "size": 5198,
+      "sha256": "bc154c96803c7e4bd8e9fdb538bc6433ab5f8e783a4a2fbf0a7eac79cedff139"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1120,8 +1120,8 @@
     },
     {
       "path": "lib/project-service.mjs",
-      "size": 25813,
-      "sha256": "bf895ee12465b7d3ac841fc1951569e7ad3760f8649a84e247be06cba03391be"
+      "size": 26628,
+      "sha256": "0303612169b4303be842b44b30dfc65872eea237b5c4af37d3bdfeb7de69f7d8"
     },
     {
       "path": "lib/request-security.mjs",
@@ -1215,8 +1215,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 35341,
-      "sha256": "0dcbd8921b5884ad7c4aa2f7db25d1d9f651db322e13be6e5360fe99cde72682"
+      "size": 37509,
+      "sha256": "53ffe94d957269d0d492154cdf8af8bdf00f5eeb7b94d651a28bdb1907b08863"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -2030,8 +2030,8 @@
     },
     {
       "path": "public/project-session.js",
-      "size": 17935,
-      "sha256": "ab27db464390daa67a05bea39cb05c447be55aba011b672d36e89f9039e03b9b"
+      "size": 21497,
+      "sha256": "fea7c49385128e18c652a4e79419791c4ee971023d77b428a95c7a4af0b1956b"
     },
     {
       "path": "public/proposal-client.js",
@@ -2255,8 +2255,8 @@
     },
     {
       "path": "public/studio-theme.css",
-      "size": 20209,
-      "sha256": "a37b55f603beacc025de916f5c8fcabb39f3600ade327e87c23b75b069629c8f"
+      "size": 20687,
+      "sha256": "48f983cdc8f196bbb27d78ffbdd8713bbcb9e70c8227e833170a067f751b9b44"
     },
     {
       "path": "public/style.css",
@@ -2267,6 +2267,11 @@
       "path": "public/template-catalog.js",
       "size": 508,
       "sha256": "c7d3236841e6886b032f974ea749804341a3923b8b32b8b37064736083963ef0"
+    },
+    {
+      "path": "public/template-family.js",
+      "size": 250,
+      "sha256": "c35cdd49f5008a35779d3ded86d4c7c2995be7e5b65ad4dba231426a7e0c61ff"
     },
     {
       "path": "public/vendor/exceljs/LICENSE",
@@ -2390,8 +2395,8 @@
     },
     {
       "path": "public/viewer.html",
-      "size": 24944,
-      "sha256": "a8ecd7ed0789d9cd6652edc84c6f39ea1afa9302f8b3519d9992878cf5825706"
+      "size": 25271,
+      "sha256": "7fffbc7724224195dc8a2ddd34d183b600a9772ac216c7e0622885c94f947da5"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2674,6 +2679,11 @@
       "sha256": "c0cccee5af68e10e9c1fac1b7f0710ad341a70f1715e7a6cef40294f0e2960f3"
     },
     {
+      "path": "tests/presentation-mold-switch.test.mjs",
+      "size": 4764,
+      "sha256": "2ea3470a099f6db294dc0a6eeec62fb531ded3385be1774c4797d9b54ca7fb92"
+    },
+    {
       "path": "tests/presentation.test.mjs",
       "size": 6272,
       "sha256": "86f7889e6f9de87c355e0865683ee41041714c8faa9980b5e72147a884367230"
@@ -2695,8 +2705,8 @@
     },
     {
       "path": "tests/projects.test.mjs",
-      "size": 17614,
-      "sha256": "72c1534357221e5554898d903424a61021753689975f4ade4a640edd70add7f1"
+      "size": 17609,
+      "sha256": "b54950c484c29c0934be3370b709099bdad0fc999a971502b3f6419223529e29"
     },
     {
       "path": "tests/security.test.mjs",
@@ -2735,8 +2745,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 33532,
-      "sha256": "68abcb7abaaae09cc1749963f04cf1d2a03d65ecc1116a77e34c3bee5d04c861"
+      "size": 35767,
+      "sha256": "66395b800eb38cba9863e8b8d7fc4328dcbade3c2ed76423dff596768a829509"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

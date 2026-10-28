@@ -297,3 +297,17 @@ test('each published kit has a shirt-only presentation with its own map, framing
   for(const p of d.panels)assert.deepEqual(p,kit.descriptor.panels.find(q=>q.number===p.number));
  }
 });
+
+test('switching project molds is owned, versioned, publication-checked and clears incompatible artwork atomically',async()=>{
+ const {templates,projects,objects,db,bucket}=setup(INSTALLED_TEMPLATES),a='kit-elite-27',b=a+'-camiseta',c='kit-raglan-basico';
+ let p=await projects.create(other,{name:'Troca ao vivo',templateId:a});const art=new File([await readFile(new URL('../public/assets/mapa-conferencia.png',import.meta.url))],'arte.png',{type:'image/png'});
+ p=await projects.save(other,p.id,{name:p.name,version:p.version},art,art);const original=p.mapUrl;assert.equal(objects.size,2);p=await projects.review(other,p.id,p.version);
+ await assert.rejects(projects.save(admin,p.id,{name:p.name,version:p.version,templateId:b}),{status:404});
+ p=await projects.save(other,p.id,{name:p.name,version:p.version,templateId:b});assert.equal(p.templateId,b);assert.ok(p.hasMap);assert.equal(p.reviewed,false);assert.equal(p.thumbnailUrl,null);assert.equal(objects.size,1);assert.equal((await projects.template(other,p.id)).category,'camiseta');
+ await assert.rejects(projects.save(other,p.id,{name:p.name,version:p.version-1,templateId:c}),{status:409});assert.equal((await projects.get(other,p.id)).templateId,b);
+ await templates.status(admin,c,{status:'archived'});await assert.rejects(projects.save(other,p.id,{name:p.name,version:p.version,templateId:c}),{status:404});await templates.status(admin,c,{status:'published',confirmed:true});
+ const failing=new ProjectService({prepare(q){if(q.startsWith('UPDATE projects SET'))throw Error('Database unavailable');return db.prepare(q);}},bucket,templates);
+ await assert.rejects(failing.save(other,p.id,{name:p.name,version:p.version,templateId:c},art,art),/Database unavailable/);assert.equal(objects.size,1);assert.equal((await projects.get(other,p.id)).templateId,b);
+ p=await projects.save(other,p.id,{name:p.name,version:p.version,templateId:c});assert.equal(p.templateId,c);assert.equal(p.hasMap,false);assert.equal(p.mapName,null);assert.equal(p.thumbnailUrl,null);assert.equal(objects.size,0);
+ p=await projects.save(other,p.id,{name:p.name,version:p.version,templateId:a},art,art);assert.equal(p.templateId,a);assert.ok(p.hasMap&&p.thumbnailUrl);assert.equal(objects.size,2);
+});

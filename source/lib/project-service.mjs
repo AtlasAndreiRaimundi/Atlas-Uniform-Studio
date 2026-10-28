@@ -1,3 +1,4 @@
+import {compatibleTemplateArt} from '../public/template-family.js';
 import {profileDetails,readProfileDetails} from './designer-profile.mjs';
 import { BUILTIN_TEMPLATE } from '../public/template-catalog.js';
 import { DEFAULT_VISUALS, sanitizeVisuals } from '../public/presentation.js';
@@ -241,9 +242,20 @@ export class ProjectService {
   async save(user, id, input, mapFile, thumbnailFile) {
     const previous = await this.own(user, id), fields = projectFields(input), expected = revision(input.version);
     if (previous.version !== expected) throw new AppError(409, 'Este projeto foi atualizado em outra aba. Reabra-o para carregar a versão mais recente.');
+    const templateId = typeof input.templateId === 'string' ? input.templateId : previous.template_id;
+    const switching = templateId !== previous.template_id;
+    let keepArt = true;
+    if (switching) {
+      if (!this.templates) throw new AppError(503, 'A seleção de moldes está indisponível.');
+      await this.templates.available(user, templateId);
+      const [before, after] = await Promise.all([this.templates.descriptor(previous.template_id), this.templates.descriptor(templateId)]);
+      keepArt = compatibleTemplateArt(before, after);
+    }
     const uploads = [], date = now();
     let savedRow;
     let mapKey = previous.map_key, thumbnailKey = previous.thumbnail_key, mapName = previous.map_name;
+    if ((switching && !keepArt) || input.discardMap === true) { mapKey = null; mapName = null; thumbnailKey = null; }
+    if (switching) thumbnailKey = null;
     const map = mapFile ? await imageUpload(mapFile) : null;
     const thumbnail = thumbnailFile ? await imageUpload(thumbnailFile, true) : null;
     if (!this.bucket && (map || thumbnail)) throw new AppError(503, 'O armazenamento está indisponível. Tente novamente.');
@@ -258,7 +270,7 @@ export class ProjectService {
         thumbnailKey = `projects/${id}/${crypto.randomUUID()}/thumbnail`;
         uploads.push(thumbnailKey); await this.bucket.put(thumbnailKey, thumbnail.bytes, { httpMetadata: { contentType: thumbnail.type } });
       }
-      savedRow = await this.db.prepare('UPDATE projects SET name = ?, client_name = ?, visual_json = ?, presentation_json = ?, map_key = ?, map_name = ?, thumbnail_key = ?, version = version + 1, updated_at = ? WHERE id = ? AND owner_id = ? AND version = ? RETURNING *').bind(fields.name, fields.clientName, JSON.stringify(fields.visuals), JSON.stringify(fields.presentation), mapKey, mapName, thumbnailKey, date, id, user.userId, expected).first();
+      savedRow = await this.db.prepare('UPDATE projects SET template_id = ?, name = ?, client_name = ?, visual_json = ?, presentation_json = ?, map_key = ?, map_name = ?, thumbnail_key = ?, version = version + 1, updated_at = ? WHERE id = ? AND owner_id = ? AND version = ? RETURNING *').bind(templateId, fields.name, fields.clientName, JSON.stringify(fields.visuals), JSON.stringify(fields.presentation), mapKey, mapName, thumbnailKey, date, id, user.userId, expected).first();
       if (!savedRow) throw new AppError(409, 'Outra atualização foi salva. Reabra o projeto antes de continuar.');
     } catch (error) {
       if (uploads.length) await this.bucket.delete(uploads).catch(() => {});

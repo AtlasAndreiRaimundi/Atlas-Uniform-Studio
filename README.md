@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v74 em 28/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v75 em 28/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 557 arquivos, Site v74, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 559 arquivos, Site v75, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -56,3 +56,5 @@ A revisão visual usa superfícies neutras no tema escuro e acentos dourados, co
 Seis moldes adicionais para apresentações e pedidos, com mapas organizados e geometria preservada: [documentação](source/docs/order-molds-2026-10.md).
 
 A criação de apresentações separa camisetas e peças avulsas dos kits completos. Cada kit possui uma versão somente camiseta, com mapa próprio.
+
+O editor permite trocar o molde na apresentação sem sair da tela, preservando arte apenas entre variantes do mesmo mapa e salvando a escolha na revisão do projeto.

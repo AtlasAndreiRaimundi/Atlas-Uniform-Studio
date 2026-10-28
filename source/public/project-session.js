@@ -1,3 +1,4 @@
+import {compatibleTemplateArt,templateFamily} from './template-family.js';
 import {createWorkflowGuide,workflowChoose,workflowOrders} from './workflow-guide.js?v=3';
 import {workflowRoute,canAttachToOrder,linkedWorkflowOrders} from './workflow-contract.js?v=2';
 const $ = (selector) => document.querySelector(selector);
@@ -9,6 +10,7 @@ export function createProjectSession(viewer) {
   const productionShortcut=document.querySelector('#productionShortcut');if(productionShortcut){productionShortcut.hidden=readOnly;productionShortcut.href=productionPath;if(orderId)productionShortcut.firstChild.textContent='Voltar ao pedido com este desenho ';}
   let project = null, pendingMap = null, dirty = false, hydrating = true, saving = false, loaded = false, mapError = false;
   let lastName = '', lastClient = '',linkedOrders=[],linkedLists=[],completing=false;
+  let activeTemplate=null,switching=false,discardMap=false;const artByFamily=new Map();
   const projectGuide=readOnly?null:createWorkflowGuide({mount:'#workflowNextStep',onAction:projectWorkflowAction});
   function refreshWorkflowGuide(created=false){projectGuide?.update({kind:'presentation',id:project?.id||id,title:project?.name,orderId:orderId||'',linkedOrders,linkedLists,created,completed:Boolean(project?.reviewed&&!dirty),ready:Boolean(project?.reviewed&&project?.hasMap&&project?.thumbnailUrl),message:!project?.hasMap?'Sua apresentação foi criada. Aplique a arte e salve para anexar o design a um pedido.':undefined});}
   async function projectWorkflowAction(action){
@@ -33,10 +35,12 @@ export function createProjectSession(viewer) {
     return data;
   }
   function state() {
-    $('#saveProjectBtn').disabled = !loaded || saving || completing || !dirty || mapError;
-    $('#completeProjectBtn').hidden=readOnly;$('#completeProjectBtn').disabled=!loaded||saving||completing||mapError||Boolean(project?.reviewed&&!dirty);$('#completeProjectBtn').textContent=completing?'Conferindo…':project?.reviewed&&!dirty?'Apresentação conferida':'Concluir e conferir';
-    $('#shareProjectBtn').disabled = !loaded || saving || mapError;
-    $('#openExportBtn').disabled = readOnly || !loaded || saving || mapError;
+    const select=$('#presentationMoldSelect');if(select)select.disabled=!loaded||saving||switching||completing;
+    if(!readOnly){$('#mapInput').disabled=switching;$('#exampleMapBtn').disabled=switching;}
+    $('#saveProjectBtn').disabled = !loaded || saving || switching || completing || !dirty || mapError;
+    $('#completeProjectBtn').hidden=readOnly;$('#completeProjectBtn').disabled=!loaded||saving||switching||completing||mapError||Boolean(project?.reviewed&&!dirty);$('#completeProjectBtn').textContent=completing?'Conferindo…':project?.reviewed&&!dirty?'Apresentação conferida':'Concluir e conferir';
+    $('#shareProjectBtn').disabled = !loaded || saving || switching || mapError;
+    $('#openExportBtn').disabled = readOnly || !loaded || saving || switching || mapError;
     $('#saveState').textContent = !loaded ? 'Carregando…' : saving ? 'Salvando…' : mapError ? 'Falha ao carregar arte' : dirty ? 'Alterações não salvas' : project?.reviewed?'Conferida no estúdio':'Rascunho salvo';
     $('#saveState').classList.toggle('dirty', dirty || mapError);
     $('#saveProjectBtn span').textContent = saving ? 'Salvando…' : 'Salvar projeto';
@@ -55,7 +59,7 @@ export function createProjectSession(viewer) {
     $('#projectFailure').hidden = false;
   }
   async function save() {
-    if (readOnly || !project || saving || mapError) return false;
+    if (readOnly || !project || saving || switching || mapError) return false;
     const name = $('#projectNameInput').value.trim(), clientName = $('#projectClientInput').value.trim();
     if (!name) { viewer.toast('Dê um nome ao projeto antes de salvar.'); $('#projectNameInput').focus(); return false; }
     saving = true; state();
@@ -64,7 +68,7 @@ export function createProjectSession(viewer) {
     const firstArt=!project.hasMap;
     const startMap = pendingMap, startVisuals = JSON.stringify(viewer.getVisuals());
     const startPresentation=JSON.stringify({...viewer.getPresentation(),camera:null});
-    const input = { name, clientName, visuals: viewer.getVisuals(), presentation:viewer.getPresentation(), version: project.version };
+    const input = { templateId:activeTemplate?.id||project.templateId,discardMap, name, clientName, visuals: viewer.getVisuals(), presentation:viewer.getPresentation(), version: project.version };
     try {
       const form = new FormData(); form.set('metadata', JSON.stringify(input));
       if (startMap) form.set('map', startMap, startMap.name || 'mapa.png');
@@ -72,7 +76,7 @@ export function createProjectSession(viewer) {
       if(pendingMap!==startMap||startVisuals!==JSON.stringify(viewer.getVisuals())||startPresentation!==JSON.stringify({...viewer.getPresentation(),camera:null})||name!==$('#projectNameInput').value.trim()||clientName!==$('#projectClientInput').value.trim()){viewer.toast('A apresentação mudou durante a captura. Salve novamente para guardar o desenho e a imagem da mesma versão.');return false;}
       if (thumbnail) form.set('thumbnail', thumbnail, 'apresentacao-4-vistas.png');
       const data = await api(`/api/projects/${encodeURIComponent(id)}`, { method: 'PUT', body: form });
-      project = data.project;
+      project = data.project;discardMap=false;
       lastName = name; lastClient = clientName;
       if (pendingMap === startMap) pendingMap = null;
       dirty = Boolean(pendingMap) || startVisuals !== JSON.stringify(viewer.getVisuals()) || startPresentation!==JSON.stringify({...viewer.getPresentation(),camera:null})||name!==$('#projectNameInput').value.trim()||clientName!==$('#projectClientInput').value.trim();
@@ -141,6 +145,7 @@ export function createProjectSession(viewer) {
     try {
       const { presentation } = await api(`/api/presentations/${encodeURIComponent(token)}`);
       if (presentation.version !== project.version) {
+        if(presentation.templateId!==project.templateId){const {template}=await api(`/api/presentations/${encodeURIComponent(token)}/template`);await viewer.replaceTemplate(template,false);}
         if (!await viewer.loadMap(presentation.mapUrl, presentation.mapName || 'Arte do projeto')) throw new Error('Não foi possível carregar a arte atualizada.');
         viewer.setVisuals(presentation.visuals); project = presentation; title(presentation.name);
         viewer.setPresentation(presentation.presentation);
@@ -149,6 +154,38 @@ export function createProjectSession(viewer) {
       }
       $('#designerName').textContent = presentation.designerName;
     } catch (error) { if (error.message.includes('disponível')) fail(error.message); }
+  }
+  async function currentArtFile(){
+    if(pendingMap)return pendingMap;
+    if(discardMap||!project?.mapUrl)return null;
+    const response=await fetch(project.mapUrl,{cache:'no-store'});if(!response.ok)throw new Error('Não foi possível preservar a arte atual.');
+    return new File([await response.blob()],project.mapName||'mapa.png',{type:response.headers.get('content-type')||'image/png'});
+  }
+  async function setupMoldPicker(){
+    const select=$('#presentationMoldSelect');if(!select)return;
+    const {templates}=await api('/api/templates');
+    if(!templates.some(t=>t.id===activeTemplate.id))templates.unshift({id:activeTemplate.id,name:activeTemplate.name,category:activeTemplate.category});
+    for(const [category,label] of [['single','Camisetas e peças avulsas'],['kit','Kits completos']]){
+      const group=document.createElement('optgroup');group.label=label;
+      for(const t of templates.filter(t=>(t.category==='conjunto')===(category==='kit'))){const option=document.createElement('option');option.value=t.id;option.textContent=t.name;group.append(option);}
+      if(group.children.length)select.append(group);
+    }
+    select.value=activeTemplate.id;$('#projectMoldControl').hidden=false;
+    select.addEventListener('change',async()=>{
+      const selected=select.value;if(selected===activeTemplate.id)return;
+      if(switching||saving||completing||!viewer.canSwitchTemplate?.()){select.value=activeTemplate.id;viewer.toast('Aguarde o modelo carregar ou a exportação terminar.');return;}
+      switching=true;state();$('#presentationMoldHelp').textContent='Carregando o novo molde…';
+      try{
+        const {template}=await api('/api/templates/'+encodeURIComponent(selected));
+        const keepArt=compatibleTemplateArt(activeTemplate,template),current=await currentArtFile();
+        if(current)artByFamily.set(templateFamily(activeTemplate),current);
+        await viewer.replaceTemplate(template,keepArt);
+        activeTemplate=template;
+        if(!keepArt){pendingMap=null;discardMap=true;mapError=false;const cached=artByFamily.get(templateFamily(template));if(cached){const url=URL.createObjectURL(cached);try{if(await viewer.loadMap(url,cached.name)){pendingMap=cached;discardMap=false;}}finally{URL.revokeObjectURL(url);}}}
+        changed();$('#presentationMoldHelp').textContent=keepArt||pendingMap?'Molde atualizado. Salve o projeto para guardar a escolha.':'Molde atualizado. Envie a arte deste molde e salve. A arte anterior pode ser recuperada voltando ao molde anterior nesta sessão.';
+        viewer.toast('Molde atualizado na apresentação.');
+      }catch(error){viewer.toast(error.message);}finally{select.value=activeTemplate.id;switching=false;state();}
+    });
   }
   async function open() {
     try {
@@ -182,7 +219,7 @@ export function createProjectSession(viewer) {
       } else {
         if (!id) { window.top.location.replace('/projects'); return; }
         const [data, profileData, moldData] = await Promise.all([api(`/api/projects/${encodeURIComponent(id)}`), api('/api/profile'), api(`/api/projects/${encodeURIComponent(id)}/template`)]);
-        viewer.configureTemplate(moldData.template);
+        activeTemplate=moldData.template;viewer.configureTemplate(activeTemplate);
         project = data.project; title(project.name);
         $('#editorBreadcrumb a').href=project.folderId?`/projects?folder=${encodeURIComponent(project.folderId)}`:'/projects';
         $('#designerName').textContent = profileData.profile.displayName;
@@ -195,6 +232,7 @@ export function createProjectSession(viewer) {
         }
       }
       loaded = true;
+      if(!readOnly)setupMoldPicker().catch(error=>viewer.toast(error.message));
     } catch (error) { fail(error.message); }
     finally { hydrating = false; state();if(!readOnly&&project)refreshWorkflowGuide(params.get('created')==='1'); }
     if (token && loaded) setInterval(refreshPresentation, 30000);
@@ -205,8 +243,8 @@ export function createProjectSession(viewer) {
     readOnly, changed, ready,proposalToken,versionId,showWorkflowGuide:()=>refreshWorkflowGuide(true),
     getProject:()=>project,
     hasUnsavedChanges:()=>dirty,
-    ensureSaved:async()=>{if(readOnly||!loaded||mapError)return false;if(dirty){if(!await save())return false;if(dirty){viewer.toast('Houve outra alteração durante o envio. Salve o projeto antes de continuar.');return false;}}return true;},
-    getMapFile:async()=>{if(pendingMap)return pendingMap;if(!project?.mapUrl)throw new Error('Carregue uma arte primeiro.');const response=await fetch(project.mapUrl,{cache:'no-store'});if(!response.ok)throw new Error('Não foi possível abrir a arte.');return new File([await response.blob()],project.mapName||'mapa.png',{type:response.headers.get('content-type')||'image/png'});},
+    ensureSaved:async()=>{if(readOnly||!loaded||switching||mapError)return false;if(dirty){if(!await save())return false;if(dirty){viewer.toast('Houve outra alteração durante o envio. Salve o projeto antes de continuar.');return false;}}return true;},
+    getMapFile:async()=>{if(pendingMap)return pendingMap;if(discardMap||!project?.mapUrl)throw new Error('Carregue uma arte primeiro.');const response=await fetch(project.mapUrl,{cache:'no-store'});if(!response.ok)throw new Error('Não foi possível abrir a arte.');return new File([await response.blob()],project.mapName||'mapa.png',{type:response.headers.get('content-type')||'image/png'});},
     mapChanged(file) { if (readOnly) return; pendingMap = file; mapError = false; changed(); },
   };
 }

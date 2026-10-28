@@ -1,6 +1,6 @@
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments } from './model-panels.js?v=2';
-import { createProjectSession } from './project-session.js?v=9';
+import { createProjectSession } from './project-session.js?v=10';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -211,8 +211,13 @@ async function init3D() {
   floor = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.ShadowMaterial({ opacity: 0.12, color: 0x223321 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = -1.65; floor.receiveShadow = true; scene.add(floor);
   resizeStage(); applyVisualState();
+  await loadPresentationModel();
+  animate();
+}
+
+async function loadPresentationModel(prefetched) {
   const loader = new GLTFLoader();
-  const gltf = await loader.loadAsync(templateConfig.modelUrl, (e) => {
+  const gltf = prefetched || await loader.loadAsync(templateConfig.modelUrl, (e) => {
     if (e.total) $('#loadProgress').textContent = `Carregando ${Math.round(e.loaded / e.total * 100)}%`;
   });
   modelRoot = gltf.scene;
@@ -275,7 +280,6 @@ async function init3D() {
   $('#screenshotBtn').disabled = false;
   $('#exportFourViewsBtn').disabled = false;
   deliveryTools?.refreshPreview();
-  animate();
 }
 
 function resizeStage() {
@@ -504,6 +508,24 @@ const viewerApi={
     $('#templateDownload').hidden = !template.templateUrl;
     $('#exampleMapBtn').hidden = !template.proofUrl;
     $('#mapStatusText').textContent = `Use a página inteira do template de ${template.name}, em 4096 × 4096 pixels.`;
+  },
+  canSwitchTemplate:()=>ready&&!exportInProgress&&!renderFailed,
+  replaceTemplate:async(template,keepArt=false)=>{
+    if(!ready||exportInProgress)throw new Error('Aguarde o carregamento ou a exportação terminar.');
+    const gltf=await new GLTFLoader().loadAsync(template.modelUrl);
+    const oldRoot=modelRoot,oldPanels=new Map(panels),oldTemplate=templateConfig,oldArt={image:sourceImage,texture:atlasTexture,url:sourceObjectUrl,mode:currentMode},oldPresentation=presentationSettings;
+    ready=false;$('#loading').hidden=false;panels.clear();scene.remove(oldRoot);
+    try {
+      viewerApi.configureTemplate(template);
+      if(!keepArt){mapRequest++;sourceImage=null;atlasTexture=null;sourceObjectUrl=null;currentMode='white';setPresentation({...presentationSettings,camera:null,details:[]});}
+      await loadPresentationModel(gltf);
+      if(!keepArt){oldArt.texture?.dispose();if(oldArt.url)URL.revokeObjectURL(oldArt.url);$('#mapInput').value='';applyMode('white');updateMapStatus();deliveryTools?.refreshPreview();}
+      const geometries=new Set(),materials=new Set(),textures=new Set();
+      for(const p of oldPanels.values()){geometries.add(p.mesh.geometry);for(const m of [p.originalMaterial,p.whiteMaterial,p.proofMaterial,p.artMaterial]){materials.add(m);if(m?.normalMap)textures.add(m.normalMap);}if(p.proof?.texture)textures.add(p.proof.texture);}
+      oldRoot.traverse(m=>{if(m.isMesh){geometries.add(m.geometry);materials.add(m.material);}});
+      for(const g of geometries)g.dispose();for(const m of materials)m?.dispose();for(const t of textures)t.dispose();
+      return true;
+    }catch(error){if(modelRoot!==oldRoot)scene.remove(modelRoot);modelRoot=oldRoot;panels.clear();for(const [key,p]of oldPanels)panels.set(key,p);scene.add(oldRoot);viewerApi.configureTemplate(oldTemplate);sourceImage=oldArt.image;atlasTexture=oldArt.texture;sourceObjectUrl=oldArt.url;currentMode=oldArt.mode;presentationSettings=oldPresentation;ready=true;setPresentation(oldPresentation);applyMode(oldArt.mode);$('#loading').hidden=true;throw error;}
   },
   getVisuals: () => ({ ...visualSettings }),
   setVisuals: (value) => { visualSettings = sanitizeVisuals(value); applyVisualState(); },
