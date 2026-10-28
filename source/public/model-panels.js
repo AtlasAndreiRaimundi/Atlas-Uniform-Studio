@@ -8,3 +8,15 @@ export function prepareBakedGeometry(geometry) {
   for(let i=0;i<originalUv.count;i++)normalizedUv.setXY(i,(originalUv.getX(i)-minU)/Math.max(maxU-minU,1e-8),(originalUv.getY(i)-minV)/Math.max(maxV-minV,1e-8));
   return {originalUv,atlasUv,normalizedUv};
 }
+
+// Remove the other garment before measuring the model or creating art materials.
+export function selectPresentationGarments(root, associations, descriptor) {
+  const excluded = new Set(descriptor.excludedPrimitiveKeys || []), removed = [];
+  if (!excluded.size) return;
+  root.traverse(mesh => {
+    if (!mesh.isMesh) return;
+    const a = associations.get(mesh);
+    if (excluded.has(`m${a?.meshes ?? 0}p${a?.primitives}`)) removed.push(mesh);
+  });
+  for (const mesh of removed) mesh.removeFromParent();
+}

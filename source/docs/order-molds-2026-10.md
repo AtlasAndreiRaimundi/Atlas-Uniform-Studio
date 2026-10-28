@@ -43,3 +43,11 @@ O primeiro comando requer Python e NumPy somente para preparação offline. Não
 ## Validação
 
 Os testes carregam todos os modelos com o GLTFLoader usado no visualizador, verificam os vínculos de projeto, hashes, posições, normais, índices, transformações, UVs originais, aplicação matemática do atlas e ausência de sobreposição entre regiões. A revisão visual dos seis mapas foi feita no navegador. O ambiente de conferência não disponibiliza WebGL; a aparência final iluminada no navegador requer conferência em uma máquina com aceleração gráfica.
+
+## Versões somente camiseta
+
+Cada kit publicado também possui uma opção `CAMISETA ...` na criação de apresentação, agrupada em “Camisetas e peças avulsas”. Os kits permanecem em “Kits completos — camiseta e calção”. As versões incluem EDGE 2027, ELITE 27, RAGLAN BÁSICO, NORMAL BÁSICO, RAGLAN ELITE e FIELD RAGLAN.
+
+As versões só com camiseta possuem mapa editável e prova próprios, sem calção e cós. Compartilham a geometria e os UVs imutáveis do kit: o visualizador remove a outra peça antes de calcular o enquadramento, criar materiais e exportar imagens ou vídeos. O espaço vazio do mapa deve ser mantido na exportação de 4096 × 4096. Não se deve aplicar o mapa de camiseta ao kit completo.
+
+Geração: `node scripts/create-shirt-variants.mjs`. Os projetos existentes e o simulador não são alterados.

@@ -1,5 +1,5 @@
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
-import { prepareBakedGeometry } from './model-panels.js';
+import { prepareBakedGeometry, selectPresentationGarments } from './model-panels.js?v=2';
 import { createProjectSession } from './project-session.js?v=9';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -216,6 +216,7 @@ async function init3D() {
     if (e.total) $('#loadProgress').textContent = `Carregando ${Math.round(e.loaded / e.total * 100)}%`;
   });
   modelRoot = gltf.scene;
+  selectPresentationGarments(modelRoot, gltf.parser.associations, templateConfig);
   if (templateConfig.kind === 'generated') {
     const vertical = new THREE.Group(); vertical.add(modelRoot);
     if (templateConfig.orientation?.up === 'z') vertical.rotation.x = -Math.PI / 2;

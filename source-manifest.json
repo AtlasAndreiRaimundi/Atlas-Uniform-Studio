@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "94bb256d21461648f3493a6bd8c910bd5aead85a",
-  "exported_at": "2026-10-28T13:33:17.712326+00:00",
+  "source_commit": "e8bc3d7bc66b636ad27555d07eed3ee22a8c12d5",
+  "exported_at": "2026-10-28T13:44:58.426800+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -395,8 +395,8 @@
     },
     {
       "path": "app/projects/dashboard.tsx",
-      "size": 24575,
-      "sha256": "8e381d80a0243c4374d427badc5dc4978b1be226bd3958e64cd2b0787e2d8794"
+      "size": 24964,
+      "sha256": "9bc802d5c2dc0f2491dd2fffd8f317ea2c09e9bfac65a526ff21539bb65ecae6"
     },
     {
       "path": "app/projects/page.tsx",
@@ -795,8 +795,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 3322,
-      "sha256": "9e871745b1740c28e579d2e80fbaeed1325acaf4ef32faf80b57b3f04f9c31ee"
+      "size": 4169,
+      "sha256": "4f73b78f85f401b2431f4867a269d240b0cb13e1dfe5e0410e333443c74773d2"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1085,8 +1085,8 @@
     },
     {
       "path": "lib/installed-templates.mjs",
-      "size": 412815,
-      "sha256": "6eaba3cd83807be0662d41213b8689cd396f52297490fba267babdf195929e64"
+      "size": 412928,
+      "sha256": "561e65b4c2e3d9344ef2c7fff493dd28fea0437d3c057ed74ca4a5f92774e121"
     },
     {
       "path": "lib/list-service.mjs",
@@ -1132,6 +1132,11 @@
       "path": "lib/security-headers.mjs",
       "size": 1077,
       "sha256": "53c6d105263d2f441a6595b321058527e41d00b123adcc1fd0ea4d696c4ef4aa"
+    },
+    {
+      "path": "lib/shirt-presentation-templates.mjs",
+      "size": 525834,
+      "sha256": "6c54df4fd442002b4d3a6714af9c6c1dd8825013c2bd167fc0e995fe0537c97c"
     },
     {
       "path": "lib/simulator-presentation-templates.mjs",
@@ -1210,8 +1215,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 35226,
-      "sha256": "0de99e8cd3738c6504a53d78133302d74839247a71a5ab51e99a4ed994080548"
+      "size": 35341,
+      "sha256": "0dcbd8921b5884ad7c4aa2f7db25d1d9f651db322e13be6e5360fe99cde72682"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1349,6 +1354,21 @@
       "sha256": "b034033c466aaefbec965fee62fe5f5cb450184eacc785144bf40818a148254b"
     },
     {
+      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/descriptor.json",
+      "size": 9894,
+      "sha256": "6052ddeffe74ec787176efa9d6b69d413c08453746d56679188796d39080c22a"
+    },
+    {
+      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/proof.svg",
+      "size": 116735,
+      "sha256": "2e140ead917ae2a19aaf514bd21f891e2d7f05a844fee4b0b89ecfd13a676c29"
+    },
+    {
+      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/template.svg",
+      "size": 114848,
+      "sha256": "5a9912eda48e461f082722f2f8aa48996e3b0ac4b19a8ac59214062eb40e2099"
+    },
+    {
       "path": "public/assets/molds/kit-edge-2027-mapa-v3/descriptor.json",
       "size": 13968,
       "sha256": "c429d3daa77935bec3bd2428178368ca51dcccad137e49478fc13ea322ec6d1a"
@@ -1419,6 +1439,21 @@
       "sha256": "e9409bfcf25b6f643ea089e485d476ec07931448afa7f1c6c2ba53f207604110"
     },
     {
+      "path": "public/assets/molds/kit-elite-27-camiseta/descriptor.json",
+      "size": 9889,
+      "sha256": "906a814b76bb3ab4616eeddc6e93745938bc4b4cad2074d499aac6eec72bf672"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27-camiseta/proof.svg",
+      "size": 118472,
+      "sha256": "724b239a0bfe8e57b9cdd118867690c90ed7e12a8054f59133094efefa592968"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27-camiseta/template.svg",
+      "size": 116583,
+      "sha256": "597636444268cf0a94f31e939abfbcc436866240044a564184a4db955cb72c5f"
+    },
+    {
       "path": "public/assets/molds/kit-elite-27/descriptor.json",
       "size": 14052,
       "sha256": "0ae355ba75fd492566cac72ef475a138b382962c47be3c8c1a9a55405bdb379c"
@@ -1447,6 +1482,21 @@
       "path": "public/assets/molds/kit-elite-27/template.svg",
       "size": 130816,
       "sha256": "15d68b7b24d81cdf9bf91b739f32d8a28248b38fa19cb1f72ad62a5c0be871cc"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan-camiseta/descriptor.json",
+      "size": 5957,
+      "sha256": "c401275890d99c7bb914a8a5b23e11ac8ae44c136e2316a9cd1278cf39395f99"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan-camiseta/proof.svg",
+      "size": 59449,
+      "sha256": "c2e6ac0a6510f0095b08ea7a36d80b440fc24a3666a79d3ddf129b446c30c366"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan-camiseta/template.svg",
+      "size": 58424,
+      "sha256": "7e179cb14ae56df0c908209a7ca0dde70ba7356e9b0b517b41fc54c2c965576a"
     },
     {
       "path": "public/assets/molds/kit-field-raglan/cloth-input.glb",
@@ -1484,6 +1534,21 @@
       "sha256": "6d4e67796e5af536289a8507ecc5f32375753e77575a8760c1626607f5586834"
     },
     {
+      "path": "public/assets/molds/kit-normal-basico-camiseta/descriptor.json",
+      "size": 5958,
+      "sha256": "f9a04d1b17df88be8bb4b7caea13799a86f85f1d175f1a98c29754995a387c0a"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico-camiseta/proof.svg",
+      "size": 92595,
+      "sha256": "2f23473212a529865e33459bab33c79ee5a0040b91e762bbfbb1100def0f0639"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico-camiseta/template.svg",
+      "size": 91615,
+      "sha256": "fc52c09536cbc7644ba96d1c48c40054d8fd4a5c08acbf76a0214c2821e9a4fb"
+    },
+    {
       "path": "public/assets/molds/kit-normal-basico/cloth-input.glb",
       "size": 5239680,
       "sha256": "5c8f11f601db9adeab57bb988a58daa50ea619966455f2f1f800da3edc7f32eb"
@@ -1519,6 +1584,21 @@
       "sha256": "94ca06c8af0273acc1d9b0ac48b14bee12ebeeca6cd313f7c6f20f48df0ab8f4"
     },
     {
+      "path": "public/assets/molds/kit-raglan-basico-camiseta/descriptor.json",
+      "size": 4523,
+      "sha256": "cff58cfe4a5a454785715c13006ab6e6bc8cc32ea20ffe9117e04e890fc62aa4"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico-camiseta/proof.svg",
+      "size": 44386,
+      "sha256": "eb65357fa19411319edb986da89ac9cc199c3d448967c0804d47ffd243c119c9"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico-camiseta/template.svg",
+      "size": 43672,
+      "sha256": "7b2e5983627eedec3f9312b6825a5900d7c588b6d06e6d31098d07864b288b0c"
+    },
+    {
       "path": "public/assets/molds/kit-raglan-basico/descriptor.json",
       "size": 8682,
       "sha256": "a3af8d54f707bc9b13209af38b1142fe5622034289bc3cb47eb2ea959215f651"
@@ -1547,6 +1627,21 @@
       "path": "public/assets/molds/kit-raglan-basico/template.svg",
       "size": 58005,
       "sha256": "429f3095f96268b8b3138d2c07d9132680311e6ae1105691ab3dce375adac982"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite-camiseta/descriptor.json",
+      "size": 7996,
+      "sha256": "b62da7ee1d6812d1a66cd21cda346f5948093311fa9d60e172f2be58463a7b72"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite-camiseta/proof.svg",
+      "size": 68817,
+      "sha256": "c28414ff1fed78e59e9d6631864f242700916a2a8ce552ad865b241edb10d188"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite-camiseta/template.svg",
+      "size": 67366,
+      "sha256": "fd9be5256a81f0ecfded4c605fad00094a5157a45be3ceb75c31ceb67c45f34a"
     },
     {
       "path": "public/assets/molds/kit-raglan-elite/cloth-input.glb",
@@ -1795,8 +1890,8 @@
     },
     {
       "path": "public/model-panels.js",
-      "size": 927,
-      "sha256": "797e98069b742973a40c4d1510fad39b2fbe086e04504fa47841ce41adb877ba"
+      "size": 1437,
+      "sha256": "39b6f519a346f1b9093b44bf1a5730882c97d80d51be698836b7d55da62885be"
     },
     {
       "path": "public/order-annotation-editor.js",
@@ -2296,7 +2391,7 @@
     {
       "path": "public/viewer.html",
       "size": 24944,
-      "sha256": "cb8865435d25e6971505cad542e91a48394103172b39047ab14ae8af6af24bca"
+      "sha256": "a8ecd7ed0789d9cd6652edc84c6f39ea1afa9302f8b3519d9992878cf5825706"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2347,6 +2442,11 @@
       "path": "scripts/connector-preview/worker.mjs",
       "size": 618,
       "sha256": "bd9c98fc68f29d975fe10508dfc9029bb681dc5789a62861d5c938bdea2064bb"
+    },
+    {
+      "path": "scripts/create-shirt-variants.mjs",
+      "size": 4020,
+      "sha256": "cc65d23181e7c8ddd4cbcd4b44f8c716fd0e174578c23fde512bf7c5a973da20"
     },
     {
       "path": "scripts/equalize-kit-edge-trims.mjs",
@@ -2635,8 +2735,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 31647,
-      "sha256": "fa34c584b5d7a6c276db4baf63ce4664baea53b1d504a71e8b8bd488a1f67528"
+      "size": 33532,
+      "sha256": "68abcb7abaaae09cc1749963f04cf1d2a03d65ecc1116a77e34c3bee5d04c861"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

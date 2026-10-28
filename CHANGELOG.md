@@ -131,3 +131,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Instala KIT ELITE 27, KIT RAGLAN BÁSICO, KIT NORMAL BÁSICO, KIT RAGLAN ELITE, KIT FIELD RAGLAN e POLO para apresentações e pedidos, com mapas SVG organizados por partes.
 - Preserva geometria externa, UVs de origem, projetos antigos e catálogo do simulador; botões e costuras da polo não recebem a arte.
 - Fonte `94bb256d21461648f3493a6bd8c910bd5aead85a` (537 arquivos). 350 testes aprovados, um pulado; TypeScript e build concluídos. Mapas revisados no navegador; renderização WebGL indisponível no ambiente de QA.
+
+## v74 — 2026-10-28
+- Adiciona seis versões somente camiseta dos kits EDGE 2027, ELITE 27, RAGLAN BÁSICO, NORMAL BÁSICO, RAGLAN ELITE e FIELD RAGLAN.
+- Agrupa camisetas e peças avulsas separadamente dos kits na criação de apresentação. Exclui calção e cós antes do enquadramento e exportação; mapas próprios preservam UVs e os projetos antigos.
+- Fonte `e8bc3d7bc66b636ad27555d07eed3ee22a8c12d5` (557 arquivos). 19 testes de modelos e apresentações aprovados; TypeScript e build concluídos. Simulador preservado.

@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "kit-field-raglan-camiseta",
+  "name": "CAMISETA FIELD RAGLAN",
+  "category": "camiseta",
+  "pageSize": 4096,
+  "sourceSha256": "4c940f9e17a1c63f23776be636c1d3d7100b7549beae4168b564bc959f3eeae4",
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 73948,
+  "vertices": 37737,
+  "panelCount": 7,
+  "primitives": [
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Filete manga direita",
+      "islandCount": 1,
+      "displayName": "Filete manga direita"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Filete manga esquerda",
+      "islandCount": 1,
+      "displayName": "Filete manga esquerda"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente"
+    }
+  ],
+  "panels": [
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 2900,
+        "y": 340,
+        "w": 220.63733298619726,
+        "h": 52.619638701174146
+      },
+      "uvBounds": [
+        -0.052933402359485626,
+        0.9871836304664612,
+        0.054546475410461426,
+        1.0128164291381836
+      ],
+      "contourVertices": 130,
+      "label": "Gola",
+      "displayName": "Gola · P07",
+      "group": "GOLAS"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 1886.2839868834005,
+        "y": 1947.1557253444294,
+        "w": 652.1935867828661,
+        "h": 56.12800615979789
+      },
+      "uvBounds": [
+        -0.16374866664409637,
+        1.2202568054199219,
+        0.153956800699234,
+        1.247598648071289
+      ],
+      "contourVertices": 114,
+      "label": "Filete manga direita",
+      "displayName": "Filete manga direita · P08",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 2618.477573666267,
+        "y": 1947.1557253444294,
+        "w": 655.3577309389763,
+        "h": 56.395480482838785
+      },
+      "uvBounds": [
+        -0.16529010236263275,
+        1.2201265096664429,
+        0.15395672619342804,
+        1.247598648071289
+      ],
+      "contourVertices": 115,
+      "label": "Filete manga esquerda",
+      "displayName": "Filete manga esquerda · P09",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 1947.1557253444294,
+        "w": 813.1364108634804,
+        "h": 704.9982000073052
+      },
+      "uvBounds": [
+        -0.6181842684745789,
+        -1.849867343902588,
+        -0.2220781296491623,
+        -1.506438970565796
+      ],
+      "contourVertices": 219,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P10",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 993.1364108634804,
+        "y": 1947.1557253444294,
+        "w": 813.1475760199202,
+        "h": 704.8073217163885
+      },
+      "uvBounds": [
+        0.19156727194786072,
+        -1.8563992977142334,
+        0.587678849697113,
+        -1.513063907623291
+      ],
+      "contourVertices": 217,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P11",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 1229.820474927093,
+        "y": 340,
+        "w": 1059.88792824681,
+        "h": 1367.1557253444294
+      },
+      "uvBounds": [
+        0.5622344017028809,
+        -1.581906795501709,
+        1.0785415172576904,
+        -0.9159191846847534
+      ],
+      "contourVertices": 361,
+      "label": "Costas",
+      "displayName": "Costas · P12",
+      "group": "CORPO_E_RECORTES"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 340,
+        "w": 1049.820474927093,
+        "h": 1243.3833894728625
+      },
+      "uvBounds": [
+        -0.2816782593727112,
+        -1.5383336544036865,
+        0.22972466051578522,
+        -0.9326397180557251
+      ],
+      "contourVertices": 356,
+      "label": "Frente",
+      "displayName": "Frente · P13",
+      "group": "CORPO_E_RECORTES"
+    }
+  ],
+  "texelsPerUvUnit": 2052.824561807333,
+  "layoutGroups": [
+    {
+      "id": "CORPO_E_RECORTES",
+      "title": "CORPO E RECORTES",
+      "panels": [
+        13,
+        12
+      ],
+      "heading": {
+        "x": 100,
+        "y": 250
+      }
+    },
+    {
+      "id": "GOLAS",
+      "title": "GOLAS",
+      "panels": [
+        7
+      ],
+      "heading": {
+        "x": 2900,
+        "y": 250
+      }
+    },
+    {
+      "id": "MANGAS_E_FILETES",
+      "title": "MANGAS + FILETES",
+      "panels": [
+        10,
+        11,
+        8,
+        9
+      ],
+      "heading": {
+        "x": 100,
+        "y": 1867.1557253444294
+      }
+    }
+  ],
+  "originalSourceSha256": "fd486745944f300b25b79783123615e3ecb10086600974cd527c24daf166675e",
+  "preparation": "outer-surfaces-v1",
+  "baseTemplateId": "kit-field-raglan",
+  "variant": "shirt-only",
+  "excludedPrimitiveKeys": [
+    "m0p0",
+    "m1p0",
+    "m2p0",
+    "m3p0",
+    "m4p0",
+    "m5p0"
+  ]
+}
