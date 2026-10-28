@@ -88,7 +88,7 @@ test('the organized Edge map follows the supplied panel names and group order wh
   const gltf=await new GLTFLoader().parseAsync(model.buffer.slice(model.byteOffset,model.byteOffset+model.byteLength),'');let meshes=0;gltf.scene.traverse(mesh=>{if(mesh.isMesh){meshes++;const association=gltf.parser.associations.get(mesh),entry=d.primitives.find(p=>p.key===`m${association.meshes??0}p${association.primitives}`);assert.ok(entry);assert.equal(next.json.meshes[entry.mesh].name,entry.displayName);prepareBakedGeometry(mesh.geometry);}});assert.equal(meshes,19);
   const {db,bucket,templates}=setup(INSTALLED_TEMPLATES),oldTemplates=new TemplateService(db,bucket,admin.userId,[{...legacy,status:'published'}]),oldProjects=new ProjectService(db,bucket,oldTemplates),oldProject=await oldProjects.create(other,{name:'Arte no mapa anterior',templateId:legacy.descriptor.id});
   const updatedProjects=new ProjectService(db,bucket,templates),existing=await updatedProjects.template(other,oldProject.id);assert.deepEqual(existing.panels,legacy.descriptor.panels);assert.deepEqual(await updatedProjects.asset(other,oldProject.id,'model'),{redirect:legacy.assets.model});
-  const active=INSTALLED_TEMPLATES.find(entry=>entry.status==='published');assert.deepEqual((await templates.catalog(other)).filter(t=>t.category==='conjunto').map(t=>t.id),[active.descriptor.id]);
+  const active=INSTALLED_TEMPLATES.find(entry=>entry.status==='published');assert.deepEqual((await templates.catalog(other)).filter(t=>t.category==='conjunto'&&t.id.startsWith('kit-edge-2027')).map(t=>t.id),[active.descriptor.id]);
   const project=await updatedProjects.create(other,{name:'Mapa organizado',templateId:active.descriptor.id});assert.deepEqual((await updatedProjects.template(other,project.id)).panels,active.descriptor.panels);
 });
 
@@ -113,7 +113,7 @@ test('matching sleeve trim sizes changes only panel 7 atlas mapping and keeps ev
   const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');let meshes=0;gltf.scene.traverse(mesh=>{if(mesh.isMesh){meshes++;prepareBakedGeometry(mesh.geometry);}});assert.equal(meshes,19);
   const {db,bucket,templates}=setup(INSTALLED_TEMPLATES),oldTemplates=new TemplateService(db,bucket,admin.userId,[{...previous,status:'published'}]),oldProjects=new ProjectService(db,bucket,oldTemplates),oldProject=await oldProjects.create(other,{name:'Arte anterior nos filetes',templateId:previous.descriptor.id}),projects=new ProjectService(db,bucket,templates);
   assert.deepEqual((await projects.template(other,oldProject.id)).panels,previous.descriptor.panels);assert.deepEqual(await projects.asset(other,oldProject.id,'model'),{redirect:previous.assets.model});
-  assert.deepEqual((await templates.catalog(other)).filter(t=>t.category==='conjunto').map(t=>t.id),[current.descriptor.id]);
+  assert.deepEqual((await templates.catalog(other)).filter(t=>t.category==='conjunto'&&t.id.startsWith('kit-edge-2027')).map(t=>t.id),[current.descriptor.id]);
 });
 function tinyGlb(change=()=>{}){
   const position=new Float32Array([0,0,0,1,0,0,0,1,0,2,0,0,3,0,0,2,1,0]),uv=new Float32Array([0,0,1,0,0,1,0,0,1,0,0,1]);
@@ -266,4 +266,24 @@ test('the original mold supports rename and reversible deletion without touching
   assert.equal((await projects.template(other,p.id)).kind,'builtin');
   assert.equal((await templates.asset(id,'model')).redirect,'/assets/camiseta.glb');
   assert.equal((await templates.restore(admin,id)).status,'published');assert.equal(objects.size,0);
+});
+
+test('six order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
+ const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,6);
+ const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
+ for(const entry of ORDER_MOLD_TEMPLATES){
+  const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);
+  assert.ok(catalog.some(t=>t.id===d.id&&t.category===d.category));const project=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,project.id)).id,d.id);
+  assert.equal(Buffer.from(await crypto.subtle.digest('SHA-256',sourceBytes)).toString('hex'),d.sourceSha256);
+  assert.deepEqual(after.json.nodes,before.json.nodes);assert.equal(after.json.meshes.length,before.json.meshes.length);assert.ok(!after.json.images?.length);assert.equal(d.panels.length,d.panelCount);
+  for(const p of d.panels){const a=before.json.meshes[p.mesh].primitives[p.primitive],b=after.json.meshes[p.mesh].primitives[p.primitive];assert.ok(p.label&&p.group);for(const key of ['POSITION','NORMAL'])assert.deepEqual(readAccessor(before.json,before.binary,a.attributes[key]).data,readAccessor(after.json,after.binary,b.attributes[key]).data);assert.deepEqual(readAccessor(before.json,before.binary,a.indices).data,readAccessor(after.json,after.binary,b.indices).data);
+   const uv=readAccessor(before.json,before.binary,a.attributes.TEXCOORD_0).data,raw=readAccessor(after.json,after.binary,b.attributes.TEXCOORD_1).data,atlas=readAccessor(after.json,after.binary,b.attributes.TEXCOORD_0).data;assert.deepEqual(uv,raw);
+   for(let i=0;i<uv.length/2;i++){assert.ok(Math.abs(atlas[i*2]*4096-(p.rect.x+(uv[i*2]-p.uvBounds[0])*d.texelsPerUvUnit))<.001);assert.ok(Math.abs(atlas[i*2+1]*4096-(p.rect.y+(uv[i*2+1]-p.uvBounds[1])*d.texelsPerUvUnit))<.001);}
+   assert.ok(p.rect.x>=0&&p.rect.y>=0&&p.rect.x+p.rect.w<=4096&&p.rect.y+p.rect.h<=4096);
+  }
+  for(let i=0;i<d.panels.length;i++)for(let j=i+1;j<d.panels.length;j++){const a=d.panels[i].rect,b=d.panels[j].rect;assert.ok(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y);}
+  const gltf=await new GLTFLoader().parseAsync(modelBytes.buffer.slice(modelBytes.byteOffset,modelBytes.byteOffset+modelBytes.byteLength),'');let cloth=0,decorations=0;gltf.scene.traverse(mesh=>{if(!mesh.isMesh)return;const a=gltf.parser.associations.get(mesh),p=d.primitives.find(p=>p.key===`m${a.meshes??0}p${a.primitives}`);assert.ok(p);if(p.decorativeOnly)decorations++;else {cloth++;prepareBakedGeometry(mesh.geometry);}});assert.equal(cloth,d.panelCount);assert.equal(decorations,d.id==='polo'?6:0);
+  assert.match(entry.templateSvg,/ARTE_DESENHE_AQUI/);assert.match(entry.templateSvg,/GUIAS_OCULTAR_ANTES_DE_EXPORTAR/);
+ }
+ const simulator=await readFile(new URL('../public/simulator-catalog.js',import.meta.url),'utf8').catch(()=> '');for(const e of ORDER_MOLD_TEMPLATES)assert.ok(!simulator.includes(`/assets/molds/${e.descriptor.id}/`));
 });

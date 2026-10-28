@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v72 em 27/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v73 em 28/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 27/10/2026: 493 arquivos, Site v72, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 537 arquivos, Site v73, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -52,3 +52,5 @@ A montagem v67 prioriza as peças e exige o CDR antes da conferência final. Con
 O orçamento automático usa o Anexo 01/2026, com desconto por cliente e nomes de exportação iniciados pelo código do pedido. Veja [cálculo, tabela e pendências](source/docs/orcamento-anexo-01-2026.md).
 
 A revisão visual usa superfícies neutras no tema escuro e acentos dourados, com correções de espaçamento e adaptação dos painéis. Consulte [revisão visual e limites de validação](source/docs/revisao-visual-2026-10-27.md).
+
+Seis moldes adicionais para apresentações e pedidos, com mapas organizados e geometria preservada: [documentação](source/docs/order-molds-2026-10.md).

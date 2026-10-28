@@ -126,3 +126,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Espaçamento do orçamento, barras de ações, campos em grades, nomes longos, diálogos e biblioteca de grafismos ajustados.
 - Cores de uniformes, texturas, paletas do cliente, iluminação 3D e PDFs preservados.
 - Fonte `b943a89f86de42e7cef8323b488fbc7d36ffbd50` (493 arquivos). 45 testes direcionados aprovados, incluindo contraste mínimo 4,5:1 nos três temas; TypeScript e build concluídos. Capa, pedido, organizador e editor isolado do simulador inspecionados na prévia; limites de áreas autenticadas registrados na documentação.
+
+## v73 — 2026-10-28
+- Instala KIT ELITE 27, KIT RAGLAN BÁSICO, KIT NORMAL BÁSICO, KIT RAGLAN ELITE, KIT FIELD RAGLAN e POLO para apresentações e pedidos, com mapas SVG organizados por partes.
+- Preserva geometria externa, UVs de origem, projetos antigos e catálogo do simulador; botões e costuras da polo não recebem a arte.
+- Fonte `94bb256d21461648f3493a6bd8c910bd5aead85a` (537 arquivos). 350 testes aprovados, um pulado; TypeScript e build concluídos. Mapas revisados no navegador; renderização WebGL indisponível no ambiente de QA.

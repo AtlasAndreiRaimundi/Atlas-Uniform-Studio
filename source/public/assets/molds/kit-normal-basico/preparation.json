@@ -1,0 +1,23 @@
+{
+  "id": "kit-normal-basico",
+  "name": "KIT NORMAL BÁSICO",
+  "category": "conjunto",
+  "sourceName": "KIT NORMAL BASICO.glb",
+  "originalSourceSha256": "9ecc87e347604ce4b52b2969c5c3dfe5151734117f543c1f8fcedec79ad1ad9f",
+  "labels": [
+    "Cós do calção 1",
+    "Cós do calção 2",
+    "Cós do calção 3",
+    "Cós do calção 4",
+    "Calção direito",
+    "Calção esquerdo",
+    "Gola",
+    "Manga direita",
+    "Filete manga direita",
+    "Filete manga esquerda",
+    "Manga esquerda",
+    "Costas",
+    "Frente"
+  ],
+  "decorativeMeshes": []
+}
