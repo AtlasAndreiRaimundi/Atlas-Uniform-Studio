@@ -1,6 +1,6 @@
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
-import { prepareBakedGeometry, selectPresentationGarments } from './model-panels.js?v=2';
-import { createProjectSession } from './project-session.js?v=11';
+import { prepareBakedGeometry, selectPresentationGarments, presentationPanelNumber } from './model-panels.js?v=3';
+import { createProjectSession } from './project-session.js?v=12';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -251,7 +251,7 @@ async function loadPresentationModel(prefetched) {
       mesh.castShadow = true; mesh.receiveShadow = false;
       return;
     }
-    const partNumber = !builtin ? templateConfig.primitives.indexOf(entry) + 1 : 0;
+    const partNumber = !builtin ? presentationPanelNumber(templateConfig,entry) : 0;
     const info = builtin ? PANEL_INFO.find(p => p.id === id) : entry ? { label: entry.displayName || `Parte ${partNumber}`, short: String(partNumber), color: ['#c6a05e','#4a83af','#bd5f57','#72a183'][partNumber % 4] } : null;
     if (!info || !mesh.geometry.attributes.position || !mesh.geometry.attributes.uv) throw new Error('Os painéis do modelo não correspondem a este molde.');
     mesh.name = info.label;

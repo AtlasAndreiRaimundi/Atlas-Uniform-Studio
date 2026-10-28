@@ -1,0 +1,20 @@
+{
+  "id": "calcao-jogo-com-recorte",
+  "name": "CALÇÃO DE JOGO COM RECORTE",
+  "category": "calcao",
+  "sourceName": "CALÇÃO DE JOGO COM RECORTE.glb",
+  "originalSourceSha256": "08c4f2263710c3b28d2b1a02baf5d31a784c08c11c584eda818063ca873684ba",
+  "labels": [
+    "Cós frente esquerdo",
+    "Cós frente direito",
+    "Cós costas direito",
+    "Cós costas esquerdo",
+    "Calção costas esquerdo",
+    "Recorte lateral esquerdo",
+    "Calção frente esquerdo",
+    "Calção frente direito",
+    "Recorte lateral direito",
+    "Calção costas direito"
+  ],
+  "decorativeMeshes": []
+}

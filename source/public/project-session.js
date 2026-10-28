@@ -1,3 +1,4 @@
+import {moldCollection,collectionMolds,moldOptionName} from './mold-collections.js';
 import {compatibleTemplateArt,templateFamily} from './template-family.js';
 import {createWorkflowGuide,workflowChoose,workflowOrders} from './workflow-guide.js?v=3';
 import {workflowRoute,canAttachToOrder,linkedWorkflowOrders} from './workflow-contract.js?v=2';
@@ -165,14 +166,21 @@ export function createProjectSession(viewer) {
     const select=$('#presentationMoldSelect');if(!select)return;
     const {templates}=await api('/api/templates');
     if(!templates.some(t=>t.id===activeTemplate.id))templates.unshift({id:activeTemplate.id,name:activeTemplate.name,category:activeTemplate.category});
-    for(const [category,label] of [['single','Camisetas e peças avulsas'],['kit','Kits completos']]){
-      const group=document.createElement('optgroup');group.label=label;
-      for(const t of templates.filter(t=>(t.category==='conjunto')===(category==='kit'))){const option=document.createElement('option');option.value=t.id;option.textContent=t.name;group.append(option);}
-      if(group.children.length)select.append(group);
+    let activeLine=moldCollection(activeTemplate);const tabHost=$('#presentationMoldCollections'),tabs=[];
+    function renderMolds(){
+      select.replaceChildren();const items=collectionMolds(templates,activeLine);
+      for(const [category,label]of [['single','Peças avulsas'],['kit','Kits completos']]){
+        const group=document.createElement('optgroup');group.label=label;
+        for(const t of items.filter(t=>(t.category==='conjunto')===(category==='kit'))){const option=document.createElement('option');option.value=t.id;option.textContent=moldOptionName(t);group.append(option);}
+        if(group.children.length)select.append(group);
+      }
+      if(!items.some(t=>t.id===activeTemplate.id)){const option=document.createElement('option');option.value='';option.textContent='Escolha um modelo desta linha';select.prepend(option);select.value='';}else select.value=activeTemplate.id;
+      for(const [line,button]of tabs)button.setAttribute('aria-pressed',String(line===activeLine));
     }
-    select.value=activeTemplate.id;$('#projectMoldControl').hidden=false;
+    if(tabHost)for(const line of ['jogo','passeio']){const button=document.createElement('button');button.type='button';button.textContent=line.toUpperCase();button.addEventListener('click',()=>{if(saving||switching||completing)return;activeLine=line;renderMolds();});tabs.push([line,button]);tabHost.append(button);}
+    renderMolds();$('#projectMoldControl').hidden=false;
     select.addEventListener('change',async()=>{
-      const selected=select.value;if(selected===activeTemplate.id)return;
+      const selected=select.value;if(!selected||selected===activeTemplate.id)return;
       if(switching||saving||completing||!viewer.canSwitchTemplate?.()){select.value=activeTemplate.id;viewer.toast('Aguarde o modelo carregar ou a exportação terminar.');return;}
       switching=true;state();$('#presentationMoldHelp').textContent='Carregando o novo molde…';
       try{
@@ -184,7 +192,7 @@ export function createProjectSession(viewer) {
         if(!keepArt){pendingMap=null;discardMap=true;mapError=false;const cached=artByFamily.get(templateFamily(template));if(cached){const url=URL.createObjectURL(cached);try{if(await viewer.loadMap(url,cached.name)){pendingMap=cached;discardMap=false;}}finally{URL.revokeObjectURL(url);}}}
         changed();$('#presentationMoldHelp').textContent=keepArt||pendingMap?'Molde atualizado. Salve o projeto para guardar a escolha.':'Molde atualizado. Envie a arte deste molde e salve. A arte anterior pode ser recuperada voltando ao molde anterior nesta sessão.';
         viewer.toast('Molde atualizado na apresentação.');
-      }catch(error){viewer.toast(error.message);}finally{select.value=activeTemplate.id;switching=false;state();}
+      }catch(error){viewer.toast(error.message);}finally{activeLine=moldCollection(activeTemplate);renderMolds();switching=false;state();}
     });
   }
   async function open() {

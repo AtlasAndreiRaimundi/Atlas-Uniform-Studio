@@ -20,3 +20,7 @@ export function selectPresentationGarments(root, associations, descriptor) {
   });
   for (const mesh of removed) mesh.removeFromParent();
 }
+
+export function presentationPanelNumber(template,entry){
+  return template.panels?.find(p=>p.mesh===entry?.mesh&&p.primitive===entry?.primitive)?.number || template.primitives.indexOf(entry)+1;
+}

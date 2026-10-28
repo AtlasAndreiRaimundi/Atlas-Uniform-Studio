@@ -1,0 +1,721 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "jogo-recorte-kit-raglan-elite-camiseta",
+  "name": "KIT JOGO · RAGLAN ELITE + CALÇÃO COM RECORTE",
+  "category": "conjunto",
+  "line": "jogo",
+  "bottomVariant": "com-recorte",
+  "garments": [
+    "Camiseta",
+    "Calção"
+  ],
+  "pageSize": 4096,
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 75533,
+  "vertices": 38891,
+  "panelCount": 20,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Gola direita",
+      "islandCount": 1,
+      "displayName": "Gola direita"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Gola esquerda",
+      "islandCount": 1,
+      "displayName": "Gola esquerda"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Recorte direito",
+      "islandCount": 1,
+      "displayName": "Recorte direito"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Recorte esquerdo",
+      "islandCount": 1,
+      "displayName": "Recorte esquerdo"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Filete manga direita",
+      "islandCount": 1,
+      "displayName": "Filete manga direita"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Filete manga esquerda",
+      "islandCount": 1,
+      "displayName": "Filete manga esquerda"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m13p0",
+      "mesh": 13,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m14p0",
+      "mesh": 14,
+      "primitive": 0,
+      "label": "Calção costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção costas esquerdo"
+    },
+    {
+      "key": "m15p0",
+      "mesh": 15,
+      "primitive": 0,
+      "label": "Recorte lateral esquerdo",
+      "islandCount": 1,
+      "displayName": "Recorte lateral esquerdo"
+    },
+    {
+      "key": "m16p0",
+      "mesh": 16,
+      "primitive": 0,
+      "label": "Calção frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção frente esquerdo"
+    },
+    {
+      "key": "m17p0",
+      "mesh": 17,
+      "primitive": 0,
+      "label": "Calção frente direito",
+      "islandCount": 1,
+      "displayName": "Calção frente direito"
+    },
+    {
+      "key": "m18p0",
+      "mesh": 18,
+      "primitive": 0,
+      "label": "Recorte lateral direito",
+      "islandCount": 1,
+      "displayName": "Recorte lateral direito"
+    },
+    {
+      "key": "m19p0",
+      "mesh": 19,
+      "primitive": 0,
+      "label": "Calção costas direito",
+      "islandCount": 1,
+      "displayName": "Calção costas direito"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 2968.729866362778,
+        "y": 340,
+        "w": 110.61070271687719,
+        "h": 38.79127787742177
+      },
+      "uvBounds": [
+        0.15531909465789795,
+        0.9852180480957031,
+        0.23559938371181488,
+        1.0133724212646484
+      ],
+      "contourVertices": 34,
+      "label": "Gola direita",
+      "displayName": "Gola direita · P1",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 1,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 3139.8806728291183,
+        "y": 340,
+        "w": 106.29309203931784,
+        "h": 42.83751090071917
+      },
+      "uvBounds": [
+        0.14863917231559753,
+        0.9710603952407837,
+        0.2257857769727707,
+        1.0021514892578125
+      ],
+      "contourVertices": 33,
+      "label": "Gola esquerda",
+      "displayName": "Gola esquerda · P2",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 2,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 849.8262351315639,
+        "y": 340,
+        "w": 700.2248922249139,
+        "h": 884.4557864672289
+      },
+      "uvBounds": [
+        -0.2799634039402008,
+        -1.514026403427124,
+        0.22825375199317932,
+        -0.872096061706543
+      ],
+      "contourVertices": 351,
+      "label": "Frente",
+      "displayName": "Frente · P3",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 3,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 2390.6795971929587,
+        "y": 340,
+        "w": 177.58314772780562,
+        "h": 368.5986065121683
+      },
+      "uvBounds": [
+        0.5307328104972839,
+        -1.477337121963501,
+        0.6596211194992065,
+        -1.2098114490509033
+      ],
+      "contourVertices": 132,
+      "label": "Recorte direito",
+      "displayName": "Recorte direito · P4",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 4,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 2628.8028486702274,
+        "y": 340,
+        "w": 171.7012043986473,
+        "h": 365.43454590892895
+      },
+      "uvBounds": [
+        1.037138819694519,
+        -1.4736659526824951,
+        1.1617580652236938,
+        -1.2084367275238037
+      ],
+      "contourVertices": 128,
+      "label": "Recorte esquerdo",
+      "displayName": "Recorte esquerdo · P5",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 5,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 2018.644895433961,
+        "y": 1527.7708879146687,
+        "w": 447.5533255401956,
+        "h": 44.90193561636053
+      },
+      "uvBounds": [
+        0.2252996861934662,
+        -1.517125129699707,
+        0.5501300096511841,
+        -1.4845356941223145
+      ],
+      "contourVertices": 117,
+      "label": "Filete manga direita",
+      "displayName": "Filete manga direita · P6",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 6,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 2526.73832472362,
+        "y": 1527.7708879146687,
+        "w": 456.70112175658716,
+        "h": 55.318829905119095
+      },
+      "uvBounds": [
+        -0.6032510995864868,
+        -1.5171222686767578,
+        -0.27178138494491577,
+        -1.4769723415374756
+      ],
+      "contourVertices": 121,
+      "label": "Filete manga esquerda",
+      "displayName": "Filete manga esquerda · P7",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 1610.591231105941,
+        "y": 340,
+        "w": 719.5482623375541,
+        "h": 1006.150576666279
+      },
+      "uvBounds": [
+        0.5825164914131165,
+        -1.6165013313293457,
+        1.104758381843567,
+        -0.8862459659576416
+      ],
+      "contourVertices": 379,
+      "label": "Costas",
+      "displayName": "Costas · P8",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 849.8262351315639,
+        "y": 1527.7708879146687,
+        "w": 524.4781117922971,
+        "h": 457.03955338412936
+      },
+      "uvBounds": [
+        -0.630559504032135,
+        -1.8490948677062988,
+        -0.24989783763885498,
+        -1.5173795223236084
+      ],
+      "contourVertices": 224,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P9",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 1434.8444506733242,
+        "y": 1527.7708879146687,
+        "w": 523.2603410111734,
+        "h": 462.2291120853311
+      },
+      "uvBounds": [
+        0.20194056630134583,
+        -1.8525981903076172,
+        0.581718385219574,
+        -1.5171163082122803
+      ],
+      "contourVertices": 220,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P10",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "kit-raglan-elite-camiseta"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 718.5525582072707,
+        "y": 3107.881867101526,
+        "w": 436.6568023020579,
+        "h": 122.91595998407706
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 29,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P11",
+      "group": "CALCAO",
+      "sourcePanelNumber": 1,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 1211.3883392239763,
+        "y": 3107.881867101526,
+        "w": 436.6568023020579,
+        "h": 122.91545868936308
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 29,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P12",
+      "group": "CALCAO",
+      "sourcePanelNumber": 2,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 1704.2241202406822,
+        "y": 3107.881867101526,
+        "w": 436.6568023020579,
+        "h": 122.91595998407706
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 28,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P13",
+      "group": "CALCAO",
+      "sourcePanelNumber": 3,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 14,
+      "mesh": 13,
+      "primitive": 0,
+      "rect": {
+        "x": 2197.059901257388,
+        "y": 3107.881867101526,
+        "w": 436.6568023020579,
+        "h": 122.91595998407706
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 28,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P14",
+      "group": "CALCAO",
+      "sourcePanelNumber": 4,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 15,
+      "mesh": 14,
+      "primitive": 0,
+      "rect": {
+        "x": 718.5525582072707,
+        "y": 2240,
+        "w": 602.2913119492043,
+        "h": 797.6581437082161
+      },
+      "uvBounds": [
+        0.6557251214981079,
+        0.2486342191696167,
+        0.9421782493591309,
+        0.6280049085617065
+      ],
+      "contourVertices": 66,
+      "label": "Calção costas esquerdo",
+      "displayName": "Calção costas esquerdo · P15",
+      "group": "CALCAO",
+      "sourcePanelNumber": 5,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 16,
+      "mesh": 15,
+      "primitive": 0,
+      "rect": {
+        "x": 2689.895682274094,
+        "y": 3107.881867101526,
+        "w": 119.8882652353084,
+        "h": 782.1181328984738
+      },
+      "uvBounds": [
+        0.9421198964118958,
+        0.25716501474380493,
+        0.9991394281387329,
+        0.6291447877883911
+      ],
+      "contourVertices": 45,
+      "label": "Recorte lateral esquerdo",
+      "displayName": "Recorte lateral esquerdo · P16",
+      "group": "CALCAO",
+      "sourcePanelNumber": 6,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 17,
+      "mesh": 16,
+      "primitive": 0,
+      "rect": {
+        "x": 1377.022848871123,
+        "y": 2240,
+        "w": 641.0361297454633,
+        "h": 789.9415888522233
+      },
+      "uvBounds": [
+        0.9990812540054321,
+        0.25852805376052856,
+        1.3039616346359253,
+        0.6342287063598633
+      ],
+      "contourVertices": 67,
+      "label": "Calção frente esquerdo",
+      "displayName": "Calção frente esquerdo · P17",
+      "group": "CALCAO",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 18,
+      "mesh": 17,
+      "primitive": 0,
+      "rect": {
+        "x": 2074.237957331234,
+        "y": 2240,
+        "w": 643.9210808244258,
+        "h": 789.4129735763299
+      },
+      "uvBounds": [
+        1.4950281381607056,
+        0.2584148645401001,
+        1.8012806177139282,
+        0.6338641047477722
+      ],
+      "contourVertices": 67,
+      "label": "Calção frente direito",
+      "displayName": "Calção frente direito · P18",
+      "group": "CALCAO",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 19,
+      "mesh": 18,
+      "primitive": 0,
+      "rect": {
+        "x": 2865.9629262240496,
+        "y": 3107.881867101526,
+        "w": 119.88889185370088,
+        "h": 775.336743331413
+      },
+      "uvBounds": [
+        1.8012219667434692,
+        0.26371753215789795,
+        1.8582417964935303,
+        0.632472038269043
+      ],
+      "contourVertices": 45,
+      "label": "Recorte lateral direito",
+      "displayName": "Recorte lateral direito · P19",
+      "group": "CALCAO",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    },
+    {
+      "number": 20,
+      "mesh": 19,
+      "primitive": 0,
+      "rect": {
+        "x": 2774.338016870308,
+        "y": 2240,
+        "w": 603.1094249224218,
+        "h": 790.376462016602
+      },
+      "uvBounds": [
+        1.85818350315094,
+        0.2562565207481384,
+        2.1450257301330566,
+        0.6321640014648438
+      ],
+      "contourVertices": 66,
+      "label": "Calção costas direito",
+      "displayName": "Calção costas direito · P20",
+      "group": "CALCAO",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "calcao-jogo-com-recorte"
+    }
+  ],
+  "layoutGroups": [
+    {
+      "id": "CAMISETA",
+      "title": "CAMISETA",
+      "panels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "CALCAO",
+      "title": "CALCAO",
+      "panels": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    }
+  ],
+  "sourceComponents": [
+    {
+      "role": "top",
+      "templateId": "kit-raglan-elite-camiseta",
+      "modelSha256": "545816c32d7181dc2a11f25fd38c483268280f2f8c90f3c478ae93d9df968925",
+      "uniformScale": 1.44461430233269,
+      "center": [
+        0.0004592984914779663,
+        0.9073022902011871,
+        0.013959404081106186
+      ],
+      "waistOrHemY": 0.7,
+      "atlas": {
+        "scale": 0.7567512968682908,
+        "offsetX": 849.8262351315639,
+        "offsetY": 340,
+        "sourceMinX": 100,
+        "sourceMinY": 340
+      }
+    },
+    {
+      "role": "bottom",
+      "templateId": "calcao-jogo-com-recorte",
+      "modelSha256": "c1d2d6be50a2c952efd713a8e8f3b9285dfeeac5d207690c5ce05c088f83987a",
+      "uniformScale": 3.769064084561546,
+      "center": [
+        0.00024402141571044922,
+        0.34949077665805817,
+        0.006628487259149551
+      ],
+      "waistOrHemY": 0.77,
+      "atlas": {
+        "scale": 0.7022372339330978,
+        "offsetX": 718.5525582072707,
+        "offsetY": 2240,
+        "sourceMinX": 100,
+        "sourceMinY": 330
+      }
+    }
+  ],
+  "compositionVersion": 1,
+  "sourceSha256": "3516d2b183eddcdbf4b6952040188d8eb1aa385d600459c40881bc265d1aaec4"
+}

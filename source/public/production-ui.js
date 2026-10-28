@@ -1,6 +1,6 @@
 import {setupOrderPricing} from './order-pricing-ui.js';
 import {orderFileStem} from './order-pricing.js';
-import {usePresentationKit} from './order-presentation.js?v=2';
+import {usePresentationKit} from './order-presentation.js?v=3';
 import {pieceFamilies,pieceFamilyKey,applicationGroups,syncFamilyCharacteristics,syncApplicationArrows,syncConfirmedApplicationPositions} from './order-linked-applications.js?v=3';
 import {ORDER_PRODUCTS,KIT_PRESETS,createOrderProduct,prepareOrderProduct} from './order-composition.js';
 import {createOrderVisualTools} from './order-visual-tools.js?v=15';

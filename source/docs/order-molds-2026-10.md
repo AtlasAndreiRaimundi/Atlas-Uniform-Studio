@@ -93,3 +93,33 @@ python scripts/prepare-order-molds.py /caminho/dos/arquivos bermuda-passeio
 node scripts/install-order-molds.mjs bermuda-passeio
 node scripts/create-shirt-variants.mjs
 ```
+
+## Coleções Jogo e Passeio; combinações com bermuda
+
+A criação de apresentação, o seletor do editor e a biblioteca do administrador separam **Jogo** e **Passeio**. A classificação usa `line` no descritor e identificadores estáveis para modelos antigos, mantendo a coleção após renomear. O ADM pode usar **Renomear / editar** para mudar nome, categoria e linha, sem alterar geometria, UVs ou vínculos de projetos. Somente o administrador pode salvar essas alterações.
+
+Foram compostos oito kits de passeio adicionais: polos com e sem recorte V, Edge 2027, Elite 27, Raglan Básico, Normal Básico, Raglan Elite e Field Raglan, sempre com a bermuda de passeio. As seis camisetas recebem versões avulsas na aba Passeio, com mapas correspondentes aos novos kits. As polos avulsas existentes continuam disponíveis. O Prime com bermuda mantém seu kit anterior. Os modelos e mapas originais de jogo permanecem intactos.
+
+As composições aplicam as transformações de cena de origem e escalas uniformes por peça para apresentar o conjunto, alinhando cintura e barra sem deformar as peças. O atlas reúne regiões independentes de camiseta/polo e bermuda. O UV original de tecido permanece em UV1. Os descritores registram IDs e SHA-256 dos componentes, transformações e regiões. Esse ajuste de apresentação não redefine medidas de fabricação.
+
+Reprodução das composições: `node scripts/compose-passeio-kits.mjs`; versões avulsas correspondentes: `node scripts/create-shirt-variants.mjs passeio`.
+
+Os calções originais de jogo permanecem como versões sem recorte. Depois do envio de CALÇÃO DE JOGO COM RECORTE.glb, foram adicionadas seis combinações com os recortes reais do arquivo, preservando as duas versões e os projetos existentes. O simulador não foi alterado.
+
+Validação: carregamento GLTF de cada composição, limites de arquivo e UVs, regiões sem sobreposição, numeração com detalhes decorativos, vínculos de projeto, autorização de renomeação, persistência da linha e troca das abas. A separação Jogo/Passeio foi conferida no navegador com o seletor real em uma tela de teste isolada, removida antes da publicação. Foram inspecionadas projeções da geometria composta; a renderização WebGL final permanece sem conferência visual neste ambiente.
+
+## Calção de jogo com recorte e seis kits adicionais
+
+O arquivo `CALÇÃO DE JOGO COM RECORTE.glb` gerou o modelo avulso `calcao-jogo-com-recorte`, com dez painéis e 4.078 triângulos de tecido. Foram mantidos quatro componentes do cós, quatro partes principais de frente/costas e os dois recortes laterais. O avatar de exibição, suas texturas, esqueleto e animações foram removidos; a geometria estática do calção e suas transformações foram preservadas. O SHA-256 do arquivo enviado está registrado na preparação.
+
+As camisetas Edge 2027, Elite 27, Raglan Básico, Normal Básico, Raglan Elite e Field Raglan têm novas versões de kit com esse calção. Os descritores declaram `line: jogo`, `bottomVariant: com-recorte` e as peças Camiseta + Calção. A seleção distingue com/sem recorte por metadados, inclusive depois de renomear. Os seis kits anteriores com calção sem recorte continuam publicados.
+
+Reprodução:
+
+```sh
+python scripts/prepare-order-molds.py /caminho/dos/arquivos calcao-jogo-com-recorte
+node scripts/install-order-molds.mjs calcao-jogo-com-recorte
+node scripts/compose-passeio-kits.mjs jogo
+```
+
+Renomear um kit fixa sua composição física no descritor; trocar um nome para uma expressão contendo Passeio não muda automaticamente camiseta/calção para polo/bermuda.

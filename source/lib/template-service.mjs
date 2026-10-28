@@ -1,3 +1,5 @@
+import {presentationGarments} from '../public/order-presentation.js';
+import {moldCollection} from '../public/mold-collections.js';
 import { AppError } from './project-service.mjs';
 import { requireAdminUser, isAdminUser } from './admin-auth.mjs';
 import { generateTemplate, TemplateError, TEMPLATE_LIMITS } from './template-generator.mjs';
@@ -22,8 +24,8 @@ export class TemplateService {
   }
   summary(row) {
     const layout = JSON.parse(row.layout_json);
-    if(row.id===BUILTIN_TEMPLATE.id)return {...BUILTIN_TEMPLATE,name:row.name,category:row.category,status:row.status,updatedAt:row.updated_at};
-    return { id:row.id, name:row.name, category:row.category, kind:'generated', status:row.status,
+    if(row.id===BUILTIN_TEMPLATE.id)return {...BUILTIN_TEMPLATE,name:row.name,line:moldCollection({...layout,id:row.id}),category:row.category,status:row.status,updatedAt:row.updated_at};
+    return { id:row.id, name:row.name, line:moldCollection({...layout,id:row.id}), bottomVariant:layout.bottomVariant, category:row.category, kind:'generated', status:row.status,
       panelCount:layout.panelCount, triangles:layout.triangles, pageSize:4096, sourceName:row.source_name,
       createdAt:row.created_at, updatedAt:row.updated_at, orientation:layout.orientation, ...(layout.thumbnailUrl?{thumbnailUrl:layout.thumbnailUrl}:{}) };
   }
@@ -83,6 +85,8 @@ export class TemplateService {
     let generated;
     try { generated=await generateTemplate(bytes,{id,name,category:input.category,up:input.up,front:input.front}); }
     catch(error){if(error instanceof TemplateError)throw new AppError(400,error.message);throw error;}
+    if(input.line!==undefined&&!['jogo','passeio'].includes(input.line))throw new AppError(400,'Escolha Jogo ou Passeio.');
+    generated.descriptor.line=input.line||'jogo';
     const keys={model:`templates/${id}/model.glb`,source:`templates/${id}/source.glb`,svg:`templates/${id}/template.svg`,proof:`templates/${id}/proof.svg`},written=[];
     try {
       for(const [kind,data,type] of [['model',generated.model,'model/gltf-binary'],['source',bytes,'model/gltf-binary'],['svg',generated.svg,'image/svg+xml'],['proof',generated.proof,'image/svg+xml']]) {
@@ -113,7 +117,9 @@ export class TemplateService {
     await this.ensureInstalled(id);
     const row=await this.row(id);
     if(row.status==='deleted')throw new AppError(400,'Restaure este molde antes de editar.');
-    await this.db.prepare('UPDATE templates SET name = ?,category = ?,updated_at = ? WHERE id = ?').bind(name,input.category,date(),id).run();
+    if(input.line!==undefined&&!['jogo','passeio'].includes(input.line))throw new AppError(400,'Escolha Jogo ou Passeio.');
+    const layout=JSON.parse(row.layout_json);if(!layout.garments&&row.category==='conjunto')layout.garments=presentationGarments({...layout,id,name:row.name,category:row.category});layout.line=input.line||moldCollection({...layout,id});
+    await this.db.prepare('UPDATE templates SET name = ?,category = ?,layout_json = ?,updated_at = ? WHERE id = ?').bind(name,input.category,JSON.stringify(layout),date(),id).run();
     return this.summary(await this.row(id));
   }
   async remove(user,id) {

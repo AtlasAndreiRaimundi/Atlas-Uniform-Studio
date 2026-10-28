@@ -8,6 +8,7 @@ S={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4}; T={5126:'<f4',5125:'<u4',5123:'<u2',5
 cos=['Cós do calção 1','Cós do calção 2','Cós do calção 3','Cós do calção 4']
 shorts=['Calção direito','Calção esquerdo']
 manifest=[
+('CALÇÃO DE JOGO COM RECORTE.glb','calcao-jogo-com-recorte','CALÇÃO DE JOGO COM RECORTE',['Cós frente esquerdo','Cós frente direito','Cós costas direito','Cós costas esquerdo','Calção costas esquerdo','Recorte lateral esquerdo','Calção frente esquerdo','Calção frente direito','Recorte lateral direito','Calção costas direito']),
 ('CONJUNTO PRIME + BERMUDA PASSEIO.glb','kit-passeio-prime','KIT DE PASSEIO PRIME',['Filete manga esquerda','Filete manga direita','Manga direita','Manga esquerda','Bermuda costas direita','Bermuda frente direita','Cós externo da bermuda','Vista do bolso direito','Bermuda costas esquerda','Bermuda frente esquerda','Vista do bolso esquerdo','Cós interno da bermuda','Frente','Gola Prime frontal','Gola Prime traseira','Costas','Acabamento interno da gola']),
 ('BERMUDA PASSEIO.glb','bermuda-passeio','BERMUDA DE PASSEIO',['Bermuda costas direita','Bermuda frente direita','Cós externo da bermuda','Vista do bolso direito','Bermuda costas esquerda','Bermuda frente esquerda','Vista do bolso esquerdo','Cós interno da bermuda']),
 ('KIT ELITE 27(1).glb','kit-elite-27','KIT ELITE 27',cos+shorts+['Filete manga direita','Filete manga esquerda']+['Gola '+str(i) for i in range(1,6)]+['Manga esquerda','Manga direita','Recorte direito','Recorte esquerdo','Frente','Costas']),
@@ -38,6 +39,7 @@ for filename,slug,name,labels in manifest:
   if typ=='VEC3':out['accessors'][-1].update(min=a.min(axis=0).tolist(),max=a.max(axis=0).tolist())
   return idx
  for m,mesh in enumerate(j['meshes']):
+  if slug=='calcao-jogo-com-recorte' and m>=len(labels):continue # Remove the display avatar from the garment asset.
   prims=[]
   for pi,pr in enumerate(mesh['primitives']):
    if m<len(labels) and pi!=(1 if slug.startswith('polo') and m==9 else 0):continue
@@ -47,6 +49,29 @@ for filename,slug,name,labels in manifest:
      a=acc(j,b,pr['attributes'][key])[used].copy().astype('<f4');attrs[key]=put(a,'VEC2' if key.startswith('TEX') else 'VEC3',5126,34962)
    inds=rev.astype('<u4').reshape(-1,1);prims.append({'attributes':attrs,'indices':put(inds,'SCALAR',5125,34963),'material':0})
   out['meshes'].append({'name':labels[m] if m<len(labels) else mesh.get('name','Detalhe'), 'primitives':prims})
+ if slug=='calcao-jogo-com-recorte':
+  out.pop('skins',None);out.pop('animations',None)
+  for node in out.get('nodes',[]):
+   if node.get('mesh',-1)>=len(labels):node.pop('mesh')
+   node.pop('skin',None)
+ if slug=='calcao-jogo-com-recorte':
+  kept=set()
+  def keep_node(i):
+   node=out['nodes'][i];children=[c for c in node.get('children',[]) if keep_node(c)]
+   if 'mesh' in node or children:
+    kept.add(i);return True
+   return False
+  for scene in out['scenes']:
+   for i in scene.get('nodes',[]):keep_node(i)
+  remap={old:new for new,old in enumerate(sorted(kept))}
+  nodes=[]
+  for i in sorted(kept):
+   node=copy.deepcopy(out['nodes'][i])
+   if 'children' in node:node['children']=[remap[c] for c in node['children'] if c in kept]
+   nodes.append(node)
+  out['nodes']=nodes
+  for scene in out['scenes']:scene['nodes']=[remap[i] for i in scene.get('nodes',[]) if i in kept]
+  out.pop('cameras',None)
  out['buffers']=[{'byteLength':len(chunks)}];out['asset']={'version':'2.0','generator':'ATLAS · outer surface preparation 1'}
  target=ROOT/'public/assets/molds'/slug;target.mkdir(parents=True,exist_ok=True)
  (target/'source.glb').write_bytes(encode(out,bytes(chunks)))
@@ -55,6 +80,6 @@ for filename,slug,name,labels in manifest:
  for node in cloth.get('nodes',[]):
   if node.get('mesh',-1)>=len(labels):node.pop('mesh')
  (target/'cloth-input.glb').write_bytes(encode(cloth,bytes(chunks)))
- meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'calcao' if slug=='bermuda-passeio' else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
+ meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'calcao' if slug in ['bermuda-passeio','calcao-jogo-com-recorte'] else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
  (target/'preparation.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  print(name,len(chunks),len(labels),'cloth meshes')
