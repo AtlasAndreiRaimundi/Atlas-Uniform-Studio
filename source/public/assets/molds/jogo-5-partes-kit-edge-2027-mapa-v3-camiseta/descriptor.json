@@ -1,0 +1,790 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "jogo-5-partes-kit-edge-2027-mapa-v3-camiseta",
+  "name": "KIT JOGO · EDGE 2027 + CALÇÃO 5 PARTES",
+  "category": "conjunto",
+  "line": "jogo",
+  "bottomVariant": "5-partes",
+  "garments": [
+    "Camiseta",
+    "Calção"
+  ],
+  "pageSize": 4096,
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 185831,
+  "vertices": 94695,
+  "panelCount": 22,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Filete de manga",
+      "islandCount": 1,
+      "displayName": "Filete de manga · P07"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Filete de manga",
+      "islandCount": 1,
+      "displayName": "Filete de manga · P08"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola · P09"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola · P10"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola · P11"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola · P12"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola · P13"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda · P14"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita · P15"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Recorte direito",
+      "islandCount": 1,
+      "displayName": "Recorte direito · P16"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Recorte esquerdo",
+      "islandCount": 1,
+      "displayName": "Recorte esquerdo · P17"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente · P18"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas · P19"
+    },
+    {
+      "key": "m13p0",
+      "mesh": 13,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m14p0",
+      "mesh": 14,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m15p0",
+      "mesh": 15,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m16p0",
+      "mesh": 16,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m17p0",
+      "mesh": 17,
+      "primitive": 0,
+      "label": "Calção frente direito",
+      "islandCount": 1,
+      "displayName": "Calção frente direito"
+    },
+    {
+      "key": "m18p0",
+      "mesh": 18,
+      "primitive": 0,
+      "label": "Calção frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção frente esquerdo"
+    },
+    {
+      "key": "m19p0",
+      "mesh": 19,
+      "primitive": 0,
+      "label": "Calção costas direito",
+      "islandCount": 1,
+      "displayName": "Calção costas direito"
+    },
+    {
+      "key": "m20p0",
+      "mesh": 20,
+      "primitive": 0,
+      "label": "Calção costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção costas esquerdo"
+    },
+    {
+      "key": "m21p0",
+      "mesh": 21,
+      "primitive": 0,
+      "label": "Calção pala traseira",
+      "islandCount": 1,
+      "displayName": "Calção pala traseira"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 1588.4002923981961,
+        "y": 1967.1064359118288,
+        "w": 434.76736535896475,
+        "h": 22.893564088171242
+      },
+      "uvBounds": [
+        0.5005751848220825,
+        0.14097756147384644,
+        0.6980220079421997,
+        0.15137457847595215
+      ],
+      "contourVertices": 179,
+      "label": "Filete de manga",
+      "displayName": "Filete de manga · P1",
+      "group": "CAMISETA",
+      "atlasScale": {
+        "x": 3206.715735758653,
+        "y": 3206.6999936938537
+      },
+      "matchedToPanel": 8,
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 960.5722299985167,
+        "y": 1967.1064359118288,
+        "w": 434.76736535896475,
+        "h": 22.893564088171242
+      },
+      "uvBounds": [
+        -0.8822041749954224,
+        0.30747008323669434,
+        -0.548964262008667,
+        0.325017511844635
+      ],
+      "contourVertices": 179,
+      "label": "Filete de manga",
+      "displayName": "Filete de manga · P2",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 2811.122618776581,
+        "y": 608.8102330559323,
+        "w": 266.15326453806887,
+        "h": 27.424731838826183
+      },
+      "uvBounds": [
+        -0.5068649649620056,
+        0.12960118055343628,
+        -0.3028641641139984,
+        0.15062165260314941
+      ],
+      "contourVertices": 119,
+      "label": "Gola",
+      "displayName": "Gola · P3",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 3102.211240888894,
+        "y": 340,
+        "w": 54.77632639356005,
+        "h": 142.69772340088582
+      },
+      "uvBounds": [
+        -0.21562564373016357,
+        0.17077195644378662,
+        -0.17364075779914856,
+        0.2801467180252075
+      ],
+      "contourVertices": 61,
+      "label": "Gola",
+      "displayName": "Gola · P4",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 2731.410934808777,
+        "y": 340,
+        "w": 54.77632639356005,
+        "h": 145.2101310292266
+      },
+      "uvBounds": [
+        -0.3235802948474884,
+        0.16909539699554443,
+        -0.2815954089164734,
+        0.28039586544036865
+      ],
+      "contourVertices": 62,
+      "label": "Gola",
+      "displayName": "Gola · P5",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 11,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 2712.9310269577845,
+        "y": 759.8350669214642,
+        "w": 91.73614209554428,
+        "h": 54.64152205334312
+      },
+      "uvBounds": [
+        -0.2586175501346588,
+        0.24506956338882446,
+        -0.18830375373363495,
+        0.28695112466812134
+      ],
+      "contourVertices": 47,
+      "label": "Gola",
+      "displayName": "Gola · P6",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 12,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 3082.1857975835123,
+        "y": 759.8350669214642,
+        "w": 94.82721300432304,
+        "h": 55.702693109933996
+      },
+      "uvBounds": [
+        -0.30794140696525574,
+        0.2301497459411621,
+        -0.23525837063789368,
+        0.27284467220306396
+      ],
+      "contourVertices": 48,
+      "label": "Gola",
+      "displayName": "Gola · P7",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 13,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 1546.7915933009056,
+        "y": 1465.3651302013784,
+        "w": 517.984763553546,
+        "h": 439.62273229875404
+      },
+      "uvBounds": [
+        -0.9200693368911743,
+        -0.04001033306121826,
+        -0.5230450630187988,
+        0.2969511151313782
+      ],
+      "contourVertices": 322,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P8",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 14,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 918.9869894121643,
+        "y": 1465.3651302013784,
+        "w": 517.9378465316695,
+        "h": 439.9412546970976
+      },
+      "uvBounds": [
+        -0.0003844604652840644,
+        -0.04025447368621826,
+        0.39660385251045227,
+        0.2969511151313782
+      ],
+      "contourVertices": 323,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P9",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 15,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 2342.164314525261,
+        "y": 340,
+        "w": 114.50120074834864,
+        "h": 684.0006438880514
+      },
+      "uvBounds": [
+        -0.029770981520414352,
+        0.3861839771270752,
+        0.05799174681305885,
+        0.9104558825492859
+      ],
+      "contourVertices": 307,
+      "label": "Recorte direito",
+      "displayName": "Recorte direito · P10",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 16,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 2172.726216265729,
+        "y": 340,
+        "w": 114.50471958099637,
+        "h": 687.4426454494485
+      },
+      "uvBounds": [
+        -0.5546203255653381,
+        0.3847534656524658,
+        -0.46685490012168884,
+        0.9116635918617249
+      ],
+      "contourVertices": 307,
+      "label": "Recorte esquerdo",
+      "displayName": "Recorte esquerdo · P11",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 17,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 918.9869894121643,
+        "y": 340,
+        "w": 554.3459500020027,
+        "h": 904.5495651368154
+      },
+      "uvBounds": [
+        -0.46095010638237,
+        0.32240599393844604,
+        -0.036055758595466614,
+        1.0157239437103271
+      ],
+      "contourVertices": 550,
+      "label": "Frente",
+      "displayName": "Frente · P12",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 18,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 1528.266318092703,
+        "y": 340,
+        "w": 589.5265194944898,
+        "h": 981.1650111702216
+      },
+      "uvBounds": [
+        0.42433884739875793,
+        0.1715298891067505,
+        0.8761983513832092,
+        0.9235719442367554
+      ],
+      "contourVertices": 557,
+      "label": "Costas",
+      "displayName": "Costas · P13",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 19,
+      "sourceTemplateId": "kit-edge-2027-mapa-v3-camiseta"
+    },
+    {
+      "number": 14,
+      "mesh": 13,
+      "primitive": 0,
+      "rect": {
+        "x": 2355.5265570779807,
+        "y": 3469.304809430346,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P14",
+      "group": "CALCAO",
+      "sourcePanelNumber": 1,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 15,
+      "mesh": 14,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 33,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P15",
+      "group": "CALCAO",
+      "sourcePanelNumber": 2,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 16,
+      "mesh": 15,
+      "primitive": 0,
+      "rect": {
+        "x": 1777.4998831663956,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P16",
+      "group": "CALCAO",
+      "sourcePanelNumber": 3,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 17,
+      "mesh": 16,
+      "primitive": 0,
+      "rect": {
+        "x": 2204.275858578456,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P17",
+      "group": "CALCAO",
+      "sourcePanelNumber": 4,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 18,
+      "mesh": 17,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 2240,
+        "w": 589.235728534411,
+        "h": 705.083180753473
+      },
+      "uvBounds": [
+        0.9899898171424866,
+        0.25852805376052856,
+        1.3039616346359253,
+        0.6342287063598633
+      ],
+      "contourVertices": 69,
+      "label": "Calção frente direito",
+      "displayName": "Calção frente direito · P18",
+      "group": "CALCAO",
+      "sourcePanelNumber": 5,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 19,
+      "mesh": 18,
+      "primitive": 0,
+      "rect": {
+        "x": 1976.9860765331232,
+        "y": 2240,
+        "w": 609.937499268804,
+        "h": 704.61146312047
+      },
+      "uvBounds": [
+        1.4950278997421265,
+        0.2584148049354553,
+        1.8200305700302124,
+        0.6338641047477722
+      ],
+      "contourVertices": 70,
+      "label": "Calção frente esquerdo",
+      "displayName": "Calção frente esquerdo · P19",
+      "group": "CALCAO",
+      "sourcePanelNumber": 6,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 20,
+      "mesh": 19,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 2991.366231058944,
+        "w": 627.3341144655315,
+        "h": 431.655528065931
+      },
+      "uvBounds": [
+        0.6557251214981079,
+        0.3989570140838623,
+        0.9899975061416626,
+        0.6289628744125366
+      ],
+      "contourVertices": 57,
+      "label": "Calção costas direito",
+      "displayName": "Calção costas direito · P20",
+      "group": "CALCAO",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 21,
+      "mesh": 20,
+      "primitive": 0,
+      "rect": {
+        "x": 2015.0844624642436,
+        "y": 2991.366231058944,
+        "w": 609.9464481449339,
+        "h": 425.2834808175617
+      },
+      "uvBounds": [
+        1.8200180530548096,
+        0.4057604670524597,
+        2.1450254917144775,
+        0.6323710083961487
+      ],
+      "contourVertices": 58,
+      "label": "Calção costas esquerdo",
+      "displayName": "Calção costas esquerdo · P21",
+      "group": "CALCAO",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 22,
+      "mesh": 21,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 3469.304809430346,
+        "w": 967.7762090792687,
+        "h": 264.701044268417
+      },
+      "uvBounds": [
+        2.0808358192443848,
+        -2.2006869316101074,
+        2.5965113639831543,
+        -2.0596420764923096
+      ],
+      "contourVertices": 71,
+      "label": "Calção pala traseira",
+      "displayName": "Calção pala traseira · P22",
+      "group": "CALCAO",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    }
+  ],
+  "layoutGroups": [
+    {
+      "id": "CAMISETA",
+      "title": "CAMISETA",
+      "panels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "CALCAO",
+      "title": "CALCAO",
+      "panels": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    }
+  ],
+  "sourceComponents": [
+    {
+      "role": "top",
+      "templateId": "kit-edge-2027-mapa-v3-camiseta",
+      "modelSha256": "b5f208b77b3f1d55c37484a957b86e56fced0d2af5db58f0448cbdee8cab4380",
+      "uniformScale": 1.3572628768424988,
+      "center": [
+        0.000329531729221344,
+        0.844526469707489,
+        0.020365960896015167
+      ],
+      "waistOrHemY": 0.7,
+      "atlas": {
+        "scale": 0.6866672334816984,
+        "offsetX": 918.9869894121643,
+        "offsetY": 340,
+        "sourceMinX": 120,
+        "sourceMinY": 340
+      }
+    },
+    {
+      "role": "bottom",
+      "templateId": "calcao-jogo-5-partes",
+      "modelSha256": "fa1d4d8e743400c3f3cce9ee9768ac371517aa1dc5de96fb4d86b49054f4bc8c",
+      "uniformScale": 3.5500912999510734,
+      "center": [
+        0.00009742192924022675,
+        0.353000283241272,
+        0.006574857980012894
+      ],
+      "waistOrHemY": 0.77,
+      "atlas": {
+        "scale": 0.4628305030547082,
+        "offsetX": 1350.7239077543354,
+        "offsetY": 2240,
+        "sourceMinX": 100,
+        "sourceMinY": 330
+      }
+    }
+  ],
+  "compositionVersion": 1,
+  "sourceSha256": "d83acb505184fa687ba87b5358c340320afdd91f61218d5221bbfb46a4d26c1d"
+}

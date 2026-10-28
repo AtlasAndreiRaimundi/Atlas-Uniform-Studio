@@ -1,0 +1,593 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "jogo-5-partes-kit-field-raglan-camiseta",
+  "name": "KIT JOGO · FIELD RAGLAN + CALÇÃO 5 PARTES",
+  "category": "conjunto",
+  "line": "jogo",
+  "bottomVariant": "5-partes",
+  "garments": [
+    "Camiseta",
+    "Calção"
+  ],
+  "pageSize": 4096,
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 78140,
+  "vertices": 40069,
+  "panelCount": 16,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Gola",
+      "islandCount": 1,
+      "displayName": "Gola"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Filete manga direita",
+      "islandCount": 1,
+      "displayName": "Filete manga direita"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Filete manga esquerda",
+      "islandCount": 1,
+      "displayName": "Filete manga esquerda"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Calção frente direito",
+      "islandCount": 1,
+      "displayName": "Calção frente direito"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Calção frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção frente esquerdo"
+    },
+    {
+      "key": "m13p0",
+      "mesh": 13,
+      "primitive": 0,
+      "label": "Calção costas direito",
+      "islandCount": 1,
+      "displayName": "Calção costas direito"
+    },
+    {
+      "key": "m14p0",
+      "mesh": 14,
+      "primitive": 0,
+      "label": "Calção costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção costas esquerdo"
+    },
+    {
+      "key": "m15p0",
+      "mesh": 15,
+      "primitive": 0,
+      "label": "Calção pala traseira",
+      "islandCount": 1,
+      "displayName": "Calção pala traseira"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 2913.680200506627,
+        "y": 340,
+        "w": 157.45128186993193,
+        "h": 37.55044285978044
+      },
+      "uvBounds": [
+        -0.052933402359485626,
+        0.9871836304664612,
+        0.054546475410461426,
+        1.0128164291381836
+      ],
+      "contourVertices": 130,
+      "label": "Gola",
+      "displayName": "Gola · P1",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 2190.2718654028376,
+        "y": 1486.8989662593094,
+        "w": 465.4185893043541,
+        "h": 40.05408513171463
+      },
+      "uvBounds": [
+        -0.16374866664409637,
+        1.2202568054199219,
+        0.153956800699234,
+        1.247598648071289
+      ],
+      "contourVertices": 114,
+      "label": "Filete manga direita",
+      "displayName": "Filete manga direita · P2",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 2712.7800794733803,
+        "y": 1486.8989662593094,
+        "w": 467.6765868365848,
+        "h": 40.244960240927064
+      },
+      "uvBounds": [
+        -0.16529010236263275,
+        1.2201265096664429,
+        0.15395672619342804,
+        1.247598648071289
+      ],
+      "contourVertices": 115,
+      "label": "Filete manga esquerda",
+      "displayName": "Filete manga esquerda · P3",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 915.5433336900346,
+        "y": 1486.8989662593094,
+        "w": 580.2706572490157,
+        "h": 503.10103374069075
+      },
+      "uvBounds": [
+        -0.6181842684745789,
+        -1.849867343902588,
+        -0.2220781296491623,
+        -1.506438970565796
+      ],
+      "contourVertices": 219,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P4",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 1552.9036157052387,
+        "y": 1486.8989662593094,
+        "w": 580.2786249314108,
+        "h": 502.96481911563524
+      },
+      "uvBounds": [
+        0.19156727194786072,
+        -1.8563992977142334,
+        0.587678849697113,
+        -1.513063907623291
+      ],
+      "contourVertices": 217,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P5",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 11,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 1721.8061707743404,
+        "y": 340,
+        "w": 756.3575514727893,
+        "h": 975.6300919607443
+      },
+      "uvBounds": [
+        0.5622344017028809,
+        -1.581906795501709,
+        1.0785415172576904,
+        -0.9159191846847534
+      ],
+      "contourVertices": 361,
+      "label": "Costas",
+      "displayName": "Costas · P6",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 12,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 915.5433336900346,
+        "y": 340,
+        "w": 749.1732123181174,
+        "h": 887.3036393189644
+      },
+      "uvBounds": [
+        -0.2816782593727112,
+        -1.5383336544036865,
+        0.22972466051578522,
+        -0.9326397180557251
+      ],
+      "contourVertices": 356,
+      "label": "Frente",
+      "displayName": "Frente · P7",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 13,
+      "sourceTemplateId": "kit-field-raglan-camiseta"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 2355.5265570779807,
+        "y": 3469.304809430346,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P8",
+      "group": "CALCAO",
+      "sourcePanelNumber": 1,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 33,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P9",
+      "group": "CALCAO",
+      "sourcePanelNumber": 2,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 1777.4998831663956,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P10",
+      "group": "CALCAO",
+      "sourcePanelNumber": 3,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 2204.275858578456,
+        "y": 3780.2889040042337,
+        "w": 389.7495351676835,
+        "h": 109.7110959957666
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704186439514,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 32,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P11",
+      "group": "CALCAO",
+      "sourcePanelNumber": 4,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 2240,
+        "w": 589.235728534411,
+        "h": 705.083180753473
+      },
+      "uvBounds": [
+        0.9899898171424866,
+        0.25852805376052856,
+        1.3039616346359253,
+        0.6342287063598633
+      ],
+      "contourVertices": 69,
+      "label": "Calção frente direito",
+      "displayName": "Calção frente direito · P12",
+      "group": "CALCAO",
+      "sourcePanelNumber": 5,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 1976.9860765331232,
+        "y": 2240,
+        "w": 609.937499268804,
+        "h": 704.61146312047
+      },
+      "uvBounds": [
+        1.4950278997421265,
+        0.2584148049354553,
+        1.8200305700302124,
+        0.6338641047477722
+      ],
+      "contourVertices": 70,
+      "label": "Calção frente esquerdo",
+      "displayName": "Calção frente esquerdo · P13",
+      "group": "CALCAO",
+      "sourcePanelNumber": 6,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 14,
+      "mesh": 13,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 2991.366231058944,
+        "w": 627.3341144655315,
+        "h": 431.655528065931
+      },
+      "uvBounds": [
+        0.6557251214981079,
+        0.3989570140838623,
+        0.9899975061416626,
+        0.6289628744125366
+      ],
+      "contourVertices": 57,
+      "label": "Calção costas direito",
+      "displayName": "Calção costas direito · P14",
+      "group": "CALCAO",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 15,
+      "mesh": 14,
+      "primitive": 0,
+      "rect": {
+        "x": 2015.0844624642436,
+        "y": 2991.366231058944,
+        "w": 609.9464481449339,
+        "h": 425.2834808175617
+      },
+      "uvBounds": [
+        1.8200180530548096,
+        0.4057604670524597,
+        2.1450254917144775,
+        0.6323710083961487
+      ],
+      "contourVertices": 58,
+      "label": "Calção costas esquerdo",
+      "displayName": "Calção costas esquerdo · P15",
+      "group": "CALCAO",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    },
+    {
+      "number": 16,
+      "mesh": 15,
+      "primitive": 0,
+      "rect": {
+        "x": 1350.7239077543354,
+        "y": 3469.304809430346,
+        "w": 967.7762090792687,
+        "h": 264.701044268417
+      },
+      "uvBounds": [
+        2.0808358192443848,
+        -2.2006869316101074,
+        2.5965113639831543,
+        -2.0596420764923096
+      ],
+      "contourVertices": 71,
+      "label": "Calção pala traseira",
+      "displayName": "Calção pala traseira · P16",
+      "group": "CALCAO",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "calcao-jogo-5-partes"
+    }
+  ],
+  "layoutGroups": [
+    {
+      "id": "CAMISETA",
+      "title": "CAMISETA",
+      "panels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "CALCAO",
+      "title": "CALCAO",
+      "panels": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    }
+  ],
+  "sourceComponents": [
+    {
+      "role": "top",
+      "templateId": "kit-field-raglan-camiseta",
+      "modelSha256": "63c4045e7b6113e0d18bce24d10281063b4eaa3778a0bfbc2f4e443295b99d38",
+      "uniformScale": 1.5293684273760808,
+      "center": [
+        0.00008787214756011963,
+        0.9211897850036621,
+        0.013896666467189789
+      ],
+      "waistOrHemY": 0.7,
+      "atlas": {
+        "scale": 0.7136203095773545,
+        "offsetX": 915.5433336900346,
+        "offsetY": 340,
+        "sourceMinX": 100,
+        "sourceMinY": 340
+      }
+    },
+    {
+      "role": "bottom",
+      "templateId": "calcao-jogo-5-partes",
+      "modelSha256": "fa1d4d8e743400c3f3cce9ee9768ac371517aa1dc5de96fb4d86b49054f4bc8c",
+      "uniformScale": 4.1184411277703825,
+      "center": [
+        0.00009742192924022675,
+        0.353000283241272,
+        0.006574857980012894
+      ],
+      "waistOrHemY": 0.77,
+      "atlas": {
+        "scale": 0.4628305030547082,
+        "offsetX": 1350.7239077543354,
+        "offsetY": 2240,
+        "sourceMinX": 100,
+        "sourceMinY": 330
+      }
+    }
+  ],
+  "compositionVersion": 1,
+  "sourceSha256": "8eb44d874afaed0a5e4bc0d92ab476ea199ae195ae09907aa8fb05945ebd0e83"
+}

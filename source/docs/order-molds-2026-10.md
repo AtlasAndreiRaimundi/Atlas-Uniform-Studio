@@ -123,3 +123,12 @@ node scripts/compose-passeio-kits.mjs jogo
 ```
 
 Renomear um kit fixa sua composição física no descritor; trocar um nome para uma expressão contendo Passeio não muda automaticamente camiseta/calção para polo/bermuda.
+
+## 28/10/2026 — Calção 5 Partes e encaixe visual dos kits
+
+- Arquivo do proprietário: CALÇÃO DE JOGO 5 PARTES(1).glb. Preparado como `calcao-jogo-5-partes`, nove painéis: cinco partes do corpo (duas frentes, duas costas e pala traseira) e quatro do cós. Geometria externa e UVs originais preservados; materiais e luz exportada substituídos pelo padrão neutro.
+- Disponível avulso na linha Jogo e em seis kits com as camisetas de jogo existentes. Mapas SVG com contornos reais e guias identificadas, mantendo a classificação 5 partes separada de com/sem recorte.
+- O visualizador aplica uma translação vertical ao calção inteiro quando necessário, antes de enquadrar o modelo. Considera a barra curva de frente/costas e busca sobreposição de 7% da altura do corpo; kits já encaixados mantêm a posição. Não muda os arquivos GLB antigos, escala, UVs ou arte; versões somente camiseta não recebem o ajuste. A mesma cena alimenta fotos e vídeo. Reabrir uma apresentação reaplica o encaixe. Miniaturas já salvas continuam até novo salvamento.
+- Testes carregam todos os kits reais, verificam a sobreposição, idempotência, pais transformados e preservação de posições locais da geometria/UVs.
+- Validação desta revisão: 365 testes aprovados, um pulado, zero falhas; TypeScript aprovado. Mapa revisado em projeção 2D. A prévia gerenciada falhou na inicialização do servidor; renderização WebGL no navegador não foi validada nesta rodada.
+- A publicação omite `cloth-input.glb`, intermediários do gerador sem referência em execução. Arquivos canônicos `model.glb` e `source.glb` e a cópia de origem no repositório são mantidos.
