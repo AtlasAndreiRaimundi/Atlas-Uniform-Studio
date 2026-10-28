@@ -1,6 +1,8 @@
 // Presentation-only placement: move the whole lower garment, never its panels/UVs.
 // Run after orientation and shirt-only filtering, before framing and all exports.
 const casualFitMeshes = new WeakSet();
+// GLBs use different export scales. Estimate centimetres from a 70 cm shirt body.
+const CASUAL_EXTRA_RISE_CM = 10, VISUAL_SHIRT_BODY_CM = 70;
 export function alignPresentationKit(root, associations, descriptor, THREE) {
   if (descriptor.kind !== 'generated' || descriptor.category !== 'conjunto') return null;
   root.updateMatrixWorld(true);
@@ -44,7 +46,8 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
   // length too large, especially under polos. Scale the complete lower garment
   // uniformly around its waistband; leave standalone shorts and game kits alone.
   let scaleApplied = 1;
-  if (casual && lower.some(mesh => !casualFitMeshes.has(mesh))) {
+  const firstCasualFit = casual && lower.some(mesh => !casualFitMeshes.has(mesh));
+  if (firstCasualFit) {
     scaleApplied = .9;
     const pivot = waist.getCenter(new THREE.Vector3()); pivot.y = waist.max.y;
     const fit = new THREE.Matrix4().makeTranslation(pivot.x,pivot.y,pivot.z)
@@ -62,7 +65,9 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
   }
   // Keep naturally fitted kits intact; give loose combinations a small, consistent overlap.
   const overlap = casual ? .11 : .07;
-  const deltaY = gap > -height * (overlap-.001) ? hem + height * overlap - waist.max.y : 0;
+  const baseDelta = gap > -height * (overlap-.001) ? hem + height * overlap - waist.max.y : 0;
+  const extraRise = firstCasualFit ? height * CASUAL_EXTRA_RISE_CM / VISUAL_SHIRT_BODY_CM : 0;
+  const deltaY = baseDelta + extraRise;
   if (deltaY) {
     for (const mesh of lower) {
       const origin = mesh.getWorldPosition(new THREE.Vector3());
@@ -72,5 +77,5 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
     }
     root.updateMatrixWorld(true);
   }
-  return {gapBefore:gap, gapAfter:gap-deltaY, deltaY, bodyHeight:height, movedMeshes:deltaY?lower.length:0, scaleApplied, casual};
+  return {gapBefore:gap, gapAfter:gap-deltaY, deltaY, bodyHeight:height, movedMeshes:deltaY?lower.length:0, scaleApplied, casual, extraRise};
 }

@@ -38,11 +38,14 @@ test('casual kit shorts shrink uniformly once, rise under the hem and leave shir
   const box=()=>lower.reduce((b,m)=>b.union(new THREE.Box3().setFromObject(m)),new THREE.Box3()),before=box(),size=before.getSize(new THREE.Vector3());
   const result=alignPresentationKit(root,g.parser.associations,e.descriptor,THREE),after=box(),next=after.getSize(new THREE.Vector3());
   assert.equal(result.scaleApplied,.9,e.descriptor.id);assert.equal(result.casual,true);
+  assert.ok(Math.abs(result.extraRise/result.bodyHeight-10/70)<1e-10,'add about 10 cm above the previous fit, independently of the GLB export scale');
+  const previousDelta=result.gapBefore>-result.bodyHeight*.109?result.gapBefore+result.bodyHeight*.11:0;
+  assert.ok(Math.abs((after.max.y-before.max.y)-previousDelta-result.extraRise)<1e-8,'raise the complete waistband by the additional offset');
   for(const axis of ['x','y','z'])assert.ok(Math.abs(next[axis]/size[axis]-.9)<1e-6,`${e.descriptor.id}: ${axis}`);
   assert.ok(after.max.y>=before.max.y-1e-8);assert.ok(result.gapAfter<=-result.bodyHeight*.109+1e-8);
   if(e.descriptor.id.startsWith('passeio-polo'))assert.ok(result.deltaY>0,'the polo waistband must rise');
   for(const {mesh,matrix}of upper)assert.deepEqual(mesh.matrixWorld.elements,matrix.elements,'shirt/buttons/stitching must stay in place');
-  const second=alignPresentationKit(root,g.parser.associations,e.descriptor,THREE);assert.equal(second.scaleApplied,1);assert.equal(second.deltaY,0);assert.ok(box().min.distanceTo(after.min)<1e-8&&box().max.distanceTo(after.max)<1e-8);
+  const second=alignPresentationKit(root,g.parser.associations,e.descriptor,THREE);assert.equal(second.scaleApplied,1);assert.equal(second.deltaY,0);assert.equal(second.extraRise,0);assert.ok(box().min.distanceTo(after.min)<1e-8&&box().max.distanceTo(after.max)<1e-8);
  }
  const game=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='jogo-5-partes-kit-elite-27-camiseta'),g=await load(game);assert.equal(alignPresentationKit(orient(g,game.descriptor),g.parser.associations,game.descriptor,THREE).scaleApplied,1);
  const standalone=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='bermuda-passeio'),s=await load(standalone),root=orient(s,standalone.descriptor),before=new THREE.Box3().setFromObject(root);assert.equal(alignPresentationKit(root,s.parser.associations,standalone.descriptor,THREE),null);assert.ok(before.equals(new THREE.Box3().setFromObject(root)));
