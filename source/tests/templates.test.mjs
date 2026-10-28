@@ -268,8 +268,8 @@ test('the original mold supports rename and reversible deletion without touching
   assert.equal((await templates.restore(admin,id)).status,'published');assert.equal(objects.size,0);
 });
 
-test('ten order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
- const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,10);
+test('eleven order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
+ const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,11);
  const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
  for(const entry of ORDER_MOLD_TEMPLATES){
   const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);

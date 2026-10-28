@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "a516e9ce2ba6391936d4654cdff182bafd167059",
-  "exported_at": "2026-10-28T17:54:07.417225+00:00",
+  "source_commit": "a9538fe2d0e0dd77b13914dec2d5e157850bc942",
+  "exported_at": "2026-10-28T19:48:21.613781+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -800,8 +800,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 11111,
-      "sha256": "bc5725e936797d1159ad70ac4dfda488c41f18d3001476824b2e7ef8e5a033c1"
+      "size": 12792,
+      "sha256": "13f7f4d54fe6161f27937f844bf92e11d71289605fa8f06bc2eedec1fdc94d9f"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1059,6 +1059,11 @@
       "sha256": "7fb0cc5ad31542d9c8d816157133fded08317450969efbf294a5826a42afe783"
     },
     {
+      "path": "lib/composed-five-part-templates.mjs",
+      "size": 687299,
+      "sha256": "0be89217c6554f8b13993ae3b5fc6c826cc68014775895bc620b8bd24860375c"
+    },
+    {
       "path": "lib/composed-game-templates.mjs",
       "size": 695706,
       "sha256": "f51e418da54a1def5bd27f309b3d591bf39aea708e883e62e3e13aed89c808bb"
@@ -1105,8 +1110,8 @@
     },
     {
       "path": "lib/installed-templates.mjs",
-      "size": 413231,
-      "sha256": "ad40c6df7b473bb6c6d5f2cc0c5f33b64268b0bf6ecdc7d243679838338dcc47"
+      "size": 413344,
+      "sha256": "f4bacb7aaae035276d989d00bbe8c36e949ead01b0388a33086e5ca47cc843c0"
     },
     {
       "path": "lib/list-service.mjs",
@@ -1115,8 +1120,8 @@
     },
     {
       "path": "lib/order-mold-templates.mjs",
-      "size": 847384,
-      "sha256": "8670454813a659be208e6da91a1186416b635b796ca62c0b5068d08aa439345e"
+      "size": 873464,
+      "sha256": "f34da7a074d38671b010787ed2822be8ef343f0e8be1aa608c430922f49ddfb9"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1235,8 +1240,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 37535,
-      "sha256": "32bb19a75e0ddb37533cf41b33c13cd690f3b98cc02701e2b2565c878aac233a"
+      "size": 37682,
+      "sha256": "a9b1ff1a3c734b32d0452aed7ead0f871370977422412c072156cdd408b325ea"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1374,6 +1379,36 @@
       "sha256": "a37ec57342fc6096d01df53d282c2c5d91eea7ee96408c82702dbf75ae2de58b"
     },
     {
+      "path": "public/assets/molds/calcao-jogo-5-partes/descriptor.json",
+      "size": 7152,
+      "sha256": "5ed0a2db3d894064e76fd8bf799bb4235692f2effc6fe1a45cc54b50cc3c9df9"
+    },
+    {
+      "path": "public/assets/molds/calcao-jogo-5-partes/model.glb",
+      "size": 154312,
+      "sha256": "fa1d4d8e743400c3f3cce9ee9768ac371517aa1dc5de96fb4d86b49054f4bc8c"
+    },
+    {
+      "path": "public/assets/molds/calcao-jogo-5-partes/preparation.json",
+      "size": 554,
+      "sha256": "36cf22914cf79e2e770d3a03eecd9aa59e058720e993000ce372a92b2eb7820b"
+    },
+    {
+      "path": "public/assets/molds/calcao-jogo-5-partes/proof.svg",
+      "size": 21658,
+      "sha256": "ff4f369be327d3c94da061bc6a925e5b1e67d16dc067539a594a2dd8e8bc4471"
+    },
+    {
+      "path": "public/assets/molds/calcao-jogo-5-partes/source.glb",
+      "size": 134332,
+      "sha256": "de51a9edf823b2154ad094471e754ea6f51a66c2870b147e7125c88b5241b4a7"
+    },
+    {
+      "path": "public/assets/molds/calcao-jogo-5-partes/template.svg",
+      "size": 20539,
+      "sha256": "96cf640b26dbe4989b24249a351d58627a41b9bd422082854d03e9bb45c8385b"
+    },
+    {
       "path": "public/assets/molds/calcao-jogo-com-recorte/descriptor.json",
       "size": 7892,
       "sha256": "10210b75f0e9b908510218a7d1db0a3adaa18d812f0a338cfa049b499e06e9fa"
@@ -1402,6 +1437,126 @@
       "path": "public/assets/molds/calcao-jogo-com-recorte/template.svg",
       "size": 21387,
       "sha256": "46128edfefc6a59e0c17373f5ae2e5509c55632e48e8b0d687d1bc8a49b3eeba"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
+      "size": 18896,
+      "sha256": "4506a0684bc3a2a53a518a6a392f33adf2528829a84e17ed679e1efdc56ef7de"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/model.glb",
+      "size": 6042084,
+      "sha256": "d83acb505184fa687ba87b5358c340320afdd91f61218d5221bbfb46a4d26c1d"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/proof.svg",
+      "size": 140003,
+      "sha256": "d98986e028132dcb317ef63890d7c427cfbc344dddcdbc3875139b6ed7b62919"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/template.svg",
+      "size": 137014,
+      "sha256": "22649a1e1bc54c86317551490893b27289014a88b011fc520b3b0561e2d0c5e5"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/descriptor.json",
+      "size": 18603,
+      "sha256": "1cc88ba75943a38cd0517e2b73cd384d38126b94f9dc1decc4f509cca544068f"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/model.glb",
+      "size": 6042104,
+      "sha256": "1b2b490df4c454235ab594b1c07284ceaed97284019623ee802ef9936b67baeb"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/proof.svg",
+      "size": 139751,
+      "sha256": "f868da94d9c1885c9733dbf9080a255267d25d1a56e5396acd31b10734d0247b"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/template.svg",
+      "size": 136760,
+      "sha256": "efeaf69347759b2c15f180da87f679f6010b4b369963e57cca12e10f8a06ece4"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/descriptor.json",
+      "size": 14204,
+      "sha256": "ac17610f3b14b2d58002bf88c8b1e4aa7aef20cbbe348ed9f46663728b41dd1a"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/model.glb",
+      "size": 2558204,
+      "sha256": "8eb44d874afaed0a5e4bc0d92ab476ea199ae195ae09907aa8fb05945ebd0e83"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/proof.svg",
+      "size": 81036,
+      "sha256": "2671e611c54376419c316bcd989df54bfa03912b1ff7296fa48da584510544bb"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/template.svg",
+      "size": 78845,
+      "sha256": "813c131b32d3538e9497fc5f545bba5eccadd006e54079157e584a206d3241e2"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/descriptor.json",
+      "size": 14217,
+      "sha256": "3e698819a860516fed2fc58df2ed1b0566601889117c0e0185aceeac275277c8"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/model.glb",
+      "size": 5991636,
+      "sha256": "7afaabbd12a1637addb62bac77dd14dcf0df25125e64004ba4e19ea08105c412"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/proof.svg",
+      "size": 114413,
+      "sha256": "174223c0b1d3e88fdb19fe1608c9c0987c52e1e37804be57acd174807586b9de"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/template.svg",
+      "size": 112256,
+      "sha256": "1032e9fa701f928c24dc6af2b56bb0c60bc7d52a81a8b2b095cbbc9e8634c035"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/descriptor.json",
+      "size": 12613,
+      "sha256": "13ae170624b8e3ae33744c0d5913c5ba94eef77c2d0e812c02e1e045ed0f225c"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/model.glb",
+      "size": 1212652,
+      "sha256": "344b7f3cd36000f48c36d02aa0d6ddf2472804c0a08b9d2b8c41a2ad8db2a3a4"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/proof.svg",
+      "size": 65916,
+      "sha256": "427851bcf55800bcf6654ad67be4163cdff52de239836380f48580b842fa0b36"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/template.svg",
+      "size": 64035,
+      "sha256": "dcfa8e77d880db5c0471c945c4a2286d5edcb48ae9ba7baf67f168ee7b71b60c"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/descriptor.json",
+      "size": 16501,
+      "sha256": "17821ededfcfe7743e4b97c37f53eb9a8db4dd57c8abc4d1294602db5dcbde6c"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/model.glb",
+      "size": 2486372,
+      "sha256": "98ab3086adc8f8a282862688d728a71a7b064bcc54462435d0ce241d72fc7332"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/proof.svg",
+      "size": 90422,
+      "sha256": "4b9eb51d260229e883dcc606acec9e809027867306e18b68de1f5aafd29854a9"
+    },
+    {
+      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/template.svg",
+      "size": 87822,
+      "sha256": "afcb18fc739dc91e10df0096fdc3e5f6ed0b4332d995f4d39078b599de3c68ce"
     },
     {
       "path": "public/assets/molds/jogo-recorte-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
@@ -2409,6 +2564,11 @@
       "sha256": "87e0db823cf56a4cf2a66dd40cfbb252551a3ab69f2417af1a1a38b6ca5c767d"
     },
     {
+      "path": "public/kit-alignment.js",
+      "size": 2960,
+      "sha256": "451064e801832e558cebc910e6769a4d48ea60c59b092e7ec29770d0c0d62dd2"
+    },
+    {
       "path": "public/map-atlas.js",
       "size": 2161,
       "sha256": "b1081ebe213ee7306436feb1c95dd1e287c55b1190c7255b637983775a6861ba"
@@ -2420,8 +2580,8 @@
     },
     {
       "path": "public/mold-collections.js",
-      "size": 795,
-      "sha256": "b138314a6eb2c9fbf920278869c4a3323e96a7412b9c5411b385fdbab5126db9"
+      "size": 860,
+      "sha256": "69f19ee5d566727b0ba12cd057a34d7ce0df3dda8df6a069af0eaab7ac36b077"
     },
     {
       "path": "public/order-annotation-editor.js",
@@ -2926,7 +3086,7 @@
     {
       "path": "public/viewer.html",
       "size": 25389,
-      "sha256": "a425e5afdf116076c7602ea31c91721aad12dbded1c8743ee4d1ae270b621baa"
+      "sha256": "a2ab652cf289e925709d849ba113a46c586d82c73676f824b9a7c38057fa2828"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2960,8 +3120,8 @@
     },
     {
       "path": "scripts/compose-passeio-kits.mjs",
-      "size": 11199,
-      "sha256": "69d215409ca1c0a8ce6f4a26e503bfa9d1bd2053e707722c8a5d073537ae8334"
+      "size": 11413,
+      "sha256": "64545bd11f4c7bea2cd24c1fdcde9f69084a4588d549fe8fc722fcf5483defbd"
     },
     {
       "path": "scripts/connector-preview/connector-preview-session.mjs",
@@ -3010,8 +3170,8 @@
     },
     {
       "path": "scripts/install-order-molds.mjs",
-      "size": 8841,
-      "sha256": "ff3abe5c85ce98c15c4dc7afb3f993d3639820c33c46cc1fb6de77cecd542da4"
+      "size": 8996,
+      "sha256": "9b17d29e1acb21b596df937062ed54b07f0a776aef63c06fa77ec81fa6937b2f"
     },
     {
       "path": "scripts/install-pnpm.sh",
@@ -3050,8 +3210,8 @@
     },
     {
       "path": "scripts/prepare-order-molds.py",
-      "size": 7599,
-      "sha256": "3f2391ca7350cb2134c8b1fd0682d4cdaffae9f5a43a4d4292c04628af2097a8"
+      "size": 7934,
+      "sha256": "123295f653a7bf022c25ac44e8c935df99035bdfd414e88c5b15b7836a971d8c"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -3065,8 +3225,8 @@
     },
     {
       "path": "scripts/prune-mold-transfer-files.mjs",
-      "size": 634,
-      "sha256": "51924538aa0bf7e9fa8cb200bb807c913b6a4132a4c333dadc8888b934c1a4cf"
+      "size": 766,
+      "sha256": "e254927dd07f22fa4557903c9e07e8b4e4facc98bd5ee1b1147b55ad19a9afa9"
     },
     {
       "path": "scripts/run-framework.mjs",
@@ -3147,6 +3307,11 @@
       "path": "tests/interface-theme.test.mjs",
       "size": 6214,
       "sha256": "6f8d3f4404865f1769715430622853dc3536aba6991cb16227918e28c1ee1715"
+    },
+    {
+      "path": "tests/kit-alignment.test.mjs",
+      "size": 5760,
+      "sha256": "2833787c5ce3895e9ebd554d269962102e8c58a8d4663b7ba2760de2512d4c7d"
     },
     {
       "path": "tests/kit-import.test.mjs",
@@ -3290,8 +3455,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 46617,
-      "sha256": "1788522ffe091a049e593bb09ecc0f55546d43dc07bf8b29abf5219df95372bc"
+      "size": 46620,
+      "sha256": "30cf0dcebe519bdcb55bf06d6a12eb4917e4dbb15d1c9d1b720f6225fc345fc5"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

@@ -1,0 +1,19 @@
+{
+  "id": "calcao-jogo-5-partes",
+  "name": "CALÇÃO DE JOGO 5 PARTES",
+  "category": "calcao",
+  "sourceName": "CALÇÃO DE JOGO 5 PARTES(1).glb",
+  "originalSourceSha256": "5f99aa1fc3b8c9bc7fdeebdc761f7d6ad129c016230d9804cb2e6c9dec9bf14e",
+  "labels": [
+    "Cós frente direito",
+    "Cós frente esquerdo",
+    "Cós costas esquerdo",
+    "Cós costas direito",
+    "Calção frente direito",
+    "Calção frente esquerdo",
+    "Calção costas direito",
+    "Calção costas esquerdo",
+    "Calção pala traseira"
+  ],
+  "decorativeMeshes": []
+}

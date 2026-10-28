@@ -158,3 +158,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Abas Jogo/Passeio, oito kits de passeio, seis camisetas avulsas e seis kits de jogo com o calção com recorte enviado. Modelos anteriores preservados.
 - Mapas próprios e renomeação no ADM, preservando composição e UVs. Avatar e animações desnecessários removidos do novo calção.
 - Fonte `a516e9ce2ba6391936d4654cdff182bafd167059` (668 arquivos). 362 testes aprovados, um pulado; TypeScript/build concluídos. Geometria e mapas conferidos; renderização WebGL final não validada neste ambiente.
+
+## v81 — 2026-10-28
+- Calção de Jogo 5 Partes, preparado do GLB enviado: cinco partes do corpo e quatro do cós, avulso e em seis kits de jogo. Mapas próprios e classificação explícita 5 partes.
+- Visualizador aproxima os calções mais soltos da barra da camiseta antes de enquadrar, com translação vertical do conjunto inferior. Geometria local, UVs e arte preservados; aplica-se a fotos e vídeo. Miniaturas já salvas atualizam no próximo salvamento.
+- Fonte `a9538fe2d0e0dd77b13914dec2d5e157850bc942` (701 arquivos). 365 testes aprovados, um pulado; TypeScript e build aprovados. Mapa 2D e geometria verificados. Prévia gerenciada falhou ao iniciar; renderização WebGL final não validada neste ambiente.
+- Intermediários cloth-input.glb omitidos do pacote de publicação; arquivos canônicos e fontes preservados.

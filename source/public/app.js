@@ -1,3 +1,4 @@
+import { alignPresentationKit } from './kit-alignment.js?v=1';
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments, presentationPanelNumber } from './model-panels.js?v=3';
 import { createProjectSession } from './project-session.js?v=12';
@@ -228,6 +229,7 @@ async function loadPresentationModel(prefetched) {
     modelRoot = new THREE.Group(); modelRoot.add(vertical);
     modelRoot.rotation.y = { '+z': 0, '-z': Math.PI, '+x': -Math.PI / 2, '-x': Math.PI / 2 }[templateConfig.orientation?.front || '+z'];
   }
+  alignPresentationKit(modelRoot, gltf.parser.associations, templateConfig, THREE);
   const box = new THREE.Box3().setFromObject(modelRoot);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());

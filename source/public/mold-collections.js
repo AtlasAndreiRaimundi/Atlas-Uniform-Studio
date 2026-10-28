@@ -7,6 +7,7 @@ export const collectionMolds=(templates,line)=>templates.filter(t=>moldCollectio
 
 export function moldBottomLabel(mold={}){
   if(mold.category!=='conjunto'||moldCollection(mold)!=='jogo')return '';
+  if(mold.bottomVariant==='5-partes')return 'calção 5 partes';
   return mold.bottomVariant==='com-recorte'?'calção com recorte':'calção sem recorte';
 }
 export function moldOptionName(mold){
