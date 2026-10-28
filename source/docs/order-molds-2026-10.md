@@ -51,3 +51,9 @@ Cada kit publicado também possui uma opção `CAMISETA ...` na criação de apr
 As versões só com camiseta possuem mapa editável e prova próprios, sem calção e cós. Compartilham a geometria e os UVs imutáveis do kit: o visualizador remove a outra peça antes de calcular o enquadramento, criar materiais e exportar imagens ou vídeos. O espaço vazio do mapa deve ser mantido na exportação de 4096 × 4096. Não se deve aplicar o mapa de camiseta ao kit completo.
 
 Geração: `node scripts/create-shirt-variants.mjs`. Os projetos existentes e o simulador não são alterados.
+
+## Troca de molde na apresentação
+
+O campo “Molde da apresentação” permite alternar modelos sem sair do editor. A escolha passa a fazer parte da mesma revisão quando o usuário salva o projeto. Luz, nome e cliente são mantidos. Arte é reutilizada somente entre variantes explícitas do mesmo atlas, por exemplo kit e camiseta do mesmo kit. Trocas entre moldes distintos deixam a peça limpa para receber a arte correspondente; a arte anterior é guardada como arquivo na memória da sessão e pode ser recuperada voltando ao molde anterior antes de fechar o editor. Detalhes de câmera de um molde incompatível são removidos para evitar apontar para regiões erradas.
+
+O salvamento valida propriedade, revisão e publicação do novo molde. Molde e arte são atualizados juntos, sem reaproveitar miniatura ou mapa incompatíveis. Falhas não removem os arquivos anteriores. Clientes e propostas não recebem o seletor. Apresentações compartilhadas recarregam o modelo quando uma nova revisão salva muda o molde.

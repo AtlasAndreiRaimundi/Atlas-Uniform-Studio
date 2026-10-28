@@ -100,7 +100,7 @@ test('failed database saves roll back new file uploads without deleting the prev
   const { store, db, bucket, objects } = setup(); const p = await store.create(alice, base);
   await store.save(alice, p.id, { ...base, version: 1 }, map);
   const key = [...objects.keys()][0];
-  const failing = new ProjectService({ prepare(query) { if (query.startsWith('UPDATE projects SET name')) throw new Error('Database unavailable'); return db.prepare(query); } }, bucket);
+  const failing = new ProjectService({ prepare(query) { if (query.startsWith('UPDATE projects SET')) throw new Error('Database unavailable'); return db.prepare(query); } }, bucket);
   await assert.rejects(failing.save(alice, p.id, { ...base, version: 2 }, map), /Database unavailable/);
   assert.equal(objects.size, 1); assert.ok(objects.has(key)); assert.equal((await store.get(alice, p.id)).version, 2);
 });
