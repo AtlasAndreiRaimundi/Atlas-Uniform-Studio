@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v81 em 28/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v82 em 28/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 701 arquivos, Site v81, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 701 arquivos, Site v82, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -66,3 +66,5 @@ Linha de Passeio Prime disponível como kit de camiseta + bermuda, Camiseta Gola
 Biblioteca separada em Jogo e Passeio, kits com calção com/sem recorte e bermuda de passeio, mapas próprios e renomeação no ADM.
 
 Calção de Jogo 5 Partes avulso e em seis kits, com mapas próprios. Encaixe visual entre camiseta e calção corrigido sem alterar UVs ou arte.
+
+Nos kits de passeio, a bermuda recebe escala visual de 90% e encaixe mais alto, especialmente nas polos. GLBs e mapas preservados.

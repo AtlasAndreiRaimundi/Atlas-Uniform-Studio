@@ -132,3 +132,10 @@ Renomear um kit fixa sua composição física no descritor; trocar um nome para 
 - Testes carregam todos os kits reais, verificam a sobreposição, idempotência, pais transformados e preservação de posições locais da geometria/UVs.
 - Validação desta revisão: 365 testes aprovados, um pulado, zero falhas; TypeScript aprovado. Mapa revisado em projeção 2D. A prévia gerenciada falhou na inicialização do servidor; renderização WebGL no navegador não foi validada nesta rodada.
 - A publicação omite `cloth-input.glb`, intermediários do gerador sem referência em execução. Arquivos canônicos `model.glb` e `source.glb` e a cópia de origem no repositório são mantidos.
+
+## 28/10/2026 — Proporção das bermudas nos kits de passeio
+
+- Corrige os nove kits que usam bermuda de passeio (incluindo as duas polos): escala uniforme de 90% ao redor do cós e sobreposição mínima do cós de 11% da altura do corpo da camiseta. A proporção anterior se baseava na largura da barra, deixando a bermuda grande em relação à polo.
+- Ajuste somente na cena de apresentação, antes do enquadramento; alcança imagens e vídeos. Bolsos, cós e partes da bermuda recebem a mesma transformação. Camisetas, botões e costuras das mangas, kits de jogo e bermuda avulsa preservados. Arquivos GLB, UVs, mapas e arte não são regravados. A escala é aplicada uma única vez por malha, inclusive se o alinhamento for chamado novamente.
+- Reabrir aplica o ajuste; miniaturas já salvas atualizam no próximo salvamento.
+- Validação: 366 testes aprovados e um pulado; regressão com os nove kits reais verifica redução uniforme, subida do cós nas polos, preservação das camisetas e idempotência. Comparação de projeções geométricas em frente/lado. Prévia gerenciada indisponível por servidor preso na inicialização; renderização WebGL final não verificada no navegador.

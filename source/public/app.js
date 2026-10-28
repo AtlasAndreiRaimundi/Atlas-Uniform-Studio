@@ -1,4 +1,4 @@
-import { alignPresentationKit } from './kit-alignment.js?v=1';
+import { alignPresentationKit } from './kit-alignment.js?v=2';
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments, presentationPanelNumber } from './model-panels.js?v=3';
 import { createProjectSession } from './project-session.js?v=12';
