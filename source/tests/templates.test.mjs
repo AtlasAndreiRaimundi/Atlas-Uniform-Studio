@@ -287,3 +287,13 @@ test('six order molds preserve cloth geometry, original UVs and scene transforms
  }
  const simulator=await readFile(new URL('../public/simulator-catalog.js',import.meta.url),'utf8').catch(()=> '');for(const e of ORDER_MOLD_TEMPLATES)assert.ok(!simulator.includes(`/assets/molds/${e.descriptor.id}/`));
 });
+
+test('each published kit has a shirt-only presentation with its own map, framing and project binding',async()=>{
+ const {SHIRT_PRESENTATION_TEMPLATES}=await import('../lib/shirt-presentation-templates.mjs'),{selectPresentationGarments}=await import('../public/model-panels.js'),{Box3,Vector3}=await import('three');
+ const kits=INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto');assert.equal(SHIRT_PRESENTATION_TEMPLATES.length,kits.length);
+ const {templates,projects}=setup(INSTALLED_TEMPLATES);for(const kit of kits){const shirt=SHIRT_PRESENTATION_TEMPLATES.find(e=>e.descriptor.baseTemplateId===kit.descriptor.id);assert.ok(shirt);const d=shirt.descriptor;assert.equal(d.category,'camiseta');assert.ok(d.panels.every(p=>p.group!=='CALCAO_E_COS'));assert.ok(d.panels.length<kit.descriptor.panels.length);assert.ok(!shirt.templateSvg.includes('id="CALCAO_E_COS"'));
+  const project=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,project.id)).id,d.id);assert.equal((await projects.template(other,project.id)).category,'camiseta');
+  const b=await readFile(new URL(`../public${shirt.assets.model}`,import.meta.url)),g=await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'');const height=new Box3().setFromObject(g.scene).getSize(new Vector3()).y;selectPresentationGarments(g.scene,g.parser.associations,d);let count=0;g.scene.traverse(mesh=>{if(!mesh.isMesh)return;count++;const a=g.parser.associations.get(mesh);assert.ok(!d.excludedPrimitiveKeys.includes(`m${a.meshes}p${a.primitives}`));prepareBakedGeometry(mesh.geometry);});assert.equal(count,d.primitives.length);assert.ok(new Box3().setFromObject(g.scene).getSize(new Vector3()).y<height);
+  for(const p of d.panels)assert.deepEqual(p,kit.descriptor.panels.find(q=>q.number===p.number));
+ }
+});
