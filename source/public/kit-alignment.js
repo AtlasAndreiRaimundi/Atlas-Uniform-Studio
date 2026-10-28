@@ -1,9 +1,11 @@
 // Presentation-only placement: move the whole lower garment, never its panels/UVs.
 // Run after orientation and shirt-only filtering, before framing and all exports.
+const casualFitMeshes = new WeakSet();
 export function alignPresentationKit(root, associations, descriptor, THREE) {
   if (descriptor.kind !== 'generated' || descriptor.category !== 'conjunto') return null;
   root.updateMatrixWorld(true);
   const lower = [], body = [];
+  let casual = false;
   root.traverse(mesh => {
     if (!mesh.isMesh || !mesh.geometry?.attributes.position) return;
     const a = associations.get(mesh), key = `m${a?.meshes ?? 0}p${a?.primitives}`;
@@ -11,7 +13,10 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
     if (!part || part.decorativeOnly) return;
     const panel = descriptor.panels?.find(p => p.mesh === part.mesh && p.primitive === part.primitive);
     const label = panel?.label || part.label || '';
-    if (['CALCAO_E_COS','CALCAO','BERMUDA'].includes(panel?.group) || /cal[cç][aã]o|bermuda|cós|bolso/i.test(label)) lower.push(mesh);
+    if (['CALCAO_E_COS','CALCAO','BERMUDA'].includes(panel?.group) || /cal[cç][aã]o|bermuda|cós|bolso/i.test(label)) {
+      lower.push(mesh);
+      if (panel?.group === 'BERMUDA' || /bermuda/i.test(label)) casual = true;
+    }
     else if (/^(frente|costas)(\b|$)/i.test(label)) body.push({mesh,box:new THREE.Box3().setFromObject(mesh)});
   });
   if (!lower.length || !body.length) return null;
@@ -35,8 +40,29 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
   const hem = Math.max(...hems);
   const gap = hem - waist.max.y;
   if (!Number.isFinite(height) || height <= 0 || !Number.isFinite(gap)) return null;
+  // Casual shorts were fitted to the shirt hem width, making their hips and
+  // length too large, especially under polos. Scale the complete lower garment
+  // uniformly around its waistband; leave standalone shorts and game kits alone.
+  let scaleApplied = 1;
+  if (casual && lower.some(mesh => !casualFitMeshes.has(mesh))) {
+    scaleApplied = .9;
+    const pivot = waist.getCenter(new THREE.Vector3()); pivot.y = waist.max.y;
+    const fit = new THREE.Matrix4().makeTranslation(pivot.x,pivot.y,pivot.z)
+      .multiply(new THREE.Matrix4().makeScale(scaleApplied,scaleApplied,scaleApplied))
+      .multiply(new THREE.Matrix4().makeTranslation(-pivot.x,-pivot.y,-pivot.z));
+    // Snapshot world matrices first so transformed parents do not change the fit.
+    const targets = lower.filter(mesh => !casualFitMeshes.has(mesh)).map(mesh => ({mesh,world:fit.clone().multiply(mesh.matrixWorld)}));
+    for (const {mesh,world} of targets) {
+      mesh.parent.updateWorldMatrix(true,false);
+      const local = mesh.parent.matrixWorld.clone().invert().multiply(world);
+      local.decompose(mesh.position,mesh.quaternion,mesh.scale);
+      mesh.updateMatrix(); casualFitMeshes.add(mesh);
+    }
+    root.updateMatrixWorld(true);
+  }
   // Keep naturally fitted kits intact; give loose combinations a small, consistent overlap.
-  const deltaY = gap > -height * .069 ? hem + height * .07 - waist.max.y : 0;
+  const overlap = casual ? .11 : .07;
+  const deltaY = gap > -height * (overlap-.001) ? hem + height * overlap - waist.max.y : 0;
   if (deltaY) {
     for (const mesh of lower) {
       const origin = mesh.getWorldPosition(new THREE.Vector3());
@@ -46,5 +72,5 @@ export function alignPresentationKit(root, associations, descriptor, THREE) {
     }
     root.updateMatrixWorld(true);
   }
-  return {gapBefore:gap, gapAfter:gap-deltaY, deltaY, bodyHeight:height, movedMeshes:deltaY?lower.length:0};
+  return {gapBefore:gap, gapAfter:gap-deltaY, deltaY, bodyHeight:height, movedMeshes:deltaY?lower.length:0, scaleApplied, casual};
 }

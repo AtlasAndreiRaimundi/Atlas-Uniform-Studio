@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "a9538fe2d0e0dd77b13914dec2d5e157850bc942",
-  "exported_at": "2026-10-28T19:48:21.613781+00:00",
+  "source_commit": "fc7c1d90765751959834b58931dc36538dbac42e",
+  "exported_at": "2026-10-28T20:02:08.415772+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -800,8 +800,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 12792,
-      "sha256": "13f7f4d54fe6161f27937f844bf92e11d71289605fa8f06bc2eedec1fdc94d9f"
+      "size": 14000,
+      "sha256": "70468bcf171edf3f51cbad8ea4f071ea469b7a7f502e69a93f4ca2ed7f739ebb"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1241,7 +1241,7 @@
     {
       "path": "public/app.js",
       "size": 37682,
-      "sha256": "a9b1ff1a3c734b32d0452aed7ead0f871370977422412c072156cdd408b325ea"
+      "sha256": "3f26b4556aca3ba9a79c69d58a2ebef5e7a4cf622ec1b88cc8278b404deea902"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -2565,8 +2565,8 @@
     },
     {
       "path": "public/kit-alignment.js",
-      "size": 2960,
-      "sha256": "451064e801832e558cebc910e6769a4d48ea60c59b092e7ec29770d0c0d62dd2"
+      "size": 4417,
+      "sha256": "e29253b66282e0c6803b244558a3d61badf6fb9fe2132fbf3e7521cab2895d6f"
     },
     {
       "path": "public/map-atlas.js",
@@ -3086,7 +3086,7 @@
     {
       "path": "public/viewer.html",
       "size": 25389,
-      "sha256": "a2ab652cf289e925709d849ba113a46c586d82c73676f824b9a7c38057fa2828"
+      "sha256": "cb74acfc041beb9a8bbd4d2a8b4a936c21ac251581597fdcff69d4a62cb04bab"
     },
     {
       "path": "public/workflow-contract.js",
@@ -3310,8 +3310,8 @@
     },
     {
       "path": "tests/kit-alignment.test.mjs",
-      "size": 5760,
-      "sha256": "2833787c5ce3895e9ebd554d269962102e8c58a8d4663b7ba2760de2512d4c7d"
+      "size": 8235,
+      "sha256": "4913d249965ace6b4e7227de649d0c49bb115caeb2bcee9c4141ffdcd429e335"
     },
     {
       "path": "tests/kit-import.test.mjs",

@@ -164,3 +164,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Visualizador aproxima os calções mais soltos da barra da camiseta antes de enquadrar, com translação vertical do conjunto inferior. Geometria local, UVs e arte preservados; aplica-se a fotos e vídeo. Miniaturas já salvas atualizam no próximo salvamento.
 - Fonte `a9538fe2d0e0dd77b13914dec2d5e157850bc942` (701 arquivos). 365 testes aprovados, um pulado; TypeScript e build aprovados. Mapa 2D e geometria verificados. Prévia gerenciada falhou ao iniciar; renderização WebGL final não validada neste ambiente.
 - Intermediários cloth-input.glb omitidos do pacote de publicação; arquivos canônicos e fontes preservados.
+
+## v82 — 2026-10-28
+- Corrige a proporção da bermuda nos nove kits de passeio, incluindo as duas polos: escala visual uniforme de 90% ao redor do cós, sobreposição mínima sob a camiseta de 11% da altura do corpo e aplicação idempotente.
+- Camisetas, botões e costuras das mangas, kits de jogo, bermuda avulsa, GLBs, UVs e mapas preservados. Fotos e vídeos usam a cena ajustada; miniaturas já salvas atualizam no próximo salvamento.
+- Fonte publicada `fc7c1d90765751959834b58931dc36538dbac42e` (701 arquivos). 366 testes aprovados, um pulado; build aprovado. Comparações geométricas em frente/lado revisadas. Prévia gerenciada indisponível; renderização WebGL final não validada no navegador.
