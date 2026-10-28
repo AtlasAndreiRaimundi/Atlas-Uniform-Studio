@@ -147,3 +147,9 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Adiciona POLO SEM RECORTE V, preparada do GLB fornecido pelo proprietário, com dez painéis, mapas SVG próprios e detalhes decorativos separados da arte.
 - Identifica a polo anterior como POLO COM RECORTE V, preservando ID, geometria, UVs e projetos existentes; nomes personalizados pelo administrador são mantidos.
 - Fonte `1e90182dddcd1b83892f1fad9aaff3a73ebe1458` (566 arquivos). 24 testes direcionados aprovados; TypeScript e build concluídos. Mapa inspecionado no navegador; renderização WebGL indisponível no ambiente.
+
+## v78 — 2026-10-28
+- Adiciona KIT DE PASSEIO PRIME, CAMISETA GOLA PRIME e BERMUDA DE PASSEIO, com modelos preparados dos arquivos enviados e mapas próprios.
+- O kit declara Camiseta + Bermuda explicitamente na integração com pedidos. A camiseta compartilha o atlas do kit; a bermuda avulsa usa o arquivo separado e mapa próprio. Costuras decorativas ficam fora da arte.
+- Mantém modelos anteriores e simulador. Grupos de seleção usam o título genérico Kits completos.
+- Fonte `4265f37a36525213e89033010465821f81298936` (581 arquivos). 357 testes aprovados, um pulado; TypeScript e build concluídos. Os três mapas foram revisados no navegador; renderização visual 3D não foi conferida neste ambiente.

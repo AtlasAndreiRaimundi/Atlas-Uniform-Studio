@@ -43,3 +43,6 @@ yarn-error.log*
 
 # OS metadata
 .DS_Store
+
+# Ignore temporary files from atomic model transfers.
+public/assets/molds/**/.model.glb.*

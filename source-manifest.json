@@ -1,12 +1,12 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "1e90182dddcd1b83892f1fad9aaff3a73ebe1458",
-  "exported_at": "2026-10-28T14:55:17.655209+00:00",
+  "source_commit": "4265f37a36525213e89033010465821f81298936",
+  "exported_at": "2026-10-28T17:15:37.106281+00:00",
   "files": [
     {
       "path": ".gitignore",
-      "size": 614,
-      "sha256": "5ca3c39bdc1288c108a1931b3f6bc5795464b6253e9457390617774259deed0c"
+      "size": 705,
+      "sha256": "70572351176aba2594b016f702a3fdcc826b6b8b4e93ef3c6ca6021373bc37c2"
     },
     {
       "path": ".npmrc",
@@ -395,8 +395,8 @@
     },
     {
       "path": "app/projects/dashboard.tsx",
-      "size": 24964,
-      "sha256": "9bc802d5c2dc0f2491dd2fffd8f317ea2c09e9bfac65a526ff21539bb65ecae6"
+      "size": 24940,
+      "sha256": "3bac819350e2165065e07182ab1da79eb9c00e526b826963b307addb0250c6a6"
     },
     {
       "path": "app/projects/page.tsx",
@@ -795,8 +795,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 6039,
-      "sha256": "0b43df17edd50eb5d63150e6a590c1d9b79574e98042403a46534b537ba2dbb6"
+      "size": 7477,
+      "sha256": "ac20e7caf01e597e5bf3d4645e2037072bc5cd1da3c191df8b078f7f4cfa3aae"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1095,8 +1095,8 @@
     },
     {
       "path": "lib/order-mold-templates.mjs",
-      "size": 648033,
-      "sha256": "6cdabb852dfb389e659fea427b5f2cae2c35a8e9a0d9841bbbc3a8d674b5292a"
+      "size": 819911,
+      "sha256": "15c3b843a2f7207b323b85f790bd7b69f2083fb9bec1fc83691e1d4a38622caf"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1135,8 +1135,8 @@
     },
     {
       "path": "lib/shirt-presentation-templates.mjs",
-      "size": 525834,
-      "sha256": "6c54df4fd442002b4d3a6714af9c6c1dd8825013c2bd167fc0e995fe0537c97c"
+      "size": 594443,
+      "sha256": "f92fac123424aaff9afcfab9f447682feb6a5d80ca7d34236ecb0fb05b3782cb"
     },
     {
       "path": "lib/simulator-presentation-templates.mjs",
@@ -1216,7 +1216,7 @@
     {
       "path": "public/app.js",
       "size": 37509,
-      "sha256": "53ffe94d957269d0d492154cdf8af8bdf00f5eeb7b94d651a28bdb1907b08863"
+      "sha256": "ba212dcdb84fbca49376e5a10bbbcd0bf061aa862d2e0f7b4722e780fa1913e2"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1322,6 +1322,36 @@
       "path": "public/assets/molde-preview.png",
       "size": 222304,
       "sha256": "4b03af73f72a85747849c9a4c5670c64e51aeb45846736f33e271c40a388a632"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/descriptor.json",
+      "size": 6424,
+      "sha256": "1654f099361f75200546f411fdc0de47694b09f7eabb19dfa4305124cd09fbcc"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/model.glb",
+      "size": 337124,
+      "sha256": "a4b8c7378d76102e19a37f972bf2d4aa5fab40394dd7c5bd831a88fda6e332b3"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/preparation.json",
+      "size": 508,
+      "sha256": "a2851730820bd98fbf71d788585dea5726da844d9644302c304400d896fc5aa1"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/proof.svg",
+      "size": 47601,
+      "sha256": "1fd3c0bccfc4831539a819e95831e01794bff77adb1207c24c2fd23b1e4b939a"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/source.glb",
+      "size": 293188,
+      "sha256": "6362a2b403b07e0d3c610d65d0dfff1a006d7323b97030bfa54fb8a73b86bcd8"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio/template.svg",
+      "size": 46633,
+      "sha256": "a37ec57342fc6096d01df53d282c2c5d91eea7ee96408c82702dbf75ae2de58b"
     },
     {
       "path": "public/assets/molds/kit-edge-2027-mapa-v2/descriptor.json",
@@ -1582,6 +1612,51 @@
       "path": "public/assets/molds/kit-normal-basico/template.svg",
       "size": 105935,
       "sha256": "94ca06c8af0273acc1d9b0ac48b14bee12ebeeca6cd313f7c6f20f48df0ab8f4"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime-camiseta/descriptor.json",
+      "size": 7866,
+      "sha256": "3665115adc3df421ffc5267c3b4ac2c191448f1f5cd362dee5f92b2eaee42293"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime-camiseta/proof.svg",
+      "size": 64014,
+      "sha256": "5f4f7c94e2b78f70fc9a90bd1292d41f9bdf0c5d4a3e4cf8fd3c910c6db87db0"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime-camiseta/template.svg",
+      "size": 62681,
+      "sha256": "5430ca72bafd17605d50bdf24676eb3237c73f826f0b917e7827e4f7b1a57152"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/descriptor.json",
+      "size": 13618,
+      "sha256": "c207ecc4146340f8cef52838469c624ec44e26768826d280b96e5a85dc664b27"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/model.glb",
+      "size": 4572224,
+      "sha256": "213affbf87980942e2363750a02a8dc078518de377facefd1da03b6c28569cd1"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/preparation.json",
+      "size": 764,
+      "sha256": "e9a3357b1e46971ed758956609ae1363da8c547792b6b6ac0e1c4f2eaa26ff9f"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/proof.svg",
+      "size": 112352,
+      "sha256": "f75e8adb3ea75c0969c7db603bf47597056418ed92afc72be087d1264e567ab4"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/source.glb",
+      "size": 4239144,
+      "sha256": "290c43144f9343349bbf7a7c75d69cfa18103d1ca0fa76da787ac50bcd0ee431"
+    },
+    {
+      "path": "public/assets/molds/kit-passeio-prime/template.svg",
+      "size": 110240,
+      "sha256": "90432ffc314166a5a2c0f7935a96eecf8d59930299506e8ba0fddec3fd0eeea5"
     },
     {
       "path": "public/assets/molds/kit-raglan-basico-camiseta/descriptor.json",
@@ -1975,8 +2050,8 @@
     },
     {
       "path": "public/order-presentation.js",
-      "size": 1517,
-      "sha256": "723b7badae62c897c04351e01ff21514a4e7f6df217d2a6534450c9bb1de4473"
+      "size": 1762,
+      "sha256": "aa3e93374aee4d71679eb9da8e1d0e7be77ef83435f52eef84453e7ea710cce7"
     },
     {
       "path": "public/order-pricing-ui.js",
@@ -2011,7 +2086,7 @@
     {
       "path": "public/pedido.html",
       "size": 33547,
-      "sha256": "70ed8b3ce4ff68a1c889c15b36ae7b25e9bf633d74a385f2c5c81788f5430027"
+      "sha256": "fa095b50c9c70cf74c043b20e87868fa6bdcdb09468dc20f6d4e9458953f705a"
     },
     {
       "path": "public/presentation-contract.js",
@@ -2050,8 +2125,8 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 107584,
-      "sha256": "bb7f825060304bd3aaa95e4951ed78245b92f23b1088f41b9da209682c1faa06"
+      "size": 107588,
+      "sha256": "21e674920561d26e760593bb0539987e48b619128b00b79ec3fd5a407c6b5c88"
     },
     {
       "path": "public/production.css",
@@ -2426,7 +2501,7 @@
     {
       "path": "public/viewer.html",
       "size": 25271,
-      "sha256": "7fffbc7724224195dc8a2ddd34d183b600a9772ac216c7e0622885c94f947da5"
+      "sha256": "70548eb0a47f747bead10b6eb7dbafe92fa13d36a2e24c7468f612c5f390721f"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2480,8 +2555,8 @@
     },
     {
       "path": "scripts/create-shirt-variants.mjs",
-      "size": 4020,
-      "sha256": "cc65d23181e7c8ddd4cbcd4b44f8c716fd0e174578c23fde512bf7c5a973da20"
+      "size": 4116,
+      "sha256": "bfc24582985a36134a29ad27b218a5f19455fcbe6079c2171972f41a9ef28118"
     },
     {
       "path": "scripts/equalize-kit-edge-trims.mjs",
@@ -2505,8 +2580,8 @@
     },
     {
       "path": "scripts/install-order-molds.mjs",
-      "size": 8320,
-      "sha256": "233250f33ba524e8031818adf3ac0d50252ecb81fb7e188a8a4ea62e198df965"
+      "size": 8638,
+      "sha256": "5542f6deaa687b6d16ab73119607db266530bc6d8acd892914c1c4aa1f17d88f"
     },
     {
       "path": "scripts/install-pnpm.sh",
@@ -2545,8 +2620,8 @@
     },
     {
       "path": "scripts/prepare-order-molds.py",
-      "size": 5425,
-      "sha256": "43952ec80ce729012dbc0f2de9d38886a387071e537f458b9c486d8804e34afb"
+      "size": 6199,
+      "sha256": "a559ef8b57f56930ca25ede5a192e0c4c80d75791be888bb4656a2de25dfcd89"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -2780,8 +2855,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 38223,
-      "sha256": "c895bccc9b7c1647cc0eb17cb40a4cae82d6635f405424f24043f039e4c6ca93"
+      "size": 40299,
+      "sha256": "3a99766a94d26b79d12450cc3b3082f4379130e43bc6191847182a0763d7ceb8"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

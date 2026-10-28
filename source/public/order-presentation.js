@@ -2,6 +2,8 @@ import {newKitPage} from './production-core.js?v=15';
 import {createOrderProduct,prepareOrderProduct} from './order-composition.js';
 export function presentationGarments(template={}){
  if(!['conjunto','kit'].includes(String(template.category||'').toLowerCase()))return null;
+ const allowed=['Camiseta','Calção','Bermuda','Polo','Jaqueta','Calça','Top','Legging'];
+ if(Array.isArray(template.garments)&&template.garments.length===2&&template.garments.every(type=>allowed.includes(type)))return [...template.garments];
  const name=String(template.name||'').toUpperCase();
  if(/JAQUETA|AGASALHO/.test(name))return ['Jaqueta','Calça'];
  if(/POLO|PASSEIO/.test(name))return ['Polo','Bermuda'];
