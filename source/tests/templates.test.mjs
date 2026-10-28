@@ -268,8 +268,8 @@ test('the original mold supports rename and reversible deletion without touching
   assert.equal((await templates.restore(admin,id)).status,'published');assert.equal(objects.size,0);
 });
 
-test('six order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
- const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,6);
+test('seven order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
+ const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,7);
  const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
  for(const entry of ORDER_MOLD_TEMPLATES){
   const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);
@@ -282,7 +282,7 @@ test('six order molds preserve cloth geometry, original UVs and scene transforms
    assert.ok(p.rect.x>=0&&p.rect.y>=0&&p.rect.x+p.rect.w<=4096&&p.rect.y+p.rect.h<=4096);
   }
   for(let i=0;i<d.panels.length;i++)for(let j=i+1;j<d.panels.length;j++){const a=d.panels[i].rect,b=d.panels[j].rect;assert.ok(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y);}
-  const gltf=await new GLTFLoader().parseAsync(modelBytes.buffer.slice(modelBytes.byteOffset,modelBytes.byteOffset+modelBytes.byteLength),'');let cloth=0,decorations=0;gltf.scene.traverse(mesh=>{if(!mesh.isMesh)return;const a=gltf.parser.associations.get(mesh),p=d.primitives.find(p=>p.key===`m${a.meshes??0}p${a.primitives}`);assert.ok(p);if(p.decorativeOnly)decorations++;else {cloth++;prepareBakedGeometry(mesh.geometry);}});assert.equal(cloth,d.panelCount);assert.equal(decorations,d.id==='polo'?6:0);
+  const gltf=await new GLTFLoader().parseAsync(modelBytes.buffer.slice(modelBytes.byteOffset,modelBytes.byteOffset+modelBytes.byteLength),'');let cloth=0,decorations=0;gltf.scene.traverse(mesh=>{if(!mesh.isMesh)return;const a=gltf.parser.associations.get(mesh),p=d.primitives.find(p=>p.key===`m${a.meshes??0}p${a.primitives}`);assert.ok(p);if(p.decorativeOnly)decorations++;else {cloth++;prepareBakedGeometry(mesh.geometry);}});assert.equal(cloth,d.panelCount);assert.equal(decorations,d.id.startsWith('polo')?6:0);
   assert.match(entry.templateSvg,/ARTE_DESENHE_AQUI/);assert.match(entry.templateSvg,/GUIAS_OCULTAR_ANTES_DE_EXPORTAR/);
  }
  const simulator=await readFile(new URL('../public/simulator-catalog.js',import.meta.url),'utf8').catch(()=> '');for(const e of ORDER_MOLD_TEMPLATES)assert.ok(!simulator.includes(`/assets/molds/${e.descriptor.id}/`));
@@ -310,4 +310,16 @@ test('switching project molds is owned, versioned, publication-checked and clear
  await assert.rejects(failing.save(other,p.id,{name:p.name,version:p.version,templateId:c},art,art),/Database unavailable/);assert.equal(objects.size,1);assert.equal((await projects.get(other,p.id)).templateId,b);
  p=await projects.save(other,p.id,{name:p.name,version:p.version,templateId:c});assert.equal(p.templateId,c);assert.equal(p.hasMap,false);assert.equal(p.mapName,null);assert.equal(p.thumbnailUrl,null);assert.equal(objects.size,0);
  p=await projects.save(other,p.id,{name:p.name,version:p.version,templateId:a},art,art);assert.equal(p.templateId,a);assert.ok(p.hasMap&&p.thumbnailUrl);assert.equal(objects.size,2);
+});
+
+test('polo variants use distinct models and maps without replacing the original saved project',async()=>{
+ const original=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='polo'),next=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='polo-sem-recorte-v');assert.ok(original&&next);assert.equal(original.descriptor.name,'POLO COM RECORTE V');assert.equal(next.descriptor.name,'POLO SEM RECORTE V');assert.equal(next.descriptor.category,'camiseta');assert.equal(next.descriptor.panelCount,10);assert.equal(next.descriptor.triangles,74640);assert.equal(original.descriptor.triangles,76729);assert.notEqual(next.assets.model,original.assets.model);assert.notEqual(next.assets.template,original.assets.template);assert.notEqual(next.descriptor.originalSourceSha256,original.descriptor.originalSourceSha256);
+ const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);assert.ok(catalog.some(t=>t.id==='polo'&&t.name==='POLO COM RECORTE V'));assert.ok(catalog.some(t=>t.id==='polo-sem-recorte-v'&&t.name==='POLO SEM RECORTE V'));
+ const a=await projects.create(other,{name:'Anterior',templateId:'polo'}),b=await projects.create(other,{name:'Sem V',templateId:'polo-sem-recorte-v'});assert.equal((await projects.template(other,a.id)).id,'polo');assert.equal((await projects.template(other,b.id)).id,'polo-sem-recorte-v');
+ const bytes=await readFile(new URL(`../public${next.assets.model}`,import.meta.url));assert.ok(bytes.length<20*1024*1024);assert.match(next.templateSvg,/POLO SEM RECORTE V/);assert.match(original.templateSvg,/POLO COM RECORTE V/);
+});
+
+test('the original polo default name is clarified for persisted rows while custom admin names remain intact',async()=>{
+ const entry=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='polo'),legacy={...entry,descriptor:{...entry.descriptor,name:'POLO'}},{db,bucket,templates}=setup(INSTALLED_TEMPLATES),old=new TemplateService(db,bucket,admin.userId,[legacy]);await old.ensureInstalled('polo');assert.equal((await templates.catalog(other)).find(t=>t.id==='polo').name,'POLO COM RECORTE V');assert.equal((await templates.descriptor('polo')).name,'POLO COM RECORTE V');const map=await templates.asset('polo','template');if(map.body)assert.match(map.body,/POLO COM RECORTE V/);
+ await templates.update(admin,'polo',{name:'Polo personalizada da fábrica',category:'camiseta'});assert.equal((await templates.descriptor('polo')).name,'Polo personalizada da fábrica');
 });

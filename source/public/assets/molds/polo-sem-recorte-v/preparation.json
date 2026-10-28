@@ -1,0 +1,25 @@
+{
+  "id": "polo-sem-recorte-v",
+  "name": "POLO SEM RECORTE V",
+  "category": "camiseta",
+  "sourceName": "polo sem recorte v.glb",
+  "originalSourceSha256": "90c01d60c5abaaca90ae2ead8676a1286034d26f43bfe9d7c1145ae05deca92e",
+  "labels": [
+    "Peitilho externo",
+    "Filete manga esquerda",
+    "Filete manga direita",
+    "Costas",
+    "Manga direita",
+    "Manga esquerda",
+    "Peitilho interno",
+    "Frente",
+    "Pé de gola",
+    "Colarinho"
+  ],
+  "decorativeMeshes": [
+    10,
+    11,
+    12,
+    13
+  ]
+}

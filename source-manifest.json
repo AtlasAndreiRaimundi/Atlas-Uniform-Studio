@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "e19ff90bfda5c13f540ee7413380acf7dbb785f7",
-  "exported_at": "2026-10-28T14:11:59.805533+00:00",
+  "source_commit": "1e90182dddcd1b83892f1fad9aaff3a73ebe1458",
+  "exported_at": "2026-10-28T14:55:17.655209+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -795,8 +795,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 5198,
-      "sha256": "bc154c96803c7e4bd8e9fdb538bc6433ab5f8e783a4a2fbf0a7eac79cedff139"
+      "size": 6039,
+      "sha256": "0b43df17edd50eb5d63150e6a590c1d9b79574e98042403a46534b537ba2dbb6"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1095,8 +1095,8 @@
     },
     {
       "path": "lib/order-mold-templates.mjs",
-      "size": 568566,
-      "sha256": "90fd08f02c3e429fb18ebea035f912b3d6a84c5d7c76fe523307c63a8d8fbea8"
+      "size": 648033,
+      "sha256": "6cdabb852dfb389e659fea427b5f2cae2c35a8e9a0d9841bbbc3a8d674b5292a"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1160,8 +1160,8 @@
     },
     {
       "path": "lib/template-service.mjs",
-      "size": 11573,
-      "sha256": "94b1c8d6e3fa5894b96dda5af50262eabdbe6ca310f708d544db6c3b179469c6"
+      "size": 11760,
+      "sha256": "d3d8ea75bc2f0fb46c6a1b7c35916ed11252b96d2e28b83b81a2167bad9bab9d"
     },
     {
       "path": "lib/utils.ts",
@@ -1679,14 +1679,44 @@
       "sha256": "5d185a2d0191f1faffca90f570fbc55ab88c0810a1e44da0e03be645c35c56f1"
     },
     {
+      "path": "public/assets/molds/polo-sem-recorte-v/descriptor.json",
+      "size": 9028,
+      "sha256": "d33e4f2c38764860ee500e47b56af224809b2d4058117d37d1a025375226607f"
+    },
+    {
+      "path": "public/assets/molds/polo-sem-recorte-v/model.glb",
+      "size": 4573488,
+      "sha256": "4549f850f1626f35303d65847723869dacd8cf3d61a6a41147331ee6ed4939e6"
+    },
+    {
+      "path": "public/assets/molds/polo-sem-recorte-v/preparation.json",
+      "size": 517,
+      "sha256": "7f922ab3440c8be1780b1de4e8514a3cb30cbafdcf1ead4712dace5b61daccf1"
+    },
+    {
+      "path": "public/assets/molds/polo-sem-recorte-v/proof.svg",
+      "size": 74016,
+      "sha256": "f1fb4abb074c736280eb2cbef2bc3cfa2c78a30a0e31193f19d3f4a9e9dbaee8"
+    },
+    {
+      "path": "public/assets/molds/polo-sem-recorte-v/source.glb",
+      "size": 4265880,
+      "sha256": "e0e18c1104725e0021467f0bba9083eb691a7c89e7644b8f8b5fbc1791990ef3"
+    },
+    {
+      "path": "public/assets/molds/polo-sem-recorte-v/template.svg",
+      "size": 72749,
+      "sha256": "be8dd0c2f08d1130c949d5f519064941842e2a8fc122f3b6bbd71fe4176aba2d"
+    },
+    {
       "path": "public/assets/molds/polo/cloth-input.glb",
       "size": 4323808,
       "sha256": "507c23f361cda5ed71651eff1600027fd03c09e83c7e8efcd692dbda8fe193bb"
     },
     {
       "path": "public/assets/molds/polo/descriptor.json",
-      "size": 8999,
-      "sha256": "349a00126ac11819a6f8cc8b59809cd4d858d936b965ef86720d6e67a0aee2db"
+      "size": 9013,
+      "sha256": "3182c5b3bcb20ec51eab0d773823a9ef5fa2e300abfe07987aa9d38b0b04da62"
     },
     {
       "path": "public/assets/molds/polo/model.glb",
@@ -1695,13 +1725,13 @@
     },
     {
       "path": "public/assets/molds/polo/preparation.json",
-      "size": 475,
-      "sha256": "ad08b141e0ec4273533623f3e6712430aeb9350bf34693bc6b597577eaa5885e"
+      "size": 489,
+      "sha256": "57e78f79ee5dcc127c088e1a7736820dac93891cae663e297840b59f3704998f"
     },
     {
       "path": "public/assets/molds/polo/proof.svg",
-      "size": 74398,
-      "sha256": "1168a4236bd025373d1a1f2cd3958d86b19d5e565c05ee03a8ee3030cb85ae02"
+      "size": 74426,
+      "sha256": "82696a999ac37cdd77eaa8cc4c1ccbb75ee03d75fde54f51c7a91cbabc1e0a6c"
     },
     {
       "path": "public/assets/molds/polo/source.glb",
@@ -1710,8 +1740,8 @@
     },
     {
       "path": "public/assets/molds/polo/template.svg",
-      "size": 73131,
-      "sha256": "29664fc2cf0ad790e1ee7728875a10433a14c13f21e25a513a067184309c9152"
+      "size": 73159,
+      "sha256": "854f67823d55061d2671b0ac9638dc18876af15c72aa0bb9256ad7d7cc81e6c6"
     },
     {
       "path": "public/assets/molds/simulator-elite-27-kit/model.glb",
@@ -2475,8 +2505,8 @@
     },
     {
       "path": "scripts/install-order-molds.mjs",
-      "size": 8087,
-      "sha256": "e734c5a45006ca4a284062d0219fa8f581d1e1a22b8efb61e6e8cbc95ff6a7fd"
+      "size": 8320,
+      "sha256": "233250f33ba524e8031818adf3ac0d50252ecb81fb7e188a8a4ea62e198df965"
     },
     {
       "path": "scripts/install-pnpm.sh",
@@ -2487,6 +2517,11 @@
       "path": "scripts/layout-kit-edge-2027.mjs",
       "size": 9832,
       "sha256": "4cc7e3cdb5e633b339349b070bf651bb2de5b8e2add9228e78293251f428d5db"
+    },
+    {
+      "path": "scripts/name-polo-variants.mjs",
+      "size": 1168,
+      "sha256": "872a4c8b64ba7e292f74b871bedeebbb9a7c78f015080b65ef04b23c19227153"
     },
     {
       "path": "scripts/npm-install.mjs",
@@ -2510,8 +2545,8 @@
     },
     {
       "path": "scripts/prepare-order-molds.py",
-      "size": 5104,
-      "sha256": "fb62a423cfc0cdedea2f52112330200f58b12cc16a982104cc9d56c92d0f4a29"
+      "size": 5425,
+      "sha256": "43952ec80ce729012dbc0f2de9d38886a387071e537f458b9c486d8804e34afb"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -2745,8 +2780,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 35767,
-      "sha256": "66395b800eb38cba9863e8b8d7fc4328dcbade3c2ed76423dff596768a829509"
+      "size": 38223,
+      "sha256": "c895bccc9b7c1647cc0eb17cb40a4cae82d6635f405424f24043f039e4c6ca93"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

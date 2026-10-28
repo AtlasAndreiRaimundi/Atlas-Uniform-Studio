@@ -29,7 +29,10 @@ export class TemplateService {
   }
   async row(id) {
     const row = await this.db.prepare('SELECT * FROM templates WHERE id = ?').bind(id).first() || this.installedRow(id);
-    if(!row)throw new AppError(404,'Molde não encontrado.');return row;
+    if(!row)throw new AppError(404,'Molde não encontrado.');
+    // Clarify the original default label even when it was persisted before the second polo existed.
+    if(id==='polo'&&row.name==='POLO')return {...row,name:'POLO COM RECORTE V'};
+    return row;
   }
   async catalog(user) {
     if(!user?.userId)throw new AppError(401,'Entre na sua conta para continuar.');
