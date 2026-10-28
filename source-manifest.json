@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "b943a89f86de42e7cef8323b488fbc7d36ffbd50",
-  "exported_at": "2026-10-27T22:39:30.847690+00:00",
+  "source_commit": "94bb256d21461648f3493a6bd8c910bd5aead85a",
+  "exported_at": "2026-10-28T13:33:17.712326+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -794,6 +794,11 @@
       "sha256": "9de6e86febdade358d2e03e0c060e0a30352704357bcfc426a584e6598073406"
     },
     {
+      "path": "docs/order-molds-2026-10.md",
+      "size": 3322,
+      "sha256": "9e871745b1740c28e579d2e80fbaeed1325acaf4ef32faf80b57b3f04f9c31ee"
+    },
+    {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
       "size": 3369,
       "sha256": "e3caa9e8337bf0c0f794e953ffcdf10529038f62ee46955960a149b22ad3d4e3"
@@ -1080,13 +1085,18 @@
     },
     {
       "path": "lib/installed-templates.mjs",
-      "size": 412726,
-      "sha256": "2e8e06b40cd366dc5ebd3c3a4372b20c807a5a2d3af3bacb0409d6eea41db2dd"
+      "size": 412815,
+      "sha256": "6eaba3cd83807be0662d41213b8689cd396f52297490fba267babdf195929e64"
     },
     {
       "path": "lib/list-service.mjs",
       "size": 9892,
       "sha256": "ca4678e5362b522836f2640c0e160786123d907df0997daa5a947ee27c18cdb3"
+    },
+    {
+      "path": "lib/order-mold-templates.mjs",
+      "size": 568566,
+      "sha256": "90fd08f02c3e429fb18ebea035f912b3d6a84c5d7c76fe523307c63a8d8fbea8"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1200,8 +1210,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 34837,
-      "sha256": "0e5f5ab3d8f937a0d6670d797c853513916605b0a95f08a81fb825f233029e3a"
+      "size": 35226,
+      "sha256": "0de99e8cd3738c6504a53d78133302d74839247a71a5ab51e99a4ed994080548"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1407,6 +1417,206 @@
       "path": "public/assets/molds/kit-edge-2027/thumbnail.png",
       "size": 222875,
       "sha256": "e9409bfcf25b6f643ea089e485d476ec07931448afa7f1c6c2ba53f207604110"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/descriptor.json",
+      "size": 14052,
+      "sha256": "0ae355ba75fd492566cac72ef475a138b382962c47be3c8c1a9a55405bdb379c"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/model.glb",
+      "size": 6038604,
+      "sha256": "77c9633b92ce49763c412a4dbf521dff725531e8088070d778f7e8613ab084bd"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/preparation.json",
+      "size": 654,
+      "sha256": "1027e8abb80e51fc3203d332010e046822f0476cd34fb71f2a67d10d85885a36"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/proof.svg",
+      "size": 133196,
+      "sha256": "cda5346d7fbe98eadd687245ef5c81894b2640cae05412c95378d54d2ed97346"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/source.glb",
+      "size": 5278536,
+      "sha256": "689e2f8c42130522edf247e63b9e0d61992e0c24a16e3243bf5493303ad3f13e"
+    },
+    {
+      "path": "public/assets/molds/kit-elite-27/template.svg",
+      "size": 130816,
+      "sha256": "15d68b7b24d81cdf9bf91b739f32d8a28248b38fa19cb1f72ad62a5c0be871cc"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/cloth-input.glb",
+      "size": 2227484,
+      "sha256": "4c940f9e17a1c63f23776be636c1d3d7100b7549beae4168b564bc959f3eeae4"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/descriptor.json",
+      "size": 10106,
+      "sha256": "141bbb3c93433cf99d20af2e93abbe0c2373e32bd3e3e0b7bf2ba9335881e3bb"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/model.glb",
+      "size": 2548916,
+      "sha256": "63c4045e7b6113e0d18bce24d10281063b4eaa3778a0bfbc2f4e443295b99d38"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/preparation.json",
+      "size": 558,
+      "sha256": "47224927fe659c2e2466c0d247b3ebfaeebc9c96a3cd87d7b21c9d5c801d4ee5"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/proof.svg",
+      "size": 73933,
+      "sha256": "b3d411ff68b51f5a74a4d88a378345715c07f32af4516aeea92fc79a04fd876b"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/source.glb",
+      "size": 2227484,
+      "sha256": "4c940f9e17a1c63f23776be636c1d3d7100b7549beae4168b564bc959f3eeae4"
+    },
+    {
+      "path": "public/assets/molds/kit-field-raglan/template.svg",
+      "size": 72293,
+      "sha256": "6d4e67796e5af536289a8507ecc5f32375753e77575a8760c1626607f5586834"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/cloth-input.glb",
+      "size": 5239680,
+      "sha256": "5c8f11f601db9adeab57bb988a58daa50ea619966455f2f1f800da3edc7f32eb"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/descriptor.json",
+      "size": 10109,
+      "sha256": "30c3f489739557401eb280609da1f06ebf06836a80bf363f96638cffafc22802"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/model.glb",
+      "size": 5993024,
+      "sha256": "2a04f0773d4971f72f7c8fcc2d5ae5cbcec1b4d7329fffdba089556351abb458"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/preparation.json",
+      "size": 562,
+      "sha256": "e1e6c49d7e4769d0909dfd3e272735f32b8f77f6f6fefbbac902d45012cf9f47"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/proof.svg",
+      "size": 107531,
+      "sha256": "787a59bac540ff27cab24f2fa0db754c9e7163590ac5865180d1086af0879572"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/source.glb",
+      "size": 5239680,
+      "sha256": "5c8f11f601db9adeab57bb988a58daa50ea619966455f2f1f800da3edc7f32eb"
+    },
+    {
+      "path": "public/assets/molds/kit-normal-basico/template.svg",
+      "size": 105935,
+      "sha256": "94ca06c8af0273acc1d9b0ac48b14bee12ebeeca6cd313f7c6f20f48df0ab8f4"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/descriptor.json",
+      "size": 8682,
+      "sha256": "a3af8d54f707bc9b13209af38b1142fe5622034289bc3cb47eb2ea959215f651"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/model.glb",
+      "size": 1214036,
+      "sha256": "687c61dffb75fca3d536f8faa7c8137872a0f7ad1adff86512a71ec3e0a5bf4f"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/preparation.json",
+      "size": 505,
+      "sha256": "a638fee5f38fdf0aa3bd33a11dc78bdad748fc9c2fd6667783917d19bd41a520"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/proof.svg",
+      "size": 59374,
+      "sha256": "27d902b9a4f1308f7e422e01415df4e65d93f49e189495dd44f7301b49e7d1fa"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/source.glb",
+      "size": 1060028,
+      "sha256": "83917c1fd91adebb8d01bf970fa2fae2fbff55fe89b33ccc1353ea5f7b7c0595"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-basico/template.svg",
+      "size": 58005,
+      "sha256": "429f3095f96268b8b3138d2c07d9132680311e6ae1105691ab3dce375adac982"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/cloth-input.glb",
+      "size": 2164372,
+      "sha256": "209648af7f33e097b7415d0a6de3704bba54637fa8146d3e9c69fdfd149adbb4"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/descriptor.json",
+      "size": 12175,
+      "sha256": "b293650641c1d11b0fceaf11b50db31eefb7766b050496d6645f5e20f1622a78"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/model.glb",
+      "size": 2477208,
+      "sha256": "545816c32d7181dc2a11f25fd38c483268280f2f8c90f3c478ae93d9df968925"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/preparation.json",
+      "size": 634,
+      "sha256": "bd57dfda68bdc6f6d00f8d038a45ae759921cf906c4635b523f38fac12f339dc"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/proof.svg",
+      "size": 83251,
+      "sha256": "b8787829f9962b578344d9ea4e0a7848c6b01bde290e87026f4625801053cc36"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/source.glb",
+      "size": 2164372,
+      "sha256": "209648af7f33e097b7415d0a6de3704bba54637fa8146d3e9c69fdfd149adbb4"
+    },
+    {
+      "path": "public/assets/molds/kit-raglan-elite/template.svg",
+      "size": 81241,
+      "sha256": "5d185a2d0191f1faffca90f570fbc55ab88c0810a1e44da0e03be645c35c56f1"
+    },
+    {
+      "path": "public/assets/molds/polo/cloth-input.glb",
+      "size": 4323808,
+      "sha256": "507c23f361cda5ed71651eff1600027fd03c09e83c7e8efcd692dbda8fe193bb"
+    },
+    {
+      "path": "public/assets/molds/polo/descriptor.json",
+      "size": 8999,
+      "sha256": "349a00126ac11819a6f8cc8b59809cd4d858d936b965ef86720d6e67a0aee2db"
+    },
+    {
+      "path": "public/assets/molds/polo/model.glb",
+      "size": 4640536,
+      "sha256": "61c1ed2c1fb4d006f26cde5ffc8373e9771a2beed9d4c87cfed3083c1a7ba27f"
+    },
+    {
+      "path": "public/assets/molds/polo/preparation.json",
+      "size": 475,
+      "sha256": "ad08b141e0ec4273533623f3e6712430aeb9350bf34693bc6b597577eaa5885e"
+    },
+    {
+      "path": "public/assets/molds/polo/proof.svg",
+      "size": 74398,
+      "sha256": "1168a4236bd025373d1a1f2cd3958d86b19d5e565c05ee03a8ee3030cb85ae02"
+    },
+    {
+      "path": "public/assets/molds/polo/source.glb",
+      "size": 4324532,
+      "sha256": "70fbbec779012f43cbf36064426cbc874f38d46389778c5812885458894da266"
+    },
+    {
+      "path": "public/assets/molds/polo/template.svg",
+      "size": 73131,
+      "sha256": "29664fc2cf0ad790e1ee7728875a10433a14c13f21e25a513a067184309c9152"
     },
     {
       "path": "public/assets/molds/simulator-elite-27-kit/model.glb",
@@ -2086,7 +2296,7 @@
     {
       "path": "public/viewer.html",
       "size": 24944,
-      "sha256": "b25d1ee432939887d1e6fd3dc7a50e3a29a57651e5b4993c76be9054ff349584"
+      "sha256": "cb8865435d25e6971505cad542e91a48394103172b39047ab14ae8af6af24bca"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2159,6 +2369,11 @@
       "sha256": "10d8764a61be50351dc3496e13588270de7956f0aa5f1189c49cabb2d89fe5c0"
     },
     {
+      "path": "scripts/install-order-molds.mjs",
+      "size": 8087,
+      "sha256": "e734c5a45006ca4a284062d0219fa8f581d1e1a22b8efb61e6e8cbc95ff6a7fd"
+    },
+    {
       "path": "scripts/install-pnpm.sh",
       "size": 9015,
       "sha256": "a684c02c2b493dfbf262a66252a5cd36f81ca995a4024761728662ae63aa40c0"
@@ -2187,6 +2402,11 @@
       "path": "scripts/prepare-atlas-favicons.mjs",
       "size": 1457,
       "sha256": "0558387f281fb7f4ce411f4f648017c3faaad8b729e8b64236c8a2e675fecb65"
+    },
+    {
+      "path": "scripts/prepare-order-molds.py",
+      "size": 5104,
+      "sha256": "fb62a423cfc0cdedea2f52112330200f58b12cc16a982104cc9d56c92d0f4a29"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -2415,8 +2635,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 28322,
-      "sha256": "579158384c52942a4da29eb5820cfcead0e0085eab89c4e716b885da6773db36"
+      "size": 31647,
+      "sha256": "fa34c584b5d7a6c276db4baf63ce4664baea53b1d504a71e8b8bd488a1f67528"
     },
     {
       "path": "tests/tracking-panel.test.mjs",

@@ -1,0 +1,23 @@
+{
+  "id": "kit-field-raglan",
+  "name": "KIT FIELD RAGLAN",
+  "category": "conjunto",
+  "sourceName": "KIT FIELD RAGLAN.glb",
+  "originalSourceSha256": "fd486745944f300b25b79783123615e3ecb10086600974cd527c24daf166675e",
+  "labels": [
+    "Cós do calção 1",
+    "Cós do calção 2",
+    "Cós do calção 3",
+    "Cós do calção 4",
+    "Calção direito",
+    "Calção esquerdo",
+    "Gola",
+    "Filete manga direita",
+    "Filete manga esquerda",
+    "Manga esquerda",
+    "Manga direita",
+    "Costas",
+    "Frente"
+  ],
+  "decorativeMeshes": []
+}

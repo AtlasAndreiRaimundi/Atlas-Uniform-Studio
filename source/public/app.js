@@ -237,6 +237,14 @@ async function init3D() {
     const builtin = templateConfig.kind === 'builtin';
     const id = builtin ? association?.primitives : `m${association?.meshes ?? 0}p${association?.primitives}`;
     const entry = !builtin && templateConfig.primitives.find(p => p.key === id);
+    // Buttons and stitching keep their geometry but never receive the drawing atlas.
+    if (entry?.decorativeOnly) {
+      if (!mesh.geometry.attributes.position) throw new Error('Detalhe do molde sem geometria.');
+      mesh.material = neutralMaterial(mesh.material);
+      useFabricInterior(mesh.material);
+      mesh.castShadow = true; mesh.receiveShadow = false;
+      return;
+    }
     const partNumber = !builtin ? templateConfig.primitives.indexOf(entry) + 1 : 0;
     const info = builtin ? PANEL_INFO.find(p => p.id === id) : entry ? { label: entry.displayName || `Parte ${partNumber}`, short: String(partNumber), color: ['#c6a05e','#4a83af','#bd5f57','#72a183'][partNumber % 4] } : null;
     if (!info || !mesh.geometry.attributes.position || !mesh.geometry.attributes.uv) throw new Error('Os painéis do modelo não correspondem a este molde.');
