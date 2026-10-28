@@ -57,3 +57,15 @@ Geração: `node scripts/create-shirt-variants.mjs`. Os projetos existentes e o 
 O campo “Molde da apresentação” permite alternar modelos sem sair do editor. A escolha passa a fazer parte da mesma revisão quando o usuário salva o projeto. Luz, nome e cliente são mantidos. Arte é reutilizada somente entre variantes explícitas do mesmo atlas, por exemplo kit e camiseta do mesmo kit. Trocas entre moldes distintos deixam a peça limpa para receber a arte correspondente; a arte anterior é guardada como arquivo na memória da sessão e pode ser recuperada voltando ao molde anterior antes de fechar o editor. Detalhes de câmera de um molde incompatível são removidos para evitar apontar para regiões erradas.
 
 O salvamento valida propriedade, revisão e publicação do novo molde. Molde e arte são atualizados juntos, sem reaproveitar miniatura ou mapa incompatíveis. Falhas não removem os arquivos anteriores. Clientes e propostas não recebem o seletor. Apresentações compartilhadas recarregam o modelo quando uma nova revisão salva muda o molde.
+
+## Polos com e sem recorte V
+
+A polo original (`polo`) passou a ser identificada como **POLO COM RECORTE V**, mantendo modelo, UVs, identificador e projetos existentes. O novo arquivo `polo sem recorte v.glb` está disponível separadamente como **POLO SEM RECORTE V** (`polo-sem-recorte-v`), com dez painéis, 74.640 triângulos de tecido e mapas próprios. Botões e costuras permanecem separados da arte, e o hash do GLB enviado está registrado em `preparation.json` e no descritor. As duas opções aparecem na criação de apresentação e no seletor de troca de molde do editor. Não compartilham mapas de desenho.
+
+Reprodução da nova importação:
+
+```sh
+python scripts/prepare-order-molds.py /caminho/dos/arquivos polo-sem-recorte-v
+node scripts/install-order-molds.mjs polo-sem-recorte-v
+node scripts/name-polo-variants.mjs
+```

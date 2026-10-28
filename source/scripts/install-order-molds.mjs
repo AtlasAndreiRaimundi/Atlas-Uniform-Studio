@@ -1,6 +1,6 @@
 import {readFile,writeFile,unlink} from 'node:fs/promises';
 import {generateTemplate,readGlb,readAccessor} from '../lib/template-generator.mjs';
-const root=new URL('../',import.meta.url),slugs=['kit-elite-27','kit-raglan-basico','kit-normal-basico','kit-raglan-elite','kit-field-raglan','polo'];
+const root=new URL('../',import.meta.url),slugs=process.argv[2]?[process.argv[2]]:['kit-elite-27','kit-raglan-basico','kit-normal-basico','kit-raglan-elite','kit-field-raglan','polo','polo-sem-recorte-v'];
 const enc=(json,binary)=>{const j=Buffer.from(JSON.stringify(json)),jl=Math.ceil(j.length/4)*4,bl=Math.ceil(binary.length/4)*4,b=Buffer.alloc(28+jl+bl);b.writeUInt32LE(0x46546c67);b.writeUInt32LE(2,4);b.writeUInt32LE(b.length,8);b.writeUInt32LE(jl,12);b.writeUInt32LE(0x4e4f534a,16);b.fill(32,20,20+jl);j.copy(b,20);b.writeUInt32LE(bl,20+jl);b.writeUInt32LE(0x004e4942,24+jl);b.set(binary,28+jl);return b;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 const entries=[];
@@ -12,7 +12,7 @@ for(const slug of slugs){
  const groups=[['CORPO_E_RECORTES','CORPO E RECORTES'],['GOLAS','GOLAS E PEITILHOS'],['MANGAS_E_FILETES','MANGAS + FILETES'],['CALCAO_E_COS','CALÇÃO + CÓS']].map(([id,title])=>({id,title,panels:[]}));
  for(const p of d.panels){p.label=meta.labels[p.mesh];p.displayName=`${p.label} · P${String(p.number).padStart(2,'0')}`;p.group=groupFor(p.label);groups.find(g=>g.id===p.group).panels.push(p.number);}
  for(const g of groups)g.panels.sort((a,b)=>{const rank=n=>{const l=d.panels[n-1].label;return /^Frente/.test(l)?0:/^Costas/.test(l)?1:/^Recorte/.test(l)?2:/^Manga/.test(l)?0:/^Filete/.test(l)?1:/^Calção/.test(l)?0:1;};return rank(a)-rank(b)||a-b;});
- if(slug!=='polo')groups[1].title='GOLAS';
+ if(!slug.startsWith('polo'))groups[1].title='GOLAS';
  // One shared scale preserves physical relationships. Body and collars share the top row.
  const gap=80,margin=100;
  function layout(scale,apply=false){
@@ -36,4 +36,5 @@ for(const slug of slugs){
  entries.push({descriptor:d,status:'published',sourceName:meta.sourceName,createdAt:'2026-10-28T12:00:00.000Z',assets:Object.fromEntries(['model','source','template','proof'].map(k=>[k,`/assets/molds/${slug}/${k}.${['model','source'].includes(k)?'glb':'svg'}`])),templateSvg});console.log(slug,d.triangles,d.panelCount);
 }
 if(entries.length!==slugs.length)throw Error(`Only ${entries.length}/${slugs.length} maps generated`);
-await writeFile(new URL('lib/order-mold-templates.mjs',root),'// Prepared owner-supplied models for presentations and orders. Simulator catalog remains independent.\nexport const ORDER_MOLD_TEMPLATES=Object.freeze('+JSON.stringify(entries)+');\n');
+const previous=process.argv[2]?(await import('../lib/order-mold-templates.mjs')).ORDER_MOLD_TEMPLATES.filter(e=>!slugs.includes(e.descriptor.id)):[];
+await writeFile(new URL('lib/order-mold-templates.mjs',root),'// Prepared owner-supplied models for presentations and orders. Simulator catalog remains independent.\nexport const ORDER_MOLD_TEMPLATES=Object.freeze('+JSON.stringify([...previous,...entries])+');\n');

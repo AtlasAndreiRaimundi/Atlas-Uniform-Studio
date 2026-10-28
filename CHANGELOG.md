@@ -142,3 +142,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Arte compartilhada somente entre variantes explícitas do mesmo atlas; outros moldes recebem arte própria. Arquivos da sessão permitem voltar à arte anterior. Falha de carregamento mantém o modelo anterior.
 - Salvamento atômico de molde e arte com autorização, publicação e revisão; miniaturas incompatíveis são invalidadas. Clientes e propostas não recebem o seletor; links compartilhados acompanham a troca na próxima atualização.
 - Fonte `e19ff90bfda5c13f540ee7413380acf7dbb785f7` (559 arquivos). 352 testes de regressão e dois novos testes de interface aprovados, um pulado na bateria completa. TypeScript e build concluídos. WebGL indisponível neste ambiente.
+
+## v76 — 2026-10-28
+- Adiciona POLO SEM RECORTE V, preparada do GLB fornecido pelo proprietário, com dez painéis, mapas SVG próprios e detalhes decorativos separados da arte.
+- Identifica a polo anterior como POLO COM RECORTE V, preservando ID, geometria, UVs e projetos existentes; nomes personalizados pelo administrador são mantidos.
+- Fonte `1e90182dddcd1b83892f1fad9aaff3a73ebe1458` (566 arquivos). 24 testes direcionados aprovados; TypeScript e build concluídos. Mapa inspecionado no navegador; renderização WebGL indisponível no ambiente.
