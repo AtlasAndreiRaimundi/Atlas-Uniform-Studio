@@ -1,11 +1,11 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {INSTALLED_TEMPLATES} from '../lib/installed-templates.mjs';
-const root=new URL('../',import.meta.url),entries=[];
+const root=new URL('../',import.meta.url),entries=[],passeio=process.argv[2]==='passeio';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-for(const base of INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto')){
- const d=structuredClone(base.descriptor),id=d.id+'-camiseta',name=d.id==='kit-passeio-prime'?'CAMISETA GOLA PRIME':d.name.replace(/^KIT\s+/i,'CAMISETA '),exclude=d.panels.filter(p=>p.group==='CALCAO_E_COS'||/cal[cç][aã]o|cós/i.test(p.label||p.displayName||'')),excludedMeshes=new Set(exclude.map(p=>p.mesh));
+for(const base of INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto'&&(passeio?e.descriptor.compositionVersion&&e.descriptor.garments[0]==='Camiseta':!e.descriptor.compositionVersion))){
+ const d=structuredClone(base.descriptor),id=d.id+'-camiseta',name=d.compositionVersion?INSTALLED_TEMPLATES.find(e=>e.descriptor.id===d.sourceComponents[0].templateId).descriptor.name:d.id==='kit-passeio-prime'?'CAMISETA GOLA PRIME':d.name.replace(/^KIT\s+/i,'CAMISETA '),exclude=d.panels.filter(p=>p.group==='CALCAO_E_COS'||p.group==='BERMUDA'||/cal[cç][aã]o|cós/i.test(p.label||p.displayName||'')),excludedMeshes=new Set(exclude.map(p=>p.mesh));
  if(!exclude.length)throw Error(`No shorts identified in ${d.id}`);
- d.baseTemplateId=d.id;d.id=id;d.name=name;d.category='camiseta';d.variant='shirt-only';delete d.garments;d.excludedPrimitiveKeys=d.primitives.filter(p=>excludedMeshes.has(p.mesh)).map(p=>p.key);d.primitives=d.primitives.filter(p=>!excludedMeshes.has(p.mesh));d.panels=d.panels.filter(p=>!excludedMeshes.has(p.mesh));d.panelCount=d.panels.length;d.layoutGroups=d.layoutGroups.filter(g=>g.id!=='CALCAO_E_COS');
+ d.baseTemplateId=d.id;d.id=id;d.name=name;d.category='camiseta';d.variant='shirt-only';delete d.garments;d.excludedPrimitiveKeys=d.primitives.filter(p=>excludedMeshes.has(p.mesh)).map(p=>p.key);d.primitives=d.primitives.filter(p=>!excludedMeshes.has(p.mesh));d.panels=d.panels.filter(p=>!excludedMeshes.has(p.mesh));d.panelCount=d.panels.length;d.layoutGroups=d.layoutGroups.filter(g=>g.id!=='CALCAO_E_COS'&&g.id!=='BERMUDA');
  const source=await readFile(new URL('public'+base.assets.model,root));const {readGlb}=await import('../lib/template-generator.mjs');const {json}=readGlb(source);d.triangles=0;d.vertices=0;for(const p of d.primitives){if(p.decorativeOnly)continue;const pr=json.meshes[p.mesh].primitives[p.primitive];d.vertices+=json.accessors[pr.attributes.POSITION].count;d.triangles+=json.accessors[pr.indices].count/3;}
  delete d.thumbnailUrl;
  const dir=new URL(`public/assets/molds/${id}/`,root);await mkdir(dir,{recursive:true});
@@ -16,4 +16,4 @@ for(const base of INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descri
  const templateSvg=await svg(false);await writeFile(new URL('template.svg',dir),templateSvg);await writeFile(new URL('proof.svg',dir),await svg(true));await writeFile(new URL('descriptor.json',dir),JSON.stringify(d,null,2)+'\n');
  entries.push({descriptor:d,status:'published',sourceName:base.sourceName,createdAt:'2026-10-28T14:00:00.000Z',assets:{...base.assets,template:`/assets/molds/${id}/template.svg`,proof:`/assets/molds/${id}/proof.svg`},templateSvg});console.log(name,d.panelCount);
 }
-await writeFile(new URL('lib/shirt-presentation-templates.mjs',root),'// Shirt-only views share the immutable base model and UV coordinates.\nexport const SHIRT_PRESENTATION_TEMPLATES=Object.freeze('+JSON.stringify(entries)+');\n');
+await writeFile(new URL(passeio?'lib/composed-passeio-shirts.mjs':'lib/shirt-presentation-templates.mjs',root),'// Shirt-only views share the immutable base model and UV coordinates.\nexport const '+(passeio?'COMPOSED_PASSEIO_SHIRTS':'SHIRT_PRESENTATION_TEMPLATES')+'=Object.freeze('+JSON.stringify(entries)+');\n');

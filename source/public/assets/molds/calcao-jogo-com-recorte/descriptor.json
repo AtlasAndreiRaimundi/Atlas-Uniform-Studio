@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "calcao-jogo-com-recorte",
+  "name": "CALÇÃO DE JOGO COM RECORTE",
+  "category": "calcao",
+  "pageSize": 4096,
+  "sourceSha256": "24ece996d3fba4f504a45a9c1eab23895a80f5370e292cae8250fe60c02c7221",
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 4078,
+  "vertices": 2284,
+  "panelCount": 10,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Calção costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção costas esquerdo"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Recorte lateral esquerdo",
+      "islandCount": 1,
+      "displayName": "Recorte lateral esquerdo"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Calção frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Calção frente esquerdo"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Calção frente direito",
+      "islandCount": 1,
+      "displayName": "Calção frente direito"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Recorte lateral direito",
+      "islandCount": 1,
+      "displayName": "Recorte lateral direito"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Calção costas direito",
+      "islandCount": 1,
+      "displayName": "Calção costas direito"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 1565.8813021643468,
+        "w": 621.8081030201515,
+        "h": 175.03480881474775
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 29,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P01",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 801.8081030201515,
+        "y": 1565.8813021643468,
+        "w": 621.8081030201515,
+        "h": 175.03409496095338
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.0292295217514038
+      ],
+      "contourVertices": 29,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P02",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 1503.616206040303,
+        "y": 1565.8813021643468,
+        "w": 621.8081030201515,
+        "h": 175.03480881474775
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 28,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P03",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 2205.4243090604546,
+        "y": 1565.8813021643468,
+        "w": 621.8081030201515,
+        "h": 175.03480881474775
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707702398300171,
+        0.10383821278810501,
+        1.029229760169983
+      ],
+      "contourVertices": 28,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P04",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 330,
+        "w": 857.674989085789,
+        "h": 1135.8813021643468
+      },
+      "uvBounds": [
+        0.6557251214981079,
+        0.2486342191696167,
+        0.9421782493591309,
+        0.6280049085617065
+      ],
+      "contourVertices": 66,
+      "label": "Calção costas esquerdo",
+      "displayName": "Calção costas esquerdo · P05",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 2907.232412080606,
+        "y": 1565.8813021643468,
+        "w": 170.72331036028513,
+        "h": 1113.7520130027544
+      },
+      "uvBounds": [
+        0.9421198964118958,
+        0.25716501474380493,
+        0.9991394281387329,
+        0.6291447877883911
+      ],
+      "contourVertices": 45,
+      "label": "Recorte lateral esquerdo",
+      "displayName": "Recorte lateral esquerdo · P06",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 1037.674989085789,
+        "y": 330,
+        "w": 912.8483919246795,
+        "h": 1124.8927722443739
+      },
+      "uvBounds": [
+        0.9990812540054321,
+        0.25852805376052856,
+        1.3039616346359253,
+        0.6342287063598633
+      ],
+      "contourVertices": 67,
+      "label": "Calção frente esquerdo",
+      "displayName": "Calção frente esquerdo · P07",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 2030.5233810104687,
+        "y": 330,
+        "w": 916.9566205111992,
+        "h": 1124.1400134182252
+      },
+      "uvBounds": [
+        1.4950281381607056,
+        0.2584148645401001,
+        1.8012806177139282,
+        0.6338641047477722
+      ],
+      "contourVertices": 67,
+      "label": "Calção frente direito",
+      "displayName": "Calção frente direito · P08",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 3157.9557224408913,
+        "y": 1565.8813021643468,
+        "w": 170.72420267752807,
+        "h": 1104.0951773361528
+      },
+      "uvBounds": [
+        1.8012219667434692,
+        0.26371753215789795,
+        1.8582417964935303,
+        0.632472038269043
+      ],
+      "contourVertices": 45,
+      "label": "Recorte lateral direito",
+      "displayName": "Recorte lateral direito · P09",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 3027.480001521668,
+        "y": 330,
+        "w": 858.8399984781782,
+        "h": 1125.5120404109778
+      },
+      "uvBounds": [
+        1.85818350315094,
+        0.2562565207481384,
+        2.1450257301330566,
+        0.6321640014648438
+      ],
+      "contourVertices": 66,
+      "label": "Calção costas direito",
+      "displayName": "Calção costas direito · P10",
+      "group": "CALCAO_E_COS"
+    }
+  ],
+  "texelsPerUvUnit": 2994.119825083226,
+  "layoutGroups": [
+    {
+      "id": "CALCAO_E_COS",
+      "title": "CALÇÃO + RECORTES + CÓS",
+      "panels": [
+        5,
+        7,
+        8,
+        10,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ],
+      "heading": {
+        "x": 100,
+        "y": 250
+      }
+    }
+  ],
+  "originalSourceSha256": "08c4f2263710c3b28d2b1a02baf5d31a784c08c11c584eda818063ca873684ba",
+  "preparation": "outer-surfaces-v1",
+  "line": "jogo",
+  "bottomVariant": "com-recorte"
+}

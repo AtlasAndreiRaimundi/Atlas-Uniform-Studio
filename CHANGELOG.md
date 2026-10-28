@@ -153,3 +153,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - O kit declara Camiseta + Bermuda explicitamente na integração com pedidos. A camiseta compartilha o atlas do kit; a bermuda avulsa usa o arquivo separado e mapa próprio. Costuras decorativas ficam fora da arte.
 - Mantém modelos anteriores e simulador. Grupos de seleção usam o título genérico Kits completos.
 - Fonte `4265f37a36525213e89033010465821f81298936` (581 arquivos). 357 testes aprovados, um pulado; TypeScript e build concluídos. Os três mapas foram revisados no navegador; renderização visual 3D não foi conferida neste ambiente.
+
+## v80 — 2026-10-28
+- Abas Jogo/Passeio, oito kits de passeio, seis camisetas avulsas e seis kits de jogo com o calção com recorte enviado. Modelos anteriores preservados.
+- Mapas próprios e renomeação no ADM, preservando composição e UVs. Avatar e animações desnecessários removidos do novo calção.
+- Fonte `a516e9ce2ba6391936d4654cdff182bafd167059` (668 arquivos). 362 testes aprovados, um pulado; TypeScript/build concluídos. Geometria e mapas conferidos; renderização WebGL final não validada neste ambiente.
