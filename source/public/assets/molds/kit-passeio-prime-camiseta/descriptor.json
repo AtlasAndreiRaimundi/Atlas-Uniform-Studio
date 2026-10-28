@@ -1,0 +1,355 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "kit-passeio-prime-camiseta",
+  "name": "CAMISETA GOLA PRIME",
+  "category": "camiseta",
+  "pageSize": 4096,
+  "sourceSha256": "290c43144f9343349bbf7a7c75d69cfa18103d1ca0fa76da787ac50bcd0ee431",
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 70295,
+  "vertices": 35974,
+  "panelCount": 9,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Filete manga esquerda",
+      "islandCount": 1,
+      "displayName": "Filete manga esquerda"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Filete manga direita",
+      "islandCount": 1,
+      "displayName": "Filete manga direita"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente"
+    },
+    {
+      "key": "m13p0",
+      "mesh": 13,
+      "primitive": 0,
+      "label": "Gola Prime frontal",
+      "islandCount": 1,
+      "displayName": "Gola Prime frontal"
+    },
+    {
+      "key": "m14p0",
+      "mesh": 14,
+      "primitive": 0,
+      "label": "Gola Prime traseira",
+      "islandCount": 1,
+      "displayName": "Gola Prime traseira"
+    },
+    {
+      "key": "m15p0",
+      "mesh": 15,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas"
+    },
+    {
+      "key": "m16p0",
+      "mesh": 16,
+      "primitive": 0,
+      "label": "Acabamento interno da gola",
+      "islandCount": 1,
+      "displayName": "Acabamento interno da gola"
+    },
+    {
+      "key": "m17p0",
+      "mesh": 17,
+      "primitive": 0,
+      "label": "Topstitch_24435380",
+      "displayName": "Topstitch_24435380",
+      "decorativeOnly": true,
+      "islandCount": 0
+    },
+    {
+      "key": "m18p0",
+      "mesh": 18,
+      "primitive": 0,
+      "label": "Topstitch_24454075",
+      "displayName": "Topstitch_24454075",
+      "decorativeOnly": true,
+      "islandCount": 0
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 1471.0248223953388,
+        "y": 1636.5108002113407,
+        "w": 485.9704830519724,
+        "h": 42.087723590562405
+      },
+      "uvBounds": [
+        -0.5916404128074646,
+        -0.4490509033203125,
+        -0.2744276225566864,
+        -0.4215785264968872
+      ],
+      "contourVertices": 114,
+      "label": "Filete manga esquerda",
+      "displayName": "Filete manga esquerda · P01",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 2036.9953054473112,
+        "y": 1636.5108002113407,
+        "w": 485.9704602233705,
+        "h": 42.087723590562405
+      },
+      "uvBounds": [
+        0.23578540980815887,
+        -0.4564664363861084,
+        0.5529981851577759,
+        -0.4289940595626831
+      ],
+      "contourVertices": 115,
+      "label": "Filete manga direita",
+      "displayName": "Filete manga direita · P02",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 1636.5108002113407,
+        "w": 606.9821165874204,
+        "h": 287.96126265641624
+      },
+      "uvBounds": [
+        0.168013334274292,
+        -0.6320221424102783,
+        0.564215362071991,
+        -0.44405806064605713
+      ],
+      "contourVertices": 174,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P03",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 786.9821165874204,
+        "y": 1636.5108002113407,
+        "w": 604.0427058079184,
+        "h": 292.4731075341791
+      },
+      "uvBounds": [
+        -0.6550585031509399,
+        -0.6110243797302246,
+        -0.2607751488685608,
+        -0.42011523246765137
+      ],
+      "contourVertices": 170,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P04",
+      "group": "MANGAS_E_FILETES"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 340,
+        "w": 677.8802891084508,
+        "h": 1012.0945592278831
+      },
+      "uvBounds": [
+        -0.24496841430664062,
+        -0.5862672328948975,
+        0.19751174747943878,
+        0.07436823844909668
+      ],
+      "contourVertices": 388,
+      "label": "Frente",
+      "displayName": "Frente · P13",
+      "group": "CORPO_E_RECORTES"
+    },
+    {
+      "number": 14,
+      "mesh": 13,
+      "primitive": 0,
+      "rect": {
+        "x": 2900,
+        "y": 340,
+        "w": 275.54948877982036,
+        "h": 133.2631506267681
+      },
+      "uvBounds": [
+        -0.11281461268663406,
+        -0.5876857042312622,
+        0.06704779714345932,
+        -0.5006994009017944
+      ],
+      "contourVertices": 92,
+      "label": "Gola Prime frontal",
+      "displayName": "Gola Prime frontal · P14",
+      "group": "GOLAS"
+    },
+    {
+      "number": 15,
+      "mesh": 14,
+      "primitive": 0,
+      "rect": {
+        "x": 3255.5494887798204,
+        "y": 340,
+        "w": 354.1277736920742,
+        "h": 93.95960332284787
+      },
+      "uvBounds": [
+        0.7303282618522644,
+        -0.6221948862075806,
+        0.9614819288253784,
+        -0.5608636140823364
+      ],
+      "contourVertices": 89,
+      "label": "Gola Prime traseira",
+      "displayName": "Gola Prime traseira · P15",
+      "group": "GOLAS"
+    },
+    {
+      "number": 16,
+      "mesh": 15,
+      "primitive": 0,
+      "rect": {
+        "x": 857.8802891084508,
+        "y": 340,
+        "w": 798.3171212768821,
+        "h": 1056.5108002113407
+      },
+      "uvBounds": [
+        0.5811718702316284,
+        -0.610166072845459,
+        1.1022660732269287,
+        0.07946169376373291
+      ],
+      "contourVertices": 399,
+      "label": "Costas",
+      "displayName": "Costas · P16",
+      "group": "CORPO_E_RECORTES"
+    },
+    {
+      "number": 17,
+      "mesh": 16,
+      "primitive": 0,
+      "rect": {
+        "x": 2900,
+        "y": 573.263150626768,
+        "w": 375.6661943187248,
+        "h": 88.43124646007678
+      },
+      "uvBounds": [
+        0.7232046127319336,
+        -0.6123278141021729,
+        0.9684172868728638,
+        -0.5546051263809204
+      ],
+      "contourVertices": 94,
+      "label": "Acabamento interno da gola",
+      "displayName": "Acabamento interno da gola · P17",
+      "group": "GOLAS"
+    }
+  ],
+  "texelsPerUvUnit": 1532.0015396219674,
+  "layoutGroups": [
+    {
+      "id": "CORPO_E_RECORTES",
+      "title": "CORPO E RECORTES",
+      "panels": [
+        13,
+        16
+      ],
+      "heading": {
+        "x": 100,
+        "y": 250
+      }
+    },
+    {
+      "id": "GOLAS",
+      "title": "GOLAS",
+      "panels": [
+        14,
+        15,
+        17
+      ],
+      "heading": {
+        "x": 2900,
+        "y": 250
+      }
+    },
+    {
+      "id": "MANGAS_E_FILETES",
+      "title": "MANGAS + FILETES",
+      "panels": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "heading": {
+        "x": 100,
+        "y": 1556.5108002113407
+      }
+    }
+  ],
+  "originalSourceSha256": "8396a8a2ceae9d7e60a478ab731762aa55c02e48152861cb02e282b87b463683",
+  "preparation": "outer-surfaces-v1",
+  "baseTemplateId": "kit-passeio-prime",
+  "variant": "shirt-only",
+  "excludedPrimitiveKeys": [
+    "m4p0",
+    "m5p0",
+    "m6p0",
+    "m7p0",
+    "m8p0",
+    "m9p0",
+    "m10p0",
+    "m11p0"
+  ]
+}

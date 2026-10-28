@@ -1,0 +1,30 @@
+{
+  "id": "kit-passeio-prime",
+  "name": "KIT DE PASSEIO PRIME",
+  "category": "conjunto",
+  "sourceName": "CONJUNTO PRIME + BERMUDA PASSEIO.glb",
+  "originalSourceSha256": "8396a8a2ceae9d7e60a478ab731762aa55c02e48152861cb02e282b87b463683",
+  "labels": [
+    "Filete manga esquerda",
+    "Filete manga direita",
+    "Manga direita",
+    "Manga esquerda",
+    "Bermuda costas direita",
+    "Bermuda frente direita",
+    "Cós externo da bermuda",
+    "Vista do bolso direito",
+    "Bermuda costas esquerda",
+    "Bermuda frente esquerda",
+    "Vista do bolso esquerdo",
+    "Cós interno da bermuda",
+    "Frente",
+    "Gola Prime frontal",
+    "Gola Prime traseira",
+    "Costas",
+    "Acabamento interno da gola"
+  ],
+  "decorativeMeshes": [
+    17,
+    18
+  ]
+}

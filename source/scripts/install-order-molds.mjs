@@ -1,6 +1,6 @@
 import {readFile,writeFile,unlink} from 'node:fs/promises';
 import {generateTemplate,readGlb,readAccessor} from '../lib/template-generator.mjs';
-const root=new URL('../',import.meta.url),slugs=process.argv[2]?[process.argv[2]]:['kit-elite-27','kit-raglan-basico','kit-normal-basico','kit-raglan-elite','kit-field-raglan','polo','polo-sem-recorte-v'];
+const root=new URL('../',import.meta.url),slugs=process.argv[2]?[process.argv[2]]:['kit-elite-27','kit-raglan-basico','kit-normal-basico','kit-raglan-elite','kit-field-raglan','polo','polo-sem-recorte-v','kit-passeio-prime','bermuda-passeio'];
 const enc=(json,binary)=>{const j=Buffer.from(JSON.stringify(json)),jl=Math.ceil(j.length/4)*4,bl=Math.ceil(binary.length/4)*4,b=Buffer.alloc(28+jl+bl);b.writeUInt32LE(0x46546c67);b.writeUInt32LE(2,4);b.writeUInt32LE(b.length,8);b.writeUInt32LE(jl,12);b.writeUInt32LE(0x4e4f534a,16);b.fill(32,20,20+jl);j.copy(b,20);b.writeUInt32LE(bl,20+jl);b.writeUInt32LE(0x004e4942,24+jl);b.set(binary,28+jl);return b;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 const entries=[];
@@ -8,7 +8,7 @@ for(const slug of slugs){
  const dir=new URL(`public/assets/molds/${slug}/`,root),meta=JSON.parse(await readFile(new URL('preparation.json',dir))),input=await readFile(new URL('cloth-input.glb',dir));
  let result;try{result=await generateTemplate(input,{id:slug,name:meta.name,category:meta.category});}catch(e){console.error(slug,e.message);continue;}
  const d=result.descriptor,old=structuredClone(d),{json,binary}=readGlb(result.model);
- const groupFor=label=>/Calção|Cós/.test(label)?'CALCAO_E_COS':/Manga|Filete/.test(label)?'MANGAS_E_FILETES':/Gola|gola|Colarinho|Peitilho/.test(label)?'GOLAS':'CORPO_E_RECORTES';
+ const groupFor=label=>/Calção|Cós|Bermuda|bolso/.test(label)?'CALCAO_E_COS':/Manga|Filete/.test(label)?'MANGAS_E_FILETES':/Gola|gola|Colarinho|Peitilho/.test(label)?'GOLAS':'CORPO_E_RECORTES';
  const groups=[['CORPO_E_RECORTES','CORPO E RECORTES'],['GOLAS','GOLAS E PEITILHOS'],['MANGAS_E_FILETES','MANGAS + FILETES'],['CALCAO_E_COS','CALÇÃO + CÓS']].map(([id,title])=>({id,title,panels:[]}));
  for(const p of d.panels){p.label=meta.labels[p.mesh];p.displayName=`${p.label} · P${String(p.number).padStart(2,'0')}`;p.group=groupFor(p.label);groups.find(g=>g.id===p.group).panels.push(p.number);}
  for(const g of groups)g.panels.sort((a,b)=>{const rank=n=>{const l=d.panels[n-1].label;return /^Frente/.test(l)?0:/^Costas/.test(l)?1:/^Recorte/.test(l)?2:/^Manga/.test(l)?0:/^Filete/.test(l)?1:/^Calção/.test(l)?0:1;};return rank(a)-rank(b)||a-b;});
@@ -19,10 +19,10 @@ for(const slug of slugs){
   const rects=new Map();const pack=(ids,x,y,maxW)=>{let xx=x,yy=y,rowH=0,right=x;for(const n of ids){const p=d.panels[n-1],w=(p.uvBounds[2]-p.uvBounds[0])*scale,h=(p.uvBounds[3]-p.uvBounds[1])*scale;if(w>maxW)return null;if(xx>x&&xx+w>x+maxW){xx=x;yy+=rowH+100;rowH=0;}rects.set(n,{x:xx,y:yy,w,h});right=Math.max(right,xx+w);xx+=w+gap;rowH=Math.max(rowH,h);}return {bottom:yy+rowH,right};};
   const body=pack(groups[0].panels,margin,340,2650),gola=pack(groups[1].panels,2900,340,1096);if(!body||!gola)return null;
   const sleeveY=Math.max(body.bottom,gola.bottom)+160,sleeves=pack(groups[2].panels,margin,sleeveY+80,3896);if(!sleeves)return null;
-  const shortsY=sleeves.bottom+160,shorts=pack(groups[3].panels,margin,shortsY+80,3896);if(!shorts||shorts.bottom>3996)return null;
+  const shortsY=groups.slice(0,3).every(g=>!g.panels.length)?250:sleeves.bottom+160,shorts=pack(groups[3].panels,margin,shortsY+80,3896);if(!shorts||shorts.bottom>3996)return null;
   if(apply){for(const p of d.panels)p.rect=rects.get(p.number);groups[0].heading={x:100,y:250};groups[1].heading={x:2900,y:250};groups[2].heading={x:100,y:sleeveY};groups[3].heading={x:100,y:shortsY};}return true;
  }
- let lo=0,hi=10000;for(let i=0;i<45;i++){const m=(lo+hi)/2;if(layout(m))lo=m;else hi=m;}const scale=lo*.97;layout(scale,true);d.texelsPerUvUnit=scale;d.layoutGroups=groups.filter(g=>g.panels.length);d.sourceSha256=Buffer.from(await crypto.subtle.digest('SHA-256',await readFile(new URL('source.glb',dir)))).toString('hex');d.originalSourceSha256=meta.originalSourceSha256;d.preparation='outer-surfaces-v1';
+ let lo=0,hi=10000;for(let i=0;i<45;i++){const m=(lo+hi)/2;if(layout(m))lo=m;else hi=m;}const scale=lo*.97;layout(scale,true);d.texelsPerUvUnit=scale;d.layoutGroups=groups.filter(g=>g.panels.length);if(['kit-passeio-prime','bermuda-passeio'].includes(slug)){const g=d.layoutGroups.find(g=>g.id==='CALCAO_E_COS');if(g)g.title='BERMUDA + CÓS + BOLSOS';}d.sourceSha256=Buffer.from(await crypto.subtle.digest('SHA-256',await readFile(new URL('source.glb',dir)))).toString('hex');d.originalSourceSha256=meta.originalSourceSha256;d.preparation='outer-surfaces-v1';if(slug==='kit-passeio-prime')d.garments=['Camiseta','Bermuda'];
  const view=new DataView(binary.buffer,binary.byteOffset,binary.byteLength);
  for(const pr of d.primitives){const p=d.panels.find(p=>p.mesh===pr.mesh&&p.primitive===pr.primitive);pr.label=p.label;pr.displayName=p.label;json.meshes[pr.mesh].name=p.label;const prim=json.meshes[pr.mesh].primitives[pr.primitive],uv=readAccessor(json,binary,prim.attributes.TEXCOORD_1),a=json.accessors[prim.attributes.TEXCOORD_0],v=json.bufferViews[a.bufferView];for(let i=0;i<uv.count;i++){// All supplied cloth meshes have exactly one UV island.
   if(pr.islandCount!==1)throw Error(`${slug}: multiple islands need per-vertex island mapping`);

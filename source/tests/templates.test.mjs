@@ -268,8 +268,8 @@ test('the original mold supports rename and reversible deletion without touching
   assert.equal((await templates.restore(admin,id)).status,'published');assert.equal(objects.size,0);
 });
 
-test('seven order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
- const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,7);
+test('nine order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
+ const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,9);
  const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
  for(const entry of ORDER_MOLD_TEMPLATES){
   const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);
@@ -282,7 +282,7 @@ test('seven order molds preserve cloth geometry, original UVs and scene transfor
    assert.ok(p.rect.x>=0&&p.rect.y>=0&&p.rect.x+p.rect.w<=4096&&p.rect.y+p.rect.h<=4096);
   }
   for(let i=0;i<d.panels.length;i++)for(let j=i+1;j<d.panels.length;j++){const a=d.panels[i].rect,b=d.panels[j].rect;assert.ok(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y);}
-  const gltf=await new GLTFLoader().parseAsync(modelBytes.buffer.slice(modelBytes.byteOffset,modelBytes.byteOffset+modelBytes.byteLength),'');let cloth=0,decorations=0;gltf.scene.traverse(mesh=>{if(!mesh.isMesh)return;const a=gltf.parser.associations.get(mesh),p=d.primitives.find(p=>p.key===`m${a.meshes??0}p${a.primitives}`);assert.ok(p);if(p.decorativeOnly)decorations++;else {cloth++;prepareBakedGeometry(mesh.geometry);}});assert.equal(cloth,d.panelCount);assert.equal(decorations,d.id.startsWith('polo')?6:0);
+  const gltf=await new GLTFLoader().parseAsync(modelBytes.buffer.slice(modelBytes.byteOffset,modelBytes.byteOffset+modelBytes.byteLength),'');let cloth=0,decorations=0;gltf.scene.traverse(mesh=>{if(!mesh.isMesh)return;const a=gltf.parser.associations.get(mesh),p=d.primitives.find(p=>p.key===`m${a.meshes??0}p${a.primitives}`);assert.ok(p);if(p.decorativeOnly)decorations++;else {cloth++;prepareBakedGeometry(mesh.geometry);}});assert.equal(cloth,d.panelCount);assert.equal(decorations,d.id.startsWith('polo')?6:d.id==='kit-passeio-prime'?2:0);
   assert.match(entry.templateSvg,/ARTE_DESENHE_AQUI/);assert.match(entry.templateSvg,/GUIAS_OCULTAR_ANTES_DE_EXPORTAR/);
  }
  const simulator=await readFile(new URL('../public/simulator-catalog.js',import.meta.url),'utf8').catch(()=> '');for(const e of ORDER_MOLD_TEMPLATES)assert.ok(!simulator.includes(`/assets/molds/${e.descriptor.id}/`));
@@ -293,7 +293,7 @@ test('each published kit has a shirt-only presentation with its own map, framing
  const kits=INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto');assert.equal(SHIRT_PRESENTATION_TEMPLATES.length,kits.length);
  const {templates,projects}=setup(INSTALLED_TEMPLATES);for(const kit of kits){const shirt=SHIRT_PRESENTATION_TEMPLATES.find(e=>e.descriptor.baseTemplateId===kit.descriptor.id);assert.ok(shirt);const d=shirt.descriptor;assert.equal(d.category,'camiseta');assert.ok(d.panels.every(p=>p.group!=='CALCAO_E_COS'));assert.ok(d.panels.length<kit.descriptor.panels.length);assert.ok(!shirt.templateSvg.includes('id="CALCAO_E_COS"'));
   const project=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,project.id)).id,d.id);assert.equal((await projects.template(other,project.id)).category,'camiseta');
-  const b=await readFile(new URL(`../public${shirt.assets.model}`,import.meta.url)),g=await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'');const height=new Box3().setFromObject(g.scene).getSize(new Vector3()).y;selectPresentationGarments(g.scene,g.parser.associations,d);let count=0;g.scene.traverse(mesh=>{if(!mesh.isMesh)return;count++;const a=g.parser.associations.get(mesh);assert.ok(!d.excludedPrimitiveKeys.includes(`m${a.meshes}p${a.primitives}`));prepareBakedGeometry(mesh.geometry);});assert.equal(count,d.primitives.length);assert.ok(new Box3().setFromObject(g.scene).getSize(new Vector3()).y<height);
+  const b=await readFile(new URL(`../public${shirt.assets.model}`,import.meta.url)),g=await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'');const height=new Box3().setFromObject(g.scene).getSize(new Vector3()).y;selectPresentationGarments(g.scene,g.parser.associations,d);let count=0;g.scene.traverse(mesh=>{if(!mesh.isMesh)return;count++;const a=g.parser.associations.get(mesh);assert.ok(!d.excludedPrimitiveKeys.includes(`m${a.meshes}p${a.primitives}`));const entry=d.primitives.find(p=>p.key===`m${a.meshes}p${a.primitives}`);if(!entry.decorativeOnly)prepareBakedGeometry(mesh.geometry);});assert.equal(count,d.primitives.length);assert.ok(new Box3().setFromObject(g.scene).getSize(new Vector3()).y<height);
   for(const p of d.panels)assert.deepEqual(p,kit.descriptor.panels.find(q=>q.number===p.number));
  }
 });
@@ -322,4 +322,14 @@ test('polo variants use distinct models and maps without replacing the original 
 test('the original polo default name is clarified for persisted rows while custom admin names remain intact',async()=>{
  const entry=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='polo'),legacy={...entry,descriptor:{...entry.descriptor,name:'POLO'}},{db,bucket,templates}=setup(INSTALLED_TEMPLATES),old=new TemplateService(db,bucket,admin.userId,[legacy]);await old.ensureInstalled('polo');assert.equal((await templates.catalog(other)).find(t=>t.id==='polo').name,'POLO COM RECORTE V');assert.equal((await templates.descriptor('polo')).name,'POLO COM RECORTE V');const map=await templates.asset('polo','template');if(map.body)assert.match(map.body,/POLO COM RECORTE V/);
  await templates.update(admin,'polo',{name:'Polo personalizada da fábrica',category:'camiseta'});assert.equal((await templates.descriptor('polo')).name,'Polo personalizada da fábrica');
+});
+
+test('Prime casual kit, Prime collar shirt and casual shorts are distinct choices with the correct order garments',async()=>{
+ const {presentationGarments}=await import('../public/order-presentation.js');
+ const kit=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='kit-passeio-prime'),shirt=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='kit-passeio-prime-camiseta'),shorts=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='bermuda-passeio');assert.ok(kit&&shirt&&shorts);
+ assert.equal(kit.descriptor.name,'KIT DE PASSEIO PRIME');assert.equal(shirt.descriptor.name,'CAMISETA GOLA PRIME');assert.equal(shorts.descriptor.name,'BERMUDA DE PASSEIO');assert.equal(kit.descriptor.panelCount,17);assert.equal(shirt.descriptor.panelCount,9);assert.equal(shorts.descriptor.panelCount,8);assert.equal(shirt.descriptor.triangles,70295);assert.equal(shorts.descriptor.triangles,9486);
+ assert.deepEqual(presentationGarments(kit.descriptor),['Camiseta','Bermuda']);assert.equal(presentationGarments(shirt.descriptor),null);assert.equal(presentationGarments(shorts.descriptor),null);
+ assert.ok(shirt.descriptor.panels.every(p=>p.group!=='CALCAO_E_COS'));assert.ok(shorts.descriptor.panels.every(p=>p.group==='CALCAO_E_COS'));assert.match(shorts.templateSvg,/BERMUDA \+ CÓS \+ BOLSOS/);assert.equal(shorts.sourceName,'BERMUDA PASSEIO.glb');
+ const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);for(const entry of [kit,shirt,shorts]){assert.ok(catalog.some(t=>t.id===entry.descriptor.id&&t.name===entry.descriptor.name));const p=await projects.create(other,{name:entry.descriptor.name,templateId:entry.descriptor.id});assert.equal((await projects.template(other,p.id)).id,entry.descriptor.id);}
+ const {compatibleTemplateArt}=await import('../public/template-family.js');assert.equal(compatibleTemplateArt(kit.descriptor,shirt.descriptor),true);assert.equal(compatibleTemplateArt(kit.descriptor,shorts.descriptor),false);
 });

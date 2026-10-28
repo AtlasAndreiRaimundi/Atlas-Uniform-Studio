@@ -1,0 +1,18 @@
+{
+  "id": "bermuda-passeio",
+  "name": "BERMUDA DE PASSEIO",
+  "category": "calcao",
+  "sourceName": "BERMUDA PASSEIO.glb",
+  "originalSourceSha256": "d7f6c155be6fdb6ec47115b3ef2bafc8fa859359cfc3b7657b3a93d4562c5c3d",
+  "labels": [
+    "Bermuda costas direita",
+    "Bermuda frente direita",
+    "Cós externo da bermuda",
+    "Vista do bolso direito",
+    "Bermuda costas esquerda",
+    "Bermuda frente esquerda",
+    "Vista do bolso esquerdo",
+    "Cós interno da bermuda"
+  ],
+  "decorativeMeshes": []
+}

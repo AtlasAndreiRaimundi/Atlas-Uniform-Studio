@@ -1,6 +1,6 @@
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments } from './model-panels.js?v=2';
-import { createProjectSession } from './project-session.js?v=10';
+import { createProjectSession } from './project-session.js?v=11';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';

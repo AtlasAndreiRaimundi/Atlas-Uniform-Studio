@@ -8,6 +8,8 @@ S={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4}; T={5126:'<f4',5125:'<u4',5123:'<u2',5
 cos=['Cós do calção 1','Cós do calção 2','Cós do calção 3','Cós do calção 4']
 shorts=['Calção direito','Calção esquerdo']
 manifest=[
+('CONJUNTO PRIME + BERMUDA PASSEIO.glb','kit-passeio-prime','KIT DE PASSEIO PRIME',['Filete manga esquerda','Filete manga direita','Manga direita','Manga esquerda','Bermuda costas direita','Bermuda frente direita','Cós externo da bermuda','Vista do bolso direito','Bermuda costas esquerda','Bermuda frente esquerda','Vista do bolso esquerdo','Cós interno da bermuda','Frente','Gola Prime frontal','Gola Prime traseira','Costas','Acabamento interno da gola']),
+('BERMUDA PASSEIO.glb','bermuda-passeio','BERMUDA DE PASSEIO',['Bermuda costas direita','Bermuda frente direita','Cós externo da bermuda','Vista do bolso direito','Bermuda costas esquerda','Bermuda frente esquerda','Vista do bolso esquerdo','Cós interno da bermuda']),
 ('KIT ELITE 27(1).glb','kit-elite-27','KIT ELITE 27',cos+shorts+['Filete manga direita','Filete manga esquerda']+['Gola '+str(i) for i in range(1,6)]+['Manga esquerda','Manga direita','Recorte direito','Recorte esquerdo','Frente','Costas']),
 ('KIT RAGLAN BASICO.glb','kit-raglan-basico','KIT RAGLAN BÁSICO',cos+shorts+['Frente','Costas','Gola','Manga esquerda','Manga direita']),
 ('KIT NORMAL BASICO.glb','kit-normal-basico','KIT NORMAL BÁSICO',cos+shorts+['Gola','Manga direita','Filete manga direita','Filete manga esquerda','Manga esquerda','Costas','Frente']),
@@ -53,6 +55,6 @@ for filename,slug,name,labels in manifest:
  for node in cloth.get('nodes',[]):
   if node.get('mesh',-1)>=len(labels):node.pop('mesh')
  (target/'cloth-input.glb').write_bytes(encode(cloth,bytes(chunks)))
- meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
+ meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'calcao' if slug=='bermuda-passeio' else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
  (target/'preparation.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  print(name,len(chunks),len(labels),'cloth meshes')

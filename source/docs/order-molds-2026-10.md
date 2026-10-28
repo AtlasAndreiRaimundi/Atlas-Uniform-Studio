@@ -69,3 +69,27 @@ python scripts/prepare-order-molds.py /caminho/dos/arquivos polo-sem-recorte-v
 node scripts/install-order-molds.mjs polo-sem-recorte-v
 node scripts/name-polo-variants.mjs
 ```
+
+## Linha de Passeio Prime
+
+Os arquivos `CONJUNTO PRIME + BERMUDA PASSEIO.glb` e `BERMUDA PASSEIO.glb` originam três opções:
+
+| Opção | ID | Painéis | Peças do pedido |
+| --- | --- | --- | --- |
+| Kit de Passeio Prime | kit-passeio-prime | 17 | Camiseta + Bermuda |
+| Camiseta Gola Prime | kit-passeio-prime-camiseta | 9 | Camiseta |
+| Bermuda de Passeio | bermuda-passeio | 8 | Bermuda |
+
+A camiseta é uma variante explícita do kit: compartilha seu atlas, omite a bermuda antes do enquadramento e possui SVG próprio. A bermuda avulsa usa o arquivo separado enviado pelo proprietário, com atlas próprio; não reaproveite nele o mapa do conjunto. Costuras decorativas ficam fora da aplicação da arte. Frente, costas, mangas, filetes, partes da gola Prime, cós e vistas dos bolsos são identificados nos mapas.
+
+O kit declara explicitamente `garments: ["Camiseta", "Bermuda"]`, evitando a antiga inferência de que todo conjunto com “passeio” no nome seria polo + bermuda. A seleção de apresentações usa o grupo genérico “Kits completos”. Modelos antigos e simulador são preservados.
+
+Reprodução:
+
+```sh
+python scripts/prepare-order-molds.py /caminho/dos/arquivos kit-passeio-prime
+node scripts/install-order-molds.mjs kit-passeio-prime
+python scripts/prepare-order-molds.py /caminho/dos/arquivos bermuda-passeio
+node scripts/install-order-molds.mjs bermuda-passeio
+node scripts/create-shirt-variants.mjs
+```

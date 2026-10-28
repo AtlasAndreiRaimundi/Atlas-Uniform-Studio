@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v76 em 28/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v78 em 28/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 566 arquivos, Site v76, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 581 arquivos, Site v78, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -60,3 +60,5 @@ A criação de apresentações separa camisetas e peças avulsas dos kits comple
 O editor permite trocar o molde na apresentação sem sair da tela, preservando arte apenas entre variantes do mesmo mapa e salvando a escolha na revisão do projeto.
 
 A biblioteca oferece Polo com recorte V e Polo sem recorte V, com modelos e mapas próprios.
+
+Linha de Passeio Prime disponível como kit de camiseta + bermuda, Camiseta Gola Prime e Bermuda de Passeio avulsas, com mapas próprios.
