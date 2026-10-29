@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "5446afb8431cd5fa303862bed853d7c0543c5131",
-  "exported_at": "2026-10-29T13:16:47.372088+00:00",
+  "source_commit": "5db0fd3b25d7a153d84647b81828829d5c0eafaa",
+  "exported_at": "2026-10-29T17:43:34.302052+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -20,8 +20,8 @@
     },
     {
       "path": "README.md",
-      "size": 25968,
-      "sha256": "81aa95d014a9c85574b45aa61def038c832b9d8b66e476aea082a03a65c3f97f"
+      "size": 26295,
+      "sha256": "f0eb2d5de0964fa6839ee6f0caa6c5285fa6a59a436b10208a5a4d79dfd93137"
     },
     {
       "path": "app/acompanhamento/page.tsx",
@@ -67,6 +67,11 @@
       "path": "app/api/admin/templates/route.ts",
       "size": 689,
       "sha256": "81dbba15537b519ab7ac4e79c1430b753b6ada9d83b637bc47061cf69f3a1a0c"
+    },
+    {
+      "path": "app/api/atlas-vector/route.ts",
+      "size": 464,
+      "sha256": "efe4cce31fd6ac988ba0fdc7632ec92955b99db9203d767b82b2ac0e1728dc5b"
     },
     {
       "path": "app/api/designers/[id]/photo/route.ts",
@@ -279,6 +284,16 @@
       "sha256": "3b12b9d5cf6c4b3f8b556196594b078906b2a60fffcd7332f61a6d2fcb51bf9b"
     },
     {
+      "path": "app/api/tools/atlas-vector/status/route.ts",
+      "size": 505,
+      "sha256": "fff17ec3fa6c1282ee03399d737766361e1fcb083fcbd44bb67ae72c39ad468a"
+    },
+    {
+      "path": "app/api/tools/atlas-vector/trace/route.ts",
+      "size": 330,
+      "sha256": "42209cd386e434ac8b828505314d169649c78f8e2dc41c0f4bc1fe56c1b626bc"
+    },
+    {
       "path": "app/api/workspace/assets/[id]/route.ts",
       "size": 1308,
       "sha256": "90ffdb6faed8db47fddec277cfebe94db7988ac72dcfca774aa665c4561cf0f7"
@@ -317,6 +332,21 @@
       "path": "app/chatgpt-auth.ts",
       "size": 2550,
       "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
+    },
+    {
+      "path": "app/ferramentas/atlas-vector/page.tsx",
+      "size": 325,
+      "sha256": "a7e8d9d1363afa1ec836300b7ee9c369e7996bfd3e16f45882cc978fb559ba67"
+    },
+    {
+      "path": "app/ferramentas/atlas-vector/vector-tool.tsx",
+      "size": 8707,
+      "sha256": "bc1e94756657d7daed6ff162344c98abaa8c6a272f8d82e5c4fb7c434604e851"
+    },
+    {
+      "path": "app/ferramentas/atlas-vector/vector.css",
+      "size": 5719,
+      "sha256": "f6d42a6d2da7c9b8e3f3e40624c3e57369b7845979385eaeadbe0528703daff5"
     },
     {
       "path": "app/globals.css",
@@ -450,8 +480,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 149,
-      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
+      "size": 256,
+      "sha256": "dfe37be4abda3b07ec652ad4cbfe1c43a2ea096db08552981fa6ba233bf45bdf"
     },
     {
       "path": "components.json",
@@ -784,6 +814,81 @@
       "sha256": "8fed96a7be361f245ef8b574e437455ea7ac7ce56d48df4dc56a9cdb45be9553"
     },
     {
+      "path": "docs/atlas-vector-beta.md",
+      "size": 7040,
+      "sha256": "8ba4d0bc949d767070107654d92d196c645e2de0d52de2d9db8a1ed2f36512dc"
+    },
+    {
+      "path": "docs/atlas-vector-engine-lock.json",
+      "size": 194,
+      "sha256": "080bef1a37c1f0f6bfb2654a48a8aef4d3e3b8410644a6069172c4830635a7a5"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/ATLAS_VECTOR_BETA_ESPECIFICACAO.md",
+      "size": 5521,
+      "sha256": "e8b773ebc297a1c5458636ce23cf8d5ae6df23d3eca99ecc7987158aabc7f761"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/ATLAS_VECTOR_BETA_PROMPT_WORK.md",
+      "size": 4171,
+      "sha256": "ca671d147cdc8d043756a168e671b85c539f9d122b10e2529443be6460316149"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/00_LEIA_PRIMEIRO.md",
+      "size": 5521,
+      "sha256": "e8b773ebc297a1c5458636ce23cf8d5ae6df23d3eca99ecc7987158aabc7f761"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/01_ESPECIFICACAO_FUNCIONAL.md",
+      "size": 6057,
+      "sha256": "89cbb02a7f353b41eaa75114382bf6e9ae1025e20eb014c11de01141683bdc19"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/02_ARQUITETURA_E_SEGURANCA.md",
+      "size": 6708,
+      "sha256": "d42f5fb8d5003a344cceb24d5d5353e4ee7ae22df5c722d85f65a4e1773965fc"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/03_CONTRATO_API.yaml",
+      "size": 4484,
+      "sha256": "a8f4e74b11d42b3ccea2bfe77e7566b61f3bafaa4a298ce19cbccb2448086374"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/04_PLANO_DE_IMPLEMENTACAO.md",
+      "size": 5402,
+      "sha256": "4e14e1935c99c637254ce340fa6b1e11e0efc24b4c88167649a7ff72e2131f30"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/05_TESTES_E_ACEITE.md",
+      "size": 4873,
+      "sha256": "596c7af72ced8e3fc814fa22342f8dac20afb5121caaa970d54beed453ec0851"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/06_RISCOS_E_PENDENCIAS.md",
+      "size": 2730,
+      "sha256": "25f014b4088e50ae647d6c14d273f50024bc3e835dbb5e289a746311f267fcee"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/MANIFEST_SHA256.json",
+      "size": 1538,
+      "sha256": "b9791ca025df060302c9abafa4db7969f22039aa50432160868cd2cdace4f93d"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/PROMPT_PARA_WORK.md",
+      "size": 4171,
+      "sha256": "ca671d147cdc8d043756a168e671b85c539f9d122b10e2529443be6460316149"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/complete/patches/studio-navigation.diff",
+      "size": 491,
+      "sha256": "1e6d05be31308e765601031c67d7960502fb7f22a2414642425c8ffa55f56e70"
+    },
+    {
+      "path": "docs/atlas-vector.vars.example",
+      "size": 73,
+      "sha256": "302abadef30f92c0d525ffdefdd8e6cabfd65a57bff88e68517e92cd4caee444"
+    },
+    {
       "path": "docs/complementos-cdr-listas.md",
       "size": 4875,
       "sha256": "58ded27500831d632844829be5587eda53ec0c0d86fa698758694a56c718ef0a"
@@ -1064,6 +1169,11 @@
       "sha256": "7fb0cc5ad31542d9c8d816157133fded08317450969efbf294a5826a42afe783"
     },
     {
+      "path": "lib/atlas-vector.mjs",
+      "size": 9138,
+      "sha256": "9586ea00cfcd402057a164ebd821b17282edbe3bef56225609d0f2c12fe81eca"
+    },
+    {
       "path": "lib/composed-five-part-templates.mjs",
       "size": 150,
       "sha256": "ba767def1a299260b1a9e0ec3462c04f3ec3a0a28771eb89c26e58bf25819c32"
@@ -1270,8 +1380,8 @@
     },
     {
       "path": "public/acervo.html",
-      "size": 8401,
-      "sha256": "93d64dfe403fc6cc892cce74fb7316846d8975223ae3d57ecc12e90241addd1b"
+      "size": 8705,
+      "sha256": "1fe71a9c9cc33863d02cd4bebd9bc543d3757e87604ecb0a629a50c063d03f6b"
     },
     {
       "path": "public/app.js",
@@ -1620,8 +1730,8 @@
     },
     {
       "path": "public/organizador.html",
-      "size": 17742,
-      "sha256": "2b71fcfdb6306d3bafa2be8a37c77f9bed6f9d97122cc5af4afbed05f1a7516a"
+      "size": 18046,
+      "sha256": "eb07ff1d538786e41993183fe8adb56640bad4f0e385e3a0d5d2efdc5022c880"
     },
     {
       "path": "public/organizer-ui.js",
@@ -1635,8 +1745,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 33547,
-      "sha256": "d15624799c0c538ad7685cab799141cd77cd9e5994bfb93a04aea042ce246914"
+      "size": 33851,
+      "sha256": "eec0562a664a95d97a43d78e84b57343d0ca3f6eebecd75be0b00ed3e0badeeb"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1895,8 +2005,8 @@
     },
     {
       "path": "public/studio-navigation.js",
-      "size": 3733,
-      "sha256": "787fb9d5b4ca2585778530f1a8d61c488d01647b0c1756fea17eda41c07c99d0"
+      "size": 3886,
+      "sha256": "b8d7364c127fcfd0489ca07402dad9b7cd40a729dad0526853bdf5a09e798b3c"
     },
     {
       "path": "public/studio-theme.css",
@@ -2242,6 +2352,11 @@
       "path": "tests/atlas-brand.test.mjs",
       "size": 2988,
       "sha256": "d99ab3ab4bee8f3f8e1571799f2828cf13d442eee0169a0ae894b5a49386dc61"
+    },
+    {
+      "path": "tests/atlas-vector.test.mjs",
+      "size": 6211,
+      "sha256": "7192451c193bfd1905d6c79fa32e2c613d9dab63065d9e4163edce68b0673463"
     },
     {
       "path": "tests/atlas.test.mjs",

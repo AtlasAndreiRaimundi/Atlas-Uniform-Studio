@@ -1,0 +1,51 @@
+{
+  "title": "ATLAS VECTOR (BETA) — handoff Work",
+  "generated": "2026-10-29",
+  "documents": [
+    {
+      "path": "00_LEIA_PRIMEIRO.md",
+      "bytes": 5521,
+      "sha256": "e8b773ebc297a1c5458636ce23cf8d5ae6df23d3eca99ecc7987158aabc7f761"
+    },
+    {
+      "path": "01_ESPECIFICACAO_FUNCIONAL.md",
+      "bytes": 6057,
+      "sha256": "89cbb02a7f353b41eaa75114382bf6e9ae1025e20eb014c11de01141683bdc19"
+    },
+    {
+      "path": "02_ARQUITETURA_E_SEGURANCA.md",
+      "bytes": 6708,
+      "sha256": "d42f5fb8d5003a344cceb24d5d5353e4ee7ae22df5c722d85f65a4e1773965fc"
+    },
+    {
+      "path": "03_CONTRATO_API.yaml",
+      "bytes": 4484,
+      "sha256": "a8f4e74b11d42b3ccea2bfe77e7566b61f3bafaa4a298ce19cbccb2448086374"
+    },
+    {
+      "path": "04_PLANO_DE_IMPLEMENTACAO.md",
+      "bytes": 5402,
+      "sha256": "4e14e1935c99c637254ce340fa6b1e11e0efc24b4c88167649a7ff72e2131f30"
+    },
+    {
+      "path": "05_TESTES_E_ACEITE.md",
+      "bytes": 4873,
+      "sha256": "596c7af72ced8e3fc814fa22342f8dac20afb5121caaa970d54beed453ec0851"
+    },
+    {
+      "path": "06_RISCOS_E_PENDENCIAS.md",
+      "bytes": 2730,
+      "sha256": "25f014b4088e50ae647d6c14d273f50024bc3e835dbb5e289a746311f267fcee"
+    },
+    {
+      "path": "PROMPT_PARA_WORK.md",
+      "bytes": 4171,
+      "sha256": "ca671d147cdc8d043756a168e671b85c539f9d122b10e2529443be6460316149"
+    },
+    {
+      "path": "patches/studio-navigation.diff",
+      "bytes": 491,
+      "sha256": "1e6d05be31308e765601031c67d7960502fb7f22a2414642425c8ffa55f56e70"
+    }
+  ]
+}
