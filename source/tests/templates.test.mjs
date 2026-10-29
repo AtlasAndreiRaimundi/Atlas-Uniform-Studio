@@ -275,8 +275,8 @@ test('the original mold supports rename and reversible deletion without touching
   assert.equal((await templates.restore(admin,id)).status,'published');assert.equal(objects.size,0);
 });
 
-test('eleven order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
- const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,11);
+test('twelve order molds preserve cloth geometry, original UVs and scene transforms, with distinct non-overlapping named maps',async()=>{
+ const {ORDER_MOLD_TEMPLATES}=await import('../lib/order-mold-templates.mjs');assert.equal(ORDER_MOLD_TEMPLATES.length,12);
  const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
  for(const entry of ORDER_MOLD_TEMPLATES){
   const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);
@@ -395,4 +395,10 @@ test('withdrawn casual shorts and all nine kits disappear even with published re
  assert.deepEqual(await projects.asset(other,old.id,'model'),{redirect:INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='passeio-polo').assets.model});
  assert.equal((await projects.get(other,old.id)).name,old.name);
  assert.equal((await projects.save(other,old.id,{name:'Arte antiga preservada',version:old.version})).templateId,'passeio-polo');
+});
+
+test('the new casual shorts and ten checked combinations are available without restoring any withdrawn ID',async()=>{
+ const {COMPOSED_PASSEIO_V2_TEMPLATES:kits}=await import('../lib/composed-passeio-v2-templates.mjs'),{templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
+ for(const e of [INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='bermuda-passeio-v2'),...kits]){const d=e.descriptor;assert.ok(catalog.some(t=>t.id===d.id&&t.line==='passeio'));const p=await projects.create(other,{name:d.name,templateId:d.id}),template=await projects.template(other,p.id);assert.equal(template.fitVersion,'passeio-v2');assert.equal(template.previewBaseColors.lower,'#d51d2f');assert.deepEqual(await projects.asset(other,p.id,'model'),{redirect:e.assets.model});}
+ assert.ok(WITHDRAWN_TEMPLATE_IDS.every(id=>!catalog.some(t=>t.id===id)));
 });

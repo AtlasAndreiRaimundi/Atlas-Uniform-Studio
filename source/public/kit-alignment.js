@@ -4,6 +4,7 @@ const casualFitMeshes = new WeakSet();
 // GLBs use different export scales. Estimate centimetres from a 70 cm shirt body.
 const CASUAL_EXTRA_RISE_CM = 10, VISUAL_SHIRT_BODY_CM = 70;
 export function alignPresentationKit(root, associations, descriptor, THREE) {
+  if (descriptor.fitVersion === 'passeio-v2') return null; // Already fitted and surface-checked in the registered model.
   if (descriptor.kind !== 'generated' || descriptor.category !== 'conjunto') return null;
   root.updateMatrixWorld(true);
   const lower = [], body = [];

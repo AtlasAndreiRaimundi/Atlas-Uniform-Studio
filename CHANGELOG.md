@@ -179,3 +179,10 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Retira dez opções dos catálogos de criação, troca e ADM: bermuda de passeio avulsa e nove kits (Prime, duas polos e seis camisetas). IDs estáveis bloqueiam também registros persistidos publicados/renomeados e tentativas de republicação/restauração desses encaixes.
 - Camisetas e polos avulsas e opções de jogo preservadas. Projetos, arquivos e arte existentes continuam acessíveis; novas criações e trocas para os IDs retirados são bloqueadas no servidor. Futuros kits serão novos GLBs com novos IDs.
 - Fonte publicada `7bd8415a65dff5c529249ddc12c75bb321de8c46`, manifesto de 702 arquivos. 367 testes aprovados, um pulado; TypeScript e build aprovados. Testes cobrem catálogo do designer/ADM, registros publicados antigos, criação/troca bloqueadas e projetos preservados.
+
+## v85 — 2026-10-29
+- Instala a nova BERMUDA PASSEIO(1).glb com 12 painéis (cós, corpo e vistas dos bolsos), avulsa e em dez kits de passeio: seis camisetas de jogo, Prime, Clássica e duas polos. IDs novos e mapas independentes; modelos antigos seguem retirados.
+- Bermudas vermelhas na conferência inicial; a arte aplicada substitui a cor de teste. Encaixe estático por combinação com verificação amostrada contra a superfície da camiseta; polo com recorte V recebeu redução adicional de aproximadamente 4%. Modelos novos não recebem os ajustes de escala/subida dos antigos.
+- Página pública de conferência dos kits e prancha geométrica com profundidade por pixel em quatro vistas. Prévia WebGL local indisponível por falha de infraestrutura; testes de geometria e arquivos finais aprovados.
+- Compactação lossless dos GLBs apenas na publicação, com ASSETS e descompactação em streaming nos URLs existentes. Todos os 62 arquivos compactados foram conferidos contra os originais; uploads/R2 e modelo direto do montador preservados.
+- Fonte `b44385a3468010e00d992e12d4d2b418436eba0c` (758 arquivos). 373 testes aprovados, um pulado; TypeScript e build aprovados. Testes de kits v2 e transporte binário adicionados ao CI.

@@ -8,6 +8,7 @@ S={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4}; T={5126:'<f4',5125:'<u4',5123:'<u2',5
 cos=['Cós do calção 1','Cós do calção 2','Cós do calção 3','Cós do calção 4']
 shorts=['Calção direito','Calção esquerdo']
 manifest=[
+('BERMUDA PASSEIO(1).glb','bermuda-passeio-v2','BERMUDA DE PASSEIO · NOVA',['Cós frente direito','Cós costas direito','Bermuda costas direita','Cós frente esquerdo','Cós costas esquerdo','Bermuda costas esquerda','Bermuda frente direita','Bermuda frente esquerda','Vista externa bolso direito','Vista interna bolso direito','Vista externa bolso esquerdo','Vista interna bolso esquerdo']),
 ('CALÇÃO DE JOGO 5 PARTES(1).glb','calcao-jogo-5-partes','CALÇÃO DE JOGO 5 PARTES',['Cós frente direito','Cós frente esquerdo','Cós costas esquerdo','Cós costas direito','Calção frente direito','Calção frente esquerdo','Calção costas direito','Calção costas esquerdo','Calção pala traseira']),
 ('CALÇÃO DE JOGO COM RECORTE.glb','calcao-jogo-com-recorte','CALÇÃO DE JOGO COM RECORTE',['Cós frente esquerdo','Cós frente direito','Cós costas direito','Cós costas esquerdo','Calção costas esquerdo','Recorte lateral esquerdo','Calção frente esquerdo','Calção frente direito','Recorte lateral direito','Calção costas direito']),
 ('CONJUNTO PRIME + BERMUDA PASSEIO.glb','kit-passeio-prime','KIT DE PASSEIO PRIME',['Filete manga esquerda','Filete manga direita','Manga direita','Manga esquerda','Bermuda costas direita','Bermuda frente direita','Cós externo da bermuda','Vista do bolso direito','Bermuda costas esquerda','Bermuda frente esquerda','Vista do bolso esquerdo','Cós interno da bermuda','Frente','Gola Prime frontal','Gola Prime traseira','Costas','Acabamento interno da gola']),
@@ -81,6 +82,6 @@ for filename,slug,name,labels in manifest:
  for node in cloth.get('nodes',[]):
   if node.get('mesh',-1)>=len(labels):node.pop('mesh')
  (target/'cloth-input.glb').write_bytes(encode(cloth,bytes(chunks)))
- meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'calcao' if slug in ['bermuda-passeio','calcao-jogo-com-recorte','calcao-jogo-5-partes'] else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
+ meta={'id':slug,'name':name,'category':'camiseta' if slug.startswith('polo') else 'calcao' if slug in ['bermuda-passeio','bermuda-passeio-v2','calcao-jogo-com-recorte','calcao-jogo-5-partes'] else 'conjunto','sourceName':filename,'originalSourceSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'labels':labels,'decorativeMeshes':list(range(len(labels),len(out['meshes'])))}
  (target/'preparation.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  print(name,len(chunks),len(labels),'cloth meshes')
