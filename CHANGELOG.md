@@ -188,10 +188,11 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Fonte `b44385a3468010e00d992e12d4d2b418436eba0c` (758 arquivos). 373 testes aprovados, um pulado; TypeScript e build aprovados. Testes de kits v2 e transporte binário adicionados ao CI.
 
 
-## Proposta em revisão — ATLAS VECTOR BETA — 2026-10-29
+## v86 — 2026-10-29 — catálogo reiniciado
 
-- Ferramenta independente, autenticada, sob feature flag, sem dados de pedidos/projetos/listas.
-- Gateway HTTPS privado e SVG path-only; limites de upload, pixels, execução e saída.
-- Interface de importação PNG, correção real de frestas, comparação e download.
-- Motor genérico e serviço Python evoluem em PR separada do Atlas-Vector.
-- Testes de segurança/regressão, build e documentação. Nenhuma publicação ou variável de produção alterada.
+- Preservado apenas KIT EDGE 2027 (mapa v3), confirmado pelo proprietário.
+- 61 IDs antigos bloqueados; modelos, fontes, mapas e descritores removidos da versão ativa.
+- Limpeza única de D1/R2 preserva objetos de pedidos, projetos e CDRs, com retry seguro e proteção de uploads futuros.
+- Montador informa indisponibilidade enquanto recebe nova base; desenhos salvos permanecem.
+- 499 arquivos verificados; 350 testes aprovados, 26 históricos/legado ignorados, zero falhas; TypeScript e build aprovados.
+- Conferência publicada: biblioteca com um molde e lixeira vazia. Pedido indicado continua no perfil.

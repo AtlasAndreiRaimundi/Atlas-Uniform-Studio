@@ -1,102 +1,50 @@
-# ATLAS VECTOR (BETA) — revisão, segurança e release
+# ATLAS VECTOR (BETA) — integração no ATLAS UNIFORM STUDIO
 
-Preparado em 29/10/2026. Andrei Raimundi, direitos reservados; sem licença pública.
+Data: 29/10/2026. Autoria declarada: Andrei Raimundi. Direitos reservados.
 
-## Entrega e isolamento
+## Estado e liberação
 
-Base GitHub do Studio:`3b2d6ae731ace5d8a239fba684c4f4f88a6a7549`.
-Fonte correspondente:`b44385a3468010e00d992e12d4d2b418436eba0c`.
-Motor:`5ebaf0ddceb8d5492d372737056a0edd07dda9f6`.
-Branches independentes `feat/atlas-vector-beta`, uma em cada repositório privado.
-Não houve alteração de main, variáveis de produção, audiência ou deploy.
+Implementação em branches separadas `feat/atlas-vector-beta`. Site em produção permanece na v86, com somente KIT EDGE 2027. O nome de exibição do Site foi corrigido para ATLAS UNIFORM STUDIO. O código desta proposta parte da fonte v86 `5446afb8431cd5fa303862bed853d7c0543c5131` e não reintroduz moldes removidos nem reativa o simulador temporariamente indisponível.
 
-Ferramentas → Criador de planilha → ATLAS VECTOR (BETA).
-Rota `/ferramentas/atlas-vector`, autenticação `requireChatGPTUser`.
-GET/POST `/api/atlas-vector` exigem `account()`; POST valida origem e corpo limitado.
-Não usa dados de pedidos, projetos, clientes, listas ou simulador, não salva
-resultados, não cria tabelas, não faz alterações em R2. Snapshots HTML do menu
-foram sincronizados pelo script existente, sem mudar o comportamento dos módulos.
+O pacote completo está em `docs/atlas-vector-handoff/complete/`; todos os nove hashes do manifesto foram conferidos. Os documentos originais são preservados, e as adaptações reais estão descritas abaixo.
 
-Fluxo:PNG local → modo fiel e correção opcional de frestas → motor ATLAS →
-comparação lado a lado → download SVG. Selecionar outro arquivo ou mudar a
-correção descarta o resultado anterior. Cancelar/limpar aborta o fetch e invalida
-respostas antigas. Object URLs revogadas na troca e desmontagem.
+**Bloqueio de ativação:** não existe serviço Python externo configurado no Site. As variáveis de produção foram consultadas: sem URL, token ou flag VECTOR. Não habilitar conversão nem publicar esta integração como funcional antes de implantar o serviço, conectar os segredos e executar um PNG pela rota autenticada no ambiente hospedado. Não foi contratado nem criado serviço pago. Não há vetorização simulada, VTracer, imagens prontas ou bitmap embutido no SVG.
 
-## Configuração de backend
+## Interface e isolamento
 
-O Python roda separadamente. Workers não executam Python nem subprocessos.
-Gateway tem feature flag fechada por padrão e consulta saúde real do motor.
-Indisponibilidade nunca gera saída simulada nem libera o botão de conversão.
+Ferramentas → Criador de planilha → ATLAS VECTOR (BETA), rota `/ferramentas/atlas-vector`, autenticada. Menus React e snapshots de Pedidos, Organizador e Acervo sincronizados. A página desativada do simulador permanece intacta.
 
-| Variável de servidor | Uso |
-|---|---|
-| `ATLAS_VECTOR_ENABLED` | Somente valor exato `true` permite chamadas |
-| `ATLAS_VECTOR_URL` | Origem HTTPS fixa, sem usuário/senha, caminho, query ou fragmento |
-| `ATLAS_VECTOR_TOKEN` | Segredo compartilhado >=32 caracteres; armazenar como secret |
+Fluxo único: PNG por clique, teclado ou arrastar → modo fiel e correção de frestas ligada por padrão → ATLAS → comparação e download fixo `atlas-vector-resultado.svg`. Zoom de100–400%, fundo quadriculado/claro/escuro somente na prévia, dimensões/tamanho e aviso para imagens menores que300px. Contagem de objetos calculada no SVG. BETA e limitações de acabamento explícitos. Sem projetos, pedidos, listas, banco de logos, R2 ou histórico de resultados. Object URLs liberadas no navegador.
 
-Nunca usar `NEXT_PUBLIC_` nem colocar segredo no código. O cliente envia apenas
-PNG e `X-Atlas-Gap-Repair`; o gateway descarta os demais headers de entrada.
-Destino definido pelo operador, nunca pelo usuário; redirects de fetch rejeitados.
-GET de saúde tem timeout3 s e corpo2KiB; upload10 s e4 MiB; conversão35 s e8 MiB,
-incluindo leitura da resposta; cancelamento propagado. SVG reconstrói somente
-paths com preenchimento explícito e raiz numérica segura, sem entidade/DTD,
-eventos, HTML, raster, rede, links, estilos, transformações ou grupos bloqueados.
-Download attachment, no-store, nosniff e CSP sandbox. Prévia via img/objectURL.
+Somente modo fiel disponível: simplificado, sensibilidade e quantidade de cores não são controles fictícios. Fotos/degradês são reduzidos a até oito cores, alfa binário128; texto vira curvas e não fonte reconhecida. Correção usa caminhos auxiliares do fill_guard e não fronteiras compartilhadas.
 
-O serviço Python verifica PNG completo; validação IHDR no gateway é apenas a
-primeira barreira, não substitui decode seguro. Limites, Docker e contrato
-HTTP implementado estão em `Atlas-Vector/docs/ATLAS_VECTOR_BETA.md`.
+## Contrato e configuração
 
-## Escopo do pacote recebido
+- `GET /api/tools/atlas-vector/status`: sessão obrigatória, `{enabled,engineConnected,engineVersion,availableModes}`; não revela URL/token.
+- `POST /api/tools/atlas-vector/trace`: sessão e origem obrigatórias; multipart limitado, `image`, `mode=faithful`, `closeGaps=true|false` (padrão true); campos desconhecidos/duplicados rejeitados. Retorna SVG seguro com contagem de paths.
+- Alias legado `/api/atlas-vector` mantém autenticação, PNG binário e identidade derivada no servidor.
+- Gateway: `ATLAS_VECTOR_ENABLED=false` por padrão, `ATLAS_VECTOR_API_URL` (origem HTTPS fixa), `ATLAS_VECTOR_API_TOKEN` secreto >=32 caracteres. Exemplo sem valores em `docs/atlas-vector.vars.example`. Sem NEXT_PUBLIC.
+- Python privado: `GET /health`, `POST /vectorize`, Bearer em `ATLAS_VECTOR_TOKEN`; PNG binário, `X-Atlas-Gap-Repair`, `X-Atlas-Subject` SHA256 da origem+identidade confiável derivado pelo gateway. Browser não escolhe identidade de quota.
+- Versão do serviço: `1.9.3-beta-service.1`. O Studio referencia commit imutável no arquivo `docs/atlas-vector-engine-lock.json`; motor não é copiado para o Studio.
 
-Somente os dois arquivos Markdown anexados foram recebidos. Não vieram o ZIP,
-documentos01–06, OpenAPI, patch e manifesto listados neles. Cópias exatas dos dois
-anexos ficam em `docs/atlas-vector-handoff/`. Não alegamos ter lido arquivos ausentes.
-Contrato HTTP síncrono binário foi implementado e testado conforme orientações
-disponíveis. PNG apenas; JPEG/WEBP e outros modos permanecem fora da interface.
+Limites adotados:4 MiB,2.097.152 pixels,8–1536px por lado,8 MiB de SVG,20.000paths. Menores que os limites inicialmente propostos, com1201×1371 testado.5 solicitações/min por identidade e uma operação/container; quota em memória e concorrência são locais: usar1worker,1réplica ou quota compartilhada no proxy. Upload8s no Python/10s no gateway,30s parede/25sCPU no subprocesso,35s gateway,2GiB endereço virtual,16MiB arquivo. Cancelamento monitora desconexão; timeout mata grupo de processo e limpa diretório temporário.
 
-## Evidências executadas
+CRC/chunks/IEND completos, rejeição de conteúdo anexado e APNG, Pillow verify, limites de descompressão, EXIF transpose, normalização RGBA sem metadados. ICC é descartado; não há gerenciamento profissional CMYK. SVG XML seguro allowlist svg/title/path, dimensões e fill-rule; gateway reconstrói caminhos, parser linear rejeita XML ativo. Sem entidades, imagens, links, scripts ou recursos externos. Download attachment, no-store, nosniff, CSP sandbox. Exibição por img/blob, sem injeção de HTML. Origem fixa, sem redirects e sem URL enviada pelo usuário. Subprocesso sem shell/segredo, temporários descartados.
 
-- Serviço Python:22 testes passaram, incluindo testes existentes, paleta genérica,
-  vazios transparentes, fresta sintética, auth, limites, SVGs maliciosos,
-  concorrência, timeout, morte do processo e limpeza de temporários.
-- Teste cruzado real:gateway→HTTP local→serviço→subprocesso ATLAS→SVG; executado
-  com e sem correção. A troca de HTTPS por loopback existe somente no adaptador
-  de teste, sem flexibilizar a configuração de produção.
-- Gateway/menu:9 testes passaram, incluindo CSRF, feature flag, ausência de URLs
-  fornecidas pelo cliente, tipos/tamanhos, saída hostil e wrappers de autenticação.
-- Suíte Studio:383 testes,382 aprovados,1 ignorado,0 falhas na primeira execução.
-- TypeScript aprovado após corrigir os tipos da resposta JSON.
-- Build oficial Sites/Vinext concluído, incluindo rota autenticada e API novas.
-  Suíte final repetida após os ajustes: 383 testes, 382 aprovados, 1 ignorado,
-  nenhuma falha. TypeScript final sem erros.
-- Navegador local:rota real redireciona para login; componente testado em rota
-  temporária de QA, removida antes da entrega. Importação PNG próprio, limpeza,
-  correção e temas claro/escuro verificados. Conversão permaneceu desabilitada
-  sem autenticação. Corrigidos conflito de coluna com sidebar fixa e CSS inválido.
+## Validação em29/10
 
-![Componente local em revisão, sem serviço web habilitado](atlas-vector-evidence/review-local.jpg)
+- Studio:388 testes,362 aprovados,26 ignorados,zero falhas. Testes históricos de moldes removidos continuam explicitamente ignorados pela v86.
+- Gateway:12 casos, incluindo origem, assinatura/dimensões, multipart/campos duplicados, identidade derivada, backend indisponível, SVG ativo e delimitadores malformados.
+- Python:28 casos aprovados localmente com integração real gateway→HTTP→subprocessoATLAS (CI isolado ignora somente esse teste entre repositórios). Fixtures sintéticas próprias; sem dados/logos de clientes.
+- Resoluções150×171,501×571 e1201×1371 processadas de verdade, três cores genéricas, área externa e recorte transparente preservados; alphaIoU>0,97 nas fixtures. Não é garantia de fidelidade universal.
+- Testes de reparo, limpeza em sucesso/timeout, subprocesso real, concorrência, quota por identidade, bytes/CRC/conteúdo anexado,413pixels, SVG hostil e busca exaustiva bloqueada.
+- TypeScript aprovado. Lint específico:zero erros,duas recomendações de next/image; img é usado para blob local temporário. Não declarar lint global limpo; há dívida anterior fora do módulo.
+- Build oficial executado; registrar resultado final no relatório/PR.
+- Navegador: prévia encontrou primeiro restrição de host por perfil portátil; corrigido com helper oficial de perfil managed-linux. A tentativa seguinte foi bloqueada pela política do navegador. Sem contornar bloqueio; testes visuais atuais,375px e autenticação hospedada permanecem não verificados.
+- CorelDRAW e Docker não executados neste ambiente. SVG foi validado por XML e rasterização CairoSVG, sem alegar teste no Corel.
 
-Os testes não equivalem a auditoria completa de segurança, revisão de Corel ou
-garantia sobre imagens arbitrárias. Fixtures geométricas próprias geradas em
-runtime, sem logotipos de clubes, imagens de clientes ou segredos no Git.
+## Implantação e rollback
 
-## Bloqueadores de release e próximos passos
+No serviço privado Linux, checkout do SHA revisado do motor, dependências fixadas em requirements-service.lock, segredo forte em ambiente, uvicorn1worker ou Docker/Compose fornecidos. Proxy HTTPS, limite de upload, saída de rede bloqueada na infraestrutura, logs sem corpos/credenciais. Antes de ativar:health autenticado, PNG real através do Worker hospedado, cancelar/timeout, comparar/baixar, revisão visual nos temas e375px, importar no Corel no Windows. Nenhuma migração de dados VECTOR.
 
-Não foi fornecido nem confirmado endpoint Python externo utilizável. Portanto,
-**a conversão web na hospedagem de destino ainda não está concluída/validada**.
-Nenhuma produção deve ser ativada apenas porque o teste local passou.
-
-1. Revisar PRs e os dois anexos disponíveis; fornecer documentos ausentes se houver
-   requisitos adicionais ao handoff recebido.
-2. Implantar container privado em staging, configurar limites e TLS, segredo e
-   política de proxy/rede conforme documentação do motor.
-3. Configurar as três variáveis apenas em staging; testar sessão autenticada,
-   PNG real, comparação, download e abertura como paths editáveis no editor alvo.
-4. Validar versões/scan de dependências e imagem de container na infraestrutura.
-   Build de Docker e execução no host de destino não foram feitos aqui.
-5. Revisão/aprovação de release antes de merge e publicação. Preservar audiência
-   existente; não alterar compartilhamento como parte deste módulo.
-
-Rollback:desativar `ATLAS_VECTOR_ENABLED`, reverter PR do Studio separadamente,
-parar/reverter container do motor. Não há migrações ou dados a restaurar.
+Rollback: manter/desativar `ATLAS_VECTOR_ENABLED`, reverter PRs separadamente e retirar serviço. Pedidos, listas e projetos não dependem do módulo. Nenhuma audiência/permissão de repositório foi alterada.

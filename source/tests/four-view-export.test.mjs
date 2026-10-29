@@ -16,7 +16,7 @@ globalThis.createImageBitmap = async blob => {
   const data = Buffer.from(await blob.arrayBuffer());
   return { width: data.readUInt32BE(16), height: data.readUInt32BE(20), close() {} };
 };
-const bytes = await readFile(new URL('../public/assets/camiseta.glb', import.meta.url));
+const bytes = await readFile(new URL('../public/assets/molds/kit-edge-2027-mapa-v3/model.glb', import.meta.url));
 const gltf = await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
 const originalBounds = new Box3().setFromObject(gltf.scene);
 

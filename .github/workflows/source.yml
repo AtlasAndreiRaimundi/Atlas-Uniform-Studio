@@ -20,7 +20,7 @@ jobs:
       - run: python3 scripts/check_source.py
       - name: Testes sem dependências externas
         working-directory: source
-        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs tests/product-catalog.test.mjs tests/order-flow.test.mjs tests/order-number.test.mjs tests/order-composition.test.mjs tests/order-pricing.test.mjs tests/linked-applications.test.mjs tests/kit-alignment.test.mjs tests/templates.test.mjs tests/passeio-v2.test.mjs tests/static-mold-binaries.test.mjs tests/atlas-vector.test.mjs
+        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs tests/product-catalog.test.mjs tests/order-flow.test.mjs tests/order-number.test.mjs tests/order-composition.test.mjs tests/order-pricing.test.mjs tests/linked-applications.test.mjs tests/kit-alignment.test.mjs tests/templates.test.mjs tests/passeio-v2.test.mjs tests/static-mold-binaries.test.mjs tests/mold-reset.test.mjs tests/atlas-vector.test.mjs
   materializar-modelos:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verificar
@@ -33,7 +33,7 @@ jobs:
       - run: python3 scripts/check_source.py
       - name: Registrar os modelos originais restaurados
         run: |
-          git add -- source/public/assets/molds/simulator-elite-27-kit/model.glb source/public/assets/molds/simulator-elite-27-shirt/model.glb source/public/simulador/models/kit-elite-27.glb
+          git add -- source/public/assets/molds/kit-edge-2027-mapa-v3/model.glb source/public/assets/molds/kit-edge-2027/source.glb
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

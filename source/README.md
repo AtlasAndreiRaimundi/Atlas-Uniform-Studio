@@ -1,4 +1,4 @@
-# Meinerz Uniform Studio
+# ATLAS UNIFORM STUDIO
 
 Estúdio de apresentação de uniformes: projetos por conta, arte 2D aplicada ao
 modelo real do CLO, ajustes de visualização e apresentação por link estável.
@@ -128,7 +128,7 @@ anônima foi conferida com D1 e R2 locais; os dados de QA não são publicados.
 
 ## Marca e autoria
 
-Meinerz Uniform Studio, criado por **Andrei Raimundi**. O wordmark da referência
+ATLAS UNIFORM STUDIO, criado por **Andrei Raimundi**. O wordmark da referência
 é exibido preservando seus pixels, com a área “ESPORTES” fora do enquadramento.
 Chakra Petch em peso 700 nos títulos e 400 nos textos: arquivos locais, sem CDN,
 com a licença OFL em `public/fonts/OFL.txt`. A assinatura dos designers nos
@@ -410,6 +410,7 @@ A audiência da hospedagem continua privada. Os links de proposta estão
 implementados, mas o acesso de clientes externos depende de liberar a audiência
 ou conceder acesso a esses clientes pelo compartilhamento do Site.
 
-## ATLAS VECTOR (BETA) — proposta em revisão
 
-Ferramenta independente em `/ferramentas/atlas-vector`, fechada por feature flag. Motor Python separado. [Segurança, testes e bloqueadores de release](docs/atlas-vector-beta.md). Sem publicação em produção nesta entrega.
+## ATLAS VECTOR BETA — atualização29/10/2026
+
+Pacote técnico completo e implementação de gateway/serviço em branch de revisão. Vetorização real pelo motor ATLAS; a ativação web permanece bloqueada até configurar serviço Python externo e validar o fluxo hospedado. Consulte [relatório](docs/atlas-vector-beta.md).

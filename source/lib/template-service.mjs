@@ -1,4 +1,6 @@
 import {isWithdrawnTemplate,WITHDRAWN_TEMPLATE_MESSAGE} from './withdrawn-templates.mjs';
+import {isRemovedMold,REMOVED_MOLD_MESSAGE} from './removed-molds.mjs';
+import {INSTALLED_TEMPLATES} from './installed-templates.mjs';
 import {presentationGarments} from '../public/order-presentation.js';
 import {moldCollection} from '../public/mold-collections.js';
 import { AppError } from './project-service.mjs';
@@ -11,7 +13,7 @@ const date = () => new Date().toISOString();
 const categories = ['camiseta','calcao','conjunto','outro'];
 export class TemplateService {
   /** @param {readonly any[]} installedTemplates */
-  constructor(db, bucket, adminId = '', installedTemplates = []) { this.db = db; this.bucket = bucket; this.adminId = adminId; this.installedTemplates = [...installedTemplates,...SIMULATOR_PRESENTATION_TEMPLATES.filter(entry=>!installedTemplates.some(item=>item.descriptor.id===entry.descriptor.id))]; }
+  constructor(db, bucket, adminId = '', installedTemplates = INSTALLED_TEMPLATES) { this.db = db; this.bucket = bucket; this.adminId = adminId; this.installedTemplates = [...installedTemplates,...SIMULATOR_PRESENTATION_TEMPLATES.filter(entry=>!installedTemplates.some(item=>item.descriptor.id===entry.descriptor.id))]; }
   installedRow(id) {
     const entry=this.installedTemplates.find(item=>item.descriptor.id===id);
     if(!entry)return null;
@@ -31,6 +33,7 @@ export class TemplateService {
       createdAt:row.created_at, updatedAt:row.updated_at, orientation:layout.orientation, ...(layout.thumbnailUrl?{thumbnailUrl:layout.thumbnailUrl}:{}) };
   }
   async row(id) {
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     const row = await this.db.prepare('SELECT * FROM templates WHERE id = ?').bind(id).first() || this.installedRow(id);
     if(!row)throw new AppError(404,'Molde não encontrado.');
     // Apply withdrawal to persisted published rows too; old project assets remain readable.
@@ -44,7 +47,7 @@ export class TemplateService {
     const rows=await this.db.prepare("SELECT * FROM templates WHERE status = 'published' ORDER BY created_at DESC").all();
     const builtin=await this.builtin();
     const installed=await Promise.all(this.installedTemplates.filter(entry=>!entry.presentationOnly).map(entry=>this.row(entry.descriptor.id))),ids=new Set(this.installedTemplates.map(entry=>entry.descriptor.id));
-    return [...(builtin.status==='published'?[builtin]:[]),...installed.filter(row=>row.status==='published').map(row=>this.summary(row)),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)).map(row=>this.summary(row))];
+    return [...(builtin.status==='published'&&!isRemovedMold(builtin.id)?[builtin]:[]),...installed.filter(row=>row.status==='published').map(row=>this.summary(row)),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)&&!isRemovedMold(row.id)).map(row=>this.summary(row))];
   }
   async builtin() {
     const row=await this.db.prepare('SELECT * FROM templates WHERE id = ?').bind(BUILTIN_TEMPLATE.id).first();
@@ -59,21 +62,24 @@ export class TemplateService {
     requireAdminUser(user,this.adminId);
     const rows=await this.db.prepare('SELECT * FROM templates ORDER BY created_at DESC').all();
     const installed=await Promise.all(this.installedTemplates.filter(entry=>!entry.presentationOnly).map(entry=>this.row(entry.descriptor.id))),ids=new Set(this.installedTemplates.map(entry=>entry.descriptor.id));
-    return [...installed.filter(row=>!row.withdrawn).map(row=>this.summary(row)),await this.builtin(),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)).map(row=>this.summary(row))];
+    return [...installed.filter(row=>!row.withdrawn).map(row=>this.summary(row)),...(!isRemovedMold(BUILTIN_TEMPLATE.id)?[await this.builtin()]:[]),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)&&!isRemovedMold(row.id)).map(row=>this.summary(row))];
   }
   async available(user,id) {
     if(!user?.userId)throw new AppError(401,'Entre na sua conta para continuar.');
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(id===BUILTIN_TEMPLATE.id){const builtin=await this.builtin();if(builtin.status!=='published')throw new AppError(404,'Este molde não está disponível para novos projetos.');return builtin;}
     const row=await this.row(id);
     if(row.status!=='published')throw new AppError(404,'Este molde não está disponível para novos projetos.');
     return this.summary(row);
   }
   async descriptor(id) {
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(id===BUILTIN_TEMPLATE.id)return this.builtin();
     const row=await this.row(id);return {...JSON.parse(row.layout_json),name:row.name,status:row.status,category:row.category};
   }
   async readable(user,id) {
     if(!user?.userId)throw new AppError(401,'Entre na sua conta para continuar.');
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     const state=id===BUILTIN_TEMPLATE.id?await this.builtin():await this.row(id);
     if(state.status!=='published'&&!isAdminUser(user,this.adminId))throw new AppError(404,'Molde não encontrado.');
     return this.descriptor(id);
@@ -102,6 +108,7 @@ export class TemplateService {
   }
   async status(user,id,input) {
     requireAdminUser(user,this.adminId);
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     if(id===BUILTIN_TEMPLATE.id)await this.ensureBuiltin();
     await this.ensureInstalled(id);
@@ -114,6 +121,7 @@ export class TemplateService {
   }
   async update(user,id,input) {
     requireAdminUser(user,this.adminId);
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     const name=typeof input?.name==='string'?input.name.trim():'';
     if(!name||name.length>80)throw new AppError(400,'Dê um nome ao molde com até 80 caracteres.');
@@ -129,6 +137,7 @@ export class TemplateService {
   }
   async remove(user,id) {
     requireAdminUser(user,this.adminId);
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(id===BUILTIN_TEMPLATE.id)await this.ensureBuiltin();
     await this.ensureInstalled(id);
     await this.row(id);
@@ -138,6 +147,7 @@ export class TemplateService {
   }
   async restore(user,id) {
     requireAdminUser(user,this.adminId);
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     const row=await this.row(id);
     if(row.status!=='deleted')throw new AppError(400,'Este molde não está na lixeira.');
@@ -145,6 +155,7 @@ export class TemplateService {
     return this.summary(await this.row(id));
   }
   async asset(id,kind) {
+    if(isRemovedMold(id))throw new AppError(404,REMOVED_MOLD_MESSAGE);
     if(!['model','template','proof','source'].includes(kind))throw new AppError(404,'Arquivo não encontrado.');
     if(id===BUILTIN_TEMPLATE.id) {
       const path={model:BUILTIN_TEMPLATE.modelUrl,template:BUILTIN_TEMPLATE.templateUrl,proof:BUILTIN_TEMPLATE.proofUrl,source:BUILTIN_TEMPLATE.modelUrl}[kind];return {redirect:path};

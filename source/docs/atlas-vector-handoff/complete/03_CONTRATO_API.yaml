@@ -1,0 +1,129 @@
+openapi: 3.1.0
+info:
+  title: ATLAS VECTOR Beta - contrato proposto do gateway Uniform Studio
+  version: 0.1.0-proposal
+  description: >-
+    Contrato de integração a implementar e testar. Nao representa endpoint
+    existente. Sessao do Studio obrigatoria; proxy privado para motor Python.
+servers:
+  - url: /
+paths:
+  /api/tools/atlas-vector/status:
+    get:
+      summary: Verificar disponibilidade do motor sem revelar segredos
+      responses:
+        '200':
+          description: Estado da ferramenta
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [enabled, engineConnected]
+                properties:
+                  enabled: {type: boolean}
+                  engineConnected: {type: boolean}
+                  engineVersion: {type: string}
+                  availableModes:
+                    type: array
+                    items: {type: string, enum: [faithful, simplified]}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /api/tools/atlas-vector/trace:
+    post:
+      summary: Gerar um SVG real por conversao raster para vetor
+      description: >-
+        As opcoes somente podem ser oferecidas na interface quando
+        implementadas no motor; rejeitar parametros nao suportados.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [image]
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: PNG; JPEG/WEBP somente apos validacao
+                mode:
+                  type: string
+                  enum: [faithful, simplified]
+                  default: faithful
+                closeGaps:
+                  type: boolean
+                  default: true
+      responses:
+        '200':
+          description: SVG real, revisado e editavel, sem raster incorporado
+          headers:
+            Content-Disposition:
+              description: attachment; filename="atlas-vector-resultado.svg"
+              schema: {type: string}
+            X-Atlas-Engine-Version:
+              schema: {type: string}
+          content:
+            image/svg+xml:
+              schema: {type: string, format: binary}
+        '400': {$ref: '#/components/responses/BadInput'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '413': {$ref: '#/components/responses/TooLarge'}
+        '415': {$ref: '#/components/responses/UnsupportedMedia'}
+        '422': {$ref: '#/components/responses/Unprocessable'}
+        '429': {$ref: '#/components/responses/RateLimited'}
+        '503': {$ref: '#/components/responses/Unavailable'}
+        '504': {$ref: '#/components/responses/Timeout'}
+components:
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: {type: string}
+        code: {type: string}
+  responses:
+    BadInput:
+      description: Arquivo ou parametros invalidos
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unauthorized:
+      description: Usuario nao autenticado
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Forbidden:
+      description: Origem ou permissao invalida
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    TooLarge:
+      description: Excedeu limite de bytes ou pixels
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    UnsupportedMedia:
+      description: Formato nao permitido
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unprocessable:
+      description: Decodificacao ou rastreio falhou
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    RateLimited:
+      description: Limite de requisicoes atingido
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unavailable:
+      description: Motor offline ou Beta desligado
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Timeout:
+      description: Processamento excedeu limite de tempo
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
