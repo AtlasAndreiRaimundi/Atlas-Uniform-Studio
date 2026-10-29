@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "592351ba43822a314e0bb441585638cda2e564ac",
-  "exported_at": "2026-10-28T20:12:03.482850+00:00",
+  "source_commit": "7bd8415a65dff5c529249ddc12c75bb321de8c46",
+  "exported_at": "2026-10-29T10:36:55.234943+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -800,8 +800,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 14847,
-      "sha256": "c66f57dcdbb5d180017bdcc55c5454e967df100a6868a955a718861868354190"
+      "size": 16086,
+      "sha256": "8e3410edead070fd8735a24a351f21b14e19e843c00e60683a289da7ff45b49e"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1185,13 +1185,18 @@
     },
     {
       "path": "lib/template-service.mjs",
-      "size": 12589,
-      "sha256": "96c510cc84ba01a0e6e7ee58cefa55188ae31802603c183b703073e711a01851"
+      "size": 13189,
+      "sha256": "afe9d3e84d7d5302b81845f385b6aeea8d539009bd595c959b30227e302bb895"
     },
     {
       "path": "lib/utils.ts",
       "size": 177,
       "sha256": "53f3d3d070f0a9082934da25b875f9499855c2b0693868dd28be8c23d8730f68"
+    },
+    {
+      "path": "lib/withdrawn-templates.mjs",
+      "size": 781,
+      "sha256": "842d632b705914094c82479842c2f2af33bba6e1bb3ec4c9e25aede6f1c5eff8"
     },
     {
       "path": "lib/workspace-service.mjs",
@@ -3455,8 +3460,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 46620,
-      "sha256": "30cf0dcebe519bdcb55bf06d6a12eb4917e4dbb15d1c9d1b720f6225fc345fc5"
+      "size": 49153,
+      "sha256": "f1c11950ca68147d7dbe228de47b6dcc24b68b32e90abfa04de61b7e4f9038ba"
     },
     {
       "path": "tests/tracking-panel.test.mjs",
