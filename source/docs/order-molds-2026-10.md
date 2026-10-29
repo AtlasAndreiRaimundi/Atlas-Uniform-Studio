@@ -153,3 +153,15 @@ Renomear um kit fixa sua composição física no descritor; trocar um nome para 
 - Camisetas avulsas de passeio, Camiseta Gola Prime, polos avulsas e opções de jogo preservadas. As versões somente camiseta que compartilham o GLB de um kit retirado continuam funcionando.
 - Arquivos, projetos e arte existentes não são apagados: apresentações antigas continuam abrindo e salvando com o mesmo molde. Novos projetos e troca para os IDs retirados são bloqueados no servidor, inclusive a partir de abas antigas.
 - Validação cobre os dez IDs com registros persistidos publicados/renomeados, ausência nos catálogos do designer e ADM, bloqueio de criação e troca, preservação dos projetos e disponibilidade das camisetas.
+
+## 29/10/2026 — Nova bermuda de passeio e kits v2
+
+- Arquivo BERMUDA PASSEIO(1).glb preparado como `bermuda-passeio-v2`: 12 painéis (4 cós, 4 corpo, 4 vistas de bolso). Materiais/luz exportada removidos; geometria externa, normais e UVs de origem preservados. Disponível avulsa na linha Passeio.
+- Dez kits novos com as seis camisetas de jogo, Prime, Clássica e duas polos. IDs `passeio-v2-*`, mapas próprios e cor vermelha de conferência na bermuda. Ao aplicar a arte, a cor do PNG substitui a cor de conferência. Os dez IDs antigos retirados continuam bloqueados.
+- Ajuste por combinação com escala uniforme; teste da superfície real da camiseta usando raios horizontais, vértices, centros e meios de arestas da bermuda na região de encontro. Se a bermuda atravessar a superfície da camiseta, o gerador reduz gradualmente e/ou reposiciona até zerar as penetrações amostradas. Na polo com recorte V, houve redução adicional de aproximadamente 4%; nos demais, o encaixe inicial passou. É um teste amostrado, não uma prova matemática de ausência de toda interseção possível.
+- Os novos modelos não recebem o redimensionamento ou a subida de 10 cm dos kits antigos. O encaixe está registrado no próprio GLB e é preservado no visualizador e exportações.
+- `/conferencia-passeio.html` permite conferir os dez kits em vermelho. `/assets/passeio-v2-encaixe.png` reúne projeções geométricas com profundidade por pixel em quatro vistas. A prévia local WebGL não pôde ser usada porque o servidor gerenciado não reiniciou; conferência geométrica e arquivos 3D automatizados.
+
+### Espaço para novos modelos
+
+A biblioteca passou do limite de pacote expandido da hospedagem ao adicionar os dez kits. A publicação compacta sem perda os arquivos `model.glb` e `source.glb` em gzip apenas em `dist/client/assets/molds`. Os originais continuam versionados. O Worker responde nos mesmos URLs e descompacta em streaming pela binding ASSETS, preservando bytes, mapas, modelos históricos, MIME e validação por ETag. Não se aplica a uploads privados/R2 nem aos modelos do montador. O script verifica cada arquivo antes de compactar; testes verificam igualdade binária, HEAD, 304 e rotas não interceptadas.

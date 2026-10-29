@@ -1,4 +1,4 @@
-import { alignPresentationKit } from './kit-alignment.js?v=3';
+import { alignPresentationKit } from './kit-alignment.js?v=4';
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments, presentationPanelNumber } from './model-panels.js?v=3';
 import { createProjectSession } from './project-session.js?v=12';
@@ -260,6 +260,8 @@ async function loadPresentationModel(prefetched) {
     mesh.geometry = mesh.geometry.clone();
     const uv = builtin ? preparePanelGeometry(mesh.geometry, ATLAS_LAYOUT.panels[id]?.rect) : prepareBakedGeometry(mesh.geometry);
     const whiteMaterial = neutralMaterial(mesh.material);
+    const mappedPanel = !builtin && templateConfig.panels?.find(p=>p.mesh===entry?.mesh&&p.primitive===entry?.primitive);
+    if(templateConfig.previewBaseColors?.lower && ['BERMUDA','CALCAO_E_COS'].includes(mappedPanel?.group)) whiteMaterial.color.set(templateConfig.previewBaseColors.lower);
     const proof = makeProof(info);
     const proofMaterial = whiteMaterial.clone(); proofMaterial.map = proof.texture; proofMaterial.color.set(0xffffff);
     const artMaterial = whiteMaterial.clone(); artMaterial.color.set(0xffffff); artMaterial.map = atlasTexture;

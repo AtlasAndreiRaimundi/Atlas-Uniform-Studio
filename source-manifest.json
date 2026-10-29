@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "7bd8415a65dff5c529249ddc12c75bb321de8c46",
-  "exported_at": "2026-10-29T10:36:55.234943+00:00",
+  "source_commit": "b44385a3468010e00d992e12d4d2b418436eba0c",
+  "exported_at": "2026-10-29T11:41:50.394503+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -450,8 +450,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 127,
-      "sha256": "8cc07b2416c290c20f89e641a6e83f2f957877fef4b5173a7246060ec222a2f9"
+      "size": 149,
+      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
     },
     {
       "path": "components.json",
@@ -800,8 +800,8 @@
     },
     {
       "path": "docs/order-molds-2026-10.md",
-      "size": 16086,
-      "sha256": "8e3410edead070fd8735a24a351f21b14e19e843c00e60683a289da7ff45b49e"
+      "size": 18323,
+      "sha256": "132329b8d556066e75e3e684f4691a413ab45bde9d690af22712eb15de570c6e"
     },
     {
       "path": "docs/pedido-montagem-producao-2026-10-27.md",
@@ -1079,6 +1079,11 @@
       "sha256": "7abf845ebe2bca3193038fe7eb77cc8cb5e0b2d69bf899f52f0cca9f74c72a13"
     },
     {
+      "path": "lib/composed-passeio-v2-templates.mjs",
+      "size": 1150641,
+      "sha256": "fa46e9f892cb2a383d8a45684ad43746ab6b373c72e96e7b98c4ba7180f27b94"
+    },
+    {
       "path": "lib/connector-context.ts",
       "size": 612,
       "sha256": "bbddff68689cb0f6926fecd4b8b96f12f2054277c296e97b0df07d4ad5ece24e"
@@ -1109,9 +1114,14 @@
       "sha256": "27504ca025586002d0cb7476dee1059a11ddc56e65f17d748ee410ea277f3704"
     },
     {
+      "path": "lib/garment-fit.mjs",
+      "size": 2393,
+      "sha256": "38f0214b1e2d96501580c4ea8f52133283789696583d385ee5164b6b58967608"
+    },
+    {
       "path": "lib/installed-templates.mjs",
-      "size": 413344,
-      "sha256": "f4bacb7aaae035276d989d00bbe8c36e949ead01b0388a33086e5ca47cc843c0"
+      "size": 413460,
+      "sha256": "26d3566b6e54969ea742ee59a7f7ee4576d42595cea03be336bc89d2353f41ac"
     },
     {
       "path": "lib/list-service.mjs",
@@ -1120,8 +1130,8 @@
     },
     {
       "path": "lib/order-mold-templates.mjs",
-      "size": 873464,
-      "sha256": "f34da7a074d38671b010787ed2822be8ef343f0e8be1aa608c430922f49ddfb9"
+      "size": 904840,
+      "sha256": "832fdfd6a62f31da2df7d8e751357e4eb17b546906925cb52a7f493f7b85d8fa"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1177,6 +1187,11 @@
       "path": "lib/simulator-validation.mjs",
       "size": 7642,
       "sha256": "9890ebda6cf96a7059b2aada09f2a258532d64346ef4b09965530fd20decb906"
+    },
+    {
+      "path": "lib/static-mold-binaries.mjs",
+      "size": 1394,
+      "sha256": "9ec06932ecc18601e2139ad01e9a5d3260d335faa3c7aa3c4cd5ba68c5b26cff"
     },
     {
       "path": "lib/template-generator.mjs",
@@ -1245,8 +1260,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 37682,
-      "sha256": "d971a37cabba51b4b56f1810b21bcf1dcfbcf1b3ec811105647c0800fe7114f5"
+      "size": 37976,
+      "sha256": "8ba26e6a9c1f3b08e1bb259f34f703821d26d72bb38c74fca7db6b452a651ca0"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1352,6 +1367,36 @@
       "path": "public/assets/molde-preview.png",
       "size": 222304,
       "sha256": "4b03af73f72a85747849c9a4c5670c64e51aeb45846736f33e271c40a388a632"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/descriptor.json",
+      "size": 9448,
+      "sha256": "555db3118744098d7ea624f42697439712aba34763ac19f2ba2fc49b6f595947"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/model.glb",
+      "size": 170516,
+      "sha256": "417e451c4ce30515de6c3027b11e72782aa9fb0d06eef5f6f5775dae74bfce33"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/preparation.json",
+      "size": 651,
+      "sha256": "6665fcaf52895c3a5daf2ca3a84a2bf1d2b592b417a3b82e20d2a4d91ca45ae5"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/proof.svg",
+      "size": 25667,
+      "sha256": "4c87f650dd1b78fd9d6816f5a4621a9f9f560663a9afb5b0700f26b768cf597e"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/source.glb",
+      "size": 148384,
+      "sha256": "8b6e7e9f624a6a8663ae10a43c87a561bab281c869e34e390c8ba5bec3de7000"
+    },
+    {
+      "path": "public/assets/molds/bermuda-passeio-v2/template.svg",
+      "size": 24191,
+      "sha256": "27f7a50e1ebb52fb90e5f1d08cca6001e026c4bc6a8eafef09627c5b64421c11"
     },
     {
       "path": "public/assets/molds/bermuda-passeio/descriptor.json",
@@ -2334,6 +2379,211 @@
       "sha256": "c5e047dfc700c02931b7a3494989df8564d6655cc19324caad798f4028f63073"
     },
     {
+      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/descriptor.json",
+      "size": 19347,
+      "sha256": "1ec480d2606a38a60f9a3c6ac14f48426e3ebb82d36e704d02e6c994b59ccceb"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/model.glb",
+      "size": 2500948,
+      "sha256": "cdae231691188eaa0ad7a17860343b700525dc8b736e6566657f85666883c480"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/proof.svg",
+      "size": 95258,
+      "sha256": "77b25ca6dd75c163b27741e8bdc6064f55b07df45be23000601e55c55ca0724d"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/template.svg",
+      "size": 92253,
+      "sha256": "a6cafb2ccac53814f5930e9b7809e5953a1db53375aa8cee7174b130f83d3d86"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-classica-base/model.glb",
+      "size": 6811364,
+      "sha256": "b9268d54bf4afb3873a36074f1b76491351dc4838bddbab5919bdf02032f42e1"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
+      "size": 21694,
+      "sha256": "6486b98a156fc744283737c0c5a30c967eef4defb5ef2739f4627fb980dc7ffd"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/model.glb",
+      "size": 6058276,
+      "sha256": "1180e8c06a6addef7ee672fbefec48c8e700d79a063068c73d30c1f1fc85db5b"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/proof.svg",
+      "size": 144015,
+      "sha256": "244a33bb27833948f4266e6d2152ce9a7a4f15698acc81bbaf34a37a2cb5fcd6"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/template.svg",
+      "size": 140622,
+      "sha256": "7e9b3b467f972966894357b6880c5562016570eb346cad0ac9159970f97128cf"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/descriptor.json",
+      "size": 21401,
+      "sha256": "5892415dceaa5cd3ea3c16bc049aaa9500a9ab09e40d9513d27c9cca810622ac"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/model.glb",
+      "size": 6058296,
+      "sha256": "5c0af4ab9a8ac1737e1a961112f484a7ff3927df50a038c319ab7ae31e730ef3"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/proof.svg",
+      "size": 143763,
+      "sha256": "608dd2b31f112fe39313a631ebfec19b087cd9de502a4d305b2256af27af431c"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/template.svg",
+      "size": 140368,
+      "sha256": "128e7acdf1025f674217e7d243ea9e13f335d45b763a4b518638dbd617c6c60f"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/descriptor.json",
+      "size": 16999,
+      "sha256": "08d8f732db9b9558573b82a29b7b203d914d130913986e657e013b1e7687f2f1"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/model.glb",
+      "size": 2574352,
+      "sha256": "5ea41bc4e7f4e63249f8231db241df12d8f98460b79a27c06e08d3246893fd38"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/proof.svg",
+      "size": 85048,
+      "sha256": "ac441d6e225bed9eb6b9701d9e35137affa397b46f45c951e47541e3411601da"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/template.svg",
+      "size": 82453,
+      "sha256": "03e68f1f76089d82b5a6ee7b816c9cbcc99a64c5c20f5815de199aafd9ef9fe3"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/descriptor.json",
+      "size": 17014,
+      "sha256": "cc4a5fcf0d2ee5d04a6bc2f9002a0011b4a1595dc0b89a3253ebbd3c9b12760e"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/model.glb",
+      "size": 6007780,
+      "sha256": "4c0800a0b7500c85edf5eadb542846f443fc2833e10f85ce28a895110dfd90b9"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/proof.svg",
+      "size": 118425,
+      "sha256": "ae0ee5930039b3745c0b00c6efeea018d801c60ba7d9c1613ed879a9424aef0e"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/template.svg",
+      "size": 115864,
+      "sha256": "2f909038a6489ee704a206d2996cf7d698475daad9fb523490b2977d2d8d7c89"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/descriptor.json",
+      "size": 19083,
+      "sha256": "5b0e6e803e12c1379d082414cebcf31675a8724298a7808c09b2b5c8a0629dd0"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/model.glb",
+      "size": 4700024,
+      "sha256": "239ce9db0942cd57cc5da93dacd65876d4b240c59e6c4c7f92613ea5c9007c30"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/proof.svg",
+      "size": 89357,
+      "sha256": "5d97117a99c4e52dc3ed3d467ade48a53de55797eef81aa83052bc5fa9b7ab1b"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/template.svg",
+      "size": 86476,
+      "sha256": "bb95600c3549066fd9698a52a60aa541b7e95ca0aca83aadd274564847dd0cf9"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/descriptor.json",
+      "size": 15409,
+      "sha256": "79c570a0336ed614dd6d98b0757f10cd878d054de5ad9da927fe8e8c0f1ac602"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/model.glb",
+      "size": 1228804,
+      "sha256": "ea74baaf90a1bc985df238d04d820a132f0c36e50fa3191e8c61b41b7a910f2a"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/proof.svg",
+      "size": 69928,
+      "sha256": "a3b37c1261c10cf145c5c59ad96388a6fc5dcbc578afce36fe61eb2401591981"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/template.svg",
+      "size": 67643,
+      "sha256": "b726551f41e7f6cb99f8e15f40e3bc62ab0ef70411bb50d52c673bb974008fc5"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/descriptor.json",
+      "size": 19300,
+      "sha256": "d5c7e583051f795f1304be48d5484baf09a764889f472dac33eac259b5aff268"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/model.glb",
+      "size": 2502536,
+      "sha256": "1da55c83ec8b3e658c034ab76938fa399b0207b171990ea09bc890a419377949"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/proof.svg",
+      "size": 94434,
+      "sha256": "91b80fea69eab95578195f1427f788b4c17b0da6bbdb5e84b3e0733cf4a23a03"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/template.svg",
+      "size": 91430,
+      "sha256": "e5bce967b6880113ce602968a940d80d1cf13adb2c640363811fc621de116a83"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/descriptor.json",
+      "size": 20480,
+      "sha256": "4019cf1b1a5815939f678da6b848709a9354b204388fed93675719e2471ee181"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/model.glb",
+      "size": 5067248,
+      "sha256": "c44fadc0a6198235f8a5a428020a0f0961f357235bfd477bd6ae5e3066c8f276"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/proof.svg",
+      "size": 99141,
+      "sha256": "d3bfb3f8e712e8bad3a739562d9a1af54eb1148abdb3673dd5fe0446950d926a"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/template.svg",
+      "size": 96107,
+      "sha256": "d29f2effba2154550f780e9b1a078a33bb34c31d9ab7ffba53e7c595cb5c5a41"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo/descriptor.json",
+      "size": 20303,
+      "sha256": "21eed3852fa032ebd7818f4b7bb74f0869e0b5fd5388af29a3277c288f5f3061"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo/model.glb",
+      "size": 5134308,
+      "sha256": "8973127fedf207d6f99cc983ab087842468769bda3a69597adb5dfd823db2e5a"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo/proof.svg",
+      "size": 99574,
+      "sha256": "b96e91923759d56590fee03b37a70f85fffb9b7b3b67c621aeaab11e754bf582"
+    },
+    {
+      "path": "public/assets/molds/passeio-v2-polo/template.svg",
+      "size": 96537,
+      "sha256": "74eb9c8c02a2546efa0a125adc579e885edf6ee0b3038998a2b2b5f1cf73ae52"
+    },
+    {
       "path": "public/assets/molds/polo-sem-recorte-v/descriptor.json",
       "size": 9028,
       "sha256": "d33e4f2c38764860ee500e47b56af224809b2d4058117d37d1a025375226607f"
@@ -2429,6 +2679,11 @@
       "sha256": "b38441ec083425037aa8a0896a959bfaa35d4406d2805e358fbf4ecf7e559a9b"
     },
     {
+      "path": "public/assets/passeio-v2-encaixe.png",
+      "size": 1113118,
+      "sha256": "dc85543393b0f749a6031fdd8f57ef1c2a3fc8a8862841548b7bca9314de9f20"
+    },
+    {
       "path": "public/assets/quadra-lines.svg",
       "size": 819,
       "sha256": "3e2be675bc404c9989caf1f0dceee5ad5ad43e310995583ed55ccfc6842de599"
@@ -2482,6 +2737,11 @@
       "path": "public/catalog-reference.js",
       "size": 5052,
       "sha256": "f8830d8dabd9d391f1454ed02c33ed189a3ea5522bade5cb641e9c7b1f83aee2"
+    },
+    {
+      "path": "public/conferencia-passeio.html",
+      "size": 135798,
+      "sha256": "db2fbddb4c7e93bde22b5a7de46e4951e973aa4391f8f81405cf767f459cbb3b"
     },
     {
       "path": "public/court-backdrop.css",
@@ -2570,8 +2830,8 @@
     },
     {
       "path": "public/kit-alignment.js",
-      "size": 4750,
-      "sha256": "8b725b6f4612473fd75200268887a3e2f055748a1e461603e05d835f6ee825d4"
+      "size": 4872,
+      "sha256": "ce4073501a0fa43c050251a9f7c67152874d4e4f4a67d514c8e37af2c6acbd59"
     },
     {
       "path": "public/map-atlas.js",
@@ -3091,7 +3351,7 @@
     {
       "path": "public/viewer.html",
       "size": 25389,
-      "sha256": "eba4f5f451fe6a8cbbfa6f8cf605fa430025b1b9d196188bf3d0942b16a4bb3a"
+      "sha256": "6c854380eceabde694209ca896ec111f720e14df29f8724a369e11d9b3a78553"
     },
     {
       "path": "public/workflow-contract.js",
@@ -3127,6 +3387,16 @@
       "path": "scripts/compose-passeio-kits.mjs",
       "size": 11413,
       "sha256": "64545bd11f4c7bea2cd24c1fdcde9f69084a4588d549fe8fc722fcf5483defbd"
+    },
+    {
+      "path": "scripts/compose-passeio-v2.mjs",
+      "size": 12962,
+      "sha256": "b783396494474b4793848446c809d71e241a28616d5a33ddd7c38b1112bb531e"
+    },
+    {
+      "path": "scripts/compress-mold-assets.mjs",
+      "size": 890,
+      "sha256": "98ba039cec298c63d1d650c4f7f16f5783088ed41515fbde8655d06ff5e07e78"
     },
     {
       "path": "scripts/connector-preview/connector-preview-session.mjs",
@@ -3175,8 +3445,8 @@
     },
     {
       "path": "scripts/install-order-molds.mjs",
-      "size": 8996,
-      "sha256": "9b17d29e1acb21b596df937062ed54b07f0a776aef63c06fa77ec81fa6937b2f"
+      "size": 9370,
+      "sha256": "4c22b3c53d006fe6ffe9df555e957ea4d224a5df184c41d4f5adcdf70419d6ec"
     },
     {
       "path": "scripts/install-pnpm.sh",
@@ -3215,8 +3485,8 @@
     },
     {
       "path": "scripts/prepare-order-molds.py",
-      "size": 7934,
-      "sha256": "123295f653a7bf022c25ac44e8c935df99035bdfd414e88c5b15b7836a971d8c"
+      "size": 8349,
+      "sha256": "4ebabf3d09e36b1045bdd9c4363a13e9bd01c1619a61e04fcf0cf270e36f940a"
     },
     {
       "path": "scripts/prepare-simulator-presentations.mjs",
@@ -3230,8 +3500,8 @@
     },
     {
       "path": "scripts/prune-mold-transfer-files.mjs",
-      "size": 766,
-      "sha256": "e254927dd07f22fa4557903c9e07e8b4e4facc98bd5ee1b1147b55ad19a9afa9"
+      "size": 782,
+      "sha256": "d2dcfeeac947e54ba2dbd05084436d38193aee21948c2c52b0019c4c9b23816a"
     },
     {
       "path": "scripts/run-framework.mjs",
@@ -3315,8 +3585,8 @@
     },
     {
       "path": "tests/kit-alignment.test.mjs",
-      "size": 8667,
-      "sha256": "d6d4ba57411cfb46665087b4e3254ff06341f42af7e1d21aad66da70360e56bc"
+      "size": 8735,
+      "sha256": "0dda855aee9f08b61f69438339b4911e4aa9c76c026843cf4b72fdb1d2b5e118"
     },
     {
       "path": "tests/kit-import.test.mjs",
@@ -3394,6 +3664,11 @@
       "sha256": "c0cccee5af68e10e9c1fac1b7f0710ad341a70f1715e7a6cef40294f0e2960f3"
     },
     {
+      "path": "tests/passeio-v2.test.mjs",
+      "size": 3380,
+      "sha256": "25277fb364ab823e81cbe337d2a81126f2dfd942da6e393cacb61375b06e0a4e"
+    },
+    {
       "path": "tests/presentation-mold-switch.test.mjs",
       "size": 5778,
       "sha256": "9b445295d9b9b38789c629b55634cdb04a593683662f1f5396914af5587efb73"
@@ -3454,14 +3729,19 @@
       "sha256": "c25f9b6a422c8bdd7742ce94abeec39914e620bccf98ac3f5ae256e083a50a96"
     },
     {
+      "path": "tests/static-mold-binaries.test.mjs",
+      "size": 2612,
+      "sha256": "817763f4d5ee5a03839d00de321104eb0c63b88f7b841830e04c2c4f8e069f24"
+    },
+    {
       "path": "tests/technical-fixture.mjs",
       "size": 473,
       "sha256": "138b43d51fa1dcb53702f041bb40378e1f380ea259f7bd745af20d7d919e9254"
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 49153,
-      "sha256": "f1c11950ca68147d7dbe228de47b6dcc24b68b32e90abfa04de61b7e4f9038ba"
+      "size": 50019,
+      "sha256": "f39f8dd9d44571c6fb52dfa93f805639e0bfd4a60926eda9cf4a1769db1a42ba"
     },
     {
       "path": "tests/tracking-panel.test.mjs",
@@ -3505,13 +3785,13 @@
     },
     {
       "path": "vite.config.ts",
-      "size": 2673,
-      "sha256": "22ff558b1636d251e076f74c1697c7166079861667af10922d6bc505cb8f8290"
+      "size": 2704,
+      "sha256": "e699534d2fccb94e5cddd5d0e110a58a58172762f49ac947c48d6e6b9ab7db9e"
     },
     {
       "path": "worker/index.ts",
-      "size": 1428,
-      "sha256": "721ffeb13edcd78dd5edd6b078ce2f4557eefa10a194e18f3baa0dae55faf9cc"
+      "size": 1629,
+      "sha256": "d4eb6277b4685ac7278baa7571ca43ea5b4f5cd8efd7a7402c96ee9d98110779"
     }
   ]
 }

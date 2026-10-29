@@ -18,7 +18,7 @@ test('actual presentation kits have no visible vertical opening, including legac
  let corrected=0;
  for(const e of INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto')){
   const g=await load(e),d=e.descriptor,root=orient(g,d),before=new Map();root.traverse(m=>{if(m.isMesh)before.set(m,{position:m.geometry.attributes.position.array.slice(),uv:m.geometry.attributes.uv.array.slice()});});
-  const result=alignPresentationKit(root,g.parser.associations,d,THREE);assert.ok(result,e.descriptor.id);assert.ok(result.gapAfter<=-result.bodyHeight*.069+1e-8,`${d.id} has a gap`);if(result.deltaY)corrected++;
+  const result=alignPresentationKit(root,g.parser.associations,d,THREE);if(d.fitVersion==='passeio-v2'){assert.equal(result,null);continue;}assert.ok(result,e.descriptor.id);assert.ok(result.gapAfter<=-result.bodyHeight*.069+1e-8,`${d.id} has a gap`);if(result.deltaY)corrected++;
   assert.equal(alignPresentationKit(root,g.parser.associations,d,THREE).deltaY,0,'alignment must be idempotent');
   for(const [m,b]of before){assert.deepEqual(m.geometry.attributes.position.array,b.position);assert.deepEqual(m.geometry.attributes.uv.array,b.uv);}
   console.log(d.id,`gap ${result.gapBefore.toFixed(5)} → ${result.gapAfter.toFixed(5)}`);

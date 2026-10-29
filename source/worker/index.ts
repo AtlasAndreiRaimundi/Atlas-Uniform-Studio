@@ -1,3 +1,4 @@
+import {serveCompressedMold} from '../lib/static-mold-binaries.mjs';
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
@@ -24,6 +25,8 @@ const worker = {
         },
       };
     }
+    const packedModel=await serveCompressedMold(request,env.ASSETS);
+    if(packedModel)return secureResponse(request,packedModel);
     const response=await runWithConnectorBinding(binding, () => handler.fetch(request, env, ctx));
     return secureResponse(request,response);
   },

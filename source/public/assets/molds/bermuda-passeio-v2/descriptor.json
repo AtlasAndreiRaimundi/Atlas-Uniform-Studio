@@ -1,0 +1,400 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "bermuda-passeio-v2",
+  "name": "BERMUDA DE PASSEIO · NOVA",
+  "category": "calcao",
+  "pageSize": 4096,
+  "sourceSha256": "8b6e7e9f624a6a8663ae10a43c87a561bab281c869e34e390c8ba5bec3de7000",
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 4546,
+  "vertices": 2547,
+  "panelCount": 12,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Bermuda costas direita",
+      "islandCount": 1,
+      "displayName": "Bermuda costas direita"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Bermuda costas esquerda",
+      "islandCount": 1,
+      "displayName": "Bermuda costas esquerda"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Bermuda frente direita",
+      "islandCount": 1,
+      "displayName": "Bermuda frente direita"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Bermuda frente esquerda",
+      "islandCount": 1,
+      "displayName": "Bermuda frente esquerda"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Vista externa bolso direito",
+      "islandCount": 1,
+      "displayName": "Vista externa bolso direito"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Vista interna bolso direito",
+      "islandCount": 1,
+      "displayName": "Vista interna bolso direito"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Vista externa bolso esquerdo",
+      "islandCount": 1,
+      "displayName": "Vista externa bolso esquerdo"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Vista interna bolso esquerdo",
+      "islandCount": 1,
+      "displayName": "Vista interna bolso esquerdo"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 2246.448202337424,
+        "y": 2071.6094536636147,
+        "w": 842.2925165414055,
+        "h": 237.09925937142202
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704782485962,
+        0.10383816808462143,
+        1.0292298793792725
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P01",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 3654.9204988843317,
+        "w": 842.292637413471,
+        "h": 237.09950111555315
+      },
+      "uvBounds": [
+        -0.1038382425904274,
+        0.9707702994346619,
+        0.10383816808462143,
+        1.029229760169983
+      ],
+      "contourVertices": 30,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P02",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 2592.68714357024,
+        "y": 330,
+        "w": 1215.64589965632,
+        "h": 1483.311045220717
+      },
+      "uvBounds": [
+        -0.9493182301521301,
+        -2.422451972961426,
+        -0.6495875120162964,
+        -2.05672550201416
+      ],
+      "contourVertices": 78,
+      "label": "Bermuda costas direita",
+      "displayName": "Bermuda costas direita · P03",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 1022.292637413471,
+        "y": 3654.9204988843317,
+        "w": 842.292637413471,
+        "h": 237.09950111555315
+      },
+      "uvBounds": [
+        -0.1038382425904274,
+        0.9707706570625305,
+        0.10383816808462143,
+        1.0292301177978516
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P04",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 1944.585274826942,
+        "y": 3654.9204988843317,
+        "w": 842.2925769774382,
+        "h": 237.09925937142202
+      },
+      "uvBounds": [
+        -0.10383819788694382,
+        0.9707704782485962,
+        0.10383819788694382,
+        1.0292298793792725
+      ],
+      "contourVertices": 30,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P05",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 2071.6094536636147,
+        "w": 1215.64589965632,
+        "h": 1483.311045220717
+      },
+      "uvBounds": [
+        -0.9493181705474854,
+        -2.422452211380005,
+        -0.6495874524116516,
+        -2.0567257404327393
+      ],
+      "contourVertices": 78,
+      "label": "Bermuda costas esquerda",
+      "displayName": "Bermuda costas esquerda · P06",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 100,
+        "y": 330,
+        "w": 1166.343604363919,
+        "h": 1641.6094536636147
+      },
+      "uvBounds": [
+        -0.3145512342453003,
+        -1.2731704711914062,
+        -0.026976533234119415,
+        -0.8684138059616089
+      ],
+      "contourVertices": 75,
+      "label": "Bermuda frente direita",
+      "displayName": "Bermuda frente direita · P07",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 1346.343604363919,
+        "y": 330,
+        "w": 1166.343539206321,
+        "h": 1641.6094536636147
+      },
+      "uvBounds": [
+        -0.001055664150044322,
+        -1.2731704711914062,
+        0.28651902079582214,
+        -0.8684138059616089
+      ],
+      "contourVertices": 75,
+      "label": "Bermuda frente esquerda",
+      "displayName": "Bermuda frente esquerda · P08",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 1395.64589965632,
+        "y": 2071.6094536636147,
+        "w": 137.16175208373176,
+        "h": 586.0264528631388
+      },
+      "uvBounds": [
+        -0.6509671807289124,
+        -2.416884660720825,
+        -0.6171484589576721,
+        -2.2723934650421143
+      ],
+      "contourVertices": 22,
+      "label": "Vista externa bolso direito",
+      "displayName": "Vista externa bolso direito · P09",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 1612.8076517400516,
+        "y": 2071.6094536636147,
+        "w": 122.2778076756355,
+        "h": 609.0820741350282
+      },
+      "uvBounds": [
+        -0.6406837701797485,
+        -2.4163711071014404,
+        -0.6105348467826843,
+        -2.266195297241211
+      ],
+      "contourVertices": 25,
+      "label": "Vista interna bolso direito",
+      "displayName": "Vista interna bolso direito · P10",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 1815.0854594156872,
+        "y": 2071.6094536636147,
+        "w": 143.4652303023338,
+        "h": 683.3845502719226
+      },
+      "uvBounds": [
+        0.4158630073070526,
+        -1.2831242084503174,
+        0.45123592019081116,
+        -1.1146283149719238
+      ],
+      "contourVertices": 22,
+      "label": "Vista externa bolso esquerdo",
+      "displayName": "Vista externa bolso esquerdo · P11",
+      "group": "CALCAO_E_COS"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 2038.550689718021,
+        "y": 2071.6094536636147,
+        "w": 127.8975126194028,
+        "h": 710.271332533588
+      },
+      "uvBounds": [
+        0.4020150303840637,
+        -1.2762489318847656,
+        0.43354955315589905,
+        -1.1011238098144531
+      ],
+      "contourVertices": 25,
+      "label": "Vista interna bolso esquerdo",
+      "displayName": "Vista interna bolso esquerdo · P12",
+      "group": "CALCAO_E_COS"
+    }
+  ],
+  "texelsPerUvUnit": 4055.7935043061093,
+  "layoutGroups": [
+    {
+      "id": "CALCAO_E_COS",
+      "title": "BERMUDA + CÓS + BOLSOS",
+      "panels": [
+        7,
+        8,
+        3,
+        6,
+        9,
+        10,
+        11,
+        12,
+        1,
+        2,
+        4,
+        5
+      ],
+      "heading": {
+        "x": 100,
+        "y": 250
+      }
+    }
+  ],
+  "originalSourceSha256": "0431bc4408fe203827e15286a1ded7172718a8bf71ff2023406a0df87df28fc8",
+  "preparation": "outer-surfaces-v1",
+  "line": "passeio",
+  "fitVersion": "passeio-v2",
+  "previewBaseColors": {
+    "lower": "#d51d2f"
+  }
+}

@@ -1,0 +1,895 @@
+{
+  "version": 1,
+  "kind": "generated",
+  "id": "passeio-v2-kit-elite-27-camiseta",
+  "name": "KIT PASSEIO · ELITE 27 + BERMUDA",
+  "category": "conjunto",
+  "line": "passeio",
+  "garments": [
+    "Camiseta",
+    "Bermuda"
+  ],
+  "pageSize": 4096,
+  "orientation": {
+    "up": "y",
+    "front": "+z"
+  },
+  "triangles": 186185,
+  "vertices": 94910,
+  "panelCount": 25,
+  "primitives": [
+    {
+      "key": "m0p0",
+      "mesh": 0,
+      "primitive": 0,
+      "label": "Filete manga direita",
+      "islandCount": 1,
+      "displayName": "Filete manga direita"
+    },
+    {
+      "key": "m1p0",
+      "mesh": 1,
+      "primitive": 0,
+      "label": "Filete manga esquerda",
+      "islandCount": 1,
+      "displayName": "Filete manga esquerda"
+    },
+    {
+      "key": "m2p0",
+      "mesh": 2,
+      "primitive": 0,
+      "label": "Gola 1",
+      "islandCount": 1,
+      "displayName": "Gola 1"
+    },
+    {
+      "key": "m3p0",
+      "mesh": 3,
+      "primitive": 0,
+      "label": "Gola 2",
+      "islandCount": 1,
+      "displayName": "Gola 2"
+    },
+    {
+      "key": "m4p0",
+      "mesh": 4,
+      "primitive": 0,
+      "label": "Gola 3",
+      "islandCount": 1,
+      "displayName": "Gola 3"
+    },
+    {
+      "key": "m5p0",
+      "mesh": 5,
+      "primitive": 0,
+      "label": "Gola 4",
+      "islandCount": 1,
+      "displayName": "Gola 4"
+    },
+    {
+      "key": "m6p0",
+      "mesh": 6,
+      "primitive": 0,
+      "label": "Gola 5",
+      "islandCount": 1,
+      "displayName": "Gola 5"
+    },
+    {
+      "key": "m7p0",
+      "mesh": 7,
+      "primitive": 0,
+      "label": "Manga esquerda",
+      "islandCount": 1,
+      "displayName": "Manga esquerda"
+    },
+    {
+      "key": "m8p0",
+      "mesh": 8,
+      "primitive": 0,
+      "label": "Manga direita",
+      "islandCount": 1,
+      "displayName": "Manga direita"
+    },
+    {
+      "key": "m9p0",
+      "mesh": 9,
+      "primitive": 0,
+      "label": "Recorte direito",
+      "islandCount": 1,
+      "displayName": "Recorte direito"
+    },
+    {
+      "key": "m10p0",
+      "mesh": 10,
+      "primitive": 0,
+      "label": "Recorte esquerdo",
+      "islandCount": 1,
+      "displayName": "Recorte esquerdo"
+    },
+    {
+      "key": "m11p0",
+      "mesh": 11,
+      "primitive": 0,
+      "label": "Frente",
+      "islandCount": 1,
+      "displayName": "Frente"
+    },
+    {
+      "key": "m12p0",
+      "mesh": 12,
+      "primitive": 0,
+      "label": "Costas",
+      "islandCount": 1,
+      "displayName": "Costas"
+    },
+    {
+      "key": "m13p0",
+      "mesh": 13,
+      "primitive": 0,
+      "label": "Cós frente direito",
+      "islandCount": 1,
+      "displayName": "Cós frente direito"
+    },
+    {
+      "key": "m14p0",
+      "mesh": 14,
+      "primitive": 0,
+      "label": "Cós costas direito",
+      "islandCount": 1,
+      "displayName": "Cós costas direito"
+    },
+    {
+      "key": "m15p0",
+      "mesh": 15,
+      "primitive": 0,
+      "label": "Bermuda costas direita",
+      "islandCount": 1,
+      "displayName": "Bermuda costas direita"
+    },
+    {
+      "key": "m16p0",
+      "mesh": 16,
+      "primitive": 0,
+      "label": "Cós frente esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós frente esquerdo"
+    },
+    {
+      "key": "m17p0",
+      "mesh": 17,
+      "primitive": 0,
+      "label": "Cós costas esquerdo",
+      "islandCount": 1,
+      "displayName": "Cós costas esquerdo"
+    },
+    {
+      "key": "m18p0",
+      "mesh": 18,
+      "primitive": 0,
+      "label": "Bermuda costas esquerda",
+      "islandCount": 1,
+      "displayName": "Bermuda costas esquerda"
+    },
+    {
+      "key": "m19p0",
+      "mesh": 19,
+      "primitive": 0,
+      "label": "Bermuda frente direita",
+      "islandCount": 1,
+      "displayName": "Bermuda frente direita"
+    },
+    {
+      "key": "m20p0",
+      "mesh": 20,
+      "primitive": 0,
+      "label": "Bermuda frente esquerda",
+      "islandCount": 1,
+      "displayName": "Bermuda frente esquerda"
+    },
+    {
+      "key": "m21p0",
+      "mesh": 21,
+      "primitive": 0,
+      "label": "Vista externa bolso direito",
+      "islandCount": 1,
+      "displayName": "Vista externa bolso direito"
+    },
+    {
+      "key": "m22p0",
+      "mesh": 22,
+      "primitive": 0,
+      "label": "Vista interna bolso direito",
+      "islandCount": 1,
+      "displayName": "Vista interna bolso direito"
+    },
+    {
+      "key": "m23p0",
+      "mesh": 23,
+      "primitive": 0,
+      "label": "Vista externa bolso esquerdo",
+      "islandCount": 1,
+      "displayName": "Vista externa bolso esquerdo"
+    },
+    {
+      "key": "m24p0",
+      "mesh": 24,
+      "primitive": 0,
+      "label": "Vista interna bolso esquerdo",
+      "islandCount": 1,
+      "displayName": "Vista interna bolso esquerdo"
+    }
+  ],
+  "panels": [
+    {
+      "number": 1,
+      "mesh": 0,
+      "primitive": 0,
+      "rect": {
+        "x": 1909.9117360812718,
+        "y": 1532.3334537304715,
+        "w": 267.98134018518664,
+        "h": 14.11117437152922
+      },
+      "uvBounds": [
+        0.5005751848220825,
+        0.14097756147384644,
+        0.6980220079421997,
+        0.15137457847595215
+      ],
+      "contourVertices": 179,
+      "label": "Filete manga direita",
+      "displayName": "Filete manga direita · P1",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 2,
+      "mesh": 1,
+      "primitive": 0,
+      "rect": {
+        "x": 2235.1054675895666,
+        "y": 1532.3334537304715,
+        "w": 452.2842002429109,
+        "h": 23.815948825366117
+      },
+      "uvBounds": [
+        -0.8822041749954224,
+        0.30747008323669434,
+        -0.548964262008667,
+        0.325017511844635
+      ],
+      "contourVertices": 179,
+      "label": "Filete manga esquerda",
+      "displayName": "Filete manga esquerda · P2",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 3,
+      "mesh": 2,
+      "primitive": 0,
+      "rect": {
+        "x": 2720.2605801360505,
+        "y": 340,
+        "w": 276.87661490933533,
+        "h": 28.529677926397827
+      },
+      "uvBounds": [
+        -0.5068649649620056,
+        0.12960118055343628,
+        -0.3028641641139984,
+        0.15062165260314941
+      ],
+      "contourVertices": 119,
+      "label": "Gola 1",
+      "displayName": "Gola 1 · P3",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 4,
+      "mesh": 3,
+      "primitive": 0,
+      "rect": {
+        "x": 3054.349586368495,
+        "y": 340,
+        "w": 56.98327185781521,
+        "h": 148.4470336258254
+      },
+      "uvBounds": [
+        -0.21562564373016357,
+        0.17077195644378662,
+        -0.17364075779914856,
+        0.2801467180252075
+      ],
+      "contourVertices": 61,
+      "label": "Gola 2",
+      "displayName": "Gola 2 · P4",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 5,
+      "mesh": 4,
+      "primitive": 0,
+      "rect": {
+        "x": 3168.5452495494183,
+        "y": 340,
+        "w": 56.98327185781521,
+        "h": 151.0606664911397
+      },
+      "uvBounds": [
+        -0.3235802948474884,
+        0.16909539699554443,
+        -0.2815954089164734,
+        0.28039586544036865
+      ],
+      "contourVertices": 62,
+      "label": "Gola 3",
+      "displayName": "Gola 3 · P5",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 11,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 6,
+      "mesh": 5,
+      "primitive": 0,
+      "rect": {
+        "x": 3282.7409127303417,
+        "y": 340,
+        "w": 95.4322034424007,
+        "h": 56.84303623283
+      },
+      "uvBounds": [
+        -0.2586175501346588,
+        0.24506956338882446,
+        -0.18830375373363495,
+        0.28695112466812134
+      ],
+      "contourVertices": 47,
+      "label": "Gola 4",
+      "displayName": "Gola 4 · P6",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 12,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 7,
+      "mesh": 6,
+      "primitive": 0,
+      "rect": {
+        "x": 2720.2605801360505,
+        "y": 562.5761556450252,
+        "w": 98.64781400856369,
+        "h": 57.946962012205965
+      },
+      "uvBounds": [
+        -0.30794140696525574,
+        0.2301497459411621,
+        -0.23525837063789368,
+        0.27284467220306396
+      ],
+      "contourVertices": 48,
+      "label": "Gola 5",
+      "displayName": "Gola 5 · P7",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 13,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 8,
+      "mesh": 7,
+      "primitive": 0,
+      "rect": {
+        "x": 717.8268838272577,
+        "y": 1532.3334537304715,
+        "w": 538.8544384613577,
+        "h": 457.33519056145826
+      },
+      "uvBounds": [
+        -0.9200693368911743,
+        -0.04001033306121826,
+        -0.5230450630187988,
+        0.2969511151313782
+      ],
+      "contourVertices": 322,
+      "label": "Manga esquerda",
+      "displayName": "Manga esquerda · P8",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 14,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 9,
+      "mesh": 8,
+      "primitive": 0,
+      "rect": {
+        "x": 1313.8937136117238,
+        "y": 1532.3334537304715,
+        "w": 538.8056311464395,
+        "h": 457.66654626952834
+      },
+      "uvBounds": [
+        -0.0003844604652840644,
+        -0.04025447368621826,
+        0.39660385251045227,
+        0.2969511151313782
+      ],
+      "contourVertices": 323,
+      "label": "Manga direita",
+      "displayName": "Manga direita · P9",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 15,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 10,
+      "mesh": 9,
+      "primitive": 0,
+      "rect": {
+        "x": 2022.2109096631082,
+        "y": 340,
+        "w": 119.11446933134452,
+        "h": 711.5591206601231
+      },
+      "uvBounds": [
+        -0.029770981520414352,
+        0.3861839771270752,
+        0.05799174681305885,
+        0.9104558825492859
+      ],
+      "contourVertices": 307,
+      "label": "Recorte direito",
+      "displayName": "Recorte direito · P10",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 16,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 11,
+      "mesh": 10,
+      "primitive": 0,
+      "rect": {
+        "x": 2198.537770317561,
+        "y": 340,
+        "w": 119.11812993822689,
+        "h": 715.1398009214993
+      },
+      "uvBounds": [
+        -0.5546203255653381,
+        0.3847534656524658,
+        -0.46685490012168884,
+        0.9116635918617249
+      ],
+      "contourVertices": 307,
+      "label": "Recorte esquerdo",
+      "displayName": "Recorte esquerdo · P11",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 17,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 12,
+      "mesh": 11,
+      "primitive": 0,
+      "rect": {
+        "x": 717.8268838272577,
+        "y": 340,
+        "w": 576.6806219402979,
+        "h": 940.9939872331352
+      },
+      "uvBounds": [
+        -0.46095010638237,
+        0.32240599393844604,
+        -0.036055758595466614,
+        1.0157239437103271
+      ],
+      "contourVertices": 550,
+      "label": "Frente",
+      "displayName": "Frente · P12",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 18,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 13,
+      "mesh": 12,
+      "primitive": 0,
+      "rect": {
+        "x": 1351.719897090664,
+        "y": 340,
+        "w": 613.2786212493359,
+        "h": 1020.6962797611465
+      },
+      "uvBounds": [
+        0.42433884739875793,
+        0.1715298891067505,
+        0.8761983513832092,
+        0.9235719442367554
+      ],
+      "contourVertices": 557,
+      "label": "Costas",
+      "displayName": "Costas · P13",
+      "group": "CAMISETA",
+      "sourcePanelNumber": 19,
+      "sourceTemplateId": "kit-elite-27-camiseta"
+    },
+    {
+      "number": 14,
+      "mesh": 13,
+      "primitive": 0,
+      "rect": {
+        "x": 2183.39081004454,
+        "y": 3046.7488668073333,
+        "w": 390.1669985832095,
+        "h": 109.82919185261704
+      },
+      "uvBounds": [
+        -0.10383821278810501,
+        0.9707704782485962,
+        0.10383816808462143,
+        1.0292298793792725
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente direito",
+      "displayName": "Cós frente direito · P14",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 1,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 15,
+      "mesh": 14,
+      "primitive": 0,
+      "rect": {
+        "x": 1189.1124135569112,
+        "y": 3780.1706961665923,
+        "w": 390.16705457360484,
+        "h": 109.82930383340782
+      },
+      "uvBounds": [
+        -0.1038382425904274,
+        0.9707702994346619,
+        0.10383816808462143,
+        1.029229760169983
+      ],
+      "contourVertices": 30,
+      "label": "Cós costas direito",
+      "displayName": "Cós costas direito · P15",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 2,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 16,
+      "mesh": 15,
+      "primitive": 0,
+      "rect": {
+        "x": 2343.77571889799,
+        "y": 2240,
+        "w": 563.1118675450987,
+        "h": 687.099798601429
+      },
+      "uvBounds": [
+        -0.9493182301521301,
+        -2.422451972961426,
+        -0.6495875120162964,
+        -2.05672550201416
+      ],
+      "contourVertices": 78,
+      "label": "Bermuda costas direita",
+      "displayName": "Bermuda costas direita · P16",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 3,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 17,
+      "mesh": 16,
+      "primitive": 0,
+      "rect": {
+        "x": 1616.33709273678,
+        "y": 3780.1706961665923,
+        "w": 390.16705457360484,
+        "h": 109.82930383340782
+      },
+      "uvBounds": [
+        -0.1038382425904274,
+        0.9707706570625305,
+        0.10383816808462143,
+        1.0292301177978516
+      ],
+      "contourVertices": 32,
+      "label": "Cós frente esquerdo",
+      "displayName": "Cós frente esquerdo · P17",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 4,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 18,
+      "mesh": 17,
+      "primitive": 0,
+      "rect": {
+        "x": 2043.561771916649,
+        "y": 3780.1706961665923,
+        "w": 390.16702657840716,
+        "h": 109.82919185261704
+      },
+      "uvBounds": [
+        -0.10383819788694382,
+        0.9707704782485962,
+        0.10383819788694382,
+        1.0292298793792725
+      ],
+      "contourVertices": 30,
+      "label": "Cós costas esquerdo",
+      "displayName": "Cós costas esquerdo · P18",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 5,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 19,
+      "mesh": 18,
+      "primitive": 0,
+      "rect": {
+        "x": 1189.1124135569112,
+        "y": 3046.7488668073333,
+        "w": 563.1118675450987,
+        "h": 687.099798601429
+      },
+      "uvBounds": [
+        -0.9493181705474854,
+        -2.422452211380005,
+        -0.6495874524116516,
+        -2.0567257404327393
+      ],
+      "contourVertices": 78,
+      "label": "Bermuda costas esquerda",
+      "displayName": "Bermuda costas esquerda · P19",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 6,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 20,
+      "mesh": 19,
+      "primitive": 0,
+      "rect": {
+        "x": 1189.1124135569112,
+        "y": 2240,
+        "w": 540.2740431554366,
+        "h": 760.4268360495032
+      },
+      "uvBounds": [
+        -0.3145512342453003,
+        -1.2731704711914062,
+        -0.026976533234119415,
+        -0.8684138059616089
+      ],
+      "contourVertices": 75,
+      "label": "Bermuda frente direita",
+      "displayName": "Bermuda frente direita · P20",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 7,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 21,
+      "mesh": 20,
+      "primitive": 0,
+      "rect": {
+        "x": 1766.4440813186118,
+        "y": 2240,
+        "w": 540.2740129731142,
+        "h": 760.4268360495032
+      },
+      "uvBounds": [
+        -0.001055664150044322,
+        -1.2731704711914062,
+        0.28651902079582214,
+        -0.8684138059616089
+      ],
+      "contourVertices": 75,
+      "label": "Bermuda frente esquerda",
+      "displayName": "Bermuda frente esquerda · P21",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 8,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 22,
+      "mesh": 21,
+      "primitive": 0,
+      "rect": {
+        "x": 1789.2819057082738,
+        "y": 3046.7488668073333,
+        "w": 63.536108988204646,
+        "h": 271.45935374428285
+      },
+      "uvBounds": [
+        -0.6509671807289124,
+        -2.416884660720825,
+        -0.6171484589576721,
+        -2.2723934650421143
+      ],
+      "contourVertices": 22,
+      "label": "Vista externa bolso direito",
+      "displayName": "Vista externa bolso direito · P22",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 9,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 23,
+      "mesh": 22,
+      "primitive": 0,
+      "rect": {
+        "x": 1889.8756393027425,
+        "y": 3046.7488668073333,
+        "w": 56.64156368150799,
+        "h": 282.1391857212562
+      },
+      "uvBounds": [
+        -0.6406837701797485,
+        -2.4163711071014404,
+        -0.6105348467826843,
+        -2.266195297241211
+      ],
+      "contourVertices": 25,
+      "label": "Vista interna bolso direito",
+      "displayName": "Vista interna bolso direito · P23",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 10,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 24,
+      "mesh": 23,
+      "primitive": 0,
+      "rect": {
+        "x": 1983.5748275905144,
+        "y": 3046.7488668073333,
+        "w": 66.45600810743859,
+        "h": 316.5576015712177
+      },
+      "uvBounds": [
+        0.4158630073070526,
+        -1.2831242084503174,
+        0.45123592019081116,
+        -1.1146283149719238
+      ],
+      "contourVertices": 22,
+      "label": "Vista externa bolso esquerdo",
+      "displayName": "Vista externa bolso esquerdo · P24",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 11,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    },
+    {
+      "number": 25,
+      "mesh": 24,
+      "primitive": 0,
+      "rect": {
+        "x": 2087.088460304217,
+        "y": 3046.7488668073333,
+        "w": 59.244725134059166,
+        "h": 329.01210512025705
+      },
+      "uvBounds": [
+        0.4020150303840637,
+        -1.2762489318847656,
+        0.43354955315589905,
+        -1.1011238098144531
+      ],
+      "contourVertices": 25,
+      "label": "Vista interna bolso esquerdo",
+      "displayName": "Vista interna bolso esquerdo · P25",
+      "group": "BERMUDA",
+      "sourcePanelNumber": 12,
+      "sourceTemplateId": "bermuda-passeio-v2"
+    }
+  ],
+  "layoutGroups": [
+    {
+      "id": "CAMISETA",
+      "title": "CAMISETA",
+      "panels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "BERMUDA",
+      "title": "BERMUDA",
+      "panels": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    }
+  ],
+  "sourceComponents": [
+    {
+      "role": "top",
+      "templateId": "kit-elite-27-camiseta",
+      "modelSha256": "77c9633b92ce49763c412a4dbf521dff725531e8088070d778f7e8613ab084bd",
+      "uniformScale": 1.3572628768424988,
+      "center": [
+        0.000329531729221344,
+        0.844526469707489,
+        0.020365960896015167
+      ],
+      "waistOrHemY": 0.7,
+      "atlas": {
+        "scale": 0.7151548915388546,
+        "offsetX": 717.8268838272577,
+        "offsetY": 340,
+        "sourceMinX": 100,
+        "sourceMinY": 340
+      }
+    },
+    {
+      "role": "bottom",
+      "templateId": "bermuda-passeio-v2",
+      "modelSha256": "417e451c4ce30515de6c3027b11e72782aa9fb0d06eef5f6f5775dae74bfce33",
+      "uniformScale": 3.4614483808723158,
+      "center": [
+        0.0002890024334192276,
+        0.35042673349380493,
+        0.0066232867538928986
+      ],
+      "waistOrHemY": 0.77,
+      "atlas": {
+        "scale": 0.4632203075782992,
+        "offsetX": 1189.1124135569112,
+        "offsetY": 2240,
+        "sourceMinX": 100,
+        "sourceMinY": 330
+      }
+    }
+  ],
+  "compositionVersion": 2,
+  "fitVersion": "passeio-v2",
+  "previewBaseColors": {
+    "lower": "#d51d2f"
+  },
+  "fitVerification": {
+    "samples": 1680,
+    "coveredSamples": 632,
+    "penetrations": 0,
+    "maxPenetration": 0,
+    "clearance": 0.002,
+    "initialScale": 3.4614483808723158,
+    "finalScale": 3.4614483808723158,
+    "waistY": 0.77,
+    "method": "radial-surface-envelope-v1"
+  },
+  "sourceSha256": "5c0af4ab9a8ac1737e1a961112f484a7ff3927df50a038c319ab7ae31e730ef3"
+}
