@@ -186,3 +186,13 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Página pública de conferência dos kits e prancha geométrica com profundidade por pixel em quatro vistas. Prévia WebGL local indisponível por falha de infraestrutura; testes de geometria e arquivos finais aprovados.
 - Compactação lossless dos GLBs apenas na publicação, com ASSETS e descompactação em streaming nos URLs existentes. Todos os 62 arquivos compactados foram conferidos contra os originais; uploads/R2 e modelo direto do montador preservados.
 - Fonte `b44385a3468010e00d992e12d4d2b418436eba0c` (758 arquivos). 373 testes aprovados, um pulado; TypeScript e build aprovados. Testes de kits v2 e transporte binário adicionados ao CI.
+
+
+## v86 — 2026-10-29 — catálogo reiniciado
+
+- Preservado apenas KIT EDGE 2027 (mapa v3), confirmado pelo proprietário.
+- 61 IDs antigos bloqueados; modelos, fontes, mapas e descritores removidos da versão ativa.
+- Limpeza única de D1/R2 preserva objetos de pedidos, projetos e CDRs, com retry seguro e proteção de uploads futuros.
+- Montador informa indisponibilidade enquanto recebe nova base; desenhos salvos permanecem.
+- 499 arquivos verificados; 350 testes aprovados, 26 históricos/legado ignorados, zero falhas; TypeScript e build aprovados.
+- Conferência publicada: biblioteca com um molde e lixeira vazia. Pedido indicado continua no perfil.

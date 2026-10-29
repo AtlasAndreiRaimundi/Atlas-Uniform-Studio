@@ -7,7 +7,7 @@ import {migrations} from './migrations.mjs';
 const migration=migrations.join('\n');
 const alice = { userId: 'alice', email: 'alice@example.test', fullName: 'Estúdio Alice' };
 const bob = { userId: 'bob', email: 'bob@example.test', fullName: 'Estúdio Bob' };
-const map = new File([await readFile(new URL('../public/assets/mapa-conferencia.png', import.meta.url))], 'minha-arte.png', { type: 'image/png' });
+const map = new File([await readFile(new URL('./fixtures/blank-map-4096.png', import.meta.url))], 'minha-arte.png', { type: 'image/png' });
 const base = { name: 'Uniforme principal', clientName: 'Cliente A', visuals: { brightness: 112, background: 'dark' } };
 
 test('presentation completion pins the reviewed version, requires saved art and is invalidated by a later save',async()=>{

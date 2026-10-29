@@ -3,6 +3,7 @@ import {AppError} from './project-service.mjs';
 import {validateSimulatorState,simulatorPNG,describeSimulatorColors} from './simulator-validation.mjs';
 import {newOrder,newPage,newKitPage} from '../public/production-core.js';
 import {UNIFORM_FONTS} from '../public/simulador/catalog.js';
+import {SIMULATOR_PRESENTATION_TEMPLATES} from './simulator-presentation-templates.mjs';
 import {PRESENTATION_LAYOUTS} from '../public/simulador/presentation-layouts.js';
 export class SimulatorService{
  /** @param {import('./project-service.mjs').ProjectService | null} projects */
@@ -22,6 +23,7 @@ export class SimulatorService{
  async thumbnail(user,id,version){const saved=await this.get(user,id);if(String(saved.version)!==String(version))throw new AppError(409,'A miniatura mudou. Atualize a lista.');return simulatorPNG(saved.preview);}
  async createPresentation(user,id,input,mapFile){
   const saved=await this.get(user,id);
+  if(!SIMULATOR_PRESENTATION_TEMPLATES.length)throw new AppError(503,'As bases antigas do simulador foram excluídas. Prepare um novo molde antes de gerar apresentações.');
   if(!Number.isSafeInteger(input?.version)||saved.version!==input.version)throw new AppError(409,'O uniforme mudou. Confira e salve a versão atual antes de criar a apresentação.');
   if(saved.state.platformBrand!=='atlas')throw new AppError(409,'Abra o uniforme no montador e confira o desenho atualizado antes de criar a apresentação.');
   if(!this.projects)throw new AppError(503,'O estúdio de apresentações está indisponível.');
