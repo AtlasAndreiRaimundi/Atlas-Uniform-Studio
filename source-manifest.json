@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "b44385a3468010e00d992e12d4d2b418436eba0c",
-  "exported_at": "2026-10-29T11:41:50.394503+00:00",
+  "source_commit": "5446afb8431cd5fa303862bed853d7c0543c5131",
+  "exported_at": "2026-10-29T13:16:47.372088+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -794,6 +794,11 @@
       "sha256": "1cc0e4b222070d5020c0c84c4c14468aa004121698f07199f37d2516650debd2"
     },
     {
+      "path": "docs/mold-reset-2026-10-29.md",
+      "size": 3511,
+      "sha256": "a3951d3e947779ae9e74e6fbacbdedc04132c902e9726d4d38161c6a140439b7"
+    },
+    {
       "path": "docs/orcamento-anexo-01-2026.md",
       "size": 4320,
       "sha256": "9de6e86febdade358d2e03e0c060e0a30352704357bcfc426a584e6598073406"
@@ -1060,28 +1065,28 @@
     },
     {
       "path": "lib/composed-five-part-templates.mjs",
-      "size": 687299,
-      "sha256": "0be89217c6554f8b13993ae3b5fc6c826cc68014775895bc620b8bd24860375c"
+      "size": 150,
+      "sha256": "ba767def1a299260b1a9e0ec3462c04f3ec3a0a28771eb89c26e58bf25819c32"
     },
     {
       "path": "lib/composed-game-templates.mjs",
-      "size": 695706,
-      "sha256": "f51e418da54a1def5bd27f309b3d591bf39aea708e883e62e3e13aed89c808bb"
+      "size": 145,
+      "sha256": "a4d4b6e1b7801e3dd7bab6322775ca1bc0efdccdfbc26543546d511b5ae987dd"
     },
     {
       "path": "lib/composed-passeio-shirts.mjs",
-      "size": 536621,
-      "sha256": "693e3a35b5573f91fdbc4df0ffd6435c8f61ea52c23ed99ef5cbc22b2e5c14c4"
+      "size": 145,
+      "sha256": "d517fb577609585d750016e0b52bb468d00c2977eba141666e4ee90d0eea4ae3"
     },
     {
       "path": "lib/composed-passeio-templates.mjs",
-      "size": 1110832,
-      "sha256": "7abf845ebe2bca3193038fe7eb77cc8cb5e0b2d69bf899f52f0cca9f74c72a13"
+      "size": 148,
+      "sha256": "326767a35beb8e85943bdfa9f58194c5218510d6a6513472efaa5d8545939a52"
     },
     {
       "path": "lib/composed-passeio-v2-templates.mjs",
-      "size": 1150641,
-      "sha256": "fa46e9f892cb2a383d8a45684ad43746ab6b373c72e96e7b98c4ba7180f27b94"
+      "size": 151,
+      "sha256": "b7ab0ac804f2e3bcf3a117f2475690fbee879d604d6b64c43283bc534e00143e"
     },
     {
       "path": "lib/connector-context.ts",
@@ -1120,8 +1125,8 @@
     },
     {
       "path": "lib/installed-templates.mjs",
-      "size": 413460,
-      "sha256": "26d3566b6e54969ea742ee59a7f7ee4576d42595cea03be336bc89d2353f41ac"
+      "size": 138890,
+      "sha256": "9fbc7debb590446cf1f05f54181b2fb18e0728c388641b7e95f02a9439de5678"
     },
     {
       "path": "lib/list-service.mjs",
@@ -1129,9 +1134,14 @@
       "sha256": "ca4678e5362b522836f2640c0e160786123d907df0997daa5a947ee27c18cdb3"
     },
     {
+      "path": "lib/mold-catalog-reset.mjs",
+      "size": 2369,
+      "sha256": "61f66465de02c935faf219c582b63b617edd66314abae39b953544e85030628e"
+    },
+    {
       "path": "lib/order-mold-templates.mjs",
-      "size": 904840,
-      "sha256": "832fdfd6a62f31da2df7d8e751357e4eb17b546906925cb52a7f493f7b85d8fa"
+      "size": 142,
+      "sha256": "0d2fdc80a48b4bd5cef4b0b986fb37466ce8ea9685adee3fadf6ccb6c1512c5d"
     },
     {
       "path": "lib/order-number.mjs",
@@ -1155,8 +1165,13 @@
     },
     {
       "path": "lib/project-service.mjs",
-      "size": 26628,
-      "sha256": "0303612169b4303be842b44b30dfc65872eea237b5c4af37d3bdfeb7de69f7d8"
+      "size": 26776,
+      "sha256": "e80c1d161c1013c9f7ecd84d98205571fb5385771d9d9f413df8f874582c7a30"
+    },
+    {
+      "path": "lib/removed-molds.mjs",
+      "size": 2376,
+      "sha256": "4f2656390e9f4781ccf89cb80a9ba5df778dc408c0dd4e6e1a047d3417c06d46"
     },
     {
       "path": "lib/request-security.mjs",
@@ -1170,18 +1185,18 @@
     },
     {
       "path": "lib/shirt-presentation-templates.mjs",
-      "size": 594443,
-      "sha256": "f92fac123424aaff9afcfab9f447682feb6a5d80ca7d34236ecb0fb05b3782cb"
+      "size": 150,
+      "sha256": "1aabbd1b904757b5ced8e582511bf874094e4377a9d223cdfa958ee64455f391"
     },
     {
       "path": "lib/simulator-presentation-templates.mjs",
-      "size": 26809,
-      "sha256": "6b1bb6606c0b17c184afa16c3f50525d5ed5e2a4615c781bf0cbdb25c2e344c7"
+      "size": 154,
+      "sha256": "f92675b430c88985a26d9289169d63f154aa3e726a2a02ce44859b004c19693e"
     },
     {
       "path": "lib/simulator-service.mjs",
-      "size": 8227,
-      "sha256": "cab5b3ca4fd0d262d20fd5abea7bd1023da47a7e384b1cdd8391a9039e68b442"
+      "size": 8491,
+      "sha256": "35e819bf7669290618e57b94b9b705e61a8a0dcd0bcfe6ee2021ad61901f9f04"
     },
     {
       "path": "lib/simulator-validation.mjs",
@@ -1200,8 +1215,8 @@
     },
     {
       "path": "lib/template-service.mjs",
-      "size": 13189,
-      "sha256": "afe9d3e84d7d5302b81845f385b6aeea8d539009bd595c959b30227e302bb895"
+      "size": 14102,
+      "sha256": "e63abc288eabf594f2ad56936cad717cd712cf5e28118697dc139e9aa21a31f7"
     },
     {
       "path": "lib/utils.ts",
@@ -1314,11 +1329,6 @@
       "sha256": "cbf8c2880fa7c5d018712b44edb81ab063023b903047adcc88f384565c539338"
     },
     {
-      "path": "public/assets/camiseta.glb",
-      "size": 6517200,
-      "sha256": "ad603e7aede9f3f08441dc897d0592b3b95243396e467272ed8cea4bbe42ec9d"
-    },
-    {
       "path": "public/assets/entry/football-athlete.png",
       "size": 1846994,
       "sha256": "ae6576f982c149b22f254d1e9b9f2d89a6df1074c9a5a7fbd3236d8ed420fec1"
@@ -1349,11 +1359,6 @@
       "sha256": "8985d18c3e3beb35c56af20be174e5e497a71d0fb2161b289d61132321c51895"
     },
     {
-      "path": "public/assets/mapa-conferencia.png",
-      "size": 592079,
-      "sha256": "e001398c0a7a16bfc55a7a35311355954c6a682b969a24655d6160bce196a45f"
-    },
-    {
       "path": "public/assets/meinerz-original.png",
       "size": 4215,
       "sha256": "cbc47fb638ed1450b9f9e92e7c9946b96b00eb7582fdadf67282d1e6372b5e81"
@@ -1364,434 +1369,14 @@
       "sha256": "2ce4319683c61566d65061a0a6632b6480407ae406903aa231ab9ac757c0bfa4"
     },
     {
-      "path": "public/assets/molde-preview.png",
-      "size": 222304,
-      "sha256": "4b03af73f72a85747849c9a4c5670c64e51aeb45846736f33e271c40a388a632"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/descriptor.json",
-      "size": 9448,
-      "sha256": "555db3118744098d7ea624f42697439712aba34763ac19f2ba2fc49b6f595947"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/model.glb",
-      "size": 170516,
-      "sha256": "417e451c4ce30515de6c3027b11e72782aa9fb0d06eef5f6f5775dae74bfce33"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/preparation.json",
-      "size": 651,
-      "sha256": "6665fcaf52895c3a5daf2ca3a84a2bf1d2b592b417a3b82e20d2a4d91ca45ae5"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/proof.svg",
-      "size": 25667,
-      "sha256": "4c87f650dd1b78fd9d6816f5a4621a9f9f560663a9afb5b0700f26b768cf597e"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/source.glb",
-      "size": 148384,
-      "sha256": "8b6e7e9f624a6a8663ae10a43c87a561bab281c869e34e390c8ba5bec3de7000"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio-v2/template.svg",
-      "size": 24191,
-      "sha256": "27f7a50e1ebb52fb90e5f1d08cca6001e026c4bc6a8eafef09627c5b64421c11"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/descriptor.json",
-      "size": 6424,
-      "sha256": "1654f099361f75200546f411fdc0de47694b09f7eabb19dfa4305124cd09fbcc"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/model.glb",
-      "size": 337124,
-      "sha256": "a4b8c7378d76102e19a37f972bf2d4aa5fab40394dd7c5bd831a88fda6e332b3"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/preparation.json",
-      "size": 508,
-      "sha256": "a2851730820bd98fbf71d788585dea5726da844d9644302c304400d896fc5aa1"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/proof.svg",
-      "size": 47601,
-      "sha256": "1fd3c0bccfc4831539a819e95831e01794bff77adb1207c24c2fd23b1e4b939a"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/source.glb",
-      "size": 293188,
-      "sha256": "6362a2b403b07e0d3c610d65d0dfff1a006d7323b97030bfa54fb8a73b86bcd8"
-    },
-    {
-      "path": "public/assets/molds/bermuda-passeio/template.svg",
-      "size": 46633,
-      "sha256": "a37ec57342fc6096d01df53d282c2c5d91eea7ee96408c82702dbf75ae2de58b"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/descriptor.json",
-      "size": 7152,
-      "sha256": "5ed0a2db3d894064e76fd8bf799bb4235692f2effc6fe1a45cc54b50cc3c9df9"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/model.glb",
-      "size": 154312,
-      "sha256": "fa1d4d8e743400c3f3cce9ee9768ac371517aa1dc5de96fb4d86b49054f4bc8c"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/preparation.json",
-      "size": 554,
-      "sha256": "36cf22914cf79e2e770d3a03eecd9aa59e058720e993000ce372a92b2eb7820b"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/proof.svg",
-      "size": 21658,
-      "sha256": "ff4f369be327d3c94da061bc6a925e5b1e67d16dc067539a594a2dd8e8bc4471"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/source.glb",
-      "size": 134332,
-      "sha256": "de51a9edf823b2154ad094471e754ea6f51a66c2870b147e7125c88b5241b4a7"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-5-partes/template.svg",
-      "size": 20539,
-      "sha256": "96cf640b26dbe4989b24249a351d58627a41b9bd422082854d03e9bb45c8385b"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/descriptor.json",
-      "size": 7892,
-      "sha256": "10210b75f0e9b908510218a7d1db0a3adaa18d812f0a338cfa049b499e06e9fa"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/model.glb",
-      "size": 151876,
-      "sha256": "c1d2d6be50a2c952efd713a8e8f3b9285dfeeac5d207690c5ce05c088f83987a"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/preparation.json",
-      "size": 593,
-      "sha256": "3694e98e235d5cc095acfbdd015d50b6e461008dbcd4c3e16df70a79ae965f15"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/proof.svg",
-      "size": 22621,
-      "sha256": "63f26fc737750d1fe348b2dcdecfbd40f7389d0b28607e951e436e543417c3a2"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/source.glb",
-      "size": 132124,
-      "sha256": "24ece996d3fba4f504a45a9c1eab23895a80f5370e292cae8250fe60c02c7221"
-    },
-    {
-      "path": "public/assets/molds/calcao-jogo-com-recorte/template.svg",
-      "size": 21387,
-      "sha256": "46128edfefc6a59e0c17373f5ae2e5509c55632e48e8b0d687d1bc8a49b3eeba"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
-      "size": 18896,
-      "sha256": "4506a0684bc3a2a53a518a6a392f33adf2528829a84e17ed679e1efdc56ef7de"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/model.glb",
-      "size": 6042084,
-      "sha256": "d83acb505184fa687ba87b5358c340320afdd91f61218d5221bbfb46a4d26c1d"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/proof.svg",
-      "size": 140003,
-      "sha256": "d98986e028132dcb317ef63890d7c427cfbc344dddcdbc3875139b6ed7b62919"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-edge-2027-mapa-v3-camiseta/template.svg",
-      "size": 137014,
-      "sha256": "22649a1e1bc54c86317551490893b27289014a88b011fc520b3b0561e2d0c5e5"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/descriptor.json",
-      "size": 18603,
-      "sha256": "1cc88ba75943a38cd0517e2b73cd384d38126b94f9dc1decc4f509cca544068f"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/model.glb",
-      "size": 6042104,
-      "sha256": "1b2b490df4c454235ab594b1c07284ceaed97284019623ee802ef9936b67baeb"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/proof.svg",
-      "size": 139751,
-      "sha256": "f868da94d9c1885c9733dbf9080a255267d25d1a56e5396acd31b10734d0247b"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-elite-27-camiseta/template.svg",
-      "size": 136760,
-      "sha256": "efeaf69347759b2c15f180da87f679f6010b4b369963e57cca12e10f8a06ece4"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/descriptor.json",
-      "size": 14204,
-      "sha256": "ac17610f3b14b2d58002bf88c8b1e4aa7aef20cbbe348ed9f46663728b41dd1a"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/model.glb",
-      "size": 2558204,
-      "sha256": "8eb44d874afaed0a5e4bc0d92ab476ea199ae195ae09907aa8fb05945ebd0e83"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/proof.svg",
-      "size": 81036,
-      "sha256": "2671e611c54376419c316bcd989df54bfa03912b1ff7296fa48da584510544bb"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-field-raglan-camiseta/template.svg",
-      "size": 78845,
-      "sha256": "813c131b32d3538e9497fc5f545bba5eccadd006e54079157e584a206d3241e2"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/descriptor.json",
-      "size": 14217,
-      "sha256": "3e698819a860516fed2fc58df2ed1b0566601889117c0e0185aceeac275277c8"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/model.glb",
-      "size": 5991636,
-      "sha256": "7afaabbd12a1637addb62bac77dd14dcf0df25125e64004ba4e19ea08105c412"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/proof.svg",
-      "size": 114413,
-      "sha256": "174223c0b1d3e88fdb19fe1608c9c0987c52e1e37804be57acd174807586b9de"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-normal-basico-camiseta/template.svg",
-      "size": 112256,
-      "sha256": "1032e9fa701f928c24dc6af2b56bb0c60bc7d52a81a8b2b095cbbc9e8634c035"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/descriptor.json",
-      "size": 12613,
-      "sha256": "13ae170624b8e3ae33744c0d5913c5ba94eef77c2d0e812c02e1e045ed0f225c"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/model.glb",
-      "size": 1212652,
-      "sha256": "344b7f3cd36000f48c36d02aa0d6ddf2472804c0a08b9d2b8c41a2ad8db2a3a4"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/proof.svg",
-      "size": 65916,
-      "sha256": "427851bcf55800bcf6654ad67be4163cdff52de239836380f48580b842fa0b36"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-basico-camiseta/template.svg",
-      "size": 64035,
-      "sha256": "dcfa8e77d880db5c0471c945c4a2286d5edcb48ae9ba7baf67f168ee7b71b60c"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/descriptor.json",
-      "size": 16501,
-      "sha256": "17821ededfcfe7743e4b97c37f53eb9a8db4dd57c8abc4d1294602db5dcbde6c"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/model.glb",
-      "size": 2486372,
-      "sha256": "98ab3086adc8f8a282862688d728a71a7b064bcc54462435d0ce241d72fc7332"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/proof.svg",
-      "size": 90422,
-      "sha256": "4b9eb51d260229e883dcc606acec9e809027867306e18b68de1f5aafd29854a9"
-    },
-    {
-      "path": "public/assets/molds/jogo-5-partes-kit-raglan-elite-camiseta/template.svg",
-      "size": 87822,
-      "sha256": "afcb18fc739dc91e10df0096fdc3e5f6ed0b4332d995f4d39078b599de3c68ce"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
-      "size": 19709,
-      "sha256": "55ebf34ca5af6f5ae56d086dcfc72dd0c29ff70b33da5fd6599bf4f1192191cb"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-edge-2027-mapa-v3-camiseta/model.glb",
-      "size": 6039932,
-      "sha256": "c96ab2ed43c538faf4f7a4701b5131314313d35a3a1cd968de1311617213d498"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-edge-2027-mapa-v3-camiseta/proof.svg",
-      "size": 140953,
-      "sha256": "53425b866ee86a4c0444ea6e8632ce6a3e78a296408064e9a37950bfe05b744a"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-edge-2027-mapa-v3-camiseta/template.svg",
-      "size": 137831,
-      "sha256": "2b1dcb2ea46bdcdbfa231636fbda8c0953ead807a8ad078a4bcce3fa8625fddb"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-elite-27-camiseta/descriptor.json",
-      "size": 19416,
-      "sha256": "014a71f2218d1c63ece529f96ca4062bf10b01a1c7eddf2941a323e8a607d5bb"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-elite-27-camiseta/model.glb",
-      "size": 6039952,
-      "sha256": "793d6422fbf7a4d94e74fbb4186719358f09623eabef128677c4a8c4cf465d3d"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-elite-27-camiseta/proof.svg",
-      "size": 140701,
-      "sha256": "a0c6e26be9593a9257a56ec6a8de109d8b28a222a7617560760ec39ec8343c55"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-elite-27-camiseta/template.svg",
-      "size": 137577,
-      "sha256": "f6c11976b81815f72fd1f3b84c72fd6002edc8d08a8829ada7867b80782ff385"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-field-raglan-camiseta/descriptor.json",
-      "size": 15016,
-      "sha256": "c775df3bff46c3c8c0620bf50e6916e255fa65eecbce9c8559786246eda36e2a"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-field-raglan-camiseta/model.glb",
-      "size": 2556020,
-      "sha256": "990c7e33a28bf4eb8441566f7e560149d10a6dd3c591e5b604d141ff85c9d7cf"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-field-raglan-camiseta/proof.svg",
-      "size": 81986,
-      "sha256": "490498c0b252ac2ebd6d15dfaeee73941b4b50272a60c5451db9651585baa9f1"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-field-raglan-camiseta/template.svg",
-      "size": 79662,
-      "sha256": "c9d54add91f8912ca8b16e9c75b7c30f479a8ef4f9eb78b86aa791be22bf222b"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-normal-basico-camiseta/descriptor.json",
-      "size": 15031,
-      "sha256": "d09586933b8e165ce0a95da6657e2d18535759acbd0370f0792627fe1363c7d6"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-normal-basico-camiseta/model.glb",
-      "size": 5989464,
-      "sha256": "d2b995227e6585f101d36d8604636cfd2ad5f7e820821a711a9c96e3e0afc21b"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-normal-basico-camiseta/proof.svg",
-      "size": 115363,
-      "sha256": "38d15759f3e8cfc83fdec952b94a0451822649711e28f241b2b7753a97e8b89e"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-normal-basico-camiseta/template.svg",
-      "size": 113073,
-      "sha256": "44f716acd1a95e9e55d487c466c0d6faa3fb8f418607449e42287e830bef0c60"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-basico-camiseta/descriptor.json",
-      "size": 13426,
-      "sha256": "b04b968dc3c47c74f8ebedb30bfdfd81d90431201979a72761421909ace8e027"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-basico-camiseta/model.glb",
-      "size": 1210468,
-      "sha256": "21cecdef9c71f924e14342747f05ef3333c10fcffe8c36769b27cf0513fc30d2"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-basico-camiseta/proof.svg",
-      "size": 66866,
-      "sha256": "86b07a43e41d6ee11bf7c8835161ed057a4fffa19480e2636eb17bea0db0f1ec"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-basico-camiseta/template.svg",
-      "size": 64852,
-      "sha256": "c1f0ab12deb9bfe3758807da7975a9e5abc36b21c98e051c83135bd6dc652e47"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-elite-camiseta/descriptor.json",
-      "size": 17314,
-      "sha256": "dc08925a3e6770ed932eef63e090f6ff6541b8a5dffbb784f46615505085f618"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-elite-camiseta/model.glb",
-      "size": 2484196,
-      "sha256": "3516d2b183eddcdbf4b6952040188d8eb1aa385d600459c40881bc265d1aaec4"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-elite-camiseta/proof.svg",
-      "size": 91372,
-      "sha256": "779e2791773c6fe306661fa80489d6284a197a0a980de4a6f6797b27e5a7e4a5"
-    },
-    {
-      "path": "public/assets/molds/jogo-recorte-kit-raglan-elite-camiseta/template.svg",
-      "size": 88639,
-      "sha256": "dae0abc4ffb503864e18a572fdbac09a3d345b65163634e56d09228fdc504879"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/descriptor.json",
-      "size": 13840,
-      "sha256": "1abdb6b95270e8b5187dbf82233953247bcf9b88a2ab03a4b38831cecd6ad126"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/guide.png",
-      "size": 435884,
-      "sha256": "91d7565354d06ec45160ae44fd92c8b0afcaa0b7ee7a44b49b6b2ae56180887f"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/model.glb",
-      "size": 6038580,
-      "sha256": "05683b996c0dd16df9a6984a19c11d47152080a71bab11c0553b4f445754e47a"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/proof.png",
-      "size": 437278,
-      "sha256": "6b734888aac1542db184689853f234482397d85782e881ed929ad830fef9c2e9"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/proof.svg",
-      "size": 130992,
-      "sha256": "725df426132d3706519f959c9744b93f540ca8482f4b8683cb8de26392461512"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v2/template.svg",
-      "size": 128585,
-      "sha256": "b034033c466aaefbec965fee62fe5f5cb450184eacc785144bf40818a148254b"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/descriptor.json",
-      "size": 9894,
-      "sha256": "6052ddeffe74ec787176efa9d6b69d413c08453746d56679188796d39080c22a"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/proof.svg",
-      "size": 116735,
-      "sha256": "2e140ead917ae2a19aaf514bd21f891e2d7f05a844fee4b0b89ecfd13a676c29"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v3-camiseta/template.svg",
-      "size": 114848,
-      "sha256": "5a9912eda48e461f082722f2f8aa48996e3b0ac4b19a8ac59214062eb40e2099"
-    },
-    {
       "path": "public/assets/molds/kit-edge-2027-mapa-v3/descriptor.json",
       "size": 13968,
       "sha256": "c429d3daa77935bec3bd2428178368ca51dcccad137e49478fc13ea322ec6d1a"
     },
     {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v3/guide.png",
-      "size": 436326,
-      "sha256": "4ab16ce08c6888732b1c935c658b64381de2ce0ce2a7f77b7b1e1f8493669559"
-    },
-    {
       "path": "public/assets/molds/kit-edge-2027-mapa-v3/model.glb",
       "size": 6038612,
       "sha256": "b5f208b77b3f1d55c37484a957b86e56fced0d2af5db58f0448cbdee8cab4380"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027-mapa-v3/proof.png",
-      "size": 437767,
-      "sha256": "b733ef4b6e009215a7030877cf2fbe21a9b359f59230434ad19fc09df32ef5a5"
     },
     {
       "path": "public/assets/molds/kit-edge-2027-mapa-v3/proof.svg",
@@ -1804,894 +1389,14 @@
       "sha256": "fe9197cfd7720da31c2573a26c780e257a981aafd941aafa5289304879582d03"
     },
     {
-      "path": "public/assets/molds/kit-edge-2027/descriptor.json",
-      "size": 10377,
-      "sha256": "3fe6e46e047d19d08840c368dccf867261a014d92e241cc9c9fd05dbe22a6cd7"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027/guide.png",
-      "size": 423955,
-      "sha256": "a0f9e2a8d517b9c298b01ea4af67ab8febfac0bb23a35c1790d9801852ae3022"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027/model.glb",
-      "size": 6038404,
-      "sha256": "b373c87f4ea5ec6ea6353fd0d12b492e9650cf296eb1232c119cba39accbdd9f"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027/proof.png",
-      "size": 394705,
-      "sha256": "062bd58179b3d6a62969dc992591d3f9d6f56f84f0b004130c9bde3f12ecc2ac"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027/proof.svg",
-      "size": 65900,
-      "sha256": "8ac5be50bcce42f00c47ffd845d785f30cd8f9c0350393602b05af392030a5bd"
-    },
-    {
       "path": "public/assets/molds/kit-edge-2027/source.glb",
       "size": 5278324,
       "sha256": "f51ce65baa2dfe19a580e4dfde798405257e307f8d48473ec034343d45059f4e"
     },
     {
-      "path": "public/assets/molds/kit-edge-2027/template.svg",
-      "size": 127673,
-      "sha256": "99bf959f5cc4f2caecd8ceb7d3ee3c22490ba741370fa64ab04c4f6f772cef64"
-    },
-    {
-      "path": "public/assets/molds/kit-edge-2027/thumbnail.png",
-      "size": 222875,
-      "sha256": "e9409bfcf25b6f643ea089e485d476ec07931448afa7f1c6c2ba53f207604110"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27-camiseta/descriptor.json",
-      "size": 9889,
-      "sha256": "906a814b76bb3ab4616eeddc6e93745938bc4b4cad2074d499aac6eec72bf672"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27-camiseta/proof.svg",
-      "size": 118472,
-      "sha256": "724b239a0bfe8e57b9cdd118867690c90ed7e12a8054f59133094efefa592968"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27-camiseta/template.svg",
-      "size": 116583,
-      "sha256": "597636444268cf0a94f31e939abfbcc436866240044a564184a4db955cb72c5f"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/descriptor.json",
-      "size": 14052,
-      "sha256": "0ae355ba75fd492566cac72ef475a138b382962c47be3c8c1a9a55405bdb379c"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/model.glb",
-      "size": 6038604,
-      "sha256": "77c9633b92ce49763c412a4dbf521dff725531e8088070d778f7e8613ab084bd"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/preparation.json",
-      "size": 654,
-      "sha256": "1027e8abb80e51fc3203d332010e046822f0476cd34fb71f2a67d10d85885a36"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/proof.svg",
-      "size": 133196,
-      "sha256": "cda5346d7fbe98eadd687245ef5c81894b2640cae05412c95378d54d2ed97346"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/source.glb",
-      "size": 5278536,
-      "sha256": "689e2f8c42130522edf247e63b9e0d61992e0c24a16e3243bf5493303ad3f13e"
-    },
-    {
-      "path": "public/assets/molds/kit-elite-27/template.svg",
-      "size": 130816,
-      "sha256": "15d68b7b24d81cdf9bf91b739f32d8a28248b38fa19cb1f72ad62a5c0be871cc"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan-camiseta/descriptor.json",
-      "size": 5957,
-      "sha256": "c401275890d99c7bb914a8a5b23e11ac8ae44c136e2316a9cd1278cf39395f99"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan-camiseta/proof.svg",
-      "size": 59449,
-      "sha256": "c2e6ac0a6510f0095b08ea7a36d80b440fc24a3666a79d3ddf129b446c30c366"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan-camiseta/template.svg",
-      "size": 58424,
-      "sha256": "7e179cb14ae56df0c908209a7ca0dde70ba7356e9b0b517b41fc54c2c965576a"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/cloth-input.glb",
-      "size": 2227484,
-      "sha256": "4c940f9e17a1c63f23776be636c1d3d7100b7549beae4168b564bc959f3eeae4"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/descriptor.json",
-      "size": 10106,
-      "sha256": "141bbb3c93433cf99d20af2e93abbe0c2373e32bd3e3e0b7bf2ba9335881e3bb"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/model.glb",
-      "size": 2548916,
-      "sha256": "63c4045e7b6113e0d18bce24d10281063b4eaa3778a0bfbc2f4e443295b99d38"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/preparation.json",
-      "size": 558,
-      "sha256": "47224927fe659c2e2466c0d247b3ebfaeebc9c96a3cd87d7b21c9d5c801d4ee5"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/proof.svg",
-      "size": 73933,
-      "sha256": "b3d411ff68b51f5a74a4d88a378345715c07f32af4516aeea92fc79a04fd876b"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/source.glb",
-      "size": 2227484,
-      "sha256": "4c940f9e17a1c63f23776be636c1d3d7100b7549beae4168b564bc959f3eeae4"
-    },
-    {
-      "path": "public/assets/molds/kit-field-raglan/template.svg",
-      "size": 72293,
-      "sha256": "6d4e67796e5af536289a8507ecc5f32375753e77575a8760c1626607f5586834"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico-camiseta/descriptor.json",
-      "size": 5958,
-      "sha256": "f9a04d1b17df88be8bb4b7caea13799a86f85f1d175f1a98c29754995a387c0a"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico-camiseta/proof.svg",
-      "size": 92595,
-      "sha256": "2f23473212a529865e33459bab33c79ee5a0040b91e762bbfbb1100def0f0639"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico-camiseta/template.svg",
-      "size": 91615,
-      "sha256": "fc52c09536cbc7644ba96d1c48c40054d8fd4a5c08acbf76a0214c2821e9a4fb"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/cloth-input.glb",
-      "size": 5239680,
-      "sha256": "5c8f11f601db9adeab57bb988a58daa50ea619966455f2f1f800da3edc7f32eb"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/descriptor.json",
-      "size": 10109,
-      "sha256": "30c3f489739557401eb280609da1f06ebf06836a80bf363f96638cffafc22802"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/model.glb",
-      "size": 5993024,
-      "sha256": "2a04f0773d4971f72f7c8fcc2d5ae5cbcec1b4d7329fffdba089556351abb458"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/preparation.json",
-      "size": 562,
-      "sha256": "e1e6c49d7e4769d0909dfd3e272735f32b8f77f6f6fefbbac902d45012cf9f47"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/proof.svg",
-      "size": 107531,
-      "sha256": "787a59bac540ff27cab24f2fa0db754c9e7163590ac5865180d1086af0879572"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/source.glb",
-      "size": 5239680,
-      "sha256": "5c8f11f601db9adeab57bb988a58daa50ea619966455f2f1f800da3edc7f32eb"
-    },
-    {
-      "path": "public/assets/molds/kit-normal-basico/template.svg",
-      "size": 105935,
-      "sha256": "94ca06c8af0273acc1d9b0ac48b14bee12ebeeca6cd313f7c6f20f48df0ab8f4"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime-camiseta/descriptor.json",
-      "size": 7866,
-      "sha256": "3665115adc3df421ffc5267c3b4ac2c191448f1f5cd362dee5f92b2eaee42293"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime-camiseta/proof.svg",
-      "size": 64014,
-      "sha256": "5f4f7c94e2b78f70fc9a90bd1292d41f9bdf0c5d4a3e4cf8fd3c910c6db87db0"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime-camiseta/template.svg",
-      "size": 62681,
-      "sha256": "5430ca72bafd17605d50bdf24676eb3237c73f826f0b917e7827e4f7b1a57152"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/descriptor.json",
-      "size": 13618,
-      "sha256": "c207ecc4146340f8cef52838469c624ec44e26768826d280b96e5a85dc664b27"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/model.glb",
-      "size": 4572224,
-      "sha256": "213affbf87980942e2363750a02a8dc078518de377facefd1da03b6c28569cd1"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/preparation.json",
-      "size": 764,
-      "sha256": "e9a3357b1e46971ed758956609ae1363da8c547792b6b6ac0e1c4f2eaa26ff9f"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/proof.svg",
-      "size": 112352,
-      "sha256": "f75e8adb3ea75c0969c7db603bf47597056418ed92afc72be087d1264e567ab4"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/source.glb",
-      "size": 4239144,
-      "sha256": "290c43144f9343349bbf7a7c75d69cfa18103d1ca0fa76da787ac50bcd0ee431"
-    },
-    {
-      "path": "public/assets/molds/kit-passeio-prime/template.svg",
-      "size": 110240,
-      "sha256": "90432ffc314166a5a2c0f7935a96eecf8d59930299506e8ba0fddec3fd0eeea5"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico-camiseta/descriptor.json",
-      "size": 4523,
-      "sha256": "cff58cfe4a5a454785715c13006ab6e6bc8cc32ea20ffe9117e04e890fc62aa4"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico-camiseta/proof.svg",
-      "size": 44386,
-      "sha256": "eb65357fa19411319edb986da89ac9cc199c3d448967c0804d47ffd243c119c9"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico-camiseta/template.svg",
-      "size": 43672,
-      "sha256": "7b2e5983627eedec3f9312b6825a5900d7c588b6d06e6d31098d07864b288b0c"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/descriptor.json",
-      "size": 8682,
-      "sha256": "a3af8d54f707bc9b13209af38b1142fe5622034289bc3cb47eb2ea959215f651"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/model.glb",
-      "size": 1214036,
-      "sha256": "687c61dffb75fca3d536f8faa7c8137872a0f7ad1adff86512a71ec3e0a5bf4f"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/preparation.json",
-      "size": 505,
-      "sha256": "a638fee5f38fdf0aa3bd33a11dc78bdad748fc9c2fd6667783917d19bd41a520"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/proof.svg",
-      "size": 59374,
-      "sha256": "27d902b9a4f1308f7e422e01415df4e65d93f49e189495dd44f7301b49e7d1fa"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/source.glb",
-      "size": 1060028,
-      "sha256": "83917c1fd91adebb8d01bf970fa2fae2fbff55fe89b33ccc1353ea5f7b7c0595"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-basico/template.svg",
-      "size": 58005,
-      "sha256": "429f3095f96268b8b3138d2c07d9132680311e6ae1105691ab3dce375adac982"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite-camiseta/descriptor.json",
-      "size": 7996,
-      "sha256": "b62da7ee1d6812d1a66cd21cda346f5948093311fa9d60e172f2be58463a7b72"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite-camiseta/proof.svg",
-      "size": 68817,
-      "sha256": "c28414ff1fed78e59e9d6631864f242700916a2a8ce552ad865b241edb10d188"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite-camiseta/template.svg",
-      "size": 67366,
-      "sha256": "fd9be5256a81f0ecfded4c605fad00094a5157a45be3ceb75c31ceb67c45f34a"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/cloth-input.glb",
-      "size": 2164372,
-      "sha256": "209648af7f33e097b7415d0a6de3704bba54637fa8146d3e9c69fdfd149adbb4"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/descriptor.json",
-      "size": 12175,
-      "sha256": "b293650641c1d11b0fceaf11b50db31eefb7766b050496d6645f5e20f1622a78"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/model.glb",
-      "size": 2477208,
-      "sha256": "545816c32d7181dc2a11f25fd38c483268280f2f8c90f3c478ae93d9df968925"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/preparation.json",
-      "size": 634,
-      "sha256": "bd57dfda68bdc6f6d00f8d038a45ae759921cf906c4635b523f38fac12f339dc"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/proof.svg",
-      "size": 83251,
-      "sha256": "b8787829f9962b578344d9ea4e0a7848c6b01bde290e87026f4625801053cc36"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/source.glb",
-      "size": 2164372,
-      "sha256": "209648af7f33e097b7415d0a6de3704bba54637fa8146d3e9c69fdfd149adbb4"
-    },
-    {
-      "path": "public/assets/molds/kit-raglan-elite/template.svg",
-      "size": 81241,
-      "sha256": "5d185a2d0191f1faffca90f570fbc55ab88c0810a1e44da0e03be645c35c56f1"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta-camiseta/descriptor.json",
-      "size": 11837,
-      "sha256": "e7112792fc807048fcb655f1883759bd6c9ac906a00f1b0d1196ed24472b9eef"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta-camiseta/proof.svg",
-      "size": 118869,
-      "sha256": "1548901950e65e214ca385961a0786058d7bc28c5ab220af0a1834e9e7e06c32"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta-camiseta/template.svg",
-      "size": 116973,
-      "sha256": "508f2fe71863635f99cb66a83ba615056a2b6da5214afd7a78c1dae3c2769d3c"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
-      "size": 18067,
-      "sha256": "85103223bc9c4c18d733df72e1165c05dc703db25e256abe56c1054f24c8ca45"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta/model.glb",
-      "size": 6225004,
-      "sha256": "728aa75e4eeacd7b6a4e1900d9b77189edfcd1d6297ce5f8dc36e255d6b486c5"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta/proof.svg",
-      "size": 167025,
-      "sha256": "ef9ac1a85e672893c71b8fb54b37fa5d5e75c1af3901c6e9a21a36c5f2bdd770"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-edge-2027-mapa-v3-camiseta/template.svg",
-      "size": 164190,
-      "sha256": "1d5fe0623e0adc924027a5f5e65f95d6d76bc85e60fc2d6b76934d9636a1fef6"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta-camiseta/descriptor.json",
-      "size": 11535,
-      "sha256": "78771b0b1f73b447181271d91aaeabae20fb91822cb4e3f944c8021abac3cbdb"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta-camiseta/proof.svg",
-      "size": 118613,
-      "sha256": "5acf60023e2e95d91342d2fa520cad842dc4b8634de4d05a66853d2e3d2cd1c6"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta-camiseta/template.svg",
-      "size": 116715,
-      "sha256": "38b368843550f87a9823b734d7760cc3b5d58b6345d55d48ff471e97c2637121"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta/descriptor.json",
-      "size": 17774,
-      "sha256": "fd6bb404f5292f82b9b0306b0d735bd27be2f7f11e133be2a1707373bcebeacb"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta/model.glb",
-      "size": 6225024,
-      "sha256": "c0feaecc461f0f519cf92cb96786ec88d3831da23d013d4b142a2fb539349381"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta/proof.svg",
-      "size": 166773,
-      "sha256": "6d6c4da70d503381ab5bac9887fed9ae027b708dfa7dbd0f036dd5cab276ec6a"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-elite-27-camiseta/template.svg",
-      "size": 163936,
-      "sha256": "6e7fed329331032c668adc0f4301265f666db148b0f221ad83871e6f6a48d225"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta-camiseta/descriptor.json",
-      "size": 7150,
-      "sha256": "e7e48f14b880e049b9e784df93a737616a1e9a065f09e6b258772a8df34bd1b5"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta-camiseta/proof.svg",
-      "size": 59763,
-      "sha256": "8e5c86ebf9e3e1ef29fb7c611a74efb6f63414df6e2effecc4bf49ddc085481b"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta-camiseta/template.svg",
-      "size": 58729,
-      "sha256": "071829ed618e759beaa16df55e4f03db0a1824c0e35a950c889828f5c7dad878"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta/descriptor.json",
-      "size": 13374,
-      "sha256": "29568278ef620d47dc0d46d9ca21ea6259d08ffa66bc770527086c57a99d1770"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta/model.glb",
-      "size": 2741132,
-      "sha256": "c09bfadc712e6203f2b210bda67543c6fcce6e179bb551ba756a89441256716e"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta/proof.svg",
-      "size": 108058,
-      "sha256": "9e40beebe2768bd844442210d755b33f93daf2ad093244ef4fbc124ee0d06026"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-field-raglan-camiseta/template.svg",
-      "size": 106021,
-      "sha256": "34cc4270c2d622c6409fb00d592d1fed6b3a89c63ac0da41f3188f816855bc74"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta-camiseta/descriptor.json",
-      "size": 7166,
-      "sha256": "6b43f51f76c64ddecd1791b49777022eb1bc01428659d781605a33867f47d7c8"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta-camiseta/proof.svg",
-      "size": 93138,
-      "sha256": "c76c30013405ba4a38ab1717096ff5a91b81b4ddee03cc790373b1d4a2d04e59"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta-camiseta/template.svg",
-      "size": 92138,
-      "sha256": "8ef6c99c171462b5a2d054585733a44c7a3b0c9a11ed0a855cb0c3efc828d317"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta/descriptor.json",
-      "size": 13389,
-      "sha256": "53c71da51f74ce01bcba3a5537fedf54e6e2ed669f7a3c9aa7ec68dd032da540"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta/model.glb",
-      "size": 6174564,
-      "sha256": "ed6c23c29b53c96160bc19609353239ef642529e06b7351dc7317a4981ad0376"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta/proof.svg",
-      "size": 141435,
-      "sha256": "0bbf2e30127b5223e7cd76c314898bccef423087dbc5aba5f8d075071c42dcc1"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-normal-basico-camiseta/template.svg",
-      "size": 139432,
-      "sha256": "ca8a77ab808e9b6b16174756e60aa8e75dab1c6b09362d53df1b42727c805dab"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta-camiseta/descriptor.json",
-      "size": 5571,
-      "sha256": "c42a1828bd50367c7cb5a07ecb28ac663e44b9fa3f91ab87c1d0e75e9fffb25d"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta-camiseta/proof.svg",
-      "size": 44601,
-      "sha256": "b41ffcc6f98fcb1e7c6436b1d64da6fa5282fc298380d9b40dfb2c5c2746163c"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta-camiseta/template.svg",
-      "size": 43897,
-      "sha256": "d5b977f589cef57504afff8845a79c479786495ec47411d0a511505e65640cd2"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta/descriptor.json",
-      "size": 11784,
-      "sha256": "f8ecae04ecdd2e8d24f19e692bea3b5297a50aae703ff0b9fde8dd3536a11d54"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta/model.glb",
-      "size": 1395576,
-      "sha256": "6be32f3398b8129289034ff137c5ab38affee95b1d7bf0b913a9fe427b7548b1"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta/proof.svg",
-      "size": 92938,
-      "sha256": "815a54044eb9908c754e5e6407d9b0aafc6eec32fa39cc3bc2ca78ce6a88f25e"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-basico-camiseta/template.svg",
-      "size": 91211,
-      "sha256": "03615b94c30f00f09e04be208df54070e1852b96f18febfe2b2921e0342450e0"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta-camiseta/descriptor.json",
-      "size": 9438,
-      "sha256": "74720ccfb105c265a625f4a00573fba6ac783e3e11a6f38847a2a8b170896690"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta-camiseta/proof.svg",
-      "size": 69211,
-      "sha256": "07b4e66812d2f304ce550fbf6d4828142ed158950632afea7c629ffa1605d965"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta-camiseta/template.svg",
-      "size": 67737,
-      "sha256": "e6cbb7906c432774816d01ec9753ac5fa78064057bf2fdbbf7bb863dc8a2d4c9"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta/descriptor.json",
-      "size": 15673,
-      "sha256": "3b243761594f23cc3a1a9e655a23a0153444e7d654d562ea86e7142112b43844"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta/model.glb",
-      "size": 2669296,
-      "sha256": "6c31273e84b012a8d7ce67c372598bdeebb13396356fbd6af1669ed6a38028f3"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta/proof.svg",
-      "size": 117444,
-      "sha256": "cda011e153b2584170ab905814d264184447ec53bd8271b699ecb580a092cd67"
-    },
-    {
-      "path": "public/assets/molds/passeio-kit-raglan-elite-camiseta/template.svg",
-      "size": 114998,
-      "sha256": "71164c2c7391f41baa2c276168418078688acf45702ee84fd25fb6ec6e7d4370"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo-sem-recorte-v/descriptor.json",
-      "size": 16853,
-      "sha256": "ab300ff4d1519c8beae0708534f44aaf564b0bbef6e8727c89b00ae0e83a0040"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo-sem-recorte-v/model.glb",
-      "size": 5233984,
-      "sha256": "5a16488e2ea222d429cfbb7791623ba69f12d3eba93dcd6968a3e682f8d812bf"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo-sem-recorte-v/proof.svg",
-      "size": 122151,
-      "sha256": "2da97e14d3b739b504da0deb97f84deddea4eca9871a4821f1b634ece32720b1"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo-sem-recorte-v/template.svg",
-      "size": 119675,
-      "sha256": "5939da53cfe5a6d58d8642633ab26e7b4153630417873d4a48672aeafe0a4288"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo/descriptor.json",
-      "size": 16675,
-      "sha256": "670935c506db35dc23bf6054997a5c6c4675729ee9509b7ce3b59e3bbde11ffb"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo/model.glb",
-      "size": 5301052,
-      "sha256": "749265380264c9b1ae7fb2c64c7029685c03ed833ccfa465b213be4d444f5eb7"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo/proof.svg",
-      "size": 122584,
-      "sha256": "da730b11eb8f1bbe33eb5814a9f41c0efb89c2b506df0081064f21da32eaa853"
-    },
-    {
-      "path": "public/assets/molds/passeio-polo/template.svg",
-      "size": 120105,
-      "sha256": "c5e047dfc700c02931b7a3494989df8564d6655cc19324caad798f4028f63073"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/descriptor.json",
-      "size": 19347,
-      "sha256": "1ec480d2606a38a60f9a3c6ac14f48426e3ebb82d36e704d02e6c994b59ccceb"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/model.glb",
-      "size": 2500948,
-      "sha256": "cdae231691188eaa0ad7a17860343b700525dc8b736e6566657f85666883c480"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/proof.svg",
-      "size": 95258,
-      "sha256": "77b25ca6dd75c163b27741e8bdc6064f55b07df45be23000601e55c55ca0724d"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-camiseta-teste-clo-v1/template.svg",
-      "size": 92253,
-      "sha256": "a6cafb2ccac53814f5930e9b7809e5953a1db53375aa8cee7174b130f83d3d86"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-classica-base/model.glb",
-      "size": 6811364,
-      "sha256": "b9268d54bf4afb3873a36074f1b76491351dc4838bddbab5919bdf02032f42e1"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/descriptor.json",
-      "size": 21694,
-      "sha256": "6486b98a156fc744283737c0c5a30c967eef4defb5ef2739f4627fb980dc7ffd"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/model.glb",
-      "size": 6058276,
-      "sha256": "1180e8c06a6addef7ee672fbefec48c8e700d79a063068c73d30c1f1fc85db5b"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/proof.svg",
-      "size": 144015,
-      "sha256": "244a33bb27833948f4266e6d2152ce9a7a4f15698acc81bbaf34a37a2cb5fcd6"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-edge-2027-mapa-v3-camiseta/template.svg",
-      "size": 140622,
-      "sha256": "7e9b3b467f972966894357b6880c5562016570eb346cad0ac9159970f97128cf"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/descriptor.json",
-      "size": 21401,
-      "sha256": "5892415dceaa5cd3ea3c16bc049aaa9500a9ab09e40d9513d27c9cca810622ac"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/model.glb",
-      "size": 6058296,
-      "sha256": "5c0af4ab9a8ac1737e1a961112f484a7ff3927df50a038c319ab7ae31e730ef3"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/proof.svg",
-      "size": 143763,
-      "sha256": "608dd2b31f112fe39313a631ebfec19b087cd9de502a4d305b2256af27af431c"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-elite-27-camiseta/template.svg",
-      "size": 140368,
-      "sha256": "128e7acdf1025f674217e7d243ea9e13f335d45b763a4b518638dbd617c6c60f"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/descriptor.json",
-      "size": 16999,
-      "sha256": "08d8f732db9b9558573b82a29b7b203d914d130913986e657e013b1e7687f2f1"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/model.glb",
-      "size": 2574352,
-      "sha256": "5ea41bc4e7f4e63249f8231db241df12d8f98460b79a27c06e08d3246893fd38"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/proof.svg",
-      "size": 85048,
-      "sha256": "ac441d6e225bed9eb6b9701d9e35137affa397b46f45c951e47541e3411601da"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-field-raglan-camiseta/template.svg",
-      "size": 82453,
-      "sha256": "03e68f1f76089d82b5a6ee7b816c9cbcc99a64c5c20f5815de199aafd9ef9fe3"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/descriptor.json",
-      "size": 17014,
-      "sha256": "cc4a5fcf0d2ee5d04a6bc2f9002a0011b4a1595dc0b89a3253ebbd3c9b12760e"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/model.glb",
-      "size": 6007780,
-      "sha256": "4c0800a0b7500c85edf5eadb542846f443fc2833e10f85ce28a895110dfd90b9"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/proof.svg",
-      "size": 118425,
-      "sha256": "ae0ee5930039b3745c0b00c6efeea018d801c60ba7d9c1613ed879a9424aef0e"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-normal-basico-camiseta/template.svg",
-      "size": 115864,
-      "sha256": "2f909038a6489ee704a206d2996cf7d698475daad9fb523490b2977d2d8d7c89"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/descriptor.json",
-      "size": 19083,
-      "sha256": "5b0e6e803e12c1379d082414cebcf31675a8724298a7808c09b2b5c8a0629dd0"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/model.glb",
-      "size": 4700024,
-      "sha256": "239ce9db0942cd57cc5da93dacd65876d4b240c59e6c4c7f92613ea5c9007c30"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/proof.svg",
-      "size": 89357,
-      "sha256": "5d97117a99c4e52dc3ed3d467ade48a53de55797eef81aa83052bc5fa9b7ab1b"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-passeio-prime-camiseta/template.svg",
-      "size": 86476,
-      "sha256": "bb95600c3549066fd9698a52a60aa541b7e95ca0aca83aadd274564847dd0cf9"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/descriptor.json",
-      "size": 15409,
-      "sha256": "79c570a0336ed614dd6d98b0757f10cd878d054de5ad9da927fe8e8c0f1ac602"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/model.glb",
-      "size": 1228804,
-      "sha256": "ea74baaf90a1bc985df238d04d820a132f0c36e50fa3191e8c61b41b7a910f2a"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/proof.svg",
-      "size": 69928,
-      "sha256": "a3b37c1261c10cf145c5c59ad96388a6fc5dcbc578afce36fe61eb2401591981"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-basico-camiseta/template.svg",
-      "size": 67643,
-      "sha256": "b726551f41e7f6cb99f8e15f40e3bc62ab0ef70411bb50d52c673bb974008fc5"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/descriptor.json",
-      "size": 19300,
-      "sha256": "d5c7e583051f795f1304be48d5484baf09a764889f472dac33eac259b5aff268"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/model.glb",
-      "size": 2502536,
-      "sha256": "1da55c83ec8b3e658c034ab76938fa399b0207b171990ea09bc890a419377949"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/proof.svg",
-      "size": 94434,
-      "sha256": "91b80fea69eab95578195f1427f788b4c17b0da6bbdb5e84b3e0733cf4a23a03"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-kit-raglan-elite-camiseta/template.svg",
-      "size": 91430,
-      "sha256": "e5bce967b6880113ce602968a940d80d1cf13adb2c640363811fc621de116a83"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/descriptor.json",
-      "size": 20480,
-      "sha256": "4019cf1b1a5815939f678da6b848709a9354b204388fed93675719e2471ee181"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/model.glb",
-      "size": 5067248,
-      "sha256": "c44fadc0a6198235f8a5a428020a0f0961f357235bfd477bd6ae5e3066c8f276"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/proof.svg",
-      "size": 99141,
-      "sha256": "d3bfb3f8e712e8bad3a739562d9a1af54eb1148abdb3673dd5fe0446950d926a"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo-sem-recorte-v/template.svg",
-      "size": 96107,
-      "sha256": "d29f2effba2154550f780e9b1a078a33bb34c31d9ab7ffba53e7c595cb5c5a41"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo/descriptor.json",
-      "size": 20303,
-      "sha256": "21eed3852fa032ebd7818f4b7bb74f0869e0b5fd5388af29a3277c288f5f3061"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo/model.glb",
-      "size": 5134308,
-      "sha256": "8973127fedf207d6f99cc983ab087842468769bda3a69597adb5dfd823db2e5a"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo/proof.svg",
-      "size": 99574,
-      "sha256": "b96e91923759d56590fee03b37a70f85fffb9b7b3b67c621aeaab11e754bf582"
-    },
-    {
-      "path": "public/assets/molds/passeio-v2-polo/template.svg",
-      "size": 96537,
-      "sha256": "74eb9c8c02a2546efa0a125adc579e885edf6ee0b3038998a2b2b5f1cf73ae52"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/descriptor.json",
-      "size": 9028,
-      "sha256": "d33e4f2c38764860ee500e47b56af224809b2d4058117d37d1a025375226607f"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/model.glb",
-      "size": 4573488,
-      "sha256": "4549f850f1626f35303d65847723869dacd8cf3d61a6a41147331ee6ed4939e6"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/preparation.json",
-      "size": 517,
-      "sha256": "7f922ab3440c8be1780b1de4e8514a3cb30cbafdcf1ead4712dace5b61daccf1"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/proof.svg",
-      "size": 74016,
-      "sha256": "f1fb4abb074c736280eb2cbef2bc3cfa2c78a30a0e31193f19d3f4a9e9dbaee8"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/source.glb",
-      "size": 4265880,
-      "sha256": "e0e18c1104725e0021467f0bba9083eb691a7c89e7644b8f8b5fbc1791990ef3"
-    },
-    {
-      "path": "public/assets/molds/polo-sem-recorte-v/template.svg",
-      "size": 72749,
-      "sha256": "be8dd0c2f08d1130c949d5f519064941842e2a8fc122f3b6bbd71fe4176aba2d"
-    },
-    {
-      "path": "public/assets/molds/polo/cloth-input.glb",
-      "size": 4323808,
-      "sha256": "507c23f361cda5ed71651eff1600027fd03c09e83c7e8efcd692dbda8fe193bb"
-    },
-    {
-      "path": "public/assets/molds/polo/descriptor.json",
-      "size": 9013,
-      "sha256": "3182c5b3bcb20ec51eab0d773823a9ef5fa2e300abfe07987aa9d38b0b04da62"
-    },
-    {
-      "path": "public/assets/molds/polo/model.glb",
-      "size": 4640536,
-      "sha256": "61c1ed2c1fb4d006f26cde5ffc8373e9771a2beed9d4c87cfed3083c1a7ba27f"
-    },
-    {
-      "path": "public/assets/molds/polo/preparation.json",
-      "size": 489,
-      "sha256": "57e78f79ee5dcc127c088e1a7736820dac93891cae663e297840b59f3704998f"
-    },
-    {
-      "path": "public/assets/molds/polo/proof.svg",
-      "size": 74426,
-      "sha256": "82696a999ac37cdd77eaa8cc4c1ccbb75ee03d75fde54f51c7a91cbabc1e0a6c"
-    },
-    {
-      "path": "public/assets/molds/polo/source.glb",
-      "size": 4324532,
-      "sha256": "70fbbec779012f43cbf36064426cbc874f38d46389778c5812885458894da266"
-    },
-    {
-      "path": "public/assets/molds/polo/template.svg",
-      "size": 73159,
-      "sha256": "854f67823d55061d2671b0ac9638dc18876af15c72aa0bb9256ad7d7cc81e6c6"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-kit/model.glb",
-      "size": 14641316,
-      "sha256": "11f22d95a83f148c96b50e66c152d11ae9fd2e23a708880b239a90b9697a6958"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-kit/template.svg",
-      "size": 5122,
-      "sha256": "d73514ca10c85eb6c00959d6ef53bcb5133e0569148c58e7623f1fedb80e96b4"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-shirt/model.glb",
-      "size": 14198700,
-      "sha256": "c3ef0700b872890414b2a868515a676e87fc47f2af3e7f034cb557c8993a0ff5"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-shirt/template.svg",
-      "size": 3601,
-      "sha256": "9941f5a895c17a4e43dea1cfaa8344f66a9f71fb41984c8922eb6b0e3d7e4e7f"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-shorts/model.glb",
-      "size": 443096,
-      "sha256": "9d73dbbd7d72fec2487e3e5ec4b8a006b32e9f6e3fc263d11604622120027466"
-    },
-    {
-      "path": "public/assets/molds/simulator-elite-27-shorts/template.svg",
-      "size": 1858,
-      "sha256": "b38441ec083425037aa8a0896a959bfaa35d4406d2805e358fbf4ecf7e559a9b"
-    },
-    {
-      "path": "public/assets/passeio-v2-encaixe.png",
-      "size": 1113118,
-      "sha256": "dc85543393b0f749a6031fdd8f57ef1c2a3fc8a8862841548b7bca9314de9f20"
-    },
-    {
       "path": "public/assets/quadra-lines.svg",
       "size": 819,
       "sha256": "3e2be675bc404c9989caf1f0dceee5ad5ad43e310995583ed55ccfc6842de599"
-    },
-    {
-      "path": "public/assets/template-camiseta.svg",
-      "size": 87895,
-      "sha256": "be31a79b84da069de2501dec6e9fe4f72658956548525d2710b23fa7e75caab0"
     },
     {
       "path": "public/atlas-brand.css",
@@ -2737,11 +1442,6 @@
       "path": "public/catalog-reference.js",
       "size": 5052,
       "sha256": "f8830d8dabd9d391f1454ed02c33ed189a3ea5522bade5cb641e9c7b1f83aee2"
-    },
-    {
-      "path": "public/conferencia-passeio.html",
-      "size": 135798,
-      "sha256": "db2fbddb4c7e93bde22b5a7de46e4951e973aa4391f8f81405cf767f459cbb3b"
     },
     {
       "path": "public/court-backdrop.css",
@@ -3045,8 +1745,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31354,
-      "sha256": "d857d6d5c5a8d0dfff0142f522cebee09e64498a945d99449f928e858427cc87"
+      "size": 2110,
+      "sha256": "1671ae7b0809b7c7028d4201293000cb2a2d05fbb259b535ab340294ac2985d4"
     },
     {
       "path": "public/simulador/elite.js",
@@ -3097,16 +1797,6 @@
       "path": "public/simulador/layers.js",
       "size": 2593,
       "sha256": "9b3592a3401314f6012a9226f8439554edcaaf514bba687fa6fa3bed8ebab5c6"
-    },
-    {
-      "path": "public/simulador/models/kit-elite-27-compatible.glb",
-      "size": 244896,
-      "sha256": "ab9deb92e2f768ff7b04258ee9ffd5511baefecbc9acd978a6020c19e579d490"
-    },
-    {
-      "path": "public/simulador/models/kit-elite-27.glb",
-      "size": 12785004,
-      "sha256": "b1d6528465177c205940c666509a6530934397c6d8710476dca6376b616e98a1"
     },
     {
       "path": "public/simulador/models/kit-elite-27.json",
@@ -3504,6 +2194,11 @@
       "sha256": "d2dcfeeac947e54ba2dbd05084436d38193aee21948c2c52b0019c4c9b23816a"
     },
     {
+      "path": "scripts/remove-other-molds.mjs",
+      "size": 1282,
+      "sha256": "4b54c66b34e499972f70927ead2c440ac9ff62eb9e308163e3fe6152b82abc97"
+    },
+    {
       "path": "scripts/run-framework.mjs",
       "size": 993,
       "sha256": "9bf9f41a29314cabe0238b8e9c540ec3f7b5a6adafc7c8fb6c3940722d061dca"
@@ -3550,8 +2245,8 @@
     },
     {
       "path": "tests/atlas.test.mjs",
-      "size": 6832,
-      "sha256": "6eb1a15afdd2895a0817a01c218cc028d441959b520cffddc1925b45c2db8232"
+      "size": 2659,
+      "sha256": "d1713054709da8e1aa6cc3a7af4dda4d2f0c9908c6286ed45cd501979cca59b1"
     },
     {
       "path": "tests/export-package.test.mjs",
@@ -3569,14 +2264,19 @@
       "sha256": "863711183ab6eee958731bbbf42106225140111169c73e31a066b4441a6b1911"
     },
     {
+      "path": "tests/fixtures/blank-map-4096.png",
+      "size": 72593,
+      "sha256": "a5da88648dba82e2af96ed7fe97bebfc41396465657bc30c9c368676843d1e21"
+    },
+    {
       "path": "tests/fixtures/simulator-logo.png",
       "size": 105,
       "sha256": "1b589d3cb828f30cd4ed51285e86c2dae37b9f32f7a41f46f7852ec1d4eb8414"
     },
     {
       "path": "tests/four-view-export.test.mjs",
-      "size": 12455,
-      "sha256": "23628230e1a5cabe6f739c964d7633645fd45e38e3cc2f7d9691f4ca8e1cfcd1"
+      "size": 12480,
+      "sha256": "5bcef35155e24dca4d606c88442d736e770cf880675fae16165889d43af7aa98"
     },
     {
       "path": "tests/interface-theme.test.mjs",
@@ -3585,8 +2285,8 @@
     },
     {
       "path": "tests/kit-alignment.test.mjs",
-      "size": 8735,
-      "sha256": "0dda855aee9f08b61f69438339b4911e4aa9c76c026843cf4b72fdb1d2b5e118"
+      "size": 8888,
+      "sha256": "9f5ab43a474516bac7cf98dd57411317e370fd8d89592721cdd3397bc7bdb28c"
     },
     {
       "path": "tests/kit-import.test.mjs",
@@ -3607,6 +2307,11 @@
       "path": "tests/migrations.mjs",
       "size": 290,
       "sha256": "e18c6806682eb1a5d446e9841d623bd87364729878c853c12b9bed7531541fe8"
+    },
+    {
+      "path": "tests/mold-reset.test.mjs",
+      "size": 5229,
+      "sha256": "a39cc4c7a657544fa36e551ac99d57a2c8344a0a6df4e04d6a4e79fc78cfac3e"
     },
     {
       "path": "tests/order-composition.test.mjs",
@@ -3665,8 +2370,8 @@
     },
     {
       "path": "tests/passeio-v2.test.mjs",
-      "size": 3380,
-      "sha256": "25277fb364ab823e81cbe337d2a81126f2dfd942da6e393cacb61375b06e0a4e"
+      "size": 3482,
+      "sha256": "a1eb417d45d5f71fc7b915d237cb174cd6dfcd6b36b2c906149373737573a25f"
     },
     {
       "path": "tests/presentation-mold-switch.test.mjs",
@@ -3695,8 +2400,8 @@
     },
     {
       "path": "tests/projects.test.mjs",
-      "size": 17609,
-      "sha256": "b54950c484c29c0934be3370b709099bdad0fc999a971502b3f6419223529e29"
+      "size": 17601,
+      "sha256": "7d1c4b3f8910c7893c50d8e8e434f1c2509df1e27ce49cfebd3c2b917d7cdac3"
     },
     {
       "path": "tests/security.test.mjs",
@@ -3710,8 +2415,8 @@
     },
     {
       "path": "tests/simulator-presentation.test.mjs",
-      "size": 10297,
-      "sha256": "32ff145e2feb06313592c6af36d97213124b8a041fcbe3a172fc45b6dda23841"
+      "size": 10501,
+      "sha256": "8eda875f5657886ecafac5b475d6d8d56fdeea1aac16bed63b1960eb49ec7c6e"
     },
     {
       "path": "tests/simulator-symmetry.test.mjs",
@@ -3725,13 +2430,13 @@
     },
     {
       "path": "tests/simulator.test.mjs",
-      "size": 14437,
-      "sha256": "c25f9b6a422c8bdd7742ce94abeec39914e620bccf98ac3f5ae256e083a50a96"
+      "size": 14501,
+      "sha256": "10285c3cbc7ecbe8aa6844f0bc44902a590fa968ec7daab07ee54f7aad09a1da"
     },
     {
       "path": "tests/static-mold-binaries.test.mjs",
-      "size": 2612,
-      "sha256": "817763f4d5ee5a03839d00de321104eb0c63b88f7b841830e04c2c4f8e069f24"
+      "size": 2621,
+      "sha256": "9bd6f59f0f152815575a5eb63b8ca4e5d57e4c6fa4b0d4d7a451489ac1abad7b"
     },
     {
       "path": "tests/technical-fixture.mjs",
@@ -3740,8 +2445,8 @@
     },
     {
       "path": "tests/templates.test.mjs",
-      "size": 50019,
-      "sha256": "f39f8dd9d44571c6fb52dfa93f805639e0bfd4a60926eda9cf4a1769db1a42ba"
+      "size": 51787,
+      "sha256": "2122e9a304a11a4c263f542c63fc20aa27db7089188edf05b926a754d5b0dc89"
     },
     {
       "path": "tests/tracking-panel.test.mjs",
@@ -3765,8 +2470,8 @@
     },
     {
       "path": "tests/workspace.test.mjs",
-      "size": 20845,
-      "sha256": "b9451e93dd0893706a72bb3fa18692191f378dc5f0746e3c7ae822e2c4c8af5a"
+      "size": 20837,
+      "sha256": "b6d1012a5a8c856ddd5d19c985661cea2ffb0ae97892a4d71852889e2fdabc66"
     },
     {
       "path": "tsconfig.json",
@@ -3790,8 +2495,8 @@
     },
     {
       "path": "worker/index.ts",
-      "size": 1629,
-      "sha256": "d4eb6277b4685ac7278baa7571ca43ea5b4f5cd8efd7a7402c96ee9d98110779"
+      "size": 1740,
+      "sha256": "b5ad26b9cb1faf2045d47352bfe089c201333e3562dd2287e15cd9edc691a186"
     }
   ]
 }

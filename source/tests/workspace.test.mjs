@@ -7,7 +7,7 @@ import {TemplateService} from '../lib/template-service.mjs';
 import {WorkspaceService} from '../lib/workspace-service.mjs';
 import {APPROVAL_STATEMENT,cleanAnchor,cleanCamera} from '../public/presentation-contract.js';
 import {migrations} from './migrations.mjs';
-const original=new Uint8Array(await readFile(new URL('../public/assets/mapa-conferencia.png',import.meta.url))),map=new File([original],'mapa-aprovacao.png',{type:'image/png'});
+const original=new Uint8Array(await readFile(new URL('./fixtures/blank-map-4096.png',import.meta.url))),map=new File([original],'mapa-aprovacao.png',{type:'image/png'});
 const alice={userId:'alice',fullName:'Andrei Design',email:'alice@example.test'},bob={userId:'bob',fullName:'Outro Design'},base={name:'Principal',clientName:'Equipe A',visuals:{background:'dark'},presentation:{layout:'grid',camera:{position:[0,0,5],target:[0,0,0]},details:[{id:'gola',name:'Gola',camera:{position:[0,1,1],target:[0,1,0]}}]}};
 const anchor={point:[.3,.5,.2],panel:'Frente',camera:{position:[0,0,5],target:[0,0,0]}};
 function setup(){

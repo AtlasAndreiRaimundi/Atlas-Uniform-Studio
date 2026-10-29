@@ -1,6 +1,7 @@
 import {compatibleTemplateArt} from '../public/template-family.js';
 import {profileDetails,readProfileDetails} from './designer-profile.mjs';
 import { BUILTIN_TEMPLATE } from '../public/template-catalog.js';
+import {RETAINED_MOLD_ID} from './removed-molds.mjs';
 import { DEFAULT_VISUALS, sanitizeVisuals } from '../public/presentation.js';
 import { cleanPresentation } from '../public/presentation-contract.js';
 
@@ -212,7 +213,7 @@ export class ProjectService {
   async create(user, input) {
     const owner = this.requireUser(user), fields = projectFields(input), id = crypto.randomUUID(), date = now();
     const folderId=folderReference(input.folderId);if(folderId)await this.ownFolder(user,folderId);
-    const templateId = typeof input.templateId === 'string' ? input.templateId : TEMPLATE_ID;
+    const templateId = typeof input.templateId === 'string' ? input.templateId : this.templates ? RETAINED_MOLD_ID : TEMPLATE_ID;
     if (this.templates) await this.templates.available(user, templateId);
     else if(templateId !== TEMPLATE_ID) throw new AppError(404, 'Molde não encontrado.');
     await this.db.prepare('INSERT INTO profiles (user_id, display_name, created_at, updated_at) VALUES (?, ?, ?, ?) ON CONFLICT(user_id) DO NOTHING').bind(owner, user.fullName || 'Designer', date, date).run();
@@ -308,7 +309,7 @@ export class ProjectService {
   }
   async template(user, id, token = /** @type {string | null} */ (null)) {
     const row = token ? await this.sharedRow(token) : await this.own(user, id);
-    const descriptor = row.template_id === TEMPLATE_ID ? { ...BUILTIN_TEMPLATE } : await this.templates.descriptor(row.template_id);
+    const descriptor = this.templates ? await this.templates.descriptor(row.template_id) : { ...BUILTIN_TEMPLATE };
     const prefix = token ? `/api/presentations/${token}` : `/api/projects/${id}`;
     descriptor.modelUrl = `${prefix}/assets/model`;
     descriptor.templateUrl = token ? null : `${prefix}/assets/template`;
@@ -321,6 +322,7 @@ export class ProjectService {
     if(expectedVersion!==null&&(!Number.isSafeInteger(expectedVersion)||expectedVersion!==row.version))throw new AppError(409,'A apresentação mudou. Atualize a lista de apresentações e tente novamente.');
     if (['model', 'template', 'proof'].includes(kind)) {
       if (token && kind !== 'model') throw new AppError(404, 'Arquivo não encontrado.');
+      if(this.templates)return this.templates.asset(row.template_id,kind);
       if (row.template_id === TEMPLATE_ID) return { redirect: { model: BUILTIN_TEMPLATE.modelUrl, template: BUILTIN_TEMPLATE.templateUrl, proof: BUILTIN_TEMPLATE.proofUrl }[kind] };
       return this.templates.asset(row.template_id, kind);
     }

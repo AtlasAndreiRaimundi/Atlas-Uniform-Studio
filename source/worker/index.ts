@@ -1,4 +1,5 @@
 import {serveCompressedMold} from '../lib/static-mold-binaries.mjs';
+import {resetMoldCatalog} from '../lib/mold-catalog-reset.mjs';
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
@@ -6,6 +7,7 @@ import {secureResponse} from '../lib/security-headers.mjs';
 
 const worker = {
   async fetch(request: Request, env: Cloudflare.Env, ctx: ExecutionContext<{ CONNECTORS?: ConnectorBinding }>) {
+    await resetMoldCatalog(env.DB,env.BUCKET);
     let binding = ctx.props?.CONNECTORS;
     // Local preview emulates the same request-scoped capability. This branch and
     // the auxiliary service binding are absent from production builds.
