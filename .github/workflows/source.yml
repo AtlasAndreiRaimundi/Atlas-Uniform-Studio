@@ -20,7 +20,7 @@ jobs:
       - run: python3 scripts/check_source.py
       - name: Testes sem dependências externas
         working-directory: source
-        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs tests/product-catalog.test.mjs tests/order-flow.test.mjs tests/order-number.test.mjs tests/order-composition.test.mjs tests/order-pricing.test.mjs tests/linked-applications.test.mjs tests/kit-alignment.test.mjs
+        run: node --test tests/security.test.mjs tests/projects.test.mjs tests/simulator.test.mjs tests/product-catalog.test.mjs tests/order-flow.test.mjs tests/order-number.test.mjs tests/order-composition.test.mjs tests/order-pricing.test.mjs tests/linked-applications.test.mjs tests/kit-alignment.test.mjs tests/templates.test.mjs
   materializar-modelos:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verificar

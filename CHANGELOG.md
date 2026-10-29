@@ -174,3 +174,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Sobe as bermudas dos nove kits de passeio mais aproximadamente 10 cm em relação à v82, mantendo escala, geometria local e arte. Conversão visual proporcional à altura do corpo da camiseta, com referência de 70 cm para acomodar diferentes escalas de GLB.
 - Deslocamento do conjunto inferior inteiro, aplicado uma vez; jogos e peças avulsas preservados. Miniaturas antigas atualizam ao salvar novamente.
 - Fonte publicada `592351ba43822a314e0bb441585638cda2e564ac` (701 arquivos). Quatro testes direcionados e build aprovados. Prévia WebGL indisponível; validação geométrica automatizada.
+
+## v84 — 2026-10-29
+- Retira dez opções dos catálogos de criação, troca e ADM: bermuda de passeio avulsa e nove kits (Prime, duas polos e seis camisetas). IDs estáveis bloqueiam também registros persistidos publicados/renomeados e tentativas de republicação/restauração desses encaixes.
+- Camisetas e polos avulsas e opções de jogo preservadas. Projetos, arquivos e arte existentes continuam acessíveis; novas criações e trocas para os IDs retirados são bloqueadas no servidor. Futuros kits serão novos GLBs com novos IDs.
+- Fonte publicada `7bd8415a65dff5c529249ddc12c75bb321de8c46`, manifesto de 702 arquivos. 367 testes aprovados, um pulado; TypeScript e build aprovados. Testes cobrem catálogo do designer/ADM, registros publicados antigos, criação/troca bloqueadas e projetos preservados.

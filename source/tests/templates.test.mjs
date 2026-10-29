@@ -1,3 +1,4 @@
+import {WITHDRAWN_TEMPLATE_IDS,isWithdrawnTemplate} from '../lib/withdrawn-templates.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -24,6 +25,12 @@ function setup(installedTemplates=[]){
   const objects=new Map(),bucket={async put(key,data,options){objects.set(key,{data,...options});},async get(key){return objects.get(key)||null;},async delete(keys){for(const key of Array.isArray(keys)?keys:[keys])objects.delete(key);}};
   const templates=new TemplateService(db,bucket,admin.userId,installedTemplates),projects=new ProjectService(db,bucket,templates);
   return {sql,db,bucket,objects,templates,projects};
+}
+
+async function assertTemplateChoice(templates,projects,catalog,entry){
+ const d=entry.descriptor;
+ if(isWithdrawnTemplate(d.id)){assert.ok(!catalog.some(t=>t.id===d.id));await assert.rejects(projects.create(other,{name:d.name,templateId:d.id}),{status:404});}
+ else {assert.ok(catalog.some(t=>t.id===d.id&&t.category===d.category));const p=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,p.id)).id,d.id);}
 }
 
 test('KIT EDGE 2027 preserves its prepared exterior geometry and source UVs with 19 separate drawing panels',async()=>{
@@ -273,7 +280,7 @@ test('eleven order molds preserve cloth geometry, original UVs and scene transfo
  const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);
  for(const entry of ORDER_MOLD_TEMPLATES){
   const d=entry.descriptor,sourceBytes=await readFile(new URL(`../public${entry.assets.source}`,import.meta.url)),modelBytes=await readFile(new URL(`../public${entry.assets.model}`,import.meta.url)),before=readGlb(sourceBytes),after=readGlb(modelBytes);
-  assert.ok(catalog.some(t=>t.id===d.id&&t.category===d.category));const project=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,project.id)).id,d.id);
+  await assertTemplateChoice(templates,projects,catalog,entry);
   assert.equal(Buffer.from(await crypto.subtle.digest('SHA-256',sourceBytes)).toString('hex'),d.sourceSha256);
   assert.deepEqual(after.json.nodes,JSON.parse(JSON.stringify(before.json.nodes)));assert.equal(after.json.meshes.length,before.json.meshes.length);assert.ok(!after.json.images?.length);assert.equal(d.panels.length,d.panelCount);
   for(const p of d.panels){const a=before.json.meshes[p.mesh].primitives[p.primitive],b=after.json.meshes[p.mesh].primitives[p.primitive];assert.ok(p.label&&p.group);for(const key of ['POSITION','NORMAL'])assert.deepEqual(readAccessor(before.json,before.binary,a.attributes[key]).data,readAccessor(after.json,after.binary,b.attributes[key]).data);assert.deepEqual(readAccessor(before.json,before.binary,a.indices).data,readAccessor(after.json,after.binary,b.indices).data);
@@ -288,7 +295,7 @@ test('eleven order molds preserve cloth geometry, original UVs and scene transfo
  const simulator=await readFile(new URL('../public/simulator-catalog.js',import.meta.url),'utf8').catch(()=> '');for(const e of ORDER_MOLD_TEMPLATES)assert.ok(!simulator.includes(`/assets/molds/${e.descriptor.id}/`));
 });
 
-test('each published kit has a shirt-only presentation with its own map, framing and project binding',async()=>{
+test('each original kit retains its available shirt-only presentation, map, framing and project binding',async()=>{
  const {SHIRT_PRESENTATION_TEMPLATES}=await import('../lib/shirt-presentation-templates.mjs'),{selectPresentationGarments}=await import('../public/model-panels.js'),{Box3,Vector3}=await import('three');
  const kits=INSTALLED_TEMPLATES.filter(e=>e.status==='published'&&e.descriptor.category==='conjunto'&&!e.descriptor.compositionVersion);assert.equal(SHIRT_PRESENTATION_TEMPLATES.length,kits.length);
  const {templates,projects}=setup(INSTALLED_TEMPLATES);for(const kit of kits){const shirt=SHIRT_PRESENTATION_TEMPLATES.find(e=>e.descriptor.baseTemplateId===kit.descriptor.id);assert.ok(shirt);const d=shirt.descriptor;assert.equal(d.category,'camiseta');assert.ok(d.panels.every(p=>p.group!=='CALCAO_E_COS'));assert.ok(d.panels.length<kit.descriptor.panels.length);assert.ok(!shirt.templateSvg.includes('id="CALCAO_E_COS"'));
@@ -324,23 +331,24 @@ test('the original polo default name is clarified for persisted rows while custo
  await templates.update(admin,'polo',{name:'Polo personalizada da fábrica',category:'camiseta'});assert.equal((await templates.descriptor('polo')).name,'Polo personalizada da fábrica');
 });
 
-test('Prime casual kit, Prime collar shirt and casual shorts are distinct choices with the correct order garments',async()=>{
+test('Prime shirt stays available while the withdrawn kit and shorts retain their original maps',async()=>{
  const {presentationGarments}=await import('../public/order-presentation.js');
  const kit=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='kit-passeio-prime'),shirt=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='kit-passeio-prime-camiseta'),shorts=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='bermuda-passeio');assert.ok(kit&&shirt&&shorts);
  assert.equal(kit.descriptor.name,'KIT DE PASSEIO PRIME');assert.equal(shirt.descriptor.name,'CAMISETA GOLA PRIME');assert.equal(shorts.descriptor.name,'BERMUDA DE PASSEIO');assert.equal(kit.descriptor.panelCount,17);assert.equal(shirt.descriptor.panelCount,9);assert.equal(shorts.descriptor.panelCount,8);assert.equal(shirt.descriptor.triangles,70295);assert.equal(shorts.descriptor.triangles,9486);
  assert.deepEqual(presentationGarments(kit.descriptor),['Camiseta','Bermuda']);assert.equal(presentationGarments(shirt.descriptor),null);assert.equal(presentationGarments(shorts.descriptor),null);
  assert.ok(shirt.descriptor.panels.every(p=>p.group!=='CALCAO_E_COS'));assert.ok(shorts.descriptor.panels.every(p=>p.group==='CALCAO_E_COS'));assert.match(shorts.templateSvg,/BERMUDA \+ CÓS \+ BOLSOS/);assert.equal(shorts.sourceName,'BERMUDA PASSEIO.glb');
- const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);for(const entry of [kit,shirt,shorts]){assert.ok(catalog.some(t=>t.id===entry.descriptor.id&&t.name===entry.descriptor.name));const p=await projects.create(other,{name:entry.descriptor.name,templateId:entry.descriptor.id});assert.equal((await projects.template(other,p.id)).id,entry.descriptor.id);}
+ const {templates,projects}=setup(INSTALLED_TEMPLATES),catalog=await templates.catalog(other);for(const entry of [kit,shirt,shorts])await assertTemplateChoice(templates,projects,catalog,entry);
  const {compatibleTemplateArt}=await import('../public/template-family.js');assert.equal(compatibleTemplateArt(kit.descriptor,shirt.descriptor),true);assert.equal(compatibleTemplateArt(kit.descriptor,shorts.descriptor),false);
 });
 
-test('all composed kits load with aligned garments, distinct UV regions and editable administrator names',async()=>{
+test('composed kits retain their maps and available kits keep editable administrator names',async()=>{
  const {COMPOSED_GAME_TEMPLATES}=await import('../lib/composed-game-templates.mjs'),{COMPOSED_PASSEIO_TEMPLATES}=await import('../lib/composed-passeio-templates.mjs'),{COMPOSED_PASSEIO_SHIRTS}=await import('../lib/composed-passeio-shirts.mjs'),{moldCollection}=await import('../public/mold-collections.js'),{presentationPanelNumber}=await import('../public/model-panels.js');assert.equal(COMPOSED_PASSEIO_TEMPLATES.length,8);assert.equal(COMPOSED_PASSEIO_SHIRTS.length,6);assert.equal(COMPOSED_GAME_TEMPLATES.length,6);
  const {templates,projects}=setup(INSTALLED_TEMPLATES);
  for(const e of [...COMPOSED_PASSEIO_TEMPLATES,...COMPOSED_GAME_TEMPLATES]){const d=e.descriptor;assert.equal(moldCollection(d),d.bottomVariant==='com-recorte'?'jogo':'passeio');const b=await readFile(new URL('../public'+e.assets.model,import.meta.url)),g=readGlb(b);assert.equal(Buffer.from(await crypto.subtle.digest('SHA-256',b)).toString('hex'),d.sourceSha256);assert.ok(b.length<20*1024*1024);assert.ok(d.sourceComponents.every(c=>c.uniformScale>0&&Number.isFinite(c.uniformScale)));let cloth=0;
   for(const pr of d.primitives){const panel=d.panels.find(p=>p.mesh===pr.mesh&&p.primitive===pr.primitive);if(pr.decorativeOnly){assert.ok(!panel);continue;}assert.ok(panel);cloth++;assert.equal(presentationPanelNumber(d,pr),panel.number);const p=g.json.meshes[pr.mesh].primitives[0],uv=readAccessor(g.json,g.binary,p.attributes.TEXCOORD_0).data;for(let i=0;i<uv.length;i+=2){const x=uv[i]*4096,y=uv[i+1]*4096;assert.ok(x>=panel.rect.x-.002&&x<=panel.rect.x+panel.rect.w+.002);assert.ok(y>=panel.rect.y-.002&&y<=panel.rect.y+panel.rect.h+.002);}assert.ok(panel.rect.x>=0&&panel.rect.y>=0&&panel.rect.x+panel.rect.w<=4096&&panel.rect.y+panel.rect.h<=4096);}
   assert.equal(cloth,d.panelCount);for(let i=0;i<d.panels.length;i++)for(let j=i+1;j<d.panels.length;j++){const a=d.panels[i].rect,b=d.panels[j].rect;assert.ok(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y);}
   const loaded=await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'');let count=0;loaded.scene.traverse(mesh=>{if(mesh.isMesh)count++;});assert.equal(count,d.primitives.length);
+  if(isWithdrawnTemplate(d.id)){await assertTemplateChoice(templates,projects,await templates.catalog(other),e);continue;}
   const p=await projects.create(other,{name:d.name,templateId:d.id});assert.equal((await projects.template(other,p.id)).id,d.id);await assert.rejects(templates.update(other,d.id,{name:'Inválido',category:'conjunto',line:'passeio'}),{status:403});await templates.update(admin,d.id,{name:'Nome escolhido pelo ADM',category:'conjunto',line:d.line});assert.equal((await templates.descriptor(d.id)).name,'Nome escolhido pelo ADM');assert.equal((await templates.catalog(other)).find(t=>t.id===d.id).line,d.line);assert.match((await templates.asset(d.id,'template')).body,/Nome escolhido pelo ADM/);assert.deepEqual((await templates.descriptor(d.id)).panels,d.panels);
  }
  for(const shirt of COMPOSED_PASSEIO_SHIRTS){assert.equal(moldCollection(shirt.descriptor),'passeio');assert.ok(shirt.descriptor.panels.every(p=>p.group!=='BERMUDA'));assert.ok(COMPOSED_PASSEIO_TEMPLATES.some(e=>e.descriptor.id===shirt.descriptor.baseTemplateId));}
@@ -360,4 +368,31 @@ test('the supplied cut-panel shorts exclude their mannequin and produce six game
  const b=await readFile(new URL('../public'+entry.assets.model,import.meta.url)),g=readGlb(b);assert.equal(g.json.meshes.length,10);assert.ok(!g.json.skins?.length&&!g.json.animations?.length);assert.ok(g.json.meshes.every(m=>!/head|avatar/i.test(m.name)));assert.ok(b.length<1024*1024);
  const {COMPOSED_GAME_TEMPLATES}=await import('../lib/composed-game-templates.mjs'),{moldOptionName,moldCollection}=await import('../public/mold-collections.js'),{presentationGarments}=await import('../public/order-presentation.js');
  for(const kit of COMPOSED_GAME_TEMPLATES){const d=kit.descriptor;assert.equal(moldCollection(d),'jogo');assert.equal(d.bottomVariant,'com-recorte');assert.deepEqual(presentationGarments(d),['Camiseta','Calção']);assert.equal(d.panels.filter(p=>/Recorte lateral/.test(p.label)).length,2);assert.equal(d.sourceComponents[1].templateId,entry.descriptor.id);assert.equal(moldOptionName({...d,name:'Meu kit'}),'Meu kit · calção com recorte');const original=INSTALLED_TEMPLATES.find(e=>e.descriptor.id===d.sourceComponents[0].templateId.replace(/-camiseta$/,''));assert.ok(original&&original.status==='published');assert.match(moldOptionName(original.descriptor),/sem recorte/);}
+});
+
+
+test('withdrawn casual shorts and all nine kits disappear even with published renamed database rows, while saved projects and shirts survive',async()=>{
+ const {templates,projects,db,bucket}=setup(INSTALLED_TEMPLATES);
+ assert.equal(WITHDRAWN_TEMPLATE_IDS.length,10);
+ // Create a historical project before applying the current availability rules.
+ const historical=new ProjectService(db,bucket,{available:async()=>({status:'published'})});
+ const old=await historical.create(other,{name:'Apresentação já salva',templateId:'passeio-polo'});
+ const current=await projects.create(other,{name:'Projeto ativo',templateId:'polo'});
+ for(const id of WITHDRAWN_TEMPLATE_IDS){
+  await templates.ensureInstalled(id);
+  await db.prepare("UPDATE templates SET name = ?,status = 'published' WHERE id = ?").bind('Nome personalizado antigo',id).run();
+  assert.equal((await templates.row(id)).status,'deleted');
+  await assert.rejects(templates.available(other,id),{status:404});
+  await assert.rejects(projects.create(other,{name:'Novo projeto',templateId:id}),{status:404});
+  await assert.rejects(projects.save(other,current.id,{name:current.name,version:current.version,templateId:id}),{status:404});
+  await assert.rejects(templates.status(admin,id,{status:'published',confirmed:true}),{status:400});
+  await assert.rejects(templates.restore(admin,id),{status:400});
+ }
+ const catalog=await templates.catalog(other),adminCatalog=await templates.adminList(admin);
+ for(const id of WITHDRAWN_TEMPLATE_IDS){assert.ok(!catalog.some(t=>t.id===id));assert.ok(!adminCatalog.some(t=>t.id===id));}
+ for(const id of ['polo','polo-sem-recorte-v','kit-passeio-prime-camiseta','passeio-kit-elite-27-camiseta-camiseta','kit-elite-27','calcao-jogo-5-partes'])assert.ok(catalog.some(t=>t.id===id),id+' must stay available');
+ assert.equal((await projects.template(other,old.id)).id,'passeio-polo');
+ assert.deepEqual(await projects.asset(other,old.id,'model'),{redirect:INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='passeio-polo').assets.model});
+ assert.equal((await projects.get(other,old.id)).name,old.name);
+ assert.equal((await projects.save(other,old.id,{name:'Arte antiga preservada',version:old.version})).templateId,'passeio-polo');
 });

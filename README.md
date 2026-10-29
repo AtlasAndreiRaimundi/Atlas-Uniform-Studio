@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v83 em 28/10/2026.
+**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v84 em 28/10/2026.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 701 arquivos, Site v83, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 28/10/2026: 702 arquivos, Site v84, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -61,12 +61,12 @@ O editor permite trocar o molde na apresentação sem sair da tela, preservando 
 
 A biblioteca oferece Polo com recorte V e Polo sem recorte V, com modelos e mapas próprios.
 
-Linha de Passeio Prime disponível como kit de camiseta + bermuda, Camiseta Gola Prime e Bermuda de Passeio avulsas, com mapas próprios.
+Camiseta Gola Prime disponível avulsa, com mapa próprio. Kit Prime e bermuda de passeio retirados das opções.
 
-Biblioteca separada em Jogo e Passeio, kits com calção com/sem recorte e bermuda de passeio, mapas próprios e renomeação no ADM.
+Biblioteca separada em Jogo e Passeio, kits de jogo com calção com/sem recorte, mapas próprios e renomeação no ADM.
 
 Calção de Jogo 5 Partes avulso e em seis kits, com mapas próprios. Encaixe visual entre camiseta e calção corrigido sem alterar UVs ou arte.
 
-Nos kits de passeio, a bermuda recebe escala visual de 90% e encaixe mais alto, especialmente nas polos. GLBs e mapas preservados.
 
-As bermudas dos kits de passeio sobem mais aproximadamente 10 cm na apresentação, mantendo a escala visual de 90%.
+
+Retiradas a bermuda de passeio avulsa e as nove combinações que a utilizavam. Camisetas e polos avulsas e opções de jogo continuam disponíveis; projetos antigos e seus arquivos são preservados. Novos kits serão cadastrados com novos GLBs.

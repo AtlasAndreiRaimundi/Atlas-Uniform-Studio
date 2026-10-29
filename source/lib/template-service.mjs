@@ -1,3 +1,4 @@
+import {isWithdrawnTemplate,WITHDRAWN_TEMPLATE_MESSAGE} from './withdrawn-templates.mjs';
 import {presentationGarments} from '../public/order-presentation.js';
 import {moldCollection} from '../public/mold-collections.js';
 import { AppError } from './project-service.mjs';
@@ -32,6 +33,8 @@ export class TemplateService {
   async row(id) {
     const row = await this.db.prepare('SELECT * FROM templates WHERE id = ?').bind(id).first() || this.installedRow(id);
     if(!row)throw new AppError(404,'Molde não encontrado.');
+    // Apply withdrawal to persisted published rows too; old project assets remain readable.
+    if(isWithdrawnTemplate(id))return {...row,status:'deleted',withdrawn:true};
     // Clarify the original default label even when it was persisted before the second polo existed.
     if(id==='polo'&&row.name==='POLO')return {...row,name:'POLO COM RECORTE V'};
     return row;
@@ -41,7 +44,7 @@ export class TemplateService {
     const rows=await this.db.prepare("SELECT * FROM templates WHERE status = 'published' ORDER BY created_at DESC").all();
     const builtin=await this.builtin();
     const installed=await Promise.all(this.installedTemplates.filter(entry=>!entry.presentationOnly).map(entry=>this.row(entry.descriptor.id))),ids=new Set(this.installedTemplates.map(entry=>entry.descriptor.id));
-    return [...(builtin.status==='published'?[builtin]:[]),...installed.filter(row=>row.status==='published').map(row=>this.summary(row)),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)).map(row=>this.summary(row))];
+    return [...(builtin.status==='published'?[builtin]:[]),...installed.filter(row=>row.status==='published').map(row=>this.summary(row)),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)).map(row=>this.summary(row))];
   }
   async builtin() {
     const row=await this.db.prepare('SELECT * FROM templates WHERE id = ?').bind(BUILTIN_TEMPLATE.id).first();
@@ -56,7 +59,7 @@ export class TemplateService {
     requireAdminUser(user,this.adminId);
     const rows=await this.db.prepare('SELECT * FROM templates ORDER BY created_at DESC').all();
     const installed=await Promise.all(this.installedTemplates.filter(entry=>!entry.presentationOnly).map(entry=>this.row(entry.descriptor.id))),ids=new Set(this.installedTemplates.map(entry=>entry.descriptor.id));
-    return [...installed.map(row=>this.summary(row)),await this.builtin(),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)).map(row=>this.summary(row))];
+    return [...installed.filter(row=>!row.withdrawn).map(row=>this.summary(row)),await this.builtin(),...rows.results.filter(row=>row.id!==BUILTIN_TEMPLATE.id&&!ids.has(row.id)&&!isWithdrawnTemplate(row.id)).map(row=>this.summary(row))];
   }
   async available(user,id) {
     if(!user?.userId)throw new AppError(401,'Entre na sua conta para continuar.');
@@ -99,6 +102,7 @@ export class TemplateService {
   }
   async status(user,id,input) {
     requireAdminUser(user,this.adminId);
+    if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     if(id===BUILTIN_TEMPLATE.id)await this.ensureBuiltin();
     await this.ensureInstalled(id);
     const row=await this.row(id);
@@ -110,6 +114,7 @@ export class TemplateService {
   }
   async update(user,id,input) {
     requireAdminUser(user,this.adminId);
+    if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     const name=typeof input?.name==='string'?input.name.trim():'';
     if(!name||name.length>80)throw new AppError(400,'Dê um nome ao molde com até 80 caracteres.');
     if(!categories.includes(input.category))throw new AppError(400,'Selecione o tipo de peça.');
@@ -133,6 +138,7 @@ export class TemplateService {
   }
   async restore(user,id) {
     requireAdminUser(user,this.adminId);
+    if(isWithdrawnTemplate(id))throw new AppError(400,WITHDRAWN_TEMPLATE_MESSAGE);
     const row=await this.row(id);
     if(row.status!=='deleted')throw new AppError(400,'Este molde não está na lixeira.');
     await this.db.prepare('UPDATE templates SET status = ?,updated_at = ? WHERE id = ?').bind(id===BUILTIN_TEMPLATE.id?'published':'draft',date(),id).run();

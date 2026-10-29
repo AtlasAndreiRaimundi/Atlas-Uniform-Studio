@@ -145,3 +145,11 @@ Renomear um kit fixa sua composição física no descritor; trocar um nome para 
 - A pedido do proprietário, sobe as bermudas dos nove kits de passeio mais aproximadamente 10 cm em relação ao encaixe da v82, mantendo a escala de 90%. Aplica-se ao conjunto inferior inteiro, inclusive cós e bolsos, uma única vez por carregamento.
 - Como os GLBs têm escalas de exportação diferentes, a posição visual usa como referência um corpo de camiseta de 70 cm: acréscimo de 10/70 da altura do corpo. É um ajuste de apresentação, sem alterar medidas de fabricação, GLBs, UVs ou mapas. Jogos e peças avulsas preservados.
 - Quatro testes direcionados aprovados; comparação do deslocamento contra o encaixe anterior e verificação de que chamadas repetidas não acumulam subida. Prévia WebGL permanece indisponível neste ambiente; validação geométrica automatizada.
+
+## 29/10/2026 — Retirada das bermudas de passeio
+
+- Retiradas dez opções do catálogo de criação/troca e da biblioteca do ADM: BERMUDA DE PASSEIO avulsa, KIT DE PASSEIO PRIME e os oito kits compostos com bermuda (duas polos e seis camisetas). IDs em `lib/withdrawn-templates.mjs`.
+- A retirada usa IDs estáveis, inclusive para registros já publicados e renomeados no banco. Não depende do nome do cliente nem da linha escolhida no ADM. Não é possível republicar ou restaurar esses encaixes antigos; os futuros kits devem ser cadastrados como novos GLBs, com novos IDs e mapas.
+- Camisetas avulsas de passeio, Camiseta Gola Prime, polos avulsas e opções de jogo preservadas. As versões somente camiseta que compartilham o GLB de um kit retirado continuam funcionando.
+- Arquivos, projetos e arte existentes não são apagados: apresentações antigas continuam abrindo e salvando com o mesmo molde. Novos projetos e troca para os IDs retirados são bloqueados no servidor, inclusive a partir de abas antigas.
+- Validação cobre os dez IDs com registros persistidos publicados/renomeados, ausência nos catálogos do designer e ADM, bloqueio de criação e troca, preservação dos projetos e disponibilidade das camisetas.
