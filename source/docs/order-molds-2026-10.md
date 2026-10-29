@@ -139,3 +139,9 @@ Renomear um kit fixa sua composição física no descritor; trocar um nome para 
 - Ajuste somente na cena de apresentação, antes do enquadramento; alcança imagens e vídeos. Bolsos, cós e partes da bermuda recebem a mesma transformação. Camisetas, botões e costuras das mangas, kits de jogo e bermuda avulsa preservados. Arquivos GLB, UVs, mapas e arte não são regravados. A escala é aplicada uma única vez por malha, inclusive se o alinhamento for chamado novamente.
 - Reabrir aplica o ajuste; miniaturas já salvas atualizam no próximo salvamento.
 - Validação: 366 testes aprovados e um pulado; regressão com os nove kits reais verifica redução uniforme, subida do cós nas polos, preservação das camisetas e idempotência. Comparação de projeções geométricas em frente/lado. Prévia gerenciada indisponível por servidor preso na inicialização; renderização WebGL final não verificada no navegador.
+
+## 28/10/2026 — Subida adicional das bermudas
+
+- A pedido do proprietário, sobe as bermudas dos nove kits de passeio mais aproximadamente 10 cm em relação ao encaixe da v82, mantendo a escala de 90%. Aplica-se ao conjunto inferior inteiro, inclusive cós e bolsos, uma única vez por carregamento.
+- Como os GLBs têm escalas de exportação diferentes, a posição visual usa como referência um corpo de camiseta de 70 cm: acréscimo de 10/70 da altura do corpo. É um ajuste de apresentação, sem alterar medidas de fabricação, GLBs, UVs ou mapas. Jogos e peças avulsas preservados.
+- Quatro testes direcionados aprovados; comparação do deslocamento contra o encaixe anterior e verificação de que chamadas repetidas não acumulam subida. Prévia WebGL permanece indisponível neste ambiente; validação geométrica automatizada.

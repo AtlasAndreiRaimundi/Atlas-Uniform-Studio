@@ -169,3 +169,8 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Corrige a proporção da bermuda nos nove kits de passeio, incluindo as duas polos: escala visual uniforme de 90% ao redor do cós, sobreposição mínima sob a camiseta de 11% da altura do corpo e aplicação idempotente.
 - Camisetas, botões e costuras das mangas, kits de jogo, bermuda avulsa, GLBs, UVs e mapas preservados. Fotos e vídeos usam a cena ajustada; miniaturas já salvas atualizam no próximo salvamento.
 - Fonte publicada `fc7c1d90765751959834b58931dc36538dbac42e` (701 arquivos). 366 testes aprovados, um pulado; build aprovado. Comparações geométricas em frente/lado revisadas. Prévia gerenciada indisponível; renderização WebGL final não validada no navegador.
+
+## v83 — 2026-10-28
+- Sobe as bermudas dos nove kits de passeio mais aproximadamente 10 cm em relação à v82, mantendo escala, geometria local e arte. Conversão visual proporcional à altura do corpo da camiseta, com referência de 70 cm para acomodar diferentes escalas de GLB.
+- Deslocamento do conjunto inferior inteiro, aplicado uma vez; jogos e peças avulsas preservados. Miniaturas antigas atualizam ao salvar novamente.
+- Fonte publicada `592351ba43822a314e0bb441585638cda2e564ac` (701 arquivos). Quatro testes direcionados e build aprovados. Prévia WebGL indisponível; validação geométrica automatizada.
