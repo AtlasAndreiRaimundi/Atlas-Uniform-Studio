@@ -17,6 +17,7 @@ export const NAV_GROUPS = [
   ]},
   {id:'tools', label:'Ferramentas', items:[
     {id:'lists', label:'Criador de planilha', href:'/organizador', icon:'M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM3 9h18M9 9v12M15 9v12M3 15h18'},
+    {id:'atlas-vector', label:'ATLAS VECTOR (BETA)', href:'/ferramentas/atlas-vector', icon:'M4 4h5v5H4V4ZM15 15h5v5h-5v-5ZM7 9c0 7 10-2 10 6M9 6h8v9'},
   ]},
 ];
 export const NAV_MORE = [

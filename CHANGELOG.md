@@ -186,3 +186,12 @@ Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para 
 - Página pública de conferência dos kits e prancha geométrica com profundidade por pixel em quatro vistas. Prévia WebGL local indisponível por falha de infraestrutura; testes de geometria e arquivos finais aprovados.
 - Compactação lossless dos GLBs apenas na publicação, com ASSETS e descompactação em streaming nos URLs existentes. Todos os 62 arquivos compactados foram conferidos contra os originais; uploads/R2 e modelo direto do montador preservados.
 - Fonte `b44385a3468010e00d992e12d4d2b418436eba0c` (758 arquivos). 373 testes aprovados, um pulado; TypeScript e build aprovados. Testes de kits v2 e transporte binário adicionados ao CI.
+
+
+## Proposta em revisão — ATLAS VECTOR BETA — 2026-10-29
+
+- Ferramenta independente, autenticada, sob feature flag, sem dados de pedidos/projetos/listas.
+- Gateway HTTPS privado e SVG path-only; limites de upload, pixels, execução e saída.
+- Interface de importação PNG, correção real de frestas, comparação e download.
+- Motor genérico e serviço Python evoluem em PR separada do Atlas-Vector.
+- Testes de segurança/regressão, build e documentação. Nenhuma publicação ou variável de produção alterada.

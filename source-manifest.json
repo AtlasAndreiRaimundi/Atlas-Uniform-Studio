@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "b44385a3468010e00d992e12d4d2b418436eba0c",
-  "exported_at": "2026-10-29T11:41:50.394503+00:00",
+  "source_commit": "9a1d8cbe2f82a2c06c1ae899c94c692a447b7fc4",
+  "exported_at": "2026-10-29T12:35:46.701506+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -20,8 +20,8 @@
     },
     {
       "path": "README.md",
-      "size": 25968,
-      "sha256": "81aa95d014a9c85574b45aa61def038c832b9d8b66e476aea082a03a65c3f97f"
+      "size": 26244,
+      "sha256": "261b82373d7ca47b110ac7abab465659a2a7229962dafd17a32f56c148d2a74c"
     },
     {
       "path": "app/acompanhamento/page.tsx",
@@ -67,6 +67,11 @@
       "path": "app/api/admin/templates/route.ts",
       "size": 689,
       "sha256": "81dbba15537b519ab7ac4e79c1430b753b6ada9d83b637bc47061cf69f3a1a0c"
+    },
+    {
+      "path": "app/api/atlas-vector/route.ts",
+      "size": 435,
+      "sha256": "638aebe47380ab580c9228f01d2be9877123ffb98224183a9aa0d2e1c92ac881"
     },
     {
       "path": "app/api/designers/[id]/photo/route.ts",
@@ -319,6 +324,21 @@
       "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
     },
     {
+      "path": "app/ferramentas/atlas-vector/page.tsx",
+      "size": 325,
+      "sha256": "a7e8d9d1363afa1ec836300b7ee9c369e7996bfd3e16f45882cc978fb559ba67"
+    },
+    {
+      "path": "app/ferramentas/atlas-vector/vector-tool.tsx",
+      "size": 6963,
+      "sha256": "9308ae224f433daaac94eff00ffbd57770059daf2fd6ad2ad1107acfddad0aca"
+    },
+    {
+      "path": "app/ferramentas/atlas-vector/vector.css",
+      "size": 5234,
+      "sha256": "b4dec2b44e0f62b38efa512ba8789228a1d1009a36fa90443c6db8bebe977364"
+    },
+    {
       "path": "app/globals.css",
       "size": 42912,
       "sha256": "0e41e73e6bc655a327a0cac2da9510ba2375cdd7f29619d07ee3e3608b8e89b8"
@@ -450,8 +470,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 149,
-      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
+      "size": 248,
+      "sha256": "843be772135f5e3781fea9be4de764c8542ac6138f43638b176f3cf1ff1ce1f5"
     },
     {
       "path": "components.json",
@@ -784,6 +804,26 @@
       "sha256": "8fed96a7be361f245ef8b574e437455ea7ac7ce56d48df4dc56a9cdb45be9553"
     },
     {
+      "path": "docs/atlas-vector-beta.md",
+      "size": 6060,
+      "sha256": "d393550b0c843004a5865cac7b16b77200c21f2760f72947fa109d9a61ce8075"
+    },
+    {
+      "path": "docs/atlas-vector-evidence/review-local.jpg",
+      "size": 106680,
+      "sha256": "c62857ebabb1db6eabd083b96458c0f634c66ae71e949ef88b8ea24e0efbeac9"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/ATLAS_VECTOR_BETA_ESPECIFICACAO.md",
+      "size": 5521,
+      "sha256": "e8b773ebc297a1c5458636ce23cf8d5ae6df23d3eca99ecc7987158aabc7f761"
+    },
+    {
+      "path": "docs/atlas-vector-handoff/ATLAS_VECTOR_BETA_PROMPT_WORK.md",
+      "size": 4171,
+      "sha256": "ca671d147cdc8d043756a168e671b85c539f9d122b10e2529443be6460316149"
+    },
+    {
       "path": "docs/complementos-cdr-listas.md",
       "size": 4875,
       "sha256": "58ded27500831d632844829be5587eda53ec0c0d86fa698758694a56c718ef0a"
@@ -1059,6 +1099,11 @@
       "sha256": "7fb0cc5ad31542d9c8d816157133fded08317450969efbf294a5826a42afe783"
     },
     {
+      "path": "lib/atlas-vector.mjs",
+      "size": 6980,
+      "sha256": "936772b52acbfa81149fcd71a7c383ac9841a6c4f30033ea54ec0c680f9de303"
+    },
+    {
       "path": "lib/composed-five-part-templates.mjs",
       "size": 687299,
       "sha256": "0be89217c6554f8b13993ae3b5fc6c826cc68014775895bc620b8bd24860375c"
@@ -1255,8 +1300,8 @@
     },
     {
       "path": "public/acervo.html",
-      "size": 8401,
-      "sha256": "93d64dfe403fc6cc892cce74fb7316846d8975223ae3d57ecc12e90241addd1b"
+      "size": 8705,
+      "sha256": "1fe71a9c9cc33863d02cd4bebd9bc543d3757e87604ecb0a629a50c063d03f6b"
     },
     {
       "path": "public/app.js",
@@ -2920,8 +2965,8 @@
     },
     {
       "path": "public/organizador.html",
-      "size": 17742,
-      "sha256": "2b71fcfdb6306d3bafa2be8a37c77f9bed6f9d97122cc5af4afbed05f1a7516a"
+      "size": 18046,
+      "sha256": "eb07ff1d538786e41993183fe8adb56640bad4f0e385e3a0d5d2efdc5022c880"
     },
     {
       "path": "public/organizer-ui.js",
@@ -2935,8 +2980,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 33547,
-      "sha256": "d15624799c0c538ad7685cab799141cd77cd9e5994bfb93a04aea042ce246914"
+      "size": 33851,
+      "sha256": "eec0562a664a95d97a43d78e84b57343d0ca3f6eebecd75be0b00ed3e0badeeb"
     },
     {
       "path": "public/presentation-contract.js",
@@ -3045,8 +3090,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31354,
-      "sha256": "d857d6d5c5a8d0dfff0142f522cebee09e64498a945d99449f928e858427cc87"
+      "size": 31658,
+      "sha256": "202ffb6d2585b43b2f338c420d92f97c256b0bf91bce142b0c5e3f42a2d8a30d"
     },
     {
       "path": "public/simulador/elite.js",
@@ -3205,8 +3250,8 @@
     },
     {
       "path": "public/studio-navigation.js",
-      "size": 3733,
-      "sha256": "787fb9d5b4ca2585778530f1a8d61c488d01647b0c1756fea17eda41c07c99d0"
+      "size": 3886,
+      "sha256": "b8d7364c127fcfd0489ca07402dad9b7cd40a729dad0526853bdf5a09e798b3c"
     },
     {
       "path": "public/studio-theme.css",
@@ -3549,6 +3594,11 @@
       "sha256": "d99ab3ab4bee8f3f8e1571799f2828cf13d442eee0169a0ae894b5a49386dc61"
     },
     {
+      "path": "tests/atlas-vector.test.mjs",
+      "size": 4671,
+      "sha256": "780dfe792e389754ea63ed6032d9a70c5bd0e1e788d4a951cdfbd608f5e5dccc"
+    },
+    {
       "path": "tests/atlas.test.mjs",
       "size": 6832,
       "sha256": "6eb1a15afdd2895a0817a01c218cc028d441959b520cffddc1925b45c2db8232"
@@ -3793,5 +3843,7 @@
       "size": 1629,
       "sha256": "d4eb6277b4685ac7278baa7571ca43ea5b4f5cd8efd7a7402c96ee9d98110779"
     }
-  ]
+  ],
+  "source_base_commit": "b44385a3468010e00d992e12d4d2b418436eba0c",
+  "review_only": true
 }

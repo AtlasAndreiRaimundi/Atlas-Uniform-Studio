@@ -409,3 +409,7 @@ são removidos antes de empacotar e os registros locais não são publicados.
 A audiência da hospedagem continua privada. Os links de proposta estão
 implementados, mas o acesso de clientes externos depende de liberar a audiência
 ou conceder acesso a esses clientes pelo compartilhamento do Site.
+
+## ATLAS VECTOR (BETA) — proposta em revisão
+
+Ferramenta independente em `/ferramentas/atlas-vector`, fechada por feature flag. Motor Python separado. [Segurança, testes e bloqueadores de release](docs/atlas-vector-beta.md). Sem publicação em produção nesta entrega.

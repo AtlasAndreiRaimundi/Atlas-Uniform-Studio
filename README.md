@@ -3,9 +3,9 @@
 Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
 
 **Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v85 em 29/10/2026.
+**Status desta branch:** proposta ATLAS VECTOR BETA em revisão; sem merge ou publicação. Produção permanece no Site v85.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 29/10/2026: 758 arquivos, Site v85, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Base de produção: Site v85 (758 arquivos). Esta branch contém 768 arquivos de fonte, com ATLAS VECTOR BETA desabilitado por padrão e manifesto SHA-256 atualizado.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
 
 ## Áreas do sistema
 - Apresentação 3D de uniformes e exportações visuais.
@@ -74,3 +74,8 @@ Retiradas a bermuda de passeio avulsa e as nove combinações que a utilizavam. 
 Nova BERMUDA DE PASSEIO e dez kits com as seis camisetas de jogo, Prime, Clássica e duas polos. Modelos v2 possuem mapas independentes, bermuda vermelha para conferência e encaixe verificado por amostragem da superfície. Os encaixes antigos continuam retirados. Página de conferência: `/conferencia-passeio.html`.
 
 GLBs estáticos são compactados sem perda na publicação e servidos nos mesmos URLs por streaming, permitindo ampliar a biblioteca dentro do limite da hospedagem. Os originais permanecem no código-fonte.
+
+
+## Proposta ATLAS VECTOR BETA
+
+Ferramenta isolada em `/ferramentas/atlas-vector`, após o Criador de planilha. Motor ATLAS próprio em repositório separado. [Implementação, segurança, evidências e bloqueadores](source/docs/atlas-vector-beta.md). Não ativar sem validação do serviço Python em staging e revisão das duas PRs.
