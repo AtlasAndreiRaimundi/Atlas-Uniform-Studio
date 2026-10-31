@@ -33,8 +33,8 @@ export class UniformScene {
   try{this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});this.renderer.outputColorSpace=THREE.SRGBColorSpace;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.05;this.renderer.setClearColor(0,0);}catch{this.renderer=new CompatibleRenderer();this.software=true;}
   this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.domElement.setAttribute('aria-label','Uniforme 3D interativo');host.append(this.renderer.domElement);
   this.controls=new OrbitControls(this.camera,this.renderer.domElement);this.controls.target.set(0,.38,0);this.controls.enableDamping=true;this.controls.dampingFactor=.09;this.controls.enablePan=false;this.controls.minDistance=2.8;this.controls.maxDistance=10;this.controls.maxPolarAngle=Math.PI*.85;this.controls.minPolarAngle=Math.PI*.15;this.controls.mouseButtons.LEFT=THREE.MOUSE.ROTATE;
-  this.scene.add(new THREE.HemisphereLight(0xffffff,0xc2c9c1,2.2));
-  const key=new THREE.DirectionalLight(0xfff9ec,2);key.position.set(3,5,5);this.scene.add(key);const fill=new THREE.DirectionalLight(0xebf4ff,1);fill.position.set(-4,2,-3);this.scene.add(fill);
+  this.scene.add(new THREE.HemisphereLight(0xffffff,0xbcbcbc,1.5));
+  const key=new THREE.DirectionalLight(0xffffff,1.3);key.position.set(3,5,5);this.scene.add(key);const fill=new THREE.DirectionalLight(0xffffff,.8);fill.position.set(-4,2,-3);this.scene.add(fill);
   this.scene.add(this.garment);if(!deferModel)this.makeDefault();
   const c=document.createElement('canvas');c.width=c.height=128;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'#24392b55');g.addColorStop(.4,'#24392b22');g.addColorStop(1,'#24392b00');ctx.fillStyle=g;ctx.fillRect(0,0,128,128);
   const shadow=new THREE.Mesh(new THREE.PlaneGeometry(3.2,1.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=-1.18;this.scene.add(shadow);this.shadow=shadow;
@@ -80,7 +80,7 @@ export class UniformScene {
   this.garment.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){if(m.map&&!this.textures.has(m.userData?.panel))m.map.dispose();m.dispose();}}});this.garment.clear();this.meshes=[];this.trimMeshes=[];
   for(const t of this.textures.values())t.texture.dispose();this.textures.clear();
  }
- async loadGLB(buffer,{preset=null}={}){
+ async loadGLB(buffer,{preset=null,presetPanels=[]}={}){
   inspectGLB(buffer);const result=await new GLTFLoader().parseAsync(buffer,'');
   const editable=[];let vertices=0;result.scene.traverse(o=>{if(o.isMesh&&o.geometry?.attributes?.uv){editable.push(o);vertices+=o.geometry.attributes.position.count;}});
   if(!editable.length||editable.length>100||vertices>(this.software?12000:900000)){result.scene.traverse(o=>{o.geometry?.dispose();});throw Error(!editable.length?'O modelo não possui painéis com coordenadas UV para desenhar.':this.software?'O modo 3D compatível aceita modelos leves, com até 12 mil vértices. Ative a aceleração gráfica no navegador para modelos maiores.':'Este modelo é pesado demais. Use até 100 painéis e 900 mil vértices.');}
@@ -88,7 +88,7 @@ export class UniformScene {
   if(!Number.isFinite(size.y)||size.y<=0)throw Error('O modelo não possui dimensões válidas.');
   this.clearGarment();this.custom=!preset;this.preset=preset;
   const wrap=new THREE.Group();wrap.add(result.scene);result.scene.position.sub(center);wrap.scale.setScalar(3.1/size.y);wrap.position.y=.38;this.garment.add(wrap);
-  const panels=[];editable.forEach((mesh,i)=>{const meta=preset?mesh.userData.labPanel:null,id=meta?.id??`mesh-${i}`,label=meta?.label??(mesh.name||`Painel ${i+1}`).slice(0,70),piece=meta?.piece??'custom';const old=Array.isArray(mesh.material)?mesh.material:[mesh.material];for(const m of old)m.dispose();mesh.material=this.material();mesh.userData={...mesh.userData,panel:id,piece};this.meshes.push(mesh);panels.push(meta?{...meta}:{id,label,piece,cm:{w:52,h:70}});});
+  const panels=[];editable.forEach((mesh,i)=>{const association=result.parser.associations.get(mesh);const number=Number(mesh.name.match(/P(\d{2})$/)?.[1]);const meta=preset?(presetPanels.find(p=>p.mesh===association?.meshes)||presetPanels.find(p=>p.number===number)||mesh.userData.labPanel):null;if(preset&&!meta)throw Error('Painel do molde não identificado.');if(meta?.rect){const uv=mesh.geometry.attributes.uv;for(let j=0;j<uv.count;j++)uv.setXY(j,(uv.getX(j)*meta.pageSize-meta.rect.x)/meta.rect.w,1-(uv.getY(j)*meta.pageSize-meta.rect.y)/meta.rect.h);uv.needsUpdate=true;}const id=meta?.id??`mesh-${i}`,label=meta?.label??(mesh.name||`Painel ${i+1}`).slice(0,70),piece=meta?.piece??'custom';const old=Array.isArray(mesh.material)?mesh.material:[mesh.material];for(const m of old)m.dispose();mesh.material=this.material();mesh.userData={...mesh.userData,panel:id,piece};this.meshes.push(mesh);panels.push(meta?{...meta}:{id,label,piece,cm:{w:52,h:70}});});
   this.view('front');return panels;
  }
  update(state){
@@ -98,6 +98,7 @@ export class UniformScene {
   for(const m of this.meshes){m.visible=state.product==='kit'||state.product==='custom'||m.userData.piece===state.product;const e=this.textures.get(m.userData.panel);if(e){m.material.map=e.texture;m.material.color.set('#ffffff');m.material.needsUpdate=true;}m.material.emissive.set(m.userData.panel===state.active?'#19220a':'#000000');m.material.emissiveIntensity=.045;}
   for(const m of this.trimMeshes){m.visible=state.product==='kit'||m.userData.piece===state.product;m.material.color.set(state.trim);}
  }
+ dispose(){cancelAnimationFrame(this.animation);this.observer.disconnect();this.controls.dispose();this.clearGarment();this.renderer.dispose?.();this.renderer.domElement.remove();}
  resize(){const {width,height}=this.host.getBoundingClientRect();if(width<1||height<1)return;this.camera.aspect=width/height;this.camera.updateProjectionMatrix();this.renderer.setSize(width,height,false);this.dirty=true;}
  view(side){const target=new THREE.Vector3(0,.38,0);this.controls.target.copy(target);const sign=this.preset?1:-1;const n={front:[0,.68,6.25],back:[0,.68,-6.25],right:[sign*6.25,.68,0],left:[-sign*6.25,.68,0],angle:[3.4,1.4,5.3]}[side]??[0,.68,6.25];this.camera.position.set(...n);this.camera.lookAt(target);this.controls.update();}
  setMode(mode){this.mode=mode;this.renderer.domElement.style.cursor=mode==='edit'?'grab':'move';}

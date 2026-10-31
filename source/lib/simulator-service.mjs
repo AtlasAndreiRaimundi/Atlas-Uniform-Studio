@@ -3,7 +3,6 @@ import {AppError} from './project-service.mjs';
 import {validateSimulatorState,simulatorPNG,describeSimulatorColors} from './simulator-validation.mjs';
 import {newOrder,newPage,newKitPage} from '../public/production-core.js';
 import {UNIFORM_FONTS} from '../public/simulador/catalog.js';
-import {SIMULATOR_PRESENTATION_TEMPLATES} from './simulator-presentation-templates.mjs';
 import {PRESENTATION_LAYOUTS} from '../public/simulador/presentation-layouts.js';
 export class SimulatorService{
  /** @param {import('./project-service.mjs').ProjectService | null} projects */
@@ -15,7 +14,7 @@ export class SimulatorService{
  async get(user,id){const row=await this.row(user,id),object=await this.bucket.get(row.object_key);if(!object)throw new AppError(503,'O desenho está temporariamente indisponível.');return {...this.summary(row),...await object.json()};}
  async save(user,id,input){
   const owner=this.owner(user),previous=id?await this.row(user,id):null;if(previous&&(!Number.isSafeInteger(input?.version)||input.version!==previous.version))throw new AppError(409,'Este uniforme mudou em outra aba. Reabra a versão salva antes de substituir.');
-  const state=validateSimulatorState(input?.state),preview=simulatorPNG(input?.preview,{maxPixels:12_000_000}).src,designId=previous?.id||crypto.randomUUID(),at=new Date().toISOString(),key=`uniform-designs/${designId}/${crypto.randomUUID()}.json`;
+  const state=validateSimulatorState(input?.state);if(previous&&previous.model_id!==state.model)throw new AppError(409,'Este desenho usa uma base anterior. Comece um novo uniforme para preservar o original.');const preview=simulatorPNG(input?.preview,{maxPixels:12_000_000}).src,designId=previous?.id||crypto.randomUUID(),at=new Date().toISOString(),key=`uniform-designs/${designId}/${crypto.randomUUID()}.json`;
   await this.bucket.put(key,JSON.stringify({state,preview}),{httpMetadata:{contentType:'application/json'}});let row;
   try{row=previous?await this.db.prepare('UPDATE uniform_designs SET title=?,product=?,object_key=?,version=version+1,updated_at=? WHERE id=? AND owner_id=? AND version=? RETURNING *').bind(state.title,state.product,key,at,designId,owner,input.version).first():await this.db.prepare('INSERT INTO uniform_designs (id,owner_id,title,model_id,product,object_key,version,created_at,updated_at) VALUES (?,?,?,?,?,?,1,?,?) RETURNING *').bind(designId,owner,state.title,state.model,state.product,key,at,at).first();if(!row)throw new AppError(409,'O uniforme foi atualizado em outra aba.');}catch(e){await this.bucket.delete(key).catch(()=>{});throw e;}
   return {...this.summary(row),state,preview};
@@ -23,7 +22,7 @@ export class SimulatorService{
  async thumbnail(user,id,version){const saved=await this.get(user,id);if(String(saved.version)!==String(version))throw new AppError(409,'A miniatura mudou. Atualize a lista.');return simulatorPNG(saved.preview);}
  async createPresentation(user,id,input,mapFile){
   const saved=await this.get(user,id);
-  if(!SIMULATOR_PRESENTATION_TEMPLATES.length)throw new AppError(503,'As bases antigas do simulador foram excluídas. Prepare um novo molde antes de gerar apresentações.');
+  if(saved.state.model!=='kit-edge-2027-mapa-v3'||saved.state.product!=='kit')throw new AppError(400,'Use o KIT EDGE 2027 completo para criar uma apresentação.');
   if(!Number.isSafeInteger(input?.version)||saved.version!==input.version)throw new AppError(409,'O uniforme mudou. Confira e salve a versão atual antes de criar a apresentação.');
   if(saved.state.platformBrand!=='atlas')throw new AppError(409,'Abra o uniforme no montador e confira o desenho atualizado antes de criar a apresentação.');
   if(!this.projects)throw new AppError(503,'O estúdio de apresentações está indisponível.');
@@ -44,8 +43,8 @@ export class SimulatorService{
   if(!row){row=await this.row(user,id);if(row.version!==saved.version)throw new AppError(409,'O uniforme mudou durante a conferência. Reabra o desenho.');}
   const orderId=row.order_id;
   try{return await this.production.get(user,orderId);}catch(e){if(e.status!==404)throw e;}
-  const document=newOrder();document.title=saved.title.slice(0,100);document.client=customer;document.notes=notes;const kit=saved.state.product==='kit',type=saved.state.product==='shorts'?'Calção':'Camiseta',page=kit?newKitPage():newPage(type);document.pages=[page];page.title='KIT ELITE 27';page.visual={mode:'shared',image:saved.preview,transform:{scale:1,x:.5,y:.5}};
-  for(const p of page.products){const piece=p.type==='Calção'?'shorts':'shirt',colors=describeSimulatorColors(saved.state,piece);p.model='KIT ELITE 27';p.quantity=input.quantity;p.fabricColor=(colors[0]||'').slice(0,200);p.detailColor=colors.slice(1).join(' · ').slice(0,200);p.notes=('Cores: '+colors.join(' · ')+'\nFontes: '+[...new Set(saved.state.panels.filter(p=>p.piece===piece).flatMap(p=>p.layers.filter(l=>l.type==='text').map(l=>UNIFORM_FONTS.find(f=>f.id===l.font)?.label)))].filter(Boolean).join(' · ')).slice(0,3500);}
+  const document=newOrder();document.title=saved.title.slice(0,100);document.client=customer;document.notes=notes;const kit=saved.state.product==='kit',type=saved.state.product==='shorts'?'Calção':'Camiseta',page=kit?newKitPage():newPage(type);document.pages=[page];page.title='KIT EDGE 2027';page.visual={mode:'shared',image:saved.preview,transform:{scale:1,x:.5,y:.5}};
+  for(const p of page.products){const piece=p.type==='Calção'?'shorts':'shirt',colors=describeSimulatorColors(saved.state,piece);p.model='KIT EDGE 2027';p.quantity=input.quantity;p.fabricColor=(colors[0]||'').slice(0,200);p.detailColor=colors.slice(1).join(' · ').slice(0,200);p.notes=('Cores: '+colors.join(' · ')+'\nFontes: '+[...new Set(saved.state.panels.filter(p=>p.piece===piece).flatMap(p=>p.layers.filter(l=>l.type==='text').map(l=>UNIFORM_FONTS.find(f=>f.id===l.font)?.label)))].filter(Boolean).join(' · ')).slice(0,3500);}
   catalogOrder(document);
   document.simulatorDesign={schema:1,id:saved.id,version:saved.version,confirmedAt:new Date().toISOString(),state:saved.state};
   try{const created=await this.production.save(user,null,{document},{newId:orderId});return this.production.get(user,created.id);}catch(e){try{return await this.production.get(user,orderId);}catch{await this.db.prepare('UPDATE uniform_designs SET order_id=NULL,order_version=NULL WHERE id=? AND owner_id=? AND order_id=? AND order_version=?').bind(id,owner,orderId,saved.version).run();throw e;}}

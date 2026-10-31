@@ -1,81 +1,27 @@
 # ATLAS UNIFORM STUDIO
 
-Software em desenvolvimento para criação, apresentação e gestão de uniformes esportivos.
+Plataforma de Andrei Raimundi para criação de uniformes, apresentações, pedidos e orçamentos.
 
-**Responsável pelo projeto (autoria declarada):** Andrei Raimundi.  
-**Status:** desenvolvimento e validação; código e documentação sincronizados com o Site v86 em 29/10/2026.
+**Produção: v87 — 31/10/2026.** Fonte sincronizada em `source/`,511 arquivos com manifesto SHA-256. Autoria declarada: Andrei Raimundi; direitos reservados.
 
-> Este repositório é privado e reúne documentação e o código-fonte real exportado do projeto em `source/`. **Snapshot canônico de 29/10/2026: 499 arquivos, Site v86, com manifesto SHA-256, testes e limites documentados.** O histórico de commits daqui não comprova, sozinho, as datas de criação de versões anteriores nem resolve a titularidade jurídica.
+## Módulos
 
-## Áreas do sistema
-- Apresentação 3D de uniformes e exportações visuais.
-- Montagem de pedidos técnicos.
-- Gestão e importação de listas de personalização.
-- Fluxo de conferência e integração entre módulos.
-- Gestão de clientes, pastas, projetos e acessos.
+- **Orçamentos:** camiseta + calção, componentes, valor por kit, quantidade, desconto, vendedor obrigatório e apresentação opcional. Salvar, reabrir, excluir e conferir para imprimir/salvar PDF, sem exigir pedido ou desenho.
+- **Apresentações:** arte aplicada ao KIT EDGE2027, quatro vistas e exportações do estúdio.
+- **Pedidos:** fichas técnicas, listas, aplicações, apontamentos, arquivos CDR e conferência de produção.
+- **Criador de planilha:** importação e organização de listas independentes ou vinculadas.
+- **Simulador:** reativado com o único molde retido KIT EDGE2027;19 painéis. WebGL para edição e quatro vistas; alternativa2D local sem aceleração gráfica.
 
-Consultar [funcionalidades](docs/funcionalidades.md), [arquitetura](docs/arquitetura.md), [titularidade e riscos](docs/propriedade-intelectual.md) e [histórico](CHANGELOG.md).
+O catálogo continua com somente KIT EDGE2027. Moldes antigos permanecem excluídos; pedidos e artes incorporadas são preservados. Dados salvos de outra base não são convertidos silenciosamente.
 
-## Planejamento inicial (24/10/2026)
-1. Exportar o código-fonte real da versão atual do site de modo autorizado.
-2. Verificar segredos, senhas, tokens, dados pessoais e materiais confidenciais antes de subir arquivos.
-3. Importar o código, descrever dependências e validar execução/testes.
-4. Criar tags de versão e registros de integridade (SHA-256 dos artefatos exatos).
-5. Configurar workflow de documentação e verificação de integridade para novas versões.
+**ATLAS VECTOR BETA** permanece nas PRs separadas #26 (Studio) e Atlas-Vector#1. Não está publicado nem habilitado: depende de serviço Python externo. Esta versão não incorpora o VECTOR.
 
-**Aviso:** informação técnica e organização de evidências, não parecer jurídico ou registro de programa no INPI.
+## Implementação e validação
 
-## Fichas técnicas de produção
+[Orçamento e simulador EDGE](source/docs/orcamentos-2026-10-31.md) · [Tabela de preços](source/docs/orcamento-anexo-01-2026.md) · [Limpeza do catálogo](source/docs/mold-reset-2026-10-29.md) · [Histórico](CHANGELOG.md).
 
-As fichas CAM-001 e CAL-001 estão versionadas com o código, incluindo catálogos, listas com quantidades independentes, validações e impressão A4. Veja [implementação, testes e pendências](docs/implementacao-fichas-2026-10-26.md) e as [especificações originais](source/docs/produtos/00_LEIA_PRIMEIRO_WORK.md).
+382 testes locais:357 aprovados,25 históricos ignorados,zero falhas. TypeScript e build oficial aprovados. Navegador: cálculo, desconto e conferência com dados fictícios; editor EDGE em2D. WebGL acelerado e tela375px não foram verificados neste ambiente. Evidência: [prévia fictícia](source/docs/releases/atlas-orcamento-conferencia-20261031.jpg).
 
-O código do pedido é gerado automaticamente no formato `0001-10-MNZ`, e a contagem impressa considera os desenhos, separando as folhas da lista. Veja [numeração e impressão](source/docs/pedidos-numeracao.md).
+Execute `python3 scripts/restore_source.py` antes de conferir a integridade e usar o código. A migração0014 adiciona somente tabela/índice de orçamentos; não modifica dados existentes.
 
-A montagem permite excluir páginas e começar outro pedido descartando o preenchimento. Veja [ações de edição e proteção de dados](source/docs/pedidos-edicao.md).
-
-## Código importado e atualizações
-
-Consulte [o relatório da importação](docs/importacao-2026-10-24.md) e [o procedimento de atualização](docs/atualizacoes-do-codigo.md). Execute `python3 scripts/restore_source.py` na raiz antes de usar o código. As verificações automáticas conferem integridade, padrões de segredos e testes críticos. Os próximos passos anteriores são preservados como planejamento inicial; a exportação e a importação foram realizadas, com limites de validação descritos no relatório.
-
-Nas informações gerais, a composição distingue kit, peça avulsa e duas peças independentes. As modelagens masculina, Baby Look e infantil podem coexistir no pedido. Veja [composição e modelagens](source/docs/pedidos-composicao-modelagens.md).
-
-Peças do mesmo desenho reúnem todas as modelagens na mesma aba. Aplicações físicas geram setas vinculadas por peça. Veja [agrupamento e apontamentos](source/docs/pedidos-pecas-agrupadas.md).
-
-A montagem segue Cliente → Informações gerais → Pedido e observações → 1ª peça → 2ª peça → Personalizações e apontamentos → Lista → Conferência. Veja [fluxo guiado](source/docs/pedidos-fluxo-guiado.md).
-
-Aplicação e seta são editadas e confirmadas juntas, sem redigitar a posição. O nome do pedido é sugerido pelo cliente. Veja [montagem guiada](source/docs/pedidos-fluxo-guiado.md).
-
-Aplicações ficam em uma única etapa do pedido. Listas salvas podem ser anexadas ou excluídas sem apagar snapshots dos pedidos. A conferência final única abre em tela cheia após o convite da lista. Veja [montagem guiada](source/docs/pedidos-fluxo-guiado.md).
-
-A montagem v67 prioriza as peças e exige o CDR antes da conferência final. Consulte [regras de montagem e produção](source/docs/pedido-montagem-producao-2026-10-27.md).
-
-O orçamento automático usa o Anexo 01/2026, com desconto por cliente e nomes de exportação iniciados pelo código do pedido. Veja [cálculo, tabela e pendências](source/docs/orcamento-anexo-01-2026.md).
-
-A revisão visual usa superfícies neutras no tema escuro e acentos dourados, com correções de espaçamento e adaptação dos painéis. Consulte [revisão visual e limites de validação](source/docs/revisao-visual-2026-10-27.md).
-
-Seis moldes adicionais para apresentações e pedidos, com mapas organizados e geometria preservada: [documentação](source/docs/order-molds-2026-10.md).
-
-A criação de apresentações separa camisetas e peças avulsas dos kits completos. Cada kit possui uma versão somente camiseta, com mapa próprio.
-
-O editor permite trocar o molde na apresentação sem sair da tela, preservando arte apenas entre variantes do mesmo mapa e salvando a escolha na revisão do projeto.
-
-A biblioteca oferece Polo com recorte V e Polo sem recorte V, com modelos e mapas próprios.
-
-Camiseta Gola Prime disponível avulsa, com mapa próprio. Kit Prime e bermuda de passeio retirados das opções.
-
-Biblioteca separada em Jogo e Passeio, kits de jogo com calção com/sem recorte, mapas próprios e renomeação no ADM.
-
-Calção de Jogo 5 Partes avulso e em seis kits, com mapas próprios. Encaixe visual entre camiseta e calção corrigido sem alterar UVs ou arte.
-
-
-
-Retiradas a bermuda de passeio avulsa e as nove combinações que a utilizavam. Camisetas e polos avulsas e opções de jogo continuam disponíveis; projetos antigos e seus arquivos são preservados. Novos kits serão cadastrados com novos GLBs.
-
-Nova BERMUDA DE PASSEIO e dez kits com as seis camisetas de jogo, Prime, Clássica e duas polos. Modelos v2 possuem mapas independentes, bermuda vermelha para conferência e encaixe verificado por amostragem da superfície. Os encaixes antigos continuam retirados. Página de conferência: `/conferencia-passeio.html`.
-
-GLBs estáticos são compactados sem perda na publicação e servidos nos mesmos URLs por streaming, permitindo ampliar a biblioteca dentro do limite da hospedagem. Os originais permanecem no código-fonte.
-
-
-## Limpeza do catálogo — v86
-
-Somente KIT EDGE 2027 (mapa v3) permanece. Os 61 IDs legados, arquivos 3D e mapas antigos foram removidos da versão ativa e do armazenamento de moldes; pedidos e artes incorporadas são preservados. [Detalhes, limites e testes](source/docs/mold-reset-2026-10-29.md). ATLAS VECTOR permanece em PR separada, sem publicação; sua branch precisará ser rebaseada antes do merge para não reintroduzir o manifesto antigo.
+[Funcionalidades](docs/funcionalidades.md) · [Arquitetura](docs/arquitetura.md) · [Atualização do código](docs/atualizacoes-do-codigo.md) · [Titularidade e riscos](docs/propriedade-intelectual.md).

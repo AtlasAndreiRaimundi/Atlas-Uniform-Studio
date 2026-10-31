@@ -1,0 +1,379 @@
+{
+  "model": "kit-edge-2027-mapa-v3",
+  "name": "KIT EDGE 2027",
+  "sourceSha256": "f51ce65baa2dfe19a580e4dfde798405257e307f8d48473ec034343d45059f4e",
+  "panels": [
+    {
+      "number": 1,
+      "id": "waist-1",
+      "label": "Cós do calção · painel 1",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 594.585208594799,
+        "y": 3849.419846534729,
+        "w": 394.5851519703865,
+        "h": 111.07263565063477
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 20.767639577388763,
+        "h": 5.845928192138672
+      }
+    },
+    {
+      "number": 2,
+      "id": "waist-2",
+      "label": "Cós do calção · painel 2",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 1069.1703605651855,
+        "y": 3849.419846534729,
+        "w": 394.58509534597397,
+        "h": 111.07263565063477
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 20.767636597156525,
+        "h": 5.845928192138672
+      }
+    },
+    {
+      "number": 3,
+      "id": "waist-3",
+      "label": "Cós do calção · painel 3",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "back",
+      "trim": true,
+      "rect": {
+        "x": 1543.7554559111595,
+        "y": 3849.419846534729,
+        "w": 394.58520859479904,
+        "h": 111.07263565063477
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 20.767642557621002,
+        "h": 5.845928192138672
+      }
+    },
+    {
+      "number": 4,
+      "id": "waist-4",
+      "label": "Cós do calção · painel 4",
+      "piece": "shorts",
+      "group": "Cós do calção",
+      "view": "back",
+      "trim": true,
+      "rect": {
+        "x": 120,
+        "y": 3849.419846534729,
+        "w": 394.58520859479904,
+        "h": 111.07263565063477
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 20.767642557621002,
+        "h": 5.845928192138672
+      }
+    },
+    {
+      "number": 5,
+      "id": "short-panel-5",
+      "label": "Calção · painel 5",
+      "piece": "shorts",
+      "group": "Calção",
+      "view": "front",
+      "rect": {
+        "x": 120,
+        "y": 2952.91063785553,
+        "w": 1234.5848977565765,
+        "h": 806.5092086791992
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 64.97815251350403,
+        "h": 42.447853088378906
+      }
+    },
+    {
+      "number": 6,
+      "id": "short-panel-6",
+      "label": "Calção · painel 6",
+      "piece": "shorts",
+      "group": "Calção",
+      "view": "front",
+      "rect": {
+        "x": 1494.5848977565765,
+        "y": 2952.91063785553,
+        "w": 1231.71652443707,
+        "h": 795.696097612381
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 64.82718549668789,
+        "h": 41.878741979599
+      }
+    },
+    {
+      "number": 7,
+      "id": "sleeve-strip-7",
+      "label": "Filete da manga · painel 7",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "right",
+      "trim": true,
+      "rect": {
+        "x": 1094.8729374952381,
+        "y": 2709.5705235004425,
+        "w": 633.1558346748352,
+        "h": 33.34011435508728
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 33.32399129867554,
+        "h": 1.7547428607940674
+      }
+    },
+    {
+      "number": 8,
+      "id": "sleeve-strip-8",
+      "label": "Filete da manga · painel 8",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "left",
+      "trim": true,
+      "rect": {
+        "x": 180.56097998953192,
+        "y": 2709.5705235004425,
+        "w": 633.1558346748352,
+        "h": 33.34011435508728
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 33.32399129867554,
+        "h": 1.7547428607940674
+      }
+    },
+    {
+      "number": 9,
+      "id": "collar-9",
+      "label": "Gola · painel 9",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "back",
+      "trim": true,
+      "rect": {
+        "x": 2875.5350497365,
+        "y": 731.470890045166,
+        "w": 387.6015216112137,
+        "h": 39.938896894454956
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 20.40008008480072,
+        "h": 2.1020472049713135
+      }
+    },
+    {
+      "number": 10,
+      "id": "collar-10",
+      "label": "Gola · painel 10",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 3299.4501689076424,
+        "y": 340,
+        "w": 79.77128326892853,
+        "h": 207.8120470046997
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 4.1984885931015015,
+        "h": 10.93747615814209
+      }
+    },
+    {
+      "number": 11,
+      "id": "collar-11",
+      "label": "Gola · painel 11",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 2759.4501689076424,
+        "y": 340,
+        "w": 79.77128326892853,
+        "h": 211.47089004516602
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 4.1984885931015015,
+        "h": 11.130046844482422
+      }
+    },
+    {
+      "number": 12,
+      "id": "collar-12",
+      "label": "Gola · painel 12",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 2732.537703961134,
+        "y": 951.409786939621,
+        "w": 133.59621316194534,
+        "h": 79.57496643066406
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 7.0313796401023865,
+        "h": 4.1881561279296875
+      }
+    },
+    {
+      "number": 13,
+      "id": "collar-13",
+      "label": "Gola · painel 13",
+      "piece": "shirt",
+      "group": "Gola",
+      "view": "front",
+      "trim": true,
+      "rect": {
+        "x": 3270.2869260311127,
+        "y": 951.409786939621,
+        "w": 138.09776902198792,
+        "h": 81.12035989761353
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 7.268303632736206,
+        "h": 4.2694926261901855
+      }
+    },
+    {
+      "number": 14,
+      "id": "sleeve-left",
+      "label": "Manga esquerda · painel 14",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "left",
+      "rect": {
+        "x": 1034.277794653899,
+        "y": 1978.8799047470093,
+        "w": 754.3461203575134,
+        "h": 640.2267515659332
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 39.70242738723755,
+        "h": 33.696144819259644
+      }
+    },
+    {
+      "number": 15,
+      "id": "sleeve-right",
+      "label": "Manga direita · painel 15",
+      "piece": "shirt",
+      "group": "Mangas e filetes",
+      "view": "right",
+      "rect": {
+        "x": 120,
+        "y": 1978.8799047470093,
+        "w": 754.277794653899,
+        "h": 640.6906187534332
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 39.69883129757363,
+        "h": 33.720558881759644
+      }
+    },
+    {
+      "number": 16,
+      "id": "side-right",
+      "label": "Recorte direito · painel 16",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "right",
+      "rect": {
+        "x": 2192.5866267085075,
+        "y": 340,
+        "w": 166.7491838335991,
+        "h": 996.1166203022003
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 8.77627283334732,
+        "h": 52.42719054222107
+      }
+    },
+    {
+      "number": 17,
+      "id": "side-left",
+      "label": "Recorte esquerdo · painel 17",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "left",
+      "rect": {
+        "x": 1945.8323183655739,
+        "y": 340,
+        "w": 166.75430834293365,
+        "h": 1001.1292397975922
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 8.77654254436493,
+        "h": 52.6910126209259
+      }
+    },
+    {
+      "number": 18,
+      "id": "front",
+      "label": "Frente · painel 18",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "front",
+      "rect": {
+        "x": 120,
+        "y": 340,
+        "w": 807.2992607951164,
+        "h": 1317.304104566574
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 42.48943477869034,
+        "h": 69.33179497718811
+      }
+    },
+    {
+      "number": 19,
+      "id": "back",
+      "label": "Costas · painel 19",
+      "piece": "shirt",
+      "group": "Corpo e recortes",
+      "view": "back",
+      "rect": {
+        "x": 1007.2992607951164,
+        "y": 340,
+        "w": 858.5330575704575,
+        "h": 1428.8799047470093
+      },
+      "pageSize": 4096,
+      "cm": {
+        "w": 45.18595039844513,
+        "h": 75.20420551300049
+      }
+    }
+  ]
+}

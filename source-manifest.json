@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "5446afb8431cd5fa303862bed853d7c0543c5131",
-  "exported_at": "2026-10-29T13:16:47.372088+00:00",
+  "source_commit": "6438cd01a0322cc8283271bb9b32b2b33df4dc40",
+  "exported_at": "2026-10-31T14:03:02.693131+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -20,8 +20,8 @@
     },
     {
       "path": "README.md",
-      "size": 25968,
-      "sha256": "81aa95d014a9c85574b45aa61def038c832b9d8b66e476aea082a03a65c3f97f"
+      "size": 26518,
+      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
     },
     {
       "path": "app/acompanhamento/page.tsx",
@@ -229,6 +229,16 @@
       "sha256": "ab855deeb4a142d9bb5cc9cac9e95c052667de40580f821c1250137733cbf991"
     },
     {
+      "path": "app/api/quotations/[id]/route.ts",
+      "size": 1080,
+      "sha256": "21b1380e06d6f53d8adcb6002dd6297194865bbdf50ca8097b84a06b6cb4c47b"
+    },
+    {
+      "path": "app/api/quotations/route.ts",
+      "size": 676,
+      "sha256": "63cb317f5fd312d47d85e876d9639b6d5bb39e76d2cb115d493dfd6da2616783"
+    },
+    {
       "path": "app/api/simulator/designs/[id]/order/route.ts",
       "size": 399,
       "sha256": "4f6d4c9699310c039ba08068071eb6d6ffb240d7b2a12fc429de7f569cb730dd"
@@ -347,6 +357,21 @@
       "path": "app/not-found.tsx",
       "size": 284,
       "sha256": "7f60284ba24595f170aca367e01f3a0a99282dffd168fe01e4e31ec851868e59"
+    },
+    {
+      "path": "app/orcamentos/page.tsx",
+      "size": 376,
+      "sha256": "1d81ebcc390fad9af734be3c451c29597d65c9c73ec860665f60e3c8aa3ddaf9"
+    },
+    {
+      "path": "app/orcamentos/quotation-editor.tsx",
+      "size": 18832,
+      "sha256": "6dc8e53536be9d9a5b4846fd47142c5322dff897945f9abe070ca7a52fc0dcc1"
+    },
+    {
+      "path": "app/orcamentos/quotation.css",
+      "size": 7618,
+      "sha256": "5c36dd7794fc94bec93251ce4636b668116acafa24a787f8a5864bab1ebd3a53"
     },
     {
       "path": "app/order-reminder.css",
@@ -775,8 +800,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9422,
-      "sha256": "f2ddd11a152e4698a4dd47d1ce651dab58cfbbd4dd85e8b0e6c57076b5749b87"
+      "size": 9801,
+      "sha256": "4c6ef9ecb595425425c05e376c4ccde9d8fa9072024337079d9088af9af00131"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -802,6 +827,11 @@
       "path": "docs/orcamento-anexo-01-2026.md",
       "size": 4320,
       "sha256": "9de6e86febdade358d2e03e0c060e0a30352704357bcfc426a584e6598073406"
+    },
+    {
+      "path": "docs/orcamentos-2026-10-31.md",
+      "size": 5817,
+      "sha256": "7298531328e03fbba83c2735a2c432b08ad06240894da3df6fa175ae5bbfa3e8"
     },
     {
       "path": "docs/order-molds-2026-10.md",
@@ -867,6 +897,11 @@
       "path": "docs/produtos/ROTEIRO-DE-HOMOLOGACAO.md",
       "size": 4557,
       "sha256": "53dd264b10e68f5a62fffee3eec9b747e447d1d20b88cda40a7b8b838afbf4db"
+    },
+    {
+      "path": "docs/releases/atlas-orcamento-conferencia-20261031.jpg",
+      "size": 59037,
+      "sha256": "4db0807e6ca995e3e94c483e6912f5ebdbf1d1f504afd36bb8641b337ee97c1c"
     },
     {
       "path": "docs/revisao-seguranca-2026-10-24.md",
@@ -959,6 +994,11 @@
       "sha256": "4faa19254c8c1a3f395cc3779c361e35534f249c65ce499dbee21dba851bb221"
     },
     {
+      "path": "drizzle/0014_ambitious_shaman.sql",
+      "size": 348,
+      "sha256": "f9169b8f36263a0a434863d3b7842087fbf59a3b8609453f2feea092d0eb9978"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1029,9 +1069,14 @@
       "sha256": "4b0ae228a465aada7ca20f6321f047cba27cce4a8f18775c777add4e58117c15"
     },
     {
+      "path": "drizzle/meta/0014_snapshot.json",
+      "size": 42397,
+      "sha256": "d33d0fcc6e774191d29b2373ec8bf6b820e3bffa45d5c75f1e403fc7f129fb33"
+    },
+    {
       "path": "drizzle/meta/_journal.json",
-      "size": 2087,
-      "sha256": "c3faa9a09eccbfa75d9e7f7672f2cf0aff2251d720850f40bafe6a89c2d949ea"
+      "size": 2232,
+      "sha256": "1ebb806bdbfa31d942c2a2e838ba0eee77614a9388ca1336b41ebf25d4e28b6b"
     },
     {
       "path": "eslint.config.mjs",
@@ -1169,6 +1214,11 @@
       "sha256": "e80c1d161c1013c9f7ecd84d98205571fb5385771d9d9f413df8f874582c7a30"
     },
     {
+      "path": "lib/quotation-service.mjs",
+      "size": 2797,
+      "sha256": "43ccdf2a166ed9df7c2e6d7a8b0d4e4091f6e52306c18aecdd819ffab46b4d19"
+    },
+    {
       "path": "lib/removed-molds.mjs",
       "size": 2376,
       "sha256": "4f2656390e9f4781ccf89cb80a9ba5df778dc408c0dd4e6e1a047d3417c06d46"
@@ -1195,8 +1245,8 @@
     },
     {
       "path": "lib/simulator-service.mjs",
-      "size": 8491,
-      "sha256": "35e819bf7669290618e57b94b9b705e61a8a0dcd0bcfe6ee2021ad61901f9f04"
+      "size": 8558,
+      "sha256": "12a93a0e61b4f41f8a5802701a9fbf1b8e53ab6ecab27417b32dd9cca3998fe9"
     },
     {
       "path": "lib/simulator-validation.mjs",
@@ -1270,8 +1320,8 @@
     },
     {
       "path": "public/acervo.html",
-      "size": 8401,
-      "sha256": "93d64dfe403fc6cc892cce74fb7316846d8975223ae3d57ecc12e90241addd1b"
+      "size": 8834,
+      "sha256": "6dcb6907c9650c1e77e235f75767fa7741939c442db85f95513a95eeb4f194de"
     },
     {
       "path": "public/app.js",
@@ -1620,8 +1670,8 @@
     },
     {
       "path": "public/organizador.html",
-      "size": 17742,
-      "sha256": "2b71fcfdb6306d3bafa2be8a37c77f9bed6f9d97122cc5af4afbed05f1a7516a"
+      "size": 18175,
+      "sha256": "515c8265858d56410deb3278ea1ac9280b86f7e92fe8f6d6315c903caa8d4ca0"
     },
     {
       "path": "public/organizer-ui.js",
@@ -1635,8 +1685,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 33547,
-      "sha256": "d15624799c0c538ad7685cab799141cd77cd9e5994bfb93a04aea042ce246914"
+      "size": 33980,
+      "sha256": "0fca6e0758d310dff9d7db08c7665dad0c467a44e306cdc64356a5e39018543b"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1704,6 +1754,11 @@
       "sha256": "26d0eb442e0bc2e3871f388b8a0d6f7e1f5b7d95b565fa532e421f8742e2089e"
     },
     {
+      "path": "public/quotation-core.js",
+      "size": 4615,
+      "sha256": "6c76daabafd3bb4675d1c79ecf1a4de9f46da93cedeaf6a95d8c7d41a69dcaee"
+    },
+    {
       "path": "public/record-id.js",
       "size": 532,
       "sha256": "76562d2a3c7d870612ee92d5fe4c6f854f0b2f3eb06807ffbfc50facf7720ca1"
@@ -1715,8 +1770,8 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 43365,
-      "sha256": "ed6b0c894cae7831ade882324d2a91008299f9eb997d620dacee9520b1c398d0"
+      "size": 44553,
+      "sha256": "ff5e07bf5cb37f861ff608e357f61bec9fcabbbb9f2afb1a2d6bf99d82ea4976"
     },
     {
       "path": "public/simulador/atlas.css",
@@ -1745,13 +1800,13 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 2110,
-      "sha256": "1671ae7b0809b7c7028d4201293000cb2a2d05fbb259b535ab340294ac2985d4"
+      "size": 31803,
+      "sha256": "0b6c064a0601ced4d08404c0ff18a2ec0ca62a965aafc6da4538b79be01ad5f0"
     },
     {
       "path": "public/simulador/elite.js",
-      "size": 4611,
-      "sha256": "04a6d2367577789e4d73ec4246c8989cf5317ffd464b0d22dc6192cfd9dc516e"
+      "size": 5075,
+      "sha256": "c02336711433a41fac4f484e3a07b0670e69e62edddc068922a0b000a4457b66"
     },
     {
       "path": "public/simulador/fonts/LICENSE.txt",
@@ -1799,9 +1854,9 @@
       "sha256": "9b3592a3401314f6012a9226f8439554edcaaf514bba687fa6fa3bed8ebab5c6"
     },
     {
-      "path": "public/simulador/models/kit-elite-27.json",
-      "size": 12881,
-      "sha256": "c17216f0d0191a999be0cc53ef0259885ba4f4d2940aca4d9f4630b38279854a"
+      "path": "public/simulador/models/kit-edge-2027.json",
+      "size": 8618,
+      "sha256": "2da52e35d0b041e05880582015046f4bd7f147384ae632b657168cfb6fd6ca95"
     },
     {
       "path": "public/simulador/paint.js",
@@ -1815,18 +1870,18 @@
     },
     {
       "path": "public/simulador/presentation-bridge.js",
-      "size": 1432,
-      "sha256": "c142d8137ccdaf5db22e1fb30cd9bf7bd696d51203449f3c3d7877c395f17a66"
+      "size": 1487,
+      "sha256": "8e1a2f6c0f20532db7b43b80e1d6f3387503cf41297e2657ac128fa5c763d9d6"
     },
     {
       "path": "public/simulador/presentation-layouts.js",
-      "size": 6835,
-      "sha256": "19a0f6716bfca8694d7a8eea63b92a1052411d04c3d68b5fdc228376f2f6b0b1"
+      "size": 2503,
+      "sha256": "64ad8e067d7bc83649f8a7851fa6d66c58d44607f525290561bb010b7028f5c3"
     },
     {
       "path": "public/simulador/scene.js",
-      "size": 13935,
-      "sha256": "e4ebee6ae3a522e1c378cf1b8d8cb763d510bbdb66e4fedc68ffb61c819abdcd"
+      "size": 14629,
+      "sha256": "bc525b14e4963a3429953677fb63b38df1c4fb9ddad28d55b8c1a8537cd9c8f7"
     },
     {
       "path": "public/simulador/style.css",
@@ -1850,8 +1905,8 @@
     },
     {
       "path": "public/simulador/tutorial.js",
-      "size": 11226,
-      "sha256": "74895894d20932afdd10ee57e057125b08460b5aa08f0f2902612801b7381f91"
+      "size": 11227,
+      "sha256": "2dcfafd9762244916e56b67563c4df291839bcd15c236912b3db0dd234a5339f"
     },
     {
       "path": "public/simulador/vendor/BufferGeometryUtils.js",
@@ -1895,8 +1950,8 @@
     },
     {
       "path": "public/studio-navigation.js",
-      "size": 3733,
-      "sha256": "787fb9d5b4ca2585778530f1a8d61c488d01647b0c1756fea17eda41c07c99d0"
+      "size": 3921,
+      "sha256": "df80b2c1c0243a200cea0820871013be58cd7a2d826662971c382c3ede6671a6"
     },
     {
       "path": "public/studio-theme.css",
@@ -2404,6 +2459,11 @@
       "sha256": "7d1c4b3f8910c7893c50d8e8e434f1c2509df1e27ce49cfebd3c2b917d7cdac3"
     },
     {
+      "path": "tests/quotations.test.mjs",
+      "size": 5035,
+      "sha256": "1bb0c186c242ee1b85466bd41614988f97dd3289aea20332f0f7b234142e2a10"
+    },
+    {
       "path": "tests/security.test.mjs",
       "size": 4867,
       "sha256": "4d0d0bc0ba37261b7a5cab163f5743fa568a4b6a97b2aa697ab586c84bae2c4d"
@@ -2415,13 +2475,13 @@
     },
     {
       "path": "tests/simulator-presentation.test.mjs",
-      "size": 10501,
-      "sha256": "8eda875f5657886ecafac5b475d6d8d56fdeea1aac16bed63b1960eb49ec7c6e"
+      "size": 10398,
+      "sha256": "0c633a5f1d2456b2910e67717618c3d2ca19a0017e2af7cbfc4232d448666334"
     },
     {
       "path": "tests/simulator-symmetry.test.mjs",
-      "size": 13585,
-      "sha256": "92bab16b8a464b80e68acb088b25df9d0bcdd98713687f60034682c5624d1b7c"
+      "size": 13586,
+      "sha256": "f437fb2e0b6f2c3ee2a077ae232df6cc9cf6b7c60003f96a28edd0197fba4956"
     },
     {
       "path": "tests/simulator-tutorial.test.mjs",
@@ -2430,8 +2490,8 @@
     },
     {
       "path": "tests/simulator.test.mjs",
-      "size": 14501,
-      "sha256": "10285c3cbc7ecbe8aa6844f0bc44902a590fa968ec7daab07ee54f7aad09a1da"
+      "size": 14486,
+      "sha256": "7875e02e8c1c916edff90f35ad994aaef6ca6e1d9e25042ca45c670d5bd29214"
     },
     {
       "path": "tests/static-mold-binaries.test.mjs",
