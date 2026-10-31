@@ -2,7 +2,7 @@
 
 Plataforma de Andrei Raimundi para criação de uniformes, apresentações, pedidos e orçamentos.
 
-**Produção: v87 — 31/10/2026.** Fonte sincronizada em `source/`,511 arquivos com manifesto SHA-256. Autoria declarada: Andrei Raimundi; direitos reservados.
+**Produção: v89 — 31/10/2026.** Fonte sincronizada em `source/`,521 arquivos com manifesto SHA-256. Autoria declarada: Andrei Raimundi; direitos reservados.
 
 ## Módulos
 
@@ -20,8 +20,12 @@ O catálogo continua com somente KIT EDGE2027. Moldes antigos permanecem excluí
 
 [Orçamento e simulador EDGE](source/docs/orcamentos-2026-10-31.md) · [Tabela de preços](source/docs/orcamento-anexo-01-2026.md) · [Limpeza do catálogo](source/docs/mold-reset-2026-10-29.md) · [Histórico](CHANGELOG.md).
 
-382 testes locais:357 aprovados,25 históricos ignorados,zero falhas. TypeScript e build oficial aprovados. Navegador: cálculo, desconto e conferência com dados fictícios; editor EDGE em2D. WebGL acelerado e tela375px não foram verificados neste ambiente. Evidência: [prévia fictícia](source/docs/releases/atlas-orcamento-conferencia-20261031.jpg).
+384 testes locais:359 aprovados,25 históricos ignorados,zero falhas. TypeScript e build oficial aprovados. Navegador: cálculo, desconto e conferência com dados fictícios; editor EDGE em2D. WebGL acelerado e tela375px não foram verificados neste ambiente. Evidência: [prévia fictícia](source/docs/releases/atlas-orcamento-conferencia-20261031.jpg).
 
 Execute `python3 scripts/restore_source.py` antes de conferir a integridade e usar o código. A migração0014 adiciona somente tabela/índice de orçamentos; não modifica dados existentes.
 
 [Funcionalidades](docs/funcionalidades.md) · [Arquitetura](docs/arquitetura.md) · [Atualização do código](docs/atualizacoes-do-codigo.md) · [Titularidade e riscos](docs/propriedade-intelectual.md).
+
+## Orçamento compartilhável — v88/v89
+
+Ficha A4 paisagem com quatro vistas e página pública `/orcamento/[token]` reunindo preços e apresentação3D. Gerar/copiar/atualizar/desativar link por orçamento salvo; versões comerciais e arte congeladas até atualização explícita. Revisões e revogações são conferidas também nos endpoints de modelo/mapa/miniatura. Nenhuma edição privada do projeto é exposta.

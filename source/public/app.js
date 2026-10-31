@@ -1,7 +1,7 @@
 import { alignPresentationKit } from './kit-alignment.js?v=4';
 import { BUILTIN_TEMPLATE } from './template-catalog.js';
 import { prepareBakedGeometry, selectPresentationGarments, presentationPanelNumber } from './model-panels.js?v=3';
-import { createProjectSession } from './project-session.js?v=12';
+import { createProjectSession } from './project-session.js?v=quotation-20261031';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
