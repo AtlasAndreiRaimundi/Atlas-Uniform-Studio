@@ -1,9 +1,9 @@
-import {PRESENTATION_LAYOUTS} from './presentation-layouts.js';
+import {PRESENTATION_LAYOUTS} from './presentation-layouts.js?v=edge-20261031';
 import {paint,imageFor} from './paint.js';
 import {FONTS} from './core.js';
 
 export async function presentationMap(state,{canvasFactory=()=>document.createElement('canvas'),loadFonts=()=>Promise.all(FONTS.map(f=>document.fonts.load('18px '+f.family))),loadImage=imageFor}={}){
- const layout=PRESENTATION_LAYOUTS[state.product];if(!layout||state.model!=='kit-elite-27')throw Error('Este uniforme ainda não possui uma base de apresentação.');
+ const layout=PRESENTATION_LAYOUTS[state.product];if(!layout||state.model!=='kit-edge-2027-mapa-v3')throw Error('A apresentação 3D usa o kit completo. Selecione Camiseta + calção antes de continuar.');
  await Promise.all([loadFonts(),...state.panels.filter(p=>layout.panels.some(q=>q.id===p.id)).flatMap(p=>p.layers).filter(l=>l.type==='image').map(l=>loadImage(l.src))]);
  const atlas=canvasFactory();atlas.width=atlas.height=layout.pageSize;const ctx=atlas.getContext('2d');ctx.clearRect(0,0,atlas.width,atlas.height);
  const panelCanvas=canvasFactory();panelCanvas.width=panelCanvas.height=1024;

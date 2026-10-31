@@ -11,7 +11,7 @@ import {drawLayer,imageCache} from '../public/simulador/paint.js';
 import {validateSimulatorState} from '../lib/simulator-validation.mjs';
 import {SimulatorService} from '../lib/simulator-service.mjs';
 import {ProductionService} from '../lib/production-service.mjs';
-const manifest=JSON.parse(await readFile(new URL('../public/simulador/models/kit-elite-27.json',import.meta.url),'utf8'));
+const manifest=JSON.parse(await readFile(new URL('../public/simulador/models/kit-edge-2027.json',import.meta.url),'utf8'));
 const preview='data:image/png;base64,'+(await readFile(new URL('./fixtures/simulator-logo.png',import.meta.url))).toString('base64');
 const color=i=>({color:COLORS[i].hex,colorId:COLORS[i].id}),panel=(s,id)=>s.panels.find(p=>p.id===id),right=s=>panel(s,'sleeve-right'),left=s=>panel(s,'sleeve-left');
 // Explicitly independent/legacy fixture; fresh creations have defaults below.

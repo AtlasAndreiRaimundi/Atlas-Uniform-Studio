@@ -10,6 +10,9 @@ export const NAV_GROUPS = [
     {id:'create-presentation', label:'Criar apresentação', href:'/projects?create=1', icon:'M3 3h18M4 3v12h16V3M12 15v6M8 21l4-4 4 4M8 7h8M8 11h4'},
     {id:'projects', label:'Meus projetos', href:'/projects', icon:'M3 8V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v1M3 8h18l-2 12H5L3 8Z'},
   ]},
+  {id:'quotes', label:'Orçamentos', items:[
+    {id:'quotations', label:'Montar orçamento', href:'/orcamentos', icon:'M7 3h10v18H7V3ZM9 7h6M9 11h2M13 11h2M9 15h2M13 15h2M9 18h6'},
+  ]},
   {id:'orders', label:'Pedidos', items:[
     {id:'create-order', label:'Criar pedido', href:'/pedidos?new=1', icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2ZM14 2v6h6M12 12v6M9 15h6'},
     {id:'orders', label:'Meus pedidos', href:'/acompanhamento', icon:'M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M9 2h6v5H9V2ZM8 12h1M12 12h4M8 17h1M12 17h4'},

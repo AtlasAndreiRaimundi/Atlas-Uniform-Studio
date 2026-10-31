@@ -1,3 +1,7 @@
+## v87 — Orçamento independente e simulador EDGE (31/10/2026)
+
+Nova guia comercial com preço por kit, quantidade, desconto, vendedor e apresentação opcional; salvar/reabrir/excluir e conferência/PDF. Cálculo reaproveita Anexo01/2026, sem inventar preços ausentes. Migração0014 schema-only, autorização por proprietário, validação de corpo/origem e controle de versão. Simulador reativado sobre o único GLB EDGE mantido,19 painéis e apresentação nativa do kit completo; sem reintroduzir moldes antigos.357 testes locais aprovados,25 históricos ignorados; tipos/build aprovados. WebGL acelerado não verificado neste ambiente. VECTOR permanece fora desta publicação.
+
 # Histórico de alterações — ATLAS UNIFORM STUDIO
 
 Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para commits, tags, testes e arquivos de evidência.

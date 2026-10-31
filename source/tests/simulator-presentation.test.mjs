@@ -16,7 +16,7 @@ import {layer} from '../public/simulador/core.js';
 import {imageCache} from '../public/simulador/paint.js';
 import {presentationMap} from '../public/simulador/presentation-bridge.js';
 const require=createRequire(import.meta.url),sharp=createRequire(require.resolve('next/package.json'))('sharp');
-const owner={userId:'alice'},other={userId:'bob'},manifest=JSON.parse(await readFile(new URL('../public/simulador/models/kit-elite-27.json',import.meta.url),'utf8'));
+const owner={userId:'alice'},other={userId:'bob'},manifest=JSON.parse(await readFile(new URL('../public/simulador/models/kit-edge-2027.json',import.meta.url),'utf8'));
 const previewBytes=await readFile(new URL('./fixtures/simulator-logo.png',import.meta.url)),preview='data:image/png;base64,'+previewBytes.toString('base64');
 const mapBytes=await sharp({create:{width:4096,height:4096,channels:4,background:'#e5e5dd'}}).png().toBuffer(),map=new File([mapBytes],'uniforme.png',{type:'image/png'});
 const creation=product=>({...eliteState(manifest.panels),product:product||'kit'});
@@ -44,23 +44,23 @@ test('every presentation vertex retains exact simulator geometry, local UVs and 
   const rects=layout.panels.map(p=>p.rect);for(const a of rects){assert.ok(a.x>=0&&a.y>=0&&a.x+a.w<=4096&&a.y+a.h<=4096);for(const b of rects)if(a!==b)assert.ok(a.x+a.w<b.x||b.x+b.w<a.x||a.y+a.h<b.y||b.y+b.h<a.y);}
  }
 });
-test('the bridge waits for uniform fonts and logos and paints only the selected product with the existing layer renderer',async()=>{
- const state=creation('shorts');for(const p of state.panels)p.layers=[];const shorts=state.panels.find(p=>p.id==='short-panel-5');shorts.layers=[layer('text',{text:'00'}),layer('image',{src:preview})];
+test('the EDGE bridge waits for fonts and logos and paints all nineteen retained atlas panels',async()=>{
+ const state=creation('kit');for(const p of state.panels)p.layers=[];const shorts=state.panels.find(p=>p.id==='short-panel-5');shorts.layers=[layer('text',{text:'00'}),layer('image',{src:preview})];
  const image={width:32,height:24};imageCache.set(preview,image);const calls=[],text=[],destinations=[];let canvasCount=0,fontLoaded=false,logoLoaded=false;
  const context=new Proxy({measureText:()=>({width:120,actualBoundingBoxLeft:60,actualBoundingBoxRight:60,actualBoundingBoxAscent:80,actualBoundingBoxDescent:20}),drawImage:(...args)=>calls.push(args),fillText:t=>text.push(t)},{get:(obj,key)=>key in obj?obj[key]:()=>{}});
  const file=await presentationMap(state,{loadFonts:async()=>{fontLoaded=true;},loadImage:async src=>{assert.equal(src,preview);logoLoaded=true;},canvasFactory:()=>{const atlas=canvasCount++===0;return {getContext:()=>atlas?{clearRect(){},drawImage:(...args)=>{assert.ok(fontLoaded&&logoLoaded);destinations.push(args);}}:context,toBlob:callback=>callback(new Blob(['png']))};}});
- assert.equal(file.type,'image/png');assert.deepEqual(text,['00']);assert.equal(calls[0][0],image);assert.equal(destinations.length,12);assert.equal(state.product,'shorts');assert.ok(destinations.every(args=>args.length===5));imageCache.delete(preview);
+ assert.equal(file.type,'image/png');assert.deepEqual(text,['00']);assert.equal(calls[0][0],image);assert.equal(destinations.length,38);assert.equal(state.product,'kit');assert.ok(destinations.every(args=>args.length===5));imageCache.delete(preview);
 });
-test('a confirmed design creates a complete private native project and repeated or concurrent clicks reuse it without overwriting edits',{skip:'Historical model deleted at owner request'},async()=>{
+test('a confirmed EDGE kit creates a native project and repeated or concurrent clicks reuse it without overwriting edits',async()=>{
  const {simulator,projects,objects,templates}=setup(),saved=await simulator.save(owner,null,{state:creation(),preview});
  const results=await Promise.all([simulator.createPresentation(owner,saved.id,{version:1},map),simulator.createPresentation(owner,saved.id,{version:1},map)]);
  assert.equal(results[0].id,results[1].id);assert.equal((await projects.list(owner)).length,1);const project=results[0];assert.ok(project.hasMap&&project.thumbnailUrl);assert.equal(project.name,saved.title);assert.equal(project.templateId,PRESENTATION_LAYOUTS.kit.id);assert.equal(project.reviewed,false);assert.equal(objects.size,3);
  await assert.rejects(projects.get(other,project.id),{status:404});await assert.rejects(projects.asset(other,project.id,'map'),{status:404});assert.equal((await projects.template(owner,project.id)).panelCount,19);
- assert.ok(!(await templates.catalog(owner)).some(t=>t.id===project.templateId));
+ assert.ok((await templates.catalog(owner)).some(t=>t.id===project.templateId));
  const edited=await projects.save(owner,project.id,{name:'Apresentação personalizada',version:project.version,visuals:{background:'light'}});
  const again=await simulator.createPresentation(owner,saved.id,{version:1},map);assert.equal(again.id,project.id);assert.equal(again.version,edited.version);assert.equal(again.name,'Apresentação personalizada');
  const shared=await projects.share(owner,project.id,true),token=shared.sharePath.split('/').at(-1);assert.equal((await projects.presentation(token)).name,edited.name);
- const next=creation('shirt');next.title='Segundo uniforme';await simulator.save(owner,saved.id,{state:next,preview,version:1});const another=await simulator.createPresentation(owner,saved.id,{version:2},map);assert.notEqual(another.id,project.id);assert.equal(another.templateId,PRESENTATION_LAYOUTS.shirt.id);assert.equal((await projects.get(owner,project.id)).name,edited.name);
+ const next=creation('kit');next.title='Segundo uniforme';await simulator.save(owner,saved.id,{state:next,preview,version:1});const another=await simulator.createPresentation(owner,saved.id,{version:2},map);assert.notEqual(another.id,project.id);assert.equal(another.templateId,PRESENTATION_LAYOUTS.kit.id);assert.equal((await projects.get(owner,project.id)).name,edited.name);
 });
 test('presentation creation rejects other accounts, stale versions, legacy previews and incomplete maps before leaving projects',{skip:'Historical model deleted at owner request'},async()=>{
  const {simulator,projects,objects}=setup(),saved=await simulator.save(owner,null,{state:creation(),preview});
