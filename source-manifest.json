@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "6438cd01a0322cc8283271bb9b32b2b33df4dc40",
-  "exported_at": "2026-10-31T14:03:02.693131+00:00",
+  "source_commit": "31820cd0e782c1733a96455c8348128efcd42a54",
+  "exported_at": "2026-10-31T14:25:59.804745+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -229,9 +229,34 @@
       "sha256": "ab855deeb4a142d9bb5cc9cac9e95c052667de40580f821c1250137733cbf991"
     },
     {
+      "path": "app/api/quotation-links/[token]/assets/[kind]/route.ts",
+      "size": 510,
+      "sha256": "6d8fe5b0eea6487c17ffbe08f47894acdbe2e3e7a357ce6c27adad3e9e7f6ae5"
+    },
+    {
+      "path": "app/api/quotation-links/[token]/presentation/route.ts",
+      "size": 458,
+      "sha256": "d3e8c1169434a96cc9abd81b8b16282102f4455f0c83395495c36c1494fe94e1"
+    },
+    {
+      "path": "app/api/quotation-links/[token]/route.ts",
+      "size": 395,
+      "sha256": "568c48dfd3d9803e0b15a95f3353ddf78c70037c707bf70c14989efa75c431ee"
+    },
+    {
+      "path": "app/api/quotation-links/[token]/template/route.ts",
+      "size": 450,
+      "sha256": "035f56cd79e60842dc85532ff2a37ee77bcf22e06316566de3f93ec83a0e4d63"
+    },
+    {
       "path": "app/api/quotations/[id]/route.ts",
       "size": 1080,
       "sha256": "21b1380e06d6f53d8adcb6002dd6297194865bbdf50ca8097b84a06b6cb4c47b"
+    },
+    {
+      "path": "app/api/quotations/[id]/share/route.ts",
+      "size": 628,
+      "sha256": "2bbbeef6f8947b3d90254e2ba3e5a440cf0e8b987af29912562138fc7535a015"
     },
     {
       "path": "app/api/quotations/route.ts",
@@ -359,19 +384,34 @@
       "sha256": "7f60284ba24595f170aca367e01f3a0a99282dffd168fe01e4e31ec851868e59"
     },
     {
+      "path": "app/orcamento/[token]/page.tsx",
+      "size": 892,
+      "sha256": "54599152e056114ae20576843e6de1f759d1f6254200113ad79a3ba4fd08a336"
+    },
+    {
+      "path": "app/orcamento/[token]/public-quotation.tsx",
+      "size": 2662,
+      "sha256": "f2dfbb9d39e52e87511348b13c20d9552517ff7a7630a4f069227cfe14f6c2ad"
+    },
+    {
+      "path": "app/orcamento/[token]/shared-quotation.css",
+      "size": 1044,
+      "sha256": "f0307bc1ba2336f3a6ed48742bdd069975906ac97dc78875ea0ba935f6df1365"
+    },
+    {
       "path": "app/orcamentos/page.tsx",
       "size": 376,
       "sha256": "1d81ebcc390fad9af734be3c451c29597d65c9c73ec860665f60e3c8aa3ddaf9"
     },
     {
       "path": "app/orcamentos/quotation-editor.tsx",
-      "size": 18832,
-      "sha256": "6dc8e53536be9d9a5b4846fd47142c5322dff897945f9abe070ca7a52fc0dcc1"
+      "size": 21417,
+      "sha256": "6b44353c472159b9e5c8ca79e6bfd3409937a25623661fe83dee24f9fd884a23"
     },
     {
       "path": "app/orcamentos/quotation.css",
-      "size": 7618,
-      "sha256": "5c36dd7794fc94bec93251ce4636b668116acafa24a787f8a5864bab1ebd3a53"
+      "size": 11571,
+      "sha256": "351ffc39c537867660c8f8ae1475e822e552621ae49b1d0033de326ff6521169"
     },
     {
       "path": "app/order-reminder.css",
@@ -800,8 +840,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9801,
-      "sha256": "4c6ef9ecb595425425c05e376c4ccde9d8fa9072024337079d9088af9af00131"
+      "size": 9945,
+      "sha256": "fed5a4140693bb746cc0b8b3bf3a42421d89f881511fe90b7b10cb8e2a8d45a8"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -830,8 +870,8 @@
     },
     {
       "path": "docs/orcamentos-2026-10-31.md",
-      "size": 5817,
-      "sha256": "7298531328e03fbba83c2735a2c432b08ad06240894da3df6fa175ae5bbfa3e8"
+      "size": 8940,
+      "sha256": "125cc1b5f8cd8b76d740a369b38f9436c71e7ab0e0fed86d352b7a1c4b964b67"
     },
     {
       "path": "docs/order-molds-2026-10.md",
@@ -999,6 +1039,11 @@
       "sha256": "f9169b8f36263a0a434863d3b7842087fbf59a3b8609453f2feea092d0eb9978"
     },
     {
+      "path": "drizzle/0015_melodic_changeling.sql",
+      "size": 259,
+      "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1074,9 +1119,14 @@
       "sha256": "d33d0fcc6e774191d29b2373ec8bf6b820e3bffa45d5c75f1e403fc7f129fb33"
     },
     {
+      "path": "drizzle/meta/0015_snapshot.json",
+      "size": 42987,
+      "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
+    },
+    {
       "path": "drizzle/meta/_journal.json",
-      "size": 2232,
-      "sha256": "1ebb806bdbfa31d942c2a2e838ba0eee77614a9388ca1336b41ebf25d4e28b6b"
+      "size": 2379,
+      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
     },
     {
       "path": "eslint.config.mjs",
@@ -1215,8 +1265,8 @@
     },
     {
       "path": "lib/quotation-service.mjs",
-      "size": 2797,
-      "sha256": "43ccdf2a166ed9df7c2e6d7a8b0d4e4091f6e52306c18aecdd819ffab46b4d19"
+      "size": 7531,
+      "sha256": "345598c1ac5faf480318490e53cbfb1d660dd6dcf6092d39fe92abc27b2d38a9"
     },
     {
       "path": "lib/removed-molds.mjs",
@@ -1325,8 +1375,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 37976,
-      "sha256": "8ba26e6a9c1f3b08e1bb259f34f703821d26d72bb38c74fca7db6b452a651ca0"
+      "size": 37992,
+      "sha256": "808a10c175b16ab3724e2a5da414849cf6c567f1244ed56ebc6390c1cc1b8851"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1735,8 +1785,8 @@
     },
     {
       "path": "public/project-session.js",
-      "size": 22487,
-      "sha256": "0dd2cb4595c4516a977e28ec9daf0fe1a7a4e7b5d8c49023066b8ab0ece9aee6"
+      "size": 22814,
+      "sha256": "8171577c8f499381942cca01f27a9ec1eabfa567c0be8d6feef0f4250cc25595"
     },
     {
       "path": "public/proposal-client.js",
@@ -2095,8 +2145,8 @@
     },
     {
       "path": "public/viewer.html",
-      "size": 25389,
-      "sha256": "6c854380eceabde694209ca896ec111f720e14df29f8724a369e11d9b3a78553"
+      "size": 25430,
+      "sha256": "338e8096b65abddf5ae2958fa18bdf39cc5c277ebd70c2130915299fa5ce3d75"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2460,8 +2510,8 @@
     },
     {
       "path": "tests/quotations.test.mjs",
-      "size": 5035,
-      "sha256": "1bb0c186c242ee1b85466bd41614988f97dd3289aea20332f0f7b234142e2a10"
+      "size": 8815,
+      "sha256": "987b7af4828d4c93b2bf7f2a367d21d16ee9a64fc26a2e2081b626c3d849c12b"
     },
     {
       "path": "tests/security.test.mjs",

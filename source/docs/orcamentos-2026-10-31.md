@@ -37,3 +37,22 @@ No navegador: rota privada sem sessão redireciona; componente testado em harnes
 Reversão: voltar à versão anterior do Site. A tabela nova pode permanecer; não remover dados comerciais salvos em rollback. Catálogo continua com somente KIT EDGE2027. ATLAS VECTOR permanece na sua PR separada, sem implantação de backend.
 
 Resultado de regressão final:382 testes,357 aprovados,25 casos históricos ignorados e zero falhas. TypeScript aprovado; lint do novo módulo sem erros (uma recomendação next/image para a miniatura autenticada). Migrações locais de0000 a0014 aplicadas em ordem com sucesso. Evidência fictícia da conferência em `docs/releases/atlas-orcamento-conferencia-20261031.jpg`.
+
+
+## Impressão em paisagem — v88
+
+Orçamento em A4 paisagem com margens10mm. A conferência usa a mesma composição: marca e dados no cabeçalho, imagem de quatro vistas da apresentação em destaque à esquerda, especificações à direita, tabela comercial abaixo. Usa a miniatura real de quatro vistas salva na apresentação, não inventa vistas a partir de uma imagem isolada. Vínculo sem miniatura exige salvar as quatro vistas antes da conferência; impressão aguarda a imagem carregar. Sem apresentação, as especificações ocupam as duas colunas. Textos extensos não são cortados e podem continuar em folha seguinte.
+
+## Link do orçamento com apresentação3D — v89
+
+Após salvar, Gerar link do orçamento publica uma cópia da revisão comercial na rota pública `/orcamento/[token]`. O botão informa que quem tiver o link verá preços e apresentação. Pode copiar, abrir, atualizar explicitamente ou desativar. Editar o orçamento não altera silenciosamente o conteúdo do link; o proprietário vê aviso de revisão anterior. Sem apresentação, o link mostra somente valores e especificações.
+
+Com apresentação, o serviço exige titularidade, versão atual, mapa e quatro vistas, e reutiliza `WorkspaceService.freeze` para preservar arte, parâmetros e descriptor da versão3D. Não ativa o compartilhamento do projeto editável. A página reúne ficha A4paisagem, quatro vistas e viewer3D somente leitura, com modelo/mapa acessíveis exclusivamente através do token ativo do orçamento.
+
+Migração0015:colunas nullable `share_token` e `share_snapshot_json` e índice único do token. Token aleatório128bits, não enumerável; detalhes públicos são uma whitelist comercial, sem `priceConfig`, custos individuais dos adicionais, proprietário, chaves de armazenamento ou documento editável. Origem/sessão/CAS obrigatórios para publicar/revogar. Leitura por token é intencionalmente pública, sem indexação e sem cache. Revogar ou excluir interrompe novos acessos ao orçamento e a todos os endpoints de arte, miniatura, modelo e descriptor do link. Conteúdo já baixado pelo cliente não pode ser recolhido.
+
+Parâmetro de revisão acompanha iframe e assets:se o link for atualizado enquanto uma página estiver aberta, requisições da revisão anterior falham com409 e pedem reabrir, evitando mistura de preços e desenho. O viewer do orçamento não atualiza sozinho ao retornar à aba. A versão orçada permanece congelada até Atualizar link.
+
+A impressão/PDF inclui link clicável para a página do cliente quando a revisão salva e compartilhada coincide com o orçamento exibido.3D é interativo na página online; a impressão usa as quatro vistas estáticas.
+
+Validação:384 testes,359 aprovados,25 históricos ignorados,zero falhas. Casos novos verificam isolamento, cópia congelada, troca de revisão, privacidade do payload, invalidação após revogação e todos os assets do3D. Migração0015 aplicada somente ao preview local antes do deploy. Typescript aprovado; lint específico sem erros e recomendações de next/image para imagens locais/autenticadas.

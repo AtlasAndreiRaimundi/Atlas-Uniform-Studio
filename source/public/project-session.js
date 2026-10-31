@@ -5,7 +5,10 @@ import {workflowRoute,canAttachToOrder,linkedWorkflowOrders} from './workflow-co
 const $ = (selector) => document.querySelector(selector);
 
 export function createProjectSession(viewer) {
-  const params = new URLSearchParams(location.search), token = params.get('share'), id = params.get('project'), previewId = params.get('mold'),proposalToken=params.get('proposal'),versionId=params.get('version'),orderId=params.get('order');
+  const params = new URLSearchParams(location.search), quotationToken=params.get('quotation'), token = params.get('share')||quotationToken, id = params.get('project'), previewId = params.get('mold'),proposalToken=params.get('proposal'),versionId=params.get('version'),orderId=params.get('order');
+  const sharedBase=quotationToken?'/api/quotation-links/'+encodeURIComponent(quotationToken):'/api/presentations/'+encodeURIComponent(token);
+  const quotationSuffix=quotationToken?'?version='+encodeURIComponent(params.get('quotationVersion')||''):'';
+  const presentationEndpoint=quotationToken?sharedBase+'/presentation'+quotationSuffix:sharedBase;
   const readOnly = Boolean(token || previewId || proposalToken);
   const productionPath=id?'/pedidos?project='+encodeURIComponent(id)+(orderId?'&order='+encodeURIComponent(orderId)+(params.get('item')?'&item='+encodeURIComponent(params.get('item')):''):''):'/pedidos';
   const productionShortcut=document.querySelector('#productionShortcut');if(productionShortcut){productionShortcut.hidden=readOnly;productionShortcut.href=productionPath;if(orderId)productionShortcut.firstChild.textContent='Voltar ao pedido com este desenho ';}
@@ -142,11 +145,11 @@ export function createProjectSession(viewer) {
     document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshPresentation(); });
   }
   async function refreshPresentation() {
-    if (!token || hydrating || !loaded) return;
+    if (quotationToken || !token || hydrating || !loaded) return;
     try {
-      const { presentation } = await api(`/api/presentations/${encodeURIComponent(token)}`);
+      const { presentation } = await api(presentationEndpoint);
       if (presentation.version !== project.version) {
-        if(presentation.templateId!==project.templateId){const {template}=await api(`/api/presentations/${encodeURIComponent(token)}/template`);await viewer.replaceTemplate(template,false);}
+        if(presentation.templateId!==project.templateId){const {template}=await api(sharedBase+'/template'+quotationSuffix);await viewer.replaceTemplate(template,false);}
         if (!await viewer.loadMap(presentation.mapUrl, presentation.mapName || 'Arte do projeto')) throw new Error('Não foi possível carregar a arte atualizada.');
         viewer.setVisuals(presentation.visuals); project = presentation; title(presentation.name);
         viewer.setPresentation(presentation.presentation);
@@ -216,7 +219,7 @@ export function createProjectSession(viewer) {
         viewer.setVisuals(version.visuals);viewer.setPresentation(version.presentation);
         if(!await viewer.loadMap(version.mapUrl,version.mapName))throw new Error('Não foi possível carregar a arte desta versão.');
       } else if (token) {
-        const [{ presentation }, { template }] = await Promise.all([api(`/api/presentations/${encodeURIComponent(token)}`), api(`/api/presentations/${encodeURIComponent(token)}/template`)]);
+        const [{ presentation }, { template }] = await Promise.all([api(presentationEndpoint), api(sharedBase+'/template'+quotationSuffix)]);
         viewer.configureTemplate(template);
         project = presentation; title(project.name);
         $('#designerName').textContent = project.designerName;

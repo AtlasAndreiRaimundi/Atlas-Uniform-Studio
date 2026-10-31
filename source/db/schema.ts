@@ -133,6 +133,7 @@ export const orderTechnicalFiles=sqliteTable('order_technical_files',{
 },t=>[index('order_technical_files_order_owner_idx').on(t.orderId,t.ownerId)]);
 
 export const salesQuotations=sqliteTable('sales_quotations',{
+ shareToken:text('share_token'),shareSnapshotJson:text('share_snapshot_json'),
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),documentJson:text('document_json').notNull(),
  version:integer('version').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
-},t=>[index('sales_quotations_owner_updated_idx').on(t.ownerId,t.updatedAt)]);
+},t=>[index('sales_quotations_owner_updated_idx').on(t.ownerId,t.updatedAt),uniqueIndex('sales_quotations_share_token_idx').on(t.shareToken)]);
