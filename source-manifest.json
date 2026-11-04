@@ -1,7 +1,7 @@
 {
   "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "31820cd0e782c1733a96455c8348128efcd42a54",
-  "exported_at": "2026-10-31T14:25:59.804745+00:00",
+  "source_commit": "8c1f48c7bffd6f3478cee3f3a8a5cb32461d3589",
+  "exported_at": "2026-11-04T20:48:18.774Z",
   "files": [
     {
       "path": ".gitignore",
@@ -17,11 +17,6 @@
       "path": ".openai/hosting.json",
       "size": 95,
       "sha256": "1a5162a69c65d70923b863794b50d5f4a8f5cbc09051084a8849a3909b3455b4"
-    },
-    {
-      "path": "README.md",
-      "size": 26518,
-      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
     },
     {
       "path": "app/acompanhamento/page.tsx",
@@ -954,6 +949,11 @@
       "sha256": "6b078bc8f52a3ab733f347b8e451226da6bcd10f435453658cbcb9cae83ff669"
     },
     {
+      "path": "docs/simulador-desfazer-2026-11-04.md",
+      "size": 1213,
+      "sha256": "2c605d3b41c942cfb4317f2d3d102e2d2927d81934cabcc88d551618df15595a"
+    },
+    {
       "path": "docs/simulador-uniformes.md",
       "size": 13103,
       "sha256": "70755d227d84e746cb601f88e721a665be5dbdf718d50a797e96c93389f504d4"
@@ -1044,6 +1044,11 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
+      "path": "drizzle/meta/_journal.json",
+      "size": 2379,
+      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1122,11 +1127,6 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
-    },
-    {
-      "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
     },
     {
       "path": "eslint.config.mjs",
@@ -1820,8 +1820,8 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 44553,
-      "sha256": "ff5e07bf5cb37f861ff608e357f61bec9fcabbbb9f2afb1a2d6bf99d82ea4976"
+      "size": 44860,
+      "sha256": "28e94408c3254df9253a7665d3fddd5e1d4bdc64e4d574df1862bed1d045bc84"
     },
     {
       "path": "public/simulador/atlas.css",
@@ -1850,8 +1850,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31803,
-      "sha256": "0b6c064a0601ced4d08404c0ff18a2ec0ca62a965aafc6da4538b79be01ad5f0"
+      "size": 31959,
+      "sha256": "2b9f498673f05113a8191c3d4098b556332c46a190c91a2ecc8676de5e318c93"
     },
     {
       "path": "public/simulador/elite.js",
@@ -1859,14 +1859,14 @@
       "sha256": "c02336711433a41fac4f484e3a07b0670e69e62edddc068922a0b000a4457b66"
     },
     {
-      "path": "public/simulador/fonts/LICENSE.txt",
-      "size": 3859,
-      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
-    },
-    {
       "path": "public/simulador/fonts/classic.ttf",
       "size": 380660,
       "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
+    },
+    {
+      "path": "public/simulador/fonts/LICENSE.txt",
+      "size": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
     },
     {
       "path": "public/simulador/fonts/mnz-autumn-26.ttf",
@@ -1897,6 +1897,11 @@
       "path": "public/simulador/graphics.js",
       "size": 3736,
       "sha256": "5f4863f2571db9ddd614df21c21c28681336c9fbad4d3f7a419262e307c109c8"
+    },
+    {
+      "path": "public/simulador/history-shortcuts.js",
+      "size": 1014,
+      "sha256": "1134ccdf7d6436209a467f0b9ff11338a5ea42ad95f5edc591dadbed4f51a563"
     },
     {
       "path": "public/simulador/layers.js",
@@ -2024,6 +2029,11 @@
       "sha256": "c35cdd49f5008a35779d3ded86d4c7c2995be7e5b65ad4dba231426a7e0c61ff"
     },
     {
+      "path": "public/vendor/exceljs/exceljs.min.js",
+      "size": 947702,
+      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+    },
+    {
       "path": "public/vendor/exceljs/LICENSE",
       "size": 1084,
       "sha256": "2ed526b7e7c7681dc2347995b5036ddf73dc27d0539cdea59b6d4a72b63a57a0"
@@ -2034,9 +2044,9 @@
       "sha256": "fc4027cc263fcffbc0b2b9b7fda248a9d4003f64d11ce967f013a8df2e514c63"
     },
     {
-      "path": "public/vendor/exceljs/exceljs.min.js",
-      "size": 947702,
-      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+      "path": "public/vendor/fontkit/fontkit.umd.min.js",
+      "size": 758440,
+      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
     },
     {
       "path": "public/vendor/fontkit/README.md",
@@ -2044,9 +2054,9 @@
       "sha256": "7315fcc54511f5ffc906969c39333f93cd47f5217ab014fe45acff14bd5ec4c0"
     },
     {
-      "path": "public/vendor/fontkit/fontkit.umd.min.js",
-      "size": 758440,
-      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
+      "path": "public/vendor/jszip/jszip.min.js",
+      "size": 97781,
+      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
     },
     {
       "path": "public/vendor/jszip/LICENSE.markdown",
@@ -2059,19 +2069,9 @@
       "sha256": "1d89f128bc9a10c160421509788367e6d121da56603e0dc44820114c8e2cc007"
     },
     {
-      "path": "public/vendor/jszip/jszip.min.js",
-      "size": 97781,
-      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
-    },
-    {
       "path": "public/vendor/mp4-muxer/LICENSE",
       "size": 1065,
       "sha256": "75c54aae7ef6ad652f684f9dd3b71e4dcef86ccebd88cf441ceed7f5eec037c5"
-    },
-    {
-      "path": "public/vendor/mp4-muxer/README.md",
-      "size": 278,
-      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
     },
     {
       "path": "public/vendor/mp4-muxer/mp4-muxer.mjs",
@@ -2079,14 +2079,14 @@
       "sha256": "d2c4c782f180c86ed30b1f5d9487a34a0d370bf9b4535285734ea187d38f9bb5"
     },
     {
+      "path": "public/vendor/mp4-muxer/README.md",
+      "size": 278,
+      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
+    },
+    {
       "path": "public/vendor/pdf-lib/LICENSE.md",
       "size": 1070,
       "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
-    },
-    {
-      "path": "public/vendor/pdf-lib/README.md",
-      "size": 105,
-      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/pdf-lib/pdf-lib.min.js",
@@ -2094,9 +2094,9 @@
       "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
     },
     {
-      "path": "public/vendor/three/LICENSE",
-      "size": 1081,
-      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+      "path": "public/vendor/pdf-lib/README.md",
+      "size": 105,
+      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/three/build/three.core.min.js",
@@ -2132,6 +2132,11 @@
       "path": "public/vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
       "size": 35539,
       "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
+    },
+    {
+      "path": "public/vendor/three/LICENSE",
+      "size": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
     },
     {
       "path": "public/video-export.js",
@@ -2172,6 +2177,11 @@
       "path": "public/workspace-hub.js",
       "size": 8249,
       "sha256": "5b8c61f4a81cc8c2fd4a795f83aec9ebeae99e6b44fe214c7bec2e830cd8239b"
+    },
+    {
+      "path": "README.md",
+      "size": 26518,
+      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
     },
     {
       "path": "scripts/build-verified.sh",
@@ -2519,6 +2529,11 @@
       "sha256": "4d0d0bc0ba37261b7a5cab163f5743fa568a4b6a97b2aa697ab586c84bae2c4d"
     },
     {
+      "path": "tests/simulator-history-shortcuts.test.mjs",
+      "size": 2616,
+      "sha256": "2cd4d20617a71522e7beb7eacf07396be81a9ad08c3cea1d808d3879f16e47d2"
+    },
+    {
       "path": "tests/simulator-layers.test.mjs",
       "size": 6949,
       "sha256": "ac7f1ed62882eb42f7fa288837f87e79ee520a0dc74e61a03fc6ac9e6df37775"
@@ -2589,14 +2604,14 @@
       "sha256": "a4c1cc83b63ef9d39641d3babaefffa063dccbbc93338e18017b5013d713163e"
     },
     {
-      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
-      "size": 1063,
-      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
-    },
-    {
       "path": "vendor/shadcn-tailwind-4.13.0.css",
       "size": 16041,
       "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
+    },
+    {
+      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
+      "size": 1063,
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
     },
     {
       "path": "vite.config.ts",
