@@ -1,4 +1,6 @@
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
+import {env} from "cloudflare:workers";
+import {googleSession} from "@/lib/google-auth.mjs";
 import { redirect } from "next/navigation";
 
 export type ChatGPTUser = {
@@ -6,6 +8,8 @@ export type ChatGPTUser = {
   displayName: string;
   email: string;
   fullName: string | null;
+  role?: 'designer' | 'vendedor';
+  provider?: 'google' | 'chatgpt';
 };
 
 const USER_ID_HEADER = "oai-authenticated-user-id";
@@ -19,6 +23,12 @@ const SIGN_OUT_PATH = "/signout-with-chatgpt";
 const CALLBACK_PATH = "/callback";
 
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
+  const store=await cookies();
+  const googleToken=store.get("__Host-atlas_google_session")?.value;
+  if(googleToken && env.DB){
+    const user=await googleSession(env.DB,googleToken).catch(()=>null);
+    if(user?.role)return user;
+  }
   const requestHeaders = await headers();
   const userId = requestHeaders.get(USER_ID_HEADER);
   const email = requestHeaders.get(USER_EMAIL_HEADER);
@@ -45,7 +55,12 @@ export async function requireChatGPTUser(
   const user = await getChatGPTUser();
   if (user) return user;
 
-  redirect(chatGPTSignInPath(returnTo));
+  const googleToken=(await cookies()).get("__Host-atlas_google_session")?.value;
+  if(googleToken && env.DB){
+    const pending=await googleSession(env.DB,googleToken).catch(()=>null);
+    if(pending && !pending.role)redirect("/conta/configurar?return_to="+encodeURIComponent(safeRelativeReturnPath(returnTo)));
+  }
+  redirect("/login?return_to="+encodeURIComponent(safeRelativeReturnPath(returnTo)));
 }
 
 export function chatGPTSignInPath(returnTo: string): string {

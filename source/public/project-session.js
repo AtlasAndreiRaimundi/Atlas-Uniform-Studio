@@ -31,7 +31,7 @@ export function createProjectSession(viewer) {
   async function api(path, options) {
     const response = await fetch(path, { ...options, cache: 'no-store' });
     if (response.status === 401 && !readOnly) {
-      window.top.location.href = `/signin-with-chatgpt?return_to=${encodeURIComponent(id ? `/studio/${id}` : '/projects')}`;
+      window.top.location.href = `/login?return_to=${encodeURIComponent(id ? `/studio/${id}` : '/projects')}`;
       throw new Error('Entre novamente para continuar.');
     }
     const data = await response.json();
