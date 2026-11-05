@@ -44,3 +44,12 @@ export default function StudioAuthPanel(){
   <div className="studio-auth-links">{mode==='login'&&<button type="button" onClick={()=>show('resend')}>Ainda não confirmou seu e-mail?</button>}{mode==='resend'&&<button type="button" onClick={()=>show('login')}>Voltar ao login</button>}{mode==='register'&&<button type="button" onClick={()=>show('login')}>Já tenho cadastro</button>}</div>
  </div>;
 }
+
+export function StudioLogout(){
+ const [busy,setBusy]=useState(false);
+ return <button type="button" className="legacy-signin" disabled={busy} onClick={async()=>{
+   setBusy(true);
+   try{await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin'});}
+   finally{location.assign('/login');}
+ }}>{busy?'Saindo...':'Sair da conta do estúdio'}</button>;
+}
