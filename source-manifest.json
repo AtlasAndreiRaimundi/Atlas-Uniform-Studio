@@ -2637,8 +2637,8 @@
     },
     {
       "path": "tests/studio-auth.test.mjs",
-      "size": 5276,
-      "sha256": "8dd3a40303c2f555cb168f592c7c7079358fc6acebf47994fef7ea00eccb5ad1"
+      "size": 5320,
+      "sha256": "f329c90f270e5102c02aa0e8e2b2d955fde57dd6372cf8349f2dcefcd70fb17a"
     },
     {
       "path": "tests/technical-fixture.mjs",
