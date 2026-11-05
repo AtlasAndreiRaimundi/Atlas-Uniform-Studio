@@ -41,6 +41,15 @@ export function validateSimulatorState(input){
   }
   for(const l of p.layers){if(++count>200||!l||!['text','pattern','image','badge','svg-graphic'].includes(l.type))fail('Use até 200 elementos por uniforme.');const layerId=id(l.id);if(layers.has(layerId))fail('Há elementos repetidos no desenho.');layers.add(layerId);
    const clean={id:layerId,type:l.type,name:text(l.name,80,false),x:number(l.x,0,1),y:number(l.y,0,1),w:number(l.w,.035,1.8),h:number(l.h,.015,2),rotation:number(l.rotation,-180,180),opacity:number(l.opacity,.1,1),locked:Boolean(l.locked),...(l.type==='image'?{color:DEFAULT_INK.hex,colorId:DEFAULT_INK.id}:color(l.color,l.colorId))};
+    if(l.naturalAspect!==undefined){
+     if(!['pattern','svg-graphic'].includes(l.type)||typeof l.keepAspect!=='boolean')fail('A proporção do grafismo é inválida.');
+     clean.naturalAspect=number(l.naturalAspect,.001,1000);
+     clean.keepAspect=l.keepAspect;
+     if(l.keepAspect){
+      const visual=(clean.w*next.cm.w)/(clean.h*next.cm.h);
+      if(Math.abs(visual/clean.naturalAspect-1)>0.0001)fail('O grafismo está desproporcional. Ajuste largura e altura ou desligue o bloqueio de proporção.');
+     }
+    }
    if(l.type==='text'){if(!UNIFORM_FONTS.some(f=>f.id===l.font))fail('Escolha uma das fontes de uniforme disponíveis.');clean.text=text(l.text,80);clean.font=l.font;if(['player-name','player-number'].includes(l.personalization))clean.personalization=l.personalization;normalizeText(clean);}
    if(l.copyKey!==undefined)clean.copyKey=id(l.copyKey);
    if(l.type==='pattern'){if(!GRAPHIC_IDS.has(l.pattern))fail('Escolha um grafismo da biblioteca.');clean.pattern=l.pattern;if(l.mirrorX!==undefined){if(typeof l.mirrorX!=='boolean')fail('Confira o espelhamento do grafismo.');clean.mirrorX=l.mirrorX;}}

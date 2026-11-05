@@ -54,3 +54,19 @@ aside.site-nav.studio-sidebar{position:fixed;inset:0 auto 0 0;display:flex;width
 .graphic-color-choice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:13px 9px;margin:8px 0 14px;background:var(--input);border:1px solid var(--line);border-radius:5px}
 .graphic-color-choice>span{font-size:10px;flex:1;min-width:95px}
 .graphic-color-choice>small{flex-basis:100%;font-size:9px;color:var(--muted);line-height:1.5}
+
+
+/* Grafismos em tamanho físico e cópia para outros painéis */
+.graphic-dimensions{display:grid;gap:10px;margin:12px 0 18px;padding:14px;border-radius:10px;border:1px solid var(--line,#d6d4cc);background:color-mix(in srgb,var(--panel,#fff) 94%,transparent)}
+.graphic-dimensions[hidden]{display:none}
+.graphic-measures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.graphic-measures input{width:100%;min-width:0}
+#graphic-multi-dialog{width:min(94vw,640px);max-height:90vh}
+.graphic-multi-dialog-body{display:grid;gap:14px}
+.graphic-multi-destinations{min-width:0;border:1px solid var(--line,#d6d4cc);border-radius:10px;padding:12px}
+.graphic-multi-destinations legend{font-weight:700;font-size:13px;padding:0 5px}
+#graphic-multi-destinations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.graphic-multi-target{display:flex;align-items:flex-start;gap:10px;padding:9px;border-radius:6px;font-size:12px;min-width:0;cursor:pointer}
+.graphic-multi-target input{margin-top:2px;flex:none}
+.graphic-multi-target span{overflow-wrap:anywhere}
+@media(max-width:520px){#graphic-multi-destinations{grid-template-columns:1fr}.graphic-measures{grid-template-columns:1fr}}

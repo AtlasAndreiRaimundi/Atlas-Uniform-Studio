@@ -960,8 +960,8 @@
     },
     {
       "path": "docs/simulador-uniformes.md",
-      "size": 14010,
-      "sha256": "0fb474115c1b98d185e012f106930a5d95e0c12d197bdcbeb3ff5c066dd156af"
+      "size": 15253,
+      "sha256": "6331b3a424384fc006d09b1b27312c7dd685530c683161d4bdc55606cd7b885e"
     },
     {
       "path": "drizzle.config.ts",
@@ -1305,8 +1305,8 @@
     },
     {
       "path": "lib/simulator-validation.mjs",
-      "size": 8473,
-      "sha256": "b4d8550747a1947e742a91fc615c1cbe06013dfac5d8d6bed633a6d8870b5b7e"
+      "size": 8997,
+      "sha256": "18bc08eafd04c0ad8dd6ac4a149993c33a5d229c6de9531a263b667c673a9953"
     },
     {
       "path": "lib/static-mold-binaries.mjs",
@@ -1825,13 +1825,13 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 48350,
-      "sha256": "936e8cbe80d088d306d76a6339e0590a7438f25d0633edf98b95f3ff15a550a2"
+      "size": 54759,
+      "sha256": "40191436bb1680d5ae27840544e6f2690039b8c019503b1cb6cfca15090780b8"
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 24875,
-      "sha256": "bd9a9f3d97bb6832d856499c4747b15297c6415954d54050beeff9db4ae937ce"
+      "size": 26081,
+      "sha256": "d870a4398a20ef83e0884a09c29c8b860bbe7ec5d69ee81e3fb4abfdf9ef1378"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1855,8 +1855,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 33602,
-      "sha256": "6be027efbe07512c037c834362f9276e1d54f109650e5e5441b65eb5d43ed998"
+      "size": 36260,
+      "sha256": "db12a3248ed1aa90707dcf0ba88af098b82cb0fef4d0ceb07210ca3e7d2b7592"
     },
     {
       "path": "public/simulador/elite.js",
@@ -1905,13 +1905,13 @@
     },
     {
       "path": "public/simulador/graphic-fit.js",
-      "size": 550,
-      "sha256": "862705c442e4f9acea1d6f56c681bb7722643f8d29c19ad408b9f39b7f5abdd6"
+      "size": 3080,
+      "sha256": "68d6c0317102f5c9d4ecfe73727f3c23b3f78457de76c3664ecaf01fb052c105"
     },
     {
       "path": "public/simulador/graphics.js",
-      "size": 3784,
-      "sha256": "ab6455905c4654754318052e3a2eb495b8b07b3cb1c8e8c960c635bb1f28e3ae"
+      "size": 4117,
+      "sha256": "6eb80a30ff7afdb8e04de185c96e25d368c806999cb8b65aebe07c3f90df9ae7"
     },
     {
       "path": "public/simulador/history-shortcuts.js",
@@ -1920,8 +1920,8 @@
     },
     {
       "path": "public/simulador/layers.js",
-      "size": 2699,
-      "sha256": "2068a017d21c81d88b9b7d3b5788e4623ea60bfe8acfdb44ce5e2b2e1491e572"
+      "size": 5767,
+      "sha256": "370665e945994279887ca9567ed26c88a4c619366ea986c11999b550b9d025a9"
     },
     {
       "path": "public/simulador/models/kit-edge-2027.json",
@@ -1930,8 +1930,8 @@
     },
     {
       "path": "public/simulador/paint.js",
-      "size": 3407,
-      "sha256": "22962b844ec2b5fb43ebac81bd1d9cfae65d500bf44759b3801adeb2c90e067b"
+      "size": 3475,
+      "sha256": "7518353cb35ea3361c13e6e011f5c29502195f217e28aa93d871c3f86c3a4527"
     },
     {
       "path": "public/simulador/paleta-sublimacao-2026.xml",
@@ -2542,6 +2542,11 @@
       "path": "tests/security.test.mjs",
       "size": 4867,
       "sha256": "4d0d0bc0ba37261b7a5cab163f5743fa568a4b6a97b2aa697ab586c84bae2c4d"
+    },
+    {
+      "path": "tests/simulator-aspect-copy.test.mjs",
+      "size": 3989,
+      "sha256": "3b129ef99a13f506a05f26893fe731d6272276578f88e337debbabb79802bb00"
     },
     {
       "path": "tests/simulator-graphics.test.mjs",
