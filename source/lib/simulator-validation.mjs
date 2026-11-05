@@ -2,6 +2,7 @@ import {AppError} from './project-service.mjs';
 import {COLORS,UNIFORM_FONTS,paletteColor,DEFAULT_INK} from '../public/simulador/catalog.js';
 import {ELITE_PANELS,ELITE_MODEL} from '../public/simulador/elite.js';
 import {GRAPHIC_IDS} from '../public/simulador/graphics.js';
+import {isShirtFillPanel,GRADIENT_ANGLES} from '../public/simulador/gradient.js';
 import {normalizeText} from '../public/simulador/core.js';
 import {normalizeSymmetry} from '../public/simulador/symmetry.js';
 import {drawingLayers} from '../public/simulador/layers.js';
@@ -33,6 +34,11 @@ export function validateSimulatorState(input){
  if(!input||input.schema!==1||input.model!==ELITE_MODEL||!['kit','shirt','shorts'].includes(input.product)||!Array.isArray(input.panels)||input.panels.length!==19)fail('Escolha uma modelagem disponibilizada pelo administrador.');
  const title=text(input.title,80,false),trim=color(input.trim,input.trimColorId);const out={schema:1,platformBrand:'atlas',model:ELITE_MODEL,title,product:input.product,trim:trim.color,trimColorId:trim.colorId,active:'front',selected:null,order:null,panels:[]};const seen=new Set(),layers=new Set();let count=0;
  for(const p of input.panels){const original=ELITE_PANELS.find(q=>q.id===p?.id);if(!original||seen.has(p.id)||!Array.isArray(p.layers)||p.layers.length>60)fail('Confira os painéis do uniforme.');seen.add(p.id);const next={...original,cm:{w:number(p.cm?.w,1,300),h:number(p.cm?.h,1,300)},...color(p.color,p.colorId),layers:[]};
+  if(p.gradient!==undefined){
+   if(!isShirtFillPanel(original)||!p.gradient||typeof p.gradient!=='object'||Array.isArray(p.gradient)||!GRADIENT_ANGLES.includes(p.gradient.angle))fail('O degradê é permitido apenas no preenchimento da camiseta e exige uma direção válida.');
+   const secondary=color(p.gradient.toColor,p.gradient.toColorId);
+   next.gradient={toColor:secondary.color,toColorId:secondary.colorId,angle:p.gradient.angle};
+  }
   for(const l of p.layers){if(++count>200||!l||!['text','pattern','image','badge'].includes(l.type))fail('Use até 200 elementos por uniforme.');const layerId=id(l.id);if(layers.has(layerId))fail('Há elementos repetidos no desenho.');layers.add(layerId);
    const clean={id:layerId,type:l.type,name:text(l.name,80,false),x:number(l.x,0,1),y:number(l.y,0,1),w:number(l.w,.035,1.8),h:number(l.h,.015,2),rotation:number(l.rotation,-180,180),opacity:number(l.opacity,.1,1),locked:Boolean(l.locked),...(l.type==='image'?{color:DEFAULT_INK.hex,colorId:DEFAULT_INK.id}:color(l.color,l.colorId))};
    if(l.type==='text'){if(!UNIFORM_FONTS.some(f=>f.id===l.font))fail('Escolha uma das fontes de uniforme disponíveis.');clean.text=text(l.text,80);clean.font=l.font;if(['player-name','player-number'].includes(l.personalization))clean.personalization=l.personalization;normalizeText(clean);}
@@ -46,4 +52,4 @@ export function validateSimulatorState(input){
  if(JSON.stringify(out).length>10*1024*1024)throw new AppError(413,'O desenho excede 10 MB. Reduza as logos.');return out;
 }
 export function simulatorSnapshot(value){if(!value||value.schema!==1||!Number.isSafeInteger(value.version)||value.version<1)fail('Confira a versão do uniforme vinculado.');return {schema:1,id:id(value.id),version:value.version,confirmedAt:text(value.confirmedAt,40),state:validateSimulatorState(value.state)};}
-export function describeSimulatorColors(state,piece){return [...new Set(state.panels.filter(p=>p.piece===piece).flatMap(p=>[p.colorId,...p.layers.filter(l=>l.type!=='image').map(l=>l.colorId)]))].map(id=>COLORS.find(c=>c.id===id)?.name).filter(Boolean);}
+export function describeSimulatorColors(state,piece){return [...new Set(state.panels.filter(p=>p.piece===piece).flatMap(p=>[p.colorId,...(p.gradient?[p.gradient.toColorId]:[]),...p.layers.filter(l=>l.type!=='image').map(l=>l.colorId)]))].map(id=>COLORS.find(c=>c.id===id)?.name).filter(Boolean);}
