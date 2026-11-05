@@ -1,6 +1,8 @@
 import {FONTS} from './core.js';
 import {DEFAULT_BASE} from './catalog.js';
-import {drawGraphic} from './graphics.js';
+import {drawGraphic,GRAPHICS} from './graphics.js';
+import {fitGraphicBox} from './graphic-fit.js';
+import {paintPanelBackground} from './gradient.js';
 import {drawAtlasMark} from '../atlas-logo-mark.js';
 import {drawingLayers} from './layers.js';
 export const imageCache=new Map();
@@ -8,7 +10,7 @@ export async function imageFor(src){if(imageCache.has(src))return imageCache.get
 export function drawLayer(ctx,l,W,H,panel){
  ctx.save();ctx.translate(l.x*W,l.y*H);ctx.rotate((l.type==='text'?0:l.rotation)*Math.PI/180);ctx.globalAlpha=l.opacity;ctx.fillStyle=l.color;
  const w=l.w*W,h=l.h*H;
- if(l.type==='image'){const im=imageCache.get(l.src);if(im&&!(im instanceof Promise))ctx.drawImage(im,-w/2,-h/2,w,h);}
+ if(l.type==='image'||l.type==='svg-graphic'){const im=imageCache.get(l.src);if(im&&!(im instanceof Promise)){const ratio=l.pixels?.w&&l.pixels?.h?l.pixels.w/l.pixels.h:im.naturalWidth/im.naturalHeight;const fitted=fitGraphicBox(w,h,W,H,panel,ratio);if(l.type==='svg-graphic'&&l.mirrorX)ctx.scale(-1,1);ctx.drawImage(im,-fitted.w/2,-fitted.h/2,fitted.w,fitted.h);}}
  if(l.type==='text'){
   const family=FONTS.find(f=>f.id===l.font)?.family??FONTS[0].family,text=l.text||'TEXTO';
   ctx.font=`100px ${family}`;ctx.textAlign='center';ctx.textBaseline='alphabetic';
@@ -18,11 +20,11 @@ export function drawLayer(ctx,l,W,H,panel){
   ctx.scale(scale,scale*aspect);ctx.fillText(text,(left-right)/2,(ascent-descent)/2);
  }
  if(l.type==='badge')drawAtlasMark(ctx,w,h,l.color,panel?.cm?.w&&panel?.cm?.h?(panel.cm.w/panel.cm.h)/(W/H):1);
- if(l.type==='pattern'){if(l.mirrorX)ctx.scale(-1,1);drawGraphic(ctx,l.pattern,w,h);}
+ if(l.type==='pattern'){if(l.mirrorX)ctx.scale(-1,1);const graphic=GRAPHICS.find(g=>g.id===l.pattern);const preserve=panel?.id?.startsWith('sleeve-strip-')||graphic?.group==='Grafismos Avançados';const fit=preserve?fitGraphicBox(w,h,W,H,panel,(graphic?.w||1)/(graphic?.h||1)):{w,h};drawGraphic(ctx,l.pattern,fit.w,fit.h);}
  ctx.restore();
 }
 export function paint(canvas,panel,{selected=null,grid=false}={}){
- const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);ctx.fillStyle=panel.color;ctx.fillRect(0,0,W,H);
+ const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);paintPanelBackground(ctx,panel,W,H);
  for(const l of drawingLayers(panel))drawLayer(ctx,l,W,H,panel);
  if(grid){ctx.save();ctx.strokeStyle='#ffffff18';ctx.lineWidth=1;for(let k=1;k<10;k++){ctx.beginPath();ctx.moveTo(W*k/10,0);ctx.lineTo(W*k/10,H);ctx.moveTo(0,H*k/10);ctx.lineTo(W,H*k/10);ctx.stroke();}ctx.strokeStyle='#ffffff77';ctx.setLineDash([6,4]);ctx.strokeRect(W*.025,H*.025,W*.95,H*.95);ctx.restore();}
  const l=panel.layers.find(l=>l.id===selected);if(l){ctx.save();ctx.translate(l.x*W,l.y*H);ctx.rotate(l.rotation*Math.PI/180);ctx.strokeStyle='#c5ef65';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.strokeRect(-l.w*W/2,-l.h*H/2,l.w*W,l.h*H);ctx.setLineDash([]);ctx.fillStyle='#fff';for(const x of [-l.w*W/2,l.w*W/2])for(const y of [-l.h*H/2,l.h*H/2]){ctx.fillRect(x-4,y-4,8,8);ctx.strokeRect(x-4,y-4,8,8);}ctx.restore();}

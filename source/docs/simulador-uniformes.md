@@ -78,3 +78,17 @@ Esta integração preserva o escopo do teste sem exportação técnica editável
 ## Verificação
 
 `tests/simulator.test.mjs` cobre o catálogo, arquivos originais, validação no servidor, logos, isolamento por proprietário, conflitos de versões, criação concorrente de pedido e recuperação após falha. A suíte geral existente também cobre os fluxos de pedido, listas, complementos, produção e administração. A revisão visual conferiu o menu, temas, fontes, paleta, grafismos e conferência das quatro vistas. O fluxo autenticado de salvamento/pedido foi validado por integração com D1/R2 simulados, sem criar pedidos de teste na conta de produção.
+
+## Grafismos avançados e degradês (novembro/2026)
+
+- O menu **Grafismos Avançados** aceita grafismos SVG vetoriais próprios e a seleção
+  obrigatória de uma cor da paleta. As formas são recoloridas, sem reutilizar as
+  cores originais. Logos de escudos no menu **Logos** mantêm suas cores de marca.
+- O arquivo SVG mantém proporção física ao ser aplicado ao mapa UV, especialmente
+  em filetes e painéis estreitos. A opção de espelhar não altera sua escala.
+- O fundo de cada painel de tecido da camiseta pode receber degradê linear em
+  quatro direções com duas cores da paleta. Os detalhes, filetes, golas, logos
+  e as camadas de grafismos não recebem esse degradê.
+- Degradês e grafismos importados entram no histórico de desfazer/refazer e nas
+  versões salvas. O servidor restringe os degradês às peças de tecido compatíveis
+  e valida vetores/cores antes do salvamento.

@@ -19,6 +19,11 @@
       "sha256": "1a5162a69c65d70923b863794b50d5f4a8f5cbc09051084a8849a3909b3455b4"
     },
     {
+      "path": "README.md",
+      "size": 26518,
+      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
+    },
+    {
       "path": "app/acompanhamento/page.tsx",
       "size": 310,
       "sha256": "3f94d0380073f91e0dec35c886065c4ee06fa44c76a26daa01832431dfc226b5"
@@ -955,8 +960,8 @@
     },
     {
       "path": "docs/simulador-uniformes.md",
-      "size": 13103,
-      "sha256": "70755d227d84e746cb601f88e721a665be5dbdf718d50a797e96c93389f504d4"
+      "size": 14010,
+      "sha256": "0fb474115c1b98d185e012f106930a5d95e0c12d197bdcbeb3ff5c066dd156af"
     },
     {
       "path": "drizzle.config.ts",
@@ -1044,11 +1049,6 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
-      "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
-    },
-    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1127,6 +1127,11 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
+    },
+    {
+      "path": "drizzle/meta/_journal.json",
+      "size": 2379,
+      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
     },
     {
       "path": "eslint.config.mjs",
@@ -1300,8 +1305,8 @@
     },
     {
       "path": "lib/simulator-validation.mjs",
-      "size": 7642,
-      "sha256": "9890ebda6cf96a7059b2aada09f2a258532d64346ef4b09965530fd20decb906"
+      "size": 8473,
+      "sha256": "b4d8550747a1947e742a91fc615c1cbe06013dfac5d8d6bed633a6d8870b5b7e"
     },
     {
       "path": "lib/static-mold-binaries.mjs",
@@ -1820,13 +1825,13 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 44860,
-      "sha256": "28e94408c3254df9253a7665d3fddd5e1d4bdc64e4d574df1862bed1d045bc84"
+      "size": 48350,
+      "sha256": "936e8cbe80d088d306d76a6339e0590a7438f25d0633edf98b95f3ff15a550a2"
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 23984,
-      "sha256": "717ac2f99c834848f0c6fce1a6044ce79299088cbf9ccc80932a6bbcdddce9e5"
+      "size": 24875,
+      "sha256": "bd9a9f3d97bb6832d856499c4747b15297c6415954d54050beeff9db4ae937ce"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1850,8 +1855,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31959,
-      "sha256": "2b9f498673f05113a8191c3d4098b556332c46a190c91a2ecc8676de5e318c93"
+      "size": 33602,
+      "sha256": "6be027efbe07512c037c834362f9276e1d54f109650e5e5441b65eb5d43ed998"
     },
     {
       "path": "public/simulador/elite.js",
@@ -1859,14 +1864,14 @@
       "sha256": "c02336711433a41fac4f484e3a07b0670e69e62edddc068922a0b000a4457b66"
     },
     {
-      "path": "public/simulador/fonts/classic.ttf",
-      "size": 380660,
-      "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
-    },
-    {
       "path": "public/simulador/fonts/LICENSE.txt",
       "size": 3859,
       "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "public/simulador/fonts/classic.ttf",
+      "size": 380660,
+      "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
     },
     {
       "path": "public/simulador/fonts/mnz-autumn-26.ttf",
@@ -1894,9 +1899,19 @@
       "sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895"
     },
     {
+      "path": "public/simulador/gradient.js",
+      "size": 749,
+      "sha256": "9f79360b6cacfdad378e36b73d5723ec28b4dbdaced35e803a13c23e65e42fe1"
+    },
+    {
+      "path": "public/simulador/graphic-fit.js",
+      "size": 550,
+      "sha256": "862705c442e4f9acea1d6f56c681bb7722643f8d29c19ad408b9f39b7f5abdd6"
+    },
+    {
       "path": "public/simulador/graphics.js",
-      "size": 3736,
-      "sha256": "5f4863f2571db9ddd614df21c21c28681336c9fbad4d3f7a419262e307c109c8"
+      "size": 3784,
+      "sha256": "ab6455905c4654754318052e3a2eb495b8b07b3cb1c8e8c960c635bb1f28e3ae"
     },
     {
       "path": "public/simulador/history-shortcuts.js",
@@ -1905,8 +1920,8 @@
     },
     {
       "path": "public/simulador/layers.js",
-      "size": 2593,
-      "sha256": "9b3592a3401314f6012a9226f8439554edcaaf514bba687fa6fa3bed8ebab5c6"
+      "size": 2699,
+      "sha256": "2068a017d21c81d88b9b7d3b5788e4623ea60bfe8acfdb44ce5e2b2e1491e572"
     },
     {
       "path": "public/simulador/models/kit-edge-2027.json",
@@ -1915,8 +1930,8 @@
     },
     {
       "path": "public/simulador/paint.js",
-      "size": 2825,
-      "sha256": "ca34cc2c4796d2e125f3ec152df39010b0e711afc5896d953e63ee362c63cfb2"
+      "size": 3407,
+      "sha256": "22962b844ec2b5fb43ebac81bd1d9cfae65d500bf44759b3801adeb2c90e067b"
     },
     {
       "path": "public/simulador/paleta-sublimacao-2026.xml",
@@ -1935,13 +1950,18 @@
     },
     {
       "path": "public/simulador/scene.js",
-      "size": 14629,
-      "sha256": "bc525b14e4963a3429953677fb63b38df1c4fb9ddad28d55b8c1a8537cd9c8f7"
+      "size": 14640,
+      "sha256": "101feb6fd02ff3d0a54e5358451612d8dc163bf22d4d7c6e866140e1af51b210"
     },
     {
       "path": "public/simulador/style.css",
       "size": 21248,
       "sha256": "f62f07f634119aa055faae3e1f21400e4731a92d82d8df73b381e8333ceb25bc"
+    },
+    {
+      "path": "public/simulador/svg-graphics.js",
+      "size": 1473,
+      "sha256": "4b39849b098f4d341ffd8c76ee402a0fb8bafa730cbccb47733ca3d8a4a243e9"
     },
     {
       "path": "public/simulador/symmetry-ui.js",
@@ -1950,8 +1970,8 @@
     },
     {
       "path": "public/simulador/symmetry.js",
-      "size": 8734,
-      "sha256": "8ec3ec7f179fc2add48ac2c9063f3174d7c3bacfc443f6e10efedbd01b33a967"
+      "size": 9147,
+      "sha256": "658bce1a20031149cf847c500c00432ff4627445b8d2a2fd237f4f3f58444992"
     },
     {
       "path": "public/simulador/tutorial.css",
@@ -2029,11 +2049,6 @@
       "sha256": "c35cdd49f5008a35779d3ded86d4c7c2995be7e5b65ad4dba231426a7e0c61ff"
     },
     {
-      "path": "public/vendor/exceljs/exceljs.min.js",
-      "size": 947702,
-      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
-    },
-    {
       "path": "public/vendor/exceljs/LICENSE",
       "size": 1084,
       "sha256": "2ed526b7e7c7681dc2347995b5036ddf73dc27d0539cdea59b6d4a72b63a57a0"
@@ -2044,9 +2059,9 @@
       "sha256": "fc4027cc263fcffbc0b2b9b7fda248a9d4003f64d11ce967f013a8df2e514c63"
     },
     {
-      "path": "public/vendor/fontkit/fontkit.umd.min.js",
-      "size": 758440,
-      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
+      "path": "public/vendor/exceljs/exceljs.min.js",
+      "size": 947702,
+      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
     },
     {
       "path": "public/vendor/fontkit/README.md",
@@ -2054,9 +2069,9 @@
       "sha256": "7315fcc54511f5ffc906969c39333f93cd47f5217ab014fe45acff14bd5ec4c0"
     },
     {
-      "path": "public/vendor/jszip/jszip.min.js",
-      "size": 97781,
-      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
+      "path": "public/vendor/fontkit/fontkit.umd.min.js",
+      "size": 758440,
+      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
     },
     {
       "path": "public/vendor/jszip/LICENSE.markdown",
@@ -2069,14 +2084,14 @@
       "sha256": "1d89f128bc9a10c160421509788367e6d121da56603e0dc44820114c8e2cc007"
     },
     {
+      "path": "public/vendor/jszip/jszip.min.js",
+      "size": 97781,
+      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
+    },
+    {
       "path": "public/vendor/mp4-muxer/LICENSE",
       "size": 1065,
       "sha256": "75c54aae7ef6ad652f684f9dd3b71e4dcef86ccebd88cf441ceed7f5eec037c5"
-    },
-    {
-      "path": "public/vendor/mp4-muxer/mp4-muxer.mjs",
-      "size": 69011,
-      "sha256": "d2c4c782f180c86ed30b1f5d9487a34a0d370bf9b4535285734ea187d38f9bb5"
     },
     {
       "path": "public/vendor/mp4-muxer/README.md",
@@ -2084,9 +2099,19 @@
       "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
     },
     {
+      "path": "public/vendor/mp4-muxer/mp4-muxer.mjs",
+      "size": 69011,
+      "sha256": "d2c4c782f180c86ed30b1f5d9487a34a0d370bf9b4535285734ea187d38f9bb5"
+    },
+    {
       "path": "public/vendor/pdf-lib/LICENSE.md",
       "size": 1070,
       "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
+    },
+    {
+      "path": "public/vendor/pdf-lib/README.md",
+      "size": 105,
+      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/pdf-lib/pdf-lib.min.js",
@@ -2094,9 +2119,9 @@
       "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
     },
     {
-      "path": "public/vendor/pdf-lib/README.md",
-      "size": 105,
-      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
+      "path": "public/vendor/three/LICENSE",
+      "size": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
     },
     {
       "path": "public/vendor/three/build/three.core.min.js",
@@ -2132,11 +2157,6 @@
       "path": "public/vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
       "size": 35539,
       "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
-    },
-    {
-      "path": "public/vendor/three/LICENSE",
-      "size": 1081,
-      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
     },
     {
       "path": "public/video-export.js",
@@ -2177,11 +2197,6 @@
       "path": "public/workspace-hub.js",
       "size": 8249,
       "sha256": "5b8c61f4a81cc8c2fd4a795f83aec9ebeae99e6b44fe214c7bec2e830cd8239b"
-    },
-    {
-      "path": "README.md",
-      "size": 26518,
-      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
     },
     {
       "path": "scripts/build-verified.sh",
@@ -2529,6 +2544,11 @@
       "sha256": "4d0d0bc0ba37261b7a5cab163f5743fa568a4b6a97b2aa697ab586c84bae2c4d"
     },
     {
+      "path": "tests/simulator-graphics.test.mjs",
+      "size": 1630,
+      "sha256": "45585c4409afcb534b8ccc78a5c0afd99c1e9b5fd887fb96ab7e80be6eaab945"
+    },
+    {
       "path": "tests/simulator-history-shortcuts.test.mjs",
       "size": 2616,
       "sha256": "2cd4d20617a71522e7beb7eacf07396be81a9ad08c3cea1d808d3879f16e47d2"
@@ -2604,14 +2624,14 @@
       "sha256": "a4c1cc83b63ef9d39641d3babaefffa063dccbbc93338e18017b5013d713163e"
     },
     {
-      "path": "vendor/shadcn-tailwind-4.13.0.css",
-      "size": 16041,
-      "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
-    },
-    {
       "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
       "size": 1063,
       "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "path": "vendor/shadcn-tailwind-4.13.0.css",
+      "size": 16041,
+      "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
     },
     {
       "path": "vite.config.ts",
