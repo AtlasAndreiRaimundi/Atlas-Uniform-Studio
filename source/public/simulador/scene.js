@@ -94,7 +94,7 @@ export class UniformScene {
  update(state){
   this.dirty=true;
   this.active=state.active;
-  for(const p of state.panels){let entry=this.textures.get(p.id);if(!entry){const canvas=document.createElement('canvas');canvas.width=canvas.height=1024;const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(8,this.renderer.capabilities.getMaxAnisotropy());entry={canvas,texture};this.textures.set(p.id,entry);}const signature=JSON.stringify([p.color,p.layers]);if(entry.signature!==signature){paint(entry.canvas,p);entry.texture.needsUpdate=true;entry.signature=signature;}}
+  for(const p of state.panels){let entry=this.textures.get(p.id);if(!entry){const canvas=document.createElement('canvas');canvas.width=canvas.height=1024;const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(8,this.renderer.capabilities.getMaxAnisotropy());entry={canvas,texture};this.textures.set(p.id,entry);}const signature=JSON.stringify([p.color,p.gradient,p.layers]);if(entry.signature!==signature){paint(entry.canvas,p);entry.texture.needsUpdate=true;entry.signature=signature;}}
   for(const m of this.meshes){m.visible=state.product==='kit'||state.product==='custom'||m.userData.piece===state.product;const e=this.textures.get(m.userData.panel);if(e){m.material.map=e.texture;m.material.color.set('#ffffff');m.material.needsUpdate=true;}m.material.emissive.set(m.userData.panel===state.active?'#19220a':'#000000');m.material.emissiveIntensity=.045;}
   for(const m of this.trimMeshes){m.visible=state.product==='kit'||m.userData.piece===state.product;m.material.color.set(state.trim);}
  }
