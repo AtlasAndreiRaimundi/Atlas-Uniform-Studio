@@ -27,7 +27,7 @@ test('professional registration verifies email before first password login and p
  const send=async(url,request)=>{assert.equal(url,'https://api.resend.com/emails');const email=JSON.parse(request.body);assert.deepEqual(email.to,['desenhista@example.com']);verificationLink=email.html.match(/https:\/\/studio.example.com\/conta\/confirmar\?token=[0-9a-f]+/)?.[0];return {ok:true};};
  const input={name:'Desenhista Teste',email:'Desenhista@Example.com',role:'designer',password:'minha-senha-1234',confirmPassword:'minha-senha-1234'};
  const registered=await registerAccount(adapter,env,input,{send});
- assert.match(registered.message,/Confirma/);assert.ok(verificationLink);
+ assert.match(registered.message,/Confira/);assert.ok(verificationLink);
  await assert.rejects(()=>loginAccount(adapter,{email:input.email,password:input.password}),{status:403});
  const token=new URL(verificationLink).searchParams.get('token');
  await verifyAccount(adapter,token);
