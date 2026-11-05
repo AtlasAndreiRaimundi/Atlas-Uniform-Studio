@@ -39,14 +39,26 @@
     <p class="eyebrow">02 / PALETA</p><h1>As cores do seu time</h1><p class="muted">Escolha a cor de fundo do painel ativo.</p>
     <label class="color-field"><button id="base-color" type="button" class="color-sample" aria-label="Escolher cor do painel" value="#075c4e"></button><span><small>COR DO PAINEL</small><strong id="base-hex"></strong></span></label>
     <p class="section-label">PALETA SUBLIMAÇÃO 2026 · 103 CORES</p><input id="base-color-search" class="palette-search" placeholder="Buscar cor, RGB ou PANTONE" aria-label="Buscar cor do painel"><div id="base-palette" class="swatches" aria-label="Paleta para o painel"></div><p class="small-note" id="base-color-description"></p>
-    <button id="apply-all" class="button subtle full">Aplicar esta cor em todos os painéis</button>
+    <button id="apply-all" class="button subtle full">Aplicar esta cor sólida em todos os painéis</button>
+     <section id="shirt-gradient" class="fill-gradient" hidden><h2>Degradê do preenchimento</h2>
+      <label class="side-copy-check"><input id="gradient-enabled" type="checkbox"> Ativar degradê neste painel</label>
+      <div id="gradient-options" hidden><label class="field compact">Cor final do degradê
+       <button id="gradient-to-color" type="button" class="color-sample" aria-label="Escolher a segunda cor do degradê"></button><small id="gradient-to-hex"></small></label>
+       <label class="field compact">Direção do degradê<select id="gradient-direction">
+        <option value="0">Esquerda → direita</option><option value="90">Cima → baixo</option><option value="180">Direita → esquerda</option><option value="270">Baixo → cima</option>
+       </select></label></div>
+      <p class="small-note">Somente no preenchimento da camiseta. Grafismos, logos, golas e filetes não recebem o degradê.</p>
+     </section>
     <hr><label class="field">Golas, filetes e cós<button id="trim-color" type="button" class="color-sample" aria-label="Escolher cor de golas, filetes e cós" value="#e4f976"></button></label>
     <div class="tip"><span data-icon="info"></span><p>As cores são uma referência de tela. O acerto para impressão será uma etapa posterior.</p></div>
    </section>
    <section data-section="patterns">
     <p class="eyebrow">03 / GRAFISMOS</p><h1>Crie por camadas.</h1>
     <div class="graphic-workspace"><h2 id="graphic-edit-title">1. Trocar grafismo</h2><label id="graphic-target-field" class="field compact">Grafismo em edição<select id="graphic-target"></select></label><p id="graphic-action-hint" class="small-note" role="status"></p><button id="graphic-new" class="button subtle full" type="button"><span data-icon="plus"></span>Adicionar outro grafismo</button><button id="graphic-cancel-new" class="button subtle full" type="button" hidden>Cancelar nova camada</button></div>
-    <h2 class="graphic-library-title">2. Escolha o desenho</h2><label class="field compact">Categoria de grafismos<select id="graphic-group"><option>Clássicos</option><option>Linhas</option><option>Recortes</option><option>Texturas</option><option value="all">Todos os grafismos</option></select></label><div id="pattern-library" class="pattern-grid"></div>
+    <h2 class="graphic-library-title">2. Escolha o desenho</h2><label class="field compact">Categoria de grafismos<select id="graphic-group"><option>Clássicos</option><option>Linhas</option><option>Recortes</option><option>Texturas</option><option>Grafismos Avançados</option><option value="all">Todos os grafismos</option></select></label>
+     <div class="graphic-color-choice"><span>Cor escolhida para o grafismo</span><button id="graphic-color" type="button" class="color-sample" aria-label="Escolher cor do grafismo"></button><small id="graphic-color-hint">Selecione uma cor da paleta para adicionar novos grafismos.</small></div>
+     <div id="pattern-library" class="pattern-grid"></div>
+     <label class="upload advanced-graphic-upload" for="advanced-graphic-upload"><span data-icon="upload"></span><strong>Importar grafismo SVG</strong><small>Grafismos Avançados · SVG vetorial até 2 MB, com cor escolhida na paleta e proporção original.</small></label><input type="file" id="advanced-graphic-upload" accept="image/svg+xml,.svg" hidden>
     <div class="tip"><span data-icon="move"></span><p>Selecione uma camada à direita para ajustar sua cor, posição e ordem.</p></div>
    </section>
    <section data-section="text" hidden>

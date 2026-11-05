@@ -11,10 +11,10 @@ export const sidePairs=s=>{const ids=new Set(visiblePanels(s).map(p=>p.id));retu
 // a saved design: absence of a pair also records the user's choice to disable it.
 export const defaultLiveSymmetry=state=>Object.fromEntries(sidePairs(state).map(pair=>[pair.id,{mode:'mirror',scope:'patterns',colors:false,base:false}]));
 const key=l=>l.copyKey||l.id;
-const included=(l,scope)=>scope==='all'||l.type==='pattern';
+const included=(l,scope)=>scope==='all'||l.type==='pattern'||l.type==='svg-graphic';
 function score(a,b){
  if(a.type!==b.type)return 0;if(key(a)===key(b))return 100;
- if(a.type==='image')return a.src===b.src?80:0;
+ if(a.type==='image'||a.type==='svg-graphic')return a.src===b.src?80:0;
  if(a.type==='pattern'&&a.pattern!==b.pattern)return 0;
  if(a.type==='text'&&!(personalizationRole(a)&&personalizationRole(a)===personalizationRole(b))&&a.text!==b.text)return 0;
  return a.name===b.name?60:40;
@@ -22,7 +22,7 @@ function score(a,b){
 function counterpart(l,candidates,used){let match=null,best=0;for(const candidate of candidates){if(used.has(candidate.id))continue;const value=score(l,candidate);if(value>best){match=candidate;best=value;}}if(match)used.add(match.id);return match;}
 function copiedLayer(original,mirror,id,locked=false){
  const copied={...original,id,copyKey:key(original),locked};if(original.pixels)copied.pixels={...original.pixels};
- if(mirror){copied.x=1-original.x;copied.rotation=original.type==='text'?0:-original.rotation;if(original.type==='pattern')copied.mirrorX=!original.mirrorX;}
+ if(mirror){copied.x=1-original.x;copied.rotation=original.type==='text'?0:-original.rotation;if(['pattern','svg-graphic'].includes(original.type))copied.mirrorX=!original.mirrorX;}
  return normalizeText(copied);
 }
 function limits(state,checkBytes=true){
@@ -44,7 +44,7 @@ export function copySideDetails(state,{pairId,sourceId,mirror=true,colorPolicy='
   if(writeMode==='merge'&&match){destination.layers[destination.layers.findIndex(l=>l.id===match.id)]=copy;stats.updated++;}else{if(writeMode==='merge')destination.layers.push(copy);stats.added++;}written.push(copy);
  }
  if(writeMode==='replace')destination.layers=written;
- if(copyBase){destination.color=source.color;destination.colorId=source.colorId;}
+ if(copyBase){destination.color=source.color;destination.colorId=source.colorId;if(source.piece==='shirt'&&!source.trim){if(source.gradient)destination.gradient=clone(source.gradient);else delete destination.gradient;}}
  next.active=target.id;next.selected=written[0]?.id??null;next.order=null;limits(next);return {state:next,sourceId,targetId:target.id,stats};
 }
 
@@ -64,7 +64,7 @@ function synchronizePair(state,pair,sourceId,config,idFactory=uid){
  const copies=originals.map(l=>{const match=counterpart(l,candidates,used),copy=copiedLayer(l,config.mode==='mirror',match?.id||idFactory(),match?.locked||false);if(!config.colors&&match&&copy.type!=='image'){copy.color=match.color;copy.colorId=match.colorId;}return copy;});
  if(config.scope==='all')target.layers=copies;
  else {let i=0;const layers=[];for(const old of target.layers){if(included(old,config.scope)){if(i<copies.length)layers.push(copies[i++]);}else layers.push(old);}target.layers=layers.concat(copies.slice(i));}
- if(config.base){target.color=source.color;target.colorId=source.colorId;}
+ if(config.base){target.color=source.color;target.colorId=source.colorId;if(source.piece==='shirt'&&!source.trim){if(source.gradient)target.gradient=clone(source.gradient);else delete target.gradient;}}
  return {sourceId:source.id,targetId:target.id,sourceCount:originals.length,targetCount:candidates.length};
 }
 export function setLiveSymmetry(state,{pairId,sourceId,mode='mirror',scope='patterns',colors=false,base=false},{idFactory=uid}={}){
@@ -73,7 +73,7 @@ export function setLiveSymmetry(state,{pairId,sourceId,mode='mirror',scope='patt
 }
 export function disableLiveSymmetry(state,pairId){const next=clone(state);if(next.symmetry){delete next.symmetry[pairId];if(!Object.keys(next.symmetry).length)delete next.symmetry;}return next;}
 function changed(panel,old,config){
- if(!old)return true;if(config.base&&(panel.color!==old.color||panel.colorId!==old.colorId))return true;
+ if(!old)return true;if(config.base&&(panel.color!==old.color||panel.colorId!==old.colorId||JSON.stringify(panel.gradient??null)!==JSON.stringify(old.gradient??null)))return true;
  const a=panel.layers.filter(l=>included(l,config.scope)),b=old.layers.filter(l=>included(l,config.scope));if(a.length!==b.length)return true;
  const fields=['id','type','name','x','y','w','h','rotation','opacity','pattern','mirrorX','text','font','personalization','src','vector',...(config.colors?['color','colorId']:[])];
  return a.some((l,i)=>fields.some(f=>l[f]!==b[i][f]));
