@@ -5,6 +5,7 @@ import {UniformScene} from './scene.js?v=edge-20261031';
 import {ELITE_MODEL,eliteState,fetchEliteModel} from './elite.js?v=edge-20261031';
 import {COLORS,DEFAULT_BASE,DEFAULT_ACCENT,applyColor,paletteColor} from './catalog.js';
 import {GRAPHICS} from './graphics.js';
+import {isShirtFillPanel,GRADIENT_ANGLES} from './gradient.js';
 import {presentationMap} from './presentation-bridge.js?v=edge-20261031';
 import {setupSideCopy} from './symmetry-ui.js';
 import {sidePairs,synchronizeLive,disableLiveSymmetry} from './symmetry.js';
@@ -22,7 +23,7 @@ function toast(text){$('toast').textContent=text;$('toast').hidden=false;clearTi
 let STORAGE_KEY='anonymous';
 let state=eliteState(),history=new History(state),scene=null,flat=false,db=null,saveTimer,dragFlat=null,gesture=false,revision=0,savedRevision=0,saveChain=Promise.resolve(),busy=false;
 let session=null,designId=null,serverVersion=null,cloudDirty=true,cloudSaving=null,reviewSnapshot=null,paletteTarget=null,reviewOrderId=null;
-let graphicPanels=state.panels,newGraphicPanel=null;const graphicTargets=new Map();
+let graphicPanels=state.panels,newGraphicPanel=null,graphicColorId=null;const graphicTargets=new Map();
 
 function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open('meinerz-uniform-simulator-v1',1);r.onupgradeneeded=()=>r.result.createObjectStore('projects');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
 function readProject(){return new Promise((resolve,reject)=>{const r=db.transaction('projects').objectStore('projects').get(STORAGE_KEY);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
@@ -50,6 +51,7 @@ function render(){
  $('model-card-title').textContent='KIT EDGE 2027';$('model-card-detail').textContent='Camiseta + calção · 19 painéis';
  setColorChip($('base-color'),p.colorId||p.color);setColorChip($('trim-color'),state.trimColorId||state.trim);const c=paletteColor(p.colorId||p.color);$('base-hex').textContent=c?.name??p.color;$('base-color-description').textContent=c?`${c.hex.toUpperCase()} · ${c.space}${c.approximate?' · Aproximação para a tela':''}`:'';
  $('base-palette').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.colorId===p.colorId));
+  renderGradient(p);
  $('layer-count').textContent=p.layers.length;$('layers-empty').hidden=!!p.layers.length;
  renderLayerList(p);
  $('undo').disabled=history.index===0;$('redo').disabled=history.index===history.items.length-1;
@@ -58,6 +60,15 @@ function render(){
  const activePair=linked.find(pair=>pair.panels.includes(p.id));$('symmetry-notice').hidden=!activePair;
  if(activePair){const settings=state.symmetry[activePair.id],other=state.panels.find(panel=>panel.id===activePair.panels.find(id=>id!==p.id));$('symmetry-notice-title').textContent='Simetria ligada · '+activePair.label;$('symmetry-notice-text').textContent=(settings.scope==='all'?'Os elementos também atualizam em ':'Os grafismos também atualizam em ')+other.label+'.'+(!settings.colors&&!settings.base?' Cores e fundos são independentes.':'');$('symmetry-disable').setAttribute('aria-label','Desligar simetria: '+activePair.label);}
  renderProperties();renderWarnings();updateScene();
+}
+function renderGradient(panel){
+ const allowed=isShirtFillPanel(panel),gradient=allowed?panel.gradient:null;
+ $('shirt-gradient').hidden=!allowed;
+ $('gradient-enabled').checked=!!gradient;
+ $('gradient-options').hidden=!gradient;
+ $('gradient-direction').value=String(gradient?.angle??90);
+ const color=paletteColor(gradient?.toColorId??DEFAULT_ACCENT.id);
+ if(color){setColorChip($('gradient-to-color'),color.id);$('gradient-to-hex').textContent=color.name+' · '+color.hex.toUpperCase();}
 }
 function renderLayerList(panel){
  const graphics=panel.layers.filter(isGraphic),ordered=drawingLayers(panel).reverse(),groups=[];
@@ -74,6 +85,8 @@ function renderGraphicPicker(){
  if(selected&&isGraphic(selected))graphicTargets.set(panel.id,selected.id);
  const target=graphicTarget(state,graphicTargets.get(panel.id)),graphics=panel.layers.filter(isGraphic),adding=newGraphicPanel===panel.id||!target;
  if(target)graphicTargets.set(panel.id,target.id);
+  if(graphicColorId)setColorChip($('graphic-color'),graphicColorId);
+  $('graphic-color-hint').textContent=graphicColorId?'A nova camada usará a cor selecionada, sem importar cores da arte original.':'Ao adicionar um grafismo, escolha sua cor na paleta.';
  $('graphic-target').replaceChildren(...graphics.map((l,i)=>{const o=node('option',null,`${i+1} · ${l.name}${l.locked?' · fixado':''}`);o.value=l.id;return o;}));$('graphic-target').disabled=!graphics.length;if(target)$('graphic-target').value=target.id;
  $('graphic-target-field').hidden=!graphics.length;$('graphic-cancel-new').hidden=newGraphicPanel!==panel.id;$('graphic-new').hidden=adding;
  $('graphic-edit-title').textContent=adding?'1. Adicionar grafismo':'1. Trocar grafismo';$('graphic-action-hint').textContent=adding?'Escolha a nova camada abaixo. Depois, os cliques voltam a trocar o grafismo.':target.locked?'O grafismo está fixado. Desfixe-o para trocar ou adicione outro grafismo.':'Escolher abaixo troca este grafismo. A cor e os ajustes são mantidos.';
@@ -101,8 +114,13 @@ function setupLibrary(){
  for(const c of COLORS){const b=paletteButton(c);b.onclick=()=>{applyColor(activePanel(state),c.id);commit();};$('base-palette').append(b);const card=paletteButton(c,true);card.onclick=()=>chooseColor(c);$('palette-colors').append(card);}
  for(const [input,container]of [['base-color-search','base-palette'],['palette-search','palette-colors']])$(input).oninput=e=>{const q=e.target.value.trim().toLowerCase();$(container).querySelectorAll('button').forEach(b=>b.hidden=!b.dataset.search.includes(q));};
  $('close-palette').onclick=()=>$('palette-dialog').close();
- for(const g of GRAPHICS){const b=node('button','pattern-card'),canvas=node('canvas');b.dataset.group=g.group;b.dataset.graphic=g.id;b.dataset.name=g.name;canvas.width=240;canvas.height=210;paint(canvas,{color:DEFAULT_BASE.hex,layers:[layer('pattern',{pattern:g.id,color:DEFAULT_ACCENT.hex,colorId:DEFAULT_ACCENT.id,w:g.id==='straight-line'?.06:1.2,h:g.id==='horizontal-line'?.06:1.2})]});const caption=node('span',null,g.name),action=icon('arrow');action.classList.add('graphic-card-action');caption.append(action);b.append(canvas,caption);b.onclick=()=>{try{const target=graphicTarget(state,graphicTargets.get(state.active)),result=applyGraphic(state,g.id,{createNew:newGraphicPanel===state.active,...(target?{targetId:target.id}:{})});newGraphicPanel=null;graphicTargets.set(state.active,result.layer.id);if(commit())toast(result.created?'Grafismo adicionado. Escolher outro desenho agora troca esta camada.':'Grafismo trocado. Cor e ajustes foram mantidos.');}catch(error){toast(error.message);}};$('pattern-library').append(b);}
+ for(const g of GRAPHICS){const b=node('button','pattern-card'),canvas=node('canvas');b.dataset.group=g.group;b.dataset.graphic=g.id;b.dataset.name=g.name;canvas.width=240;canvas.height=210;paint(canvas,{color:DEFAULT_BASE.hex,layers:[layer('pattern',{pattern:g.id,color:DEFAULT_ACCENT.hex,colorId:DEFAULT_ACCENT.id,w:g.id==='straight-line'?.06:1.2,h:g.id==='horizontal-line'?.06:1.2})]});const caption=node('span',null,g.name),action=icon('arrow');action.classList.add('graphic-card-action');caption.append(action);b.append(canvas,caption);b.onclick=()=>{const target=graphicTarget(state,graphicTargets.get(state.active)),adding=newGraphicPanel===state.active||!target,chosen=graphicColorId??(adding?null:target?.colorId);
+    const applySelected=(colorId)=>{try{const result=applyGraphic(state,g.id,{createNew:newGraphicPanel===state.active,...(target?{targetId:target.id}:{})});if(colorId)applyColor(result.layer,colorId);newGraphicPanel=null;graphicTargets.set(state.active,result.layer.id);if(commit())toast(result.created?'Grafismo adicionado com a cor escolhida.':'Grafismo trocado sem recuperar cores da arte original.');}catch(error){toast(error.message);}};
+    if(!chosen){openPalette(c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);applySelected(c.id);});toast('Escolha a cor do grafismo na paleta antes de adicionar.');return;}
+    applySelected(chosen);
+   };$('pattern-library').append(b);}
  $('graphic-group').onchange=filterGraphicLibrary;filterGraphicLibrary();
+  $('graphic-color').onclick=()=>openPalette(c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);renderGraphicPicker();});
  $('graphic-target').onchange=e=>{newGraphicPanel=null;state.selected=e.target.value;graphicTargets.set(state.active,e.target.value);render();};
  $('graphic-new').onclick=()=>{state.selected=null;newGraphicPanel=state.active;render();};$('graphic-cancel-new').onclick=()=>{newGraphicPanel=null;state.selected=graphicTarget(state,graphicTargets.get(state.active))?.id??null;render();};
  for(const target of ['new-font','layer-font'])$(target).replaceChildren(...FONTS.map(f=>{const o=node('option',null,f.label);o.value=f.id;return o;}));
@@ -141,7 +159,10 @@ function setupControls(){
  $('symmetry-disable').onclick=()=>{const pair=sidePairs(state).find(pair=>pair.panels.includes(state.active)&&state.symmetry?.[pair.id]);if(!pair)return;state=disableLiveSymmetry(state,pair.id);if(commit()){$('active-panel').focus();toast('Simetria desligada: '+pair.label+'. Os desenhos foram mantidos. Agora você pode editar cada lado separadamente.');}};
  $('product').onchange=e=>{state.product=e.target.value;if(!visiblePanels(state).some(p=>p.id===state.active))state.active=visiblePanels(state)[0].id;state.selected=null;commit();};
  $('base-color').onclick=()=>openPalette('base');
- $('apply-all').onclick=()=>{const c=activePanel(state).colorId;for(const p of state.panels)applyColor(p,c);state.trim=paletteColor(c).hex;state.trimColorId=c;commit();};
+  $('gradient-enabled').onchange=e=>{const p=activePanel(state);if(!isShirtFillPanel(p))return;if(e.target.checked){const c=paletteColor(p.gradient?.toColorId??DEFAULT_ACCENT.id);p.gradient={toColor:c.hex,toColorId:c.id,angle:p.gradient?.angle??90};}else delete p.gradient;commit();};
+  $('gradient-to-color').onclick=()=>openPalette(c=>{const p=activePanel(state);if(isShirtFillPanel(p)&&p.gradient){p.gradient.toColor=c.hex;p.gradient.toColorId=c.id;commit();}});
+  $('gradient-direction').onchange=e=>{const p=activePanel(state),angle=Number(e.target.value);if(isShirtFillPanel(p)&&p.gradient&&GRADIENT_ANGLES.includes(angle)){p.gradient.angle=angle;commit();}};
+ $('apply-all').onclick=()=>{const c=activePanel(state).colorId;for(const p of state.panels){applyColor(p,c);delete p.gradient;}state.trim=paletteColor(c).hex;state.trimColorId=c;commit();};
  $('trim-color').onclick=()=>openPalette('trim');
  $('project-title').oninput=e=>{state.title=e.target.value.slice(0,80);cloudDirty=true;scheduleSave();};$('project-title').onchange=commit;
  function restoreHistory(action){if(busy||cloudSaving||gesture)return;const index=history.index;const restored=history[action]();if(history.index===index)return;state=restored;state.order=null;cloudDirty=true;scheduleSave();render();}
