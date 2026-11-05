@@ -10,7 +10,7 @@ eventos de ponteiro. Os traços ficam atrás do uniforme e dos controles.
 
 ## Fluxo
 
-1. Entre com a conta ChatGPT. A plataforma fornece a identidade e o e-mail.
+1. Crie sua conta profissional como **Desenhista/Designer** ou **Vendedor**. Defina a senha e confirme o endereço de e-mail para ativar o acesso. Contas antigas podem continuar entrando via ChatGPT durante a transição.
 2. Defina a assinatura profissional em seu perfil.
 3. Use **Nova pasta** para organizar por cliente ou equipe. Dentro dela, crie
    projetos com nome e cliente opcional; projetos sem pasta também são aceitos.
@@ -32,9 +32,9 @@ eventos de ponteiro. Os traços ficam atrás do uniforme e dos controles.
 
 A publicação preserva a audiência pública configurada no Site. Projetos e
 pastas exigem autenticação por conta; links de apresentação concedem acesso
-somente à peça ou proposta correspondente. A autenticação disponível nesta
-hospedagem é Sign in with ChatGPT; não há senha própria ou envio de códigos por
-e-mail feito pelo aplicativo.
+somente à peça ou proposta correspondente. O aplicativo aceita login próprio por e-mail e senha após confirmação. Durante a
+transição, a autenticação ChatGPT continua disponível para usuários antigos.
+Os papéis profissionais não concedem acesso administrativo automaticamente.
 
 ## Pastas de projetos
 
@@ -415,3 +415,28 @@ ou conceder acesso a esses clientes pelo compartilhamento do Site.
 A guia **Orçamentos** calcula camiseta + calção por kit, quantidade, desconto e aplicações, com vendedor obrigatório, apresentação opcional, salvamento na conta e conferência para imprimir/salvar PDF. Reutiliza a tabela Anexo01/2026 dos pedidos. Preços ausentes não são presumidos.
 
 O simulador volta a usar somente o KIT EDGE2027 existente, com mapeamento local dos19 painéis. Bases excluídas não retornam. [Implementação, segurança e limites de validação](docs/orcamentos-2026-10-31.md).
+
+## Cadastro próprio de profissionais
+
+A tela /login oferece **Entrar**, **Criar cadastro**, seleção **Designer/Vendedor**,
+validação de senha com confirmação e reenvio de e-mail. A rota /conta/confirmar
+ativa a conta apenas após o usuário clicar no link recebido (token de 256 bits,
+expiração em 24 h). A senha é armazenada somente como PBKDF2-HMAC-SHA256
+(salt aleatório por conta, 310.000 iterações). As sessões usam tokens aleatórios
+hashados em D1, cookie HttpOnly/SameSite=Lax/Secure, validade de sete dias e logout
+com revogação. Tentativas de login e de cadastro possuem limitação de frequência.
+
+**Configuração obrigatória para ativar o cadastro em produção:**
+- Aplicar a migration `drizzle/0016_studio_accounts.sql` ao banco D1.
+- Definir `RESEND_API_KEY` como segredo do Worker.
+- Definir `AUTH_EMAIL_FROM` com remetente de domínio verificado no Resend.
+- Definir `AUTH_APP_URL` com a origem HTTPS oficial do ATLAS Uniform Studio.
+- Confirmar DNS do domínio de envio (SPF/DKIM) e testar entrega real.
+- Jamais registrar tokens de confirmação, sessões ou senhas nos logs.
+O cadastro falha explicitamente com 503 enquanto essas configurações não existirem,
+e não oferece simulação de confirmação por e-mail no ambiente publicado.
+
+Contas novas usam IDs próprios estáveis com prefixo `studio:`, preservando o
+isolamento das pastas, projetos, listas e pedidos existentes. Para contas antigas,
+o acesso ChatGPT continua independente e seus projetos não são migrados
+automaticamente para evitar associação incorreta de dados.
