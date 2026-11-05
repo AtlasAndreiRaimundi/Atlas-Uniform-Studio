@@ -1,7 +1,4 @@
 {
-  "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "8c1f48c7bffd6f3478cee3f3a8a5cb32461d3589",
-  "exported_at": "2026-11-04T20:48:18.774Z",
   "files": [
     {
       "path": ".gitignore",
@@ -62,6 +59,36 @@
       "path": "app/api/admin/templates/route.ts",
       "size": 689,
       "sha256": "81dbba15537b519ab7ac4e79c1430b753b6ada9d83b637bc47061cf69f3a1a0c"
+    },
+    {
+      "path": "app/api/auth/login/route.ts",
+      "size": 608,
+      "sha256": "9fd3ecadc5f85aa6efaa35b46cb5013c83dcf20216528a51c0bfcad91df9221c"
+    },
+    {
+      "path": "app/api/auth/logout/route.ts",
+      "size": 521,
+      "sha256": "a2239895ca3d400c409185ed8dd36b9683300c4833b0b9d1e81a549ee996f241"
+    },
+    {
+      "path": "app/api/auth/register/route.ts",
+      "size": 428,
+      "sha256": "4912ac4cc465901547902830a111a86d5613f48d6c85489c78c21a563f56742c"
+    },
+    {
+      "path": "app/api/auth/resend/route.ts",
+      "size": 404,
+      "sha256": "0bf0f7a67a2f48713c424e5ee74eac6a2ec3f14e1fb7f5000e1a55b8915aa45f"
+    },
+    {
+      "path": "app/api/auth/session/route.ts",
+      "size": 328,
+      "sha256": "83166c58a4eaed884c6efdce2c439a6f1d43628a9749ca3cb12a4265d321f510"
+    },
+    {
+      "path": "app/api/auth/verify/route.ts",
+      "size": 347,
+      "sha256": "b5ffaf2f66160f1327655a9091f24fb72fc6d1086b0bb8fcb5d6345e4f81ffe9"
     },
     {
       "path": "app/api/designers/[id]/photo/route.ts",
@@ -290,8 +317,8 @@
     },
     {
       "path": "app/api/simulator/session/route.ts",
-      "size": 301,
-      "sha256": "4d0a5da2a4b8856c3fe485450e16feb751ca0cfb5ab05d055db37bdde93f1d9d"
+      "size": 362,
+      "sha256": "12f7ef59a4c82c4a45157df340619bcfc630b8a422a0b96e5c97aec92c2b6d08"
     },
     {
       "path": "app/api/templates/[id]/assets/[kind]/route.ts",
@@ -345,8 +372,13 @@
     },
     {
       "path": "app/chatgpt-auth.ts",
-      "size": 2550,
-      "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
+      "size": 3071,
+      "sha256": "79069bb161fe16cb2ba7fcf92bc0215986e375779cae5c9b8ee72d23124a594a"
+    },
+    {
+      "path": "app/conta/confirmar/page.tsx",
+      "size": 1766,
+      "sha256": "c53f48bb4cf8675e6d53530b67112e0dc4c8b2d23deae1da674319d97475b720"
     },
     {
       "path": "app/globals.css",
@@ -370,8 +402,13 @@
     },
     {
       "path": "app/login/page.tsx",
-      "size": 2892,
-      "sha256": "670c6ac49ee38a2c91c44a0446256d4cc3ec6e6e98d8812f880066e34a5b41c3"
+      "size": 3239,
+      "sha256": "e32da85b6c6ef3c7c8fc3bfb0907c05b5b7ed17eee87ca4690da72cddfc3379a"
+    },
+    {
+      "path": "app/login/studio-auth-panel.tsx",
+      "size": 4428,
+      "sha256": "510b2d349faac6290f4853362c71f5109b0b0a2d13ed48042ef7aa6d0550db16"
     },
     {
       "path": "app/not-found.tsx",
