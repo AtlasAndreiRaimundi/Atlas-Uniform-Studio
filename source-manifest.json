@@ -1951,9 +1951,19 @@
       "sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895"
     },
     {
+      "path": "public/simulador/gradient.js",
+      "size": 749,
+      "sha256": "9f79360b6cacfdad378e36b73d5723ec28b4dbdaced35e803a13c23e65e42fe1"
+    },
+    {
+      "path": "public/simulador/graphic-fit.js",
+      "size": 550,
+      "sha256": "862705c442e4f9acea1d6f56c681bb7722643f8d29c19ad408b9f39b7f5abdd6"
+    },
+    {
       "path": "public/simulador/graphics.js",
-      "size": 3736,
-      "sha256": "5f4863f2571db9ddd614df21c21c28681336c9fbad4d3f7a419262e307c109c8"
+      "size": 3784,
+      "sha256": "ab6455905c4654754318052e3a2eb495b8b07b3cb1c8e8c960c635bb1f28e3ae"
     },
     {
       "path": "public/simulador/history-shortcuts.js",
@@ -1972,8 +1982,8 @@
     },
     {
       "path": "public/simulador/paint.js",
-      "size": 2825,
-      "sha256": "ca34cc2c4796d2e125f3ec152df39010b0e711afc5896d953e63ee362c63cfb2"
+      "size": 3330,
+      "sha256": "01504af501d7e01caff234b0d6223d517499c6c7702b3c82433ee9e7866725ff"
     },
     {
       "path": "public/simulador/paleta-sublimacao-2026.xml",
@@ -1992,8 +2002,8 @@
     },
     {
       "path": "public/simulador/scene.js",
-      "size": 14629,
-      "sha256": "bc525b14e4963a3429953677fb63b38df1c4fb9ddad28d55b8c1a8537cd9c8f7"
+      "size": 14640,
+      "sha256": "101feb6fd02ff3d0a54e5358451612d8dc163bf22d4d7c6e866140e1af51b210"
     },
     {
       "path": "public/simulador/style.css",
@@ -2007,8 +2017,8 @@
     },
     {
       "path": "public/simulador/symmetry.js",
-      "size": 8734,
-      "sha256": "8ec3ec7f179fc2add48ac2c9063f3174d7c3bacfc443f6e10efedbd01b33a967"
+      "size": 9075,
+      "sha256": "3d76d328215244359ca10ace2eef36b85a5a1513c0a958d24cd01b8bd72e2146"
     },
     {
       "path": "public/simulador/tutorial.css",
@@ -2619,6 +2629,11 @@
       "path": "tests/static-mold-binaries.test.mjs",
       "size": 2621,
       "sha256": "9bd6f59f0f152815575a5eb63b8ca4e5d57e4c6fa4b0d4d7a451489ac1abad7b"
+    },
+    {
+      "path": "tests/studio-auth.test.mjs",
+      "size": 5276,
+      "sha256": "8dd3a40303c2f555cb168f592c7c7079358fc6acebf47994fef7ea00eccb5ad1"
     },
     {
       "path": "tests/technical-fixture.mjs",
