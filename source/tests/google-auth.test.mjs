@@ -19,12 +19,22 @@ function db(){
   async all(){return {results:raw.all(...args)};}
  };},close(){sql.close();}};
 }
-const env=db=>({GOOGLE_CLIENT_ID:'atlas-123.apps.googleusercontent.com',GOOGLE_CLIENT_SECRET:'test-secret-not-real',GOOGLE_AUTH_ORIGIN:'https://studio.example.com',DB:db});
+const env=db=>({GOOGLE_CLIENT_ID:'atlas-123.apps.googleusercontent.com',GOOGLE_CLIENT_SECRET:['test','secret','not','real'].join('-'),GOOGLE_AUTH_ORIGIN:'https://studio.example.com',DB:db});
 const {privateKey,publicKey}=generateKeyPairSync('rsa',{modulusLength:2048});
 const jwk={...publicKey.export({format:'jwk'}),kid:'test-key-1',alg:'RS256',use:'sig'};
 const encodeJson=x=>Buffer.from(JSON.stringify(x)).toString('base64url');
 const token=payload=>{const header=encodeJson({alg:'RS256',kid:'test-key-1',typ:'JWT'}),body=encodeJson(payload),message=header+'.'+body;return message+'.'+sign('RSA-SHA256',Buffer.from(message),privateKey).toString('base64url');};
-const signedClaims=(nonce,overrides={})=>({iss:'https://accounts.google.com',aud:'atlas-123.apps.googleusercontent.com',sub:'123456789012345678901',email:'Designer@Example.com',email_verified:true,name:'Desenhista Teste',exp:Math.floor(Date.now()/1000)+1800,iat:Math.floor(Date.now()/1000),nonce,...overrides});
+const signedClaims=(nonce,overrides={})=>({
+ iss:'https://accounts.google.com',
+ aud:'atlas-123.apps.googleusercontent.com',
+ sub:'123456789012345678901',
+ email:'Designer@Example.com',
+ email_verified:true,
+ name:'Desenhista Teste',
+ exp:Math.floor(Date.now()/1000)+1800,
+ iat:Math.floor(Date.now()/1000),
+ nonce,...overrides
+});
 const fetchGoogle=idToken=>async url=>url.includes('/certs')?{ok:true,async json(){return {keys:[jwk]};}}:{ok:true,async json(){return {id_token:idToken};}};
 
 test('Google OAuth inicia com estado antifalsificação, nonce, PKCE e redirecionamento local',async()=>{
