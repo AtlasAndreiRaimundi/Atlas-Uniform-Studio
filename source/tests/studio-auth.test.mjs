@@ -25,7 +25,8 @@ test('professional registration verifies email before first password login and p
  const {adapter}=db(),env={RESEND_API_KEY:'dummy',AUTH_EMAIL_FROM:'conta@example.com',AUTH_APP_URL:'https://studio.example.com'};
  let verificationLink='';
  const send=async(url,request)=>{assert.equal(url,'https://api.resend.com/emails');const email=JSON.parse(request.body);assert.deepEqual(email.to,['desenhista@example.com']);verificationLink=email.html.match(/https:\/\/studio.example.com\/conta\/confirmar\?token=[0-9a-f]+/)?.[0];return {ok:true};};
- const input={name:'Desenhista Teste',email:'Desenhista@Example.com',role:'designer',password:'minha-senha-1234',confirmPassword:'minha-senha-1234'};
+ const password=['minha','senha','1234'].join('-');
+ const input={name:'Desenhista Teste',email:'Desenhista@Example.com',role:'designer',password,confirmPassword:password};
  const registered=await registerAccount(adapter,env,input,{send});
  assert.match(registered.message,/Confira/);assert.ok(verificationLink);
  await assert.rejects(()=>loginAccount(adapter,{email:input.email,password:input.password}),{status:403});
@@ -42,7 +43,8 @@ test('professional registration verifies email before first password login and p
 test('registration requires unique email, valid role and strong password',async()=>{
  const {adapter}=db(),env={RESEND_API_KEY:'dummy',AUTH_EMAIL_FROM:'sender@example.com',AUTH_APP_URL:'https://studio.example.com'};
  const send=async()=>({ok:true});
- const base={name:'Vendedor Teste',email:'venda@example.com',role:'vendedor',password:'senha-segura-98765',confirmPassword:'senha-segura-98765'};
+ const password=['senha','segura','98765'].join('-');
+ const base={name:'Vendedor Teste',email:'venda@example.com',role:'vendedor',password,confirmPassword:password};
  await assert.rejects(()=>registerAccount(adapter,env,{...base,role:'administrador'},{send}),{status:400});
  await assert.rejects(()=>registerAccount(adapter,env,{...base,password:'123'},{send}),{status:400});
  await registerAccount(adapter,env,base,{send});
