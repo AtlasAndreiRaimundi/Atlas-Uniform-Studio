@@ -6,9 +6,9 @@
  <meta name="description" content="Crie seu uniforme ATLAS em 3D com fontes exclusivas, paleta de sublimação e grafismos editáveis.">
  <meta name="robots" content="noindex,nofollow">
  <link rel="icon" href="/favicon.ico?v=atlas-20261024" type="image/x-icon" sizes="16x16 32x32 48x48 64x64"><link rel="icon" href="/atlas-favicon-32.png?v=atlas-20261024" type="image/png" sizes="32x32"><link rel="icon" href="/atlas-favicon.svg?v=atlas-20261024" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=atlas-20261024" sizes="180x180">
- <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="/fonts.css"><link rel="stylesheet" href="/interface-theme.css?v=2"><link rel="stylesheet" href="/studio-navigation.css?v=1"><link rel="stylesheet" href="./atlas.css?v=8"><script src="/interface-theme.js?v=2"></script><script type="module" src="/studio-navigation-init.js?v=1"></script>
+ <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="/fonts.css"><link rel="stylesheet" href="/interface-theme.css?v=2"><link rel="stylesheet" href="/studio-navigation.css?v=1"><link rel="stylesheet" href="./atlas.css?v=graphic-proportion-20261105"><script src="/interface-theme.js?v=2"></script><script type="module" src="/studio-navigation-init.js?v=1"></script>
  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
- <script type="module" src="./app.js?v=undo-20261104"></script>
+ <script type="module" src="./app.js?v=graphic-proportion-20261105"></script>
  <link rel="stylesheet" href="./tutorial.css?v=1">
 <link rel="stylesheet" href="/atlas-brand.css?v=1"></head>
 <body>
@@ -59,6 +59,7 @@
      <div class="graphic-color-choice"><span>Cor escolhida para o grafismo</span><button id="graphic-color" type="button" class="color-sample" aria-label="Escolher cor do grafismo"></button><small id="graphic-color-hint">Selecione uma cor da paleta para adicionar novos grafismos.</small></div>
      <div id="pattern-library" class="pattern-grid"></div>
      <label class="upload advanced-graphic-upload" for="advanced-graphic-upload"><span data-icon="upload"></span><strong>Importar grafismo SVG</strong><small>Grafismos Avançados · SVG vetorial até 2 MB, com cor escolhida na paleta e proporção original.</small></label><input type="file" id="advanced-graphic-upload" accept="image/svg+xml,.svg" hidden>
+      <button id="open-graphic-multi" class="button subtle full" type="button"><span data-icon="copy"></span>Aplicar / copiar grafismo para outros painéis</button><p class="small-note">Copie do painel atual ou escolha outro painel como origem. Medidas físicas, cor e ângulo são preservados.</p>
     <div class="tip"><span data-icon="move"></span><p>Selecione uma camada à direita para ajustar sua cor, posição e ordem.</p></div>
    </section>
    <section data-section="text" hidden>
@@ -93,6 +94,14 @@
     <p id="personalization-note" class="small-note" hidden></p><div id="text-properties" hidden><label id="layer-text-field" class="field compact">Texto<input id="layer-text" maxlength="80"></label><label class="field compact">Fonte<select id="layer-font"></select></label></div>
     <label id="layer-color-field" class="inline-field">Cor do elemento<button id="layer-color" type="button" class="color-sample" aria-label="Escolher cor do elemento"></button></label>
     <label class="range-field"><span>Tamanho <output id="size-output"></output></span><input id="layer-size" aria-label="Tamanho do elemento" type="range" min="4" max="180" step="1"></label>
+     <div id="graphic-dimensions" class="graphic-dimensions" hidden>
+      <label class="side-copy-check"><input type="checkbox" id="graphic-keep-aspect" checked>Manter proporção original do grafismo</label>
+      <div class="graphic-measures">
+       <label class="field compact">Largura (cm)<input id="graphic-width-cm" type="number" min="0.01" max="600" step="0.1" inputmode="decimal"></label>
+       <label class="field compact">Altura (cm)<input id="graphic-height-cm" type="number" min="0.01" max="600" step="0.1" inputmode="decimal"></label>
+      </div>
+      <p id="graphic-dimension-note" class="small-note">A proporção original é mantida ao redimensionar.</p>
+     </div>
     <p id="proportion-note" class="small-note" hidden>Proporção travada: largura e altura mudam juntas.</p><label id="rotation-field" class="range-field"><span>Rotação <output id="rotation-output"></output></span><input id="layer-rotation" aria-label="Rotação do elemento" type="range" min="-180" max="180" step="1"></label>
     <label id="pattern-mirror-field" class="side-copy-check" hidden><input id="layer-mirror" type="checkbox">Espelhar grafismo na horizontal</label><label class="range-field"><span>Opacidade <output id="opacity-output"></output></span><input id="layer-opacity" aria-label="Opacidade do elemento" type="range" min="10" max="100" step="1"></label>
     <div class="position-fields"><label class="field compact">Horizontal (%)<input id="layer-x" type="number" min="0" max="100" step=".1"></label><label class="field compact">Vertical (%)<input id="layer-y" type="number" min="0" max="100" step=".1"></label></div>
@@ -140,6 +149,19 @@
   </div>
   <div class="side-copy-footer"><button id="side-copy-cancel" class="button subtle">Cancelar</button><button id="side-copy-apply" class="button dark" disabled>Aplicar cópia única</button></div>
  </dialog>
+ <dialog id="graphic-multi-dialog" aria-labelledby="graphic-multi-title">
+   <div class="dialog-head"><div><p class="eyebrow">GRAFISMOS / PAINÉIS</p><h2 id="graphic-multi-title">Copiar sem deformar.</h2></div><button id="graphic-multi-close" class="icon-button" type="button" aria-label="Fechar cópia de grafismos" data-icon="close"></button></div>
+   <div class="dialog-scroll graphic-multi-dialog-body">
+    <p class="muted">Selecione um grafismo em qualquer painel e aplique em quantos painéis precisar. Medidas em centímetros e proporções são mantidas mesmo em peças de formatos diferentes.</p>
+    <label class="field">Copiar do painel<select id="graphic-multi-source"></select></label>
+    <label class="field">Grafismo de origem<select id="graphic-multi-graphic"></select></label>
+    <fieldset class="graphic-multi-destinations"><legend>Painéis de destino</legend><div id="graphic-multi-destinations"></div></fieldset>
+    <button id="graphic-multi-all" class="button subtle" type="button">Selecionar / desmarcar todos</button>
+    <p id="graphic-multi-summary" class="small-note" role="status"></p>
+    <p class="small-note">A cópia preserva tamanho físico, cor, opacidade, rotação e posição relativa. Caso algum destino não comporte essas medidas, o sistema avisa sem achatar a arte. A simetria permanece uma ferramenta independente.</p>
+   </div>
+   <div class="side-copy-footer"><button id="graphic-multi-cancel" type="button" class="button subtle">Cancelar</button><button id="graphic-multi-apply" type="button" class="button dark" disabled>Copiar para painéis selecionados</button></div>
+  </dialog>
  <dialog id="palette-dialog"><div class="dialog-head"><div><p class="eyebrow">PALETA SUBLIMAÇÃO 2026</p><h2>Escolha a cor.</h2></div><button id="close-palette" class="icon-button" aria-label="Fechar paleta" data-icon="close"></button></div><div class="dialog-scroll"><input id="palette-search" class="palette-search" placeholder="Buscar pelo nome, RGB ou PANTONE" aria-label="Buscar na paleta"><div id="palette-colors" class="palette-grid"></div><p class="small-note">Os códigos originais são preservados. Cores LAB e especiais têm uma aproximação para a tela; confirme o resultado na impressão.</p></div></dialog>
  <dialog id="designs-dialog"><div class="dialog-head"><div><p class="eyebrow">SUAS CRIAÇÕES</p><h2>Meus uniformes.</h2></div><button id="close-designs" class="icon-button" aria-label="Fechar meus uniformes" data-icon="close"></button></div><div class="dialog-scroll"><input id="design-search" class="palette-search" placeholder="Buscar pelo nome do uniforme" aria-label="Buscar uniforme"><div id="design-list" class="design-list"></div></div></dialog>
  <noscript>Ative o JavaScript para usar o simulador de uniformes.</noscript>

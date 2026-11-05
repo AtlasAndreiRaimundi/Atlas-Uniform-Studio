@@ -92,3 +92,22 @@ Esta integração preserva o escopo do teste sem exportação técnica editável
 - Degradês e grafismos importados entram no histórico de desfazer/refazer e nas
   versões salvas. O servidor restringe os degradês às peças de tecido compatíveis
   e valida vetores/cores antes do salvamento.
+
+## Proporção original e cópia dos grafismos (05/11/2026)
+
+- Os grafismos de posições 02 (Linha vertical), 05 (Listras horizontais),
+  10 (Transversal dupla) e 17 (Recortes nos ombros) não aparecem mais na
+  biblioteca. Projetos antigos continuam exibindo seus respectivos desenhos.
+- Novos grafismos SVG e procedurais são criados em centímetros, respeitando
+  a proporção natural inclusive nos filetes estreitos. O formato do painel
+  não redimensiona ou comprime o grafismo por conta própria.
+- Proporção original fica bloqueada por padrão. Largura/altura (cm) são
+  editáveis; ao desligar a trava, cada medida pode ser ajustada livremente.
+- A função "Aplicar / copiar grafismo para outros painéis" permite selecionar
+  outro painel como origem e marcar diversos destinos. Cor, rotação,
+  opacidade, posição relativa e medidas físicas são mantidas.
+- Se o desenho não puder ser copiado com o mesmo tamanho dentro dos limites
+  existentes do painel, a operação inteira é recusada sem deformação
+  silenciosa nem exclusão de elementos existentes.
+- Os novos atributos são preservados no histórico e na validação do servidor.
+  Grafismos antigos mantêm leitura e podem ser normalizados ao serem editados.
