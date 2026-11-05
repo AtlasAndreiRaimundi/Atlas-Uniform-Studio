@@ -10,7 +10,7 @@ eventos de ponteiro. Os traços ficam atrás do uniforme e dos controles.
 
 ## Fluxo
 
-1. Entre com a conta ChatGPT. A plataforma fornece a identidade e o e-mail.
+1. Entre com Google (quando configurado) ou com a conta ChatGPT existente. Perfis Google escolhem Designer/Vendedor no primeiro acesso.
 2. Defina a assinatura profissional em seu perfil.
 3. Use **Nova pasta** para organizar por cliente ou equipe. Dentro dela, crie
    projetos com nome e cliente opcional; projetos sem pasta também são aceitos.
@@ -32,9 +32,7 @@ eventos de ponteiro. Os traços ficam atrás do uniforme e dos controles.
 
 A publicação preserva a audiência pública configurada no Site. Projetos e
 pastas exigem autenticação por conta; links de apresentação concedem acesso
-somente à peça ou proposta correspondente. A autenticação disponível nesta
-hospedagem é Sign in with ChatGPT; não há senha própria ou envio de códigos por
-e-mail feito pelo aplicativo.
+somente à peça ou proposta correspondente. A integração Google OpenID Connect utiliza autenticação do Google, sem senhas próprias nem códigos por e-mail. Enquanto a integração não for configurada, a hospedagem mantém Sign in with ChatGPT.
 
 ## Pastas de projetos
 
@@ -415,3 +413,32 @@ ou conceder acesso a esses clientes pelo compartilhamento do Site.
 A guia **Orçamentos** calcula camiseta + calção por kit, quantidade, desconto e aplicações, com vendedor obrigatório, apresentação opcional, salvamento na conta e conferência para imprimir/salvar PDF. Reutiliza a tabela Anexo01/2026 dos pedidos. Preços ausentes não são presumidos.
 
 O simulador volta a usar somente o KIT EDGE2027 existente, com mapeamento local dos19 painéis. Bases excluídas não retornam. [Implementação, segurança e limites de validação](docs/orcamentos-2026-10-31.md).
+
+## Login com Google (pendente de credenciais de produção)
+
+Foi preparado o fluxo OpenID Connect Authorization Code + PKCE S256, com estado
+antifalsificação e nonce por tentativa, validação da assinatura RS256 via JWKS
+oficial do Google, verificação de issuer/audience/expiração/e-mail verificado,
+identificação pelo Google `sub` (nunca pelo e-mail), sessão de sete dias no D1
+com cookie HttpOnly/Secure/SameSite=Lax, logout revogável e seleção inicial de
+perfil Designer ou Vendedor. Esses papéis não atribuem privilégios administrativos.
+O login ChatGPT existente continua disponível; pastas e pedidos antigos não
+são transferidos automaticamente por coincidência de e-mail.
+
+Antes de habilitar o botão em produção:
+
+1. Criar credenciais OAuth 2.0 do tipo **Aplicativo da Web** no Google Cloud.
+2. Adicionar como URI de redirecionamento exata:
+   `https://SEU-DOMINIO/api/auth/google/callback`.
+3. Aplicar a migração `drizzle/0016_google_auth.sql` ao D1 da hospedagem.
+4. Configurar `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (segredo no Worker)
+   e `GOOGLE_AUTH_ORIGIN=https://SEU-DOMINIO` (sem barra final).
+5. Garantir acesso externo ao domínio. Hospedagens com audiência privada
+   podem impedir que o retorno do Google alcance o aplicativo.
+6. Testar autenticação real, definição de perfil, salvamento de projeto,
+   expiração de sessão e saída no ambiente público.
+
+O botão Google permanece oculto até haver credenciais e conexão D1. O acesso
+anterior via ChatGPT é o caminho de contingência. A PR #30 (cadastro próprio por
+senha) é uma alternativa em rascunho e utiliza outra migração 0016; **não deve
+ser integrada simultaneamente sem reconciliar as migrações**.

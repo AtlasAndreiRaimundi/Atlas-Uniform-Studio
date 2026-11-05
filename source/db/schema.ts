@@ -137,3 +137,15 @@ export const salesQuotations=sqliteTable('sales_quotations',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),documentJson:text('document_json').notNull(),
  version:integer('version').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
 },t=>[index('sales_quotations_owner_updated_idx').on(t.ownerId,t.updatedAt),uniqueIndex('sales_quotations_share_token_idx').on(t.shareToken)]);
+
+export const googleAccounts=sqliteTable('google_accounts',{
+  id:text('id').primaryKey(),email:text('email').notNull(),
+  displayName:text('display_name').notNull(),role:text('role'),
+  createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
+});
+export const googleSessions=sqliteTable('google_sessions',{
+  tokenHash:text('token_hash').primaryKey(),
+  userId:text('user_id').notNull().references(()=>googleAccounts.id,{onDelete:'cascade'}),
+  expiresAt:integer('expires_at').notNull(),
+  createdAt:text('created_at').notNull(),
+},t=>[index('google_sessions_user_idx').on(t.userId),index('google_sessions_expires_idx').on(t.expiresAt)]);

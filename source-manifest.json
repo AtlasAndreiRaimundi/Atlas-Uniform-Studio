@@ -19,11 +19,6 @@
       "sha256": "1a5162a69c65d70923b863794b50d5f4a8f5cbc09051084a8849a3909b3455b4"
     },
     {
-      "path": "README.md",
-      "size": 26518,
-      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
-    },
-    {
       "path": "app/acompanhamento/page.tsx",
       "size": 310,
       "sha256": "3f94d0380073f91e0dec35c886065c4ee06fa44c76a26daa01832431dfc226b5"
@@ -67,6 +62,26 @@
       "path": "app/api/admin/templates/route.ts",
       "size": 689,
       "sha256": "81dbba15537b519ab7ac4e79c1430b753b6ada9d83b637bc47061cf69f3a1a0c"
+    },
+    {
+      "path": "app/api/auth/google/callback/route.ts",
+      "size": 1317,
+      "sha256": "bfc945b33208bfc08b9802d9614f5ca4ea69cde8714859b1ca64015fbc1a2870"
+    },
+    {
+      "path": "app/api/auth/google/logout/route.ts",
+      "size": 609,
+      "sha256": "2f5c2586e4f0d99eb1ff17c24a4af623d329dba8e561a0323f074ab547e12279"
+    },
+    {
+      "path": "app/api/auth/google/role/route.ts",
+      "size": 868,
+      "sha256": "2a3ef9772ffb8664ca1fa2dd6acdba97fe3ef4e7f7591cb5cfefbcfaaa0bca25"
+    },
+    {
+      "path": "app/api/auth/google/start/route.ts",
+      "size": 560,
+      "sha256": "c64e9f6a502787648967ee1d98ad090bd7112d9bcccf2fca784596de3e9285b8"
     },
     {
       "path": "app/api/designers/[id]/photo/route.ts",
@@ -350,8 +365,13 @@
     },
     {
       "path": "app/chatgpt-auth.ts",
-      "size": 2550,
-      "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
+      "size": 3318,
+      "sha256": "e7dbc39debf80c9e2ef11e0b0ac3cb7311bdb29a08e6b1c19e095b3aed1c9984"
+    },
+    {
+      "path": "app/conta/configurar/page.tsx",
+      "size": 2424,
+      "sha256": "4ed80f0e94dea3c5a32343c104f6c7493115e9489afc7ce210cc4e4f5c8e8ccd"
     },
     {
       "path": "app/globals.css",
@@ -370,13 +390,13 @@
     },
     {
       "path": "app/login/home-hero.css",
-      "size": 14958,
-      "sha256": "849a353ee662e87c17bbe7f2d45d409ad0f1da062cdd2a1d1526b5965f1b242e"
+      "size": 15412,
+      "sha256": "2914aa78d06750262962f178806b56309895db2c00f2ba6942a8623e7ece2195"
     },
     {
       "path": "app/login/page.tsx",
-      "size": 2892,
-      "sha256": "670c6ac49ee38a2c91c44a0446256d4cc3ec6e6e98d8812f880066e34a5b41c3"
+      "size": 4070,
+      "sha256": "8de198ca5aa2afd93de79586f9c30a8a1d84d2024178e3478d152ff4be89ec0b"
     },
     {
       "path": "app/not-found.tsx",
@@ -445,8 +465,8 @@
     },
     {
       "path": "app/perfil/page.tsx",
-      "size": 296,
-      "sha256": "00d2f0f29408b621fbb498be3d48346c647da2847f0724c6e99beb30cab907c5"
+      "size": 481,
+      "sha256": "1081827153ffa2b901002c83cf7bba4b8f4395d2052e658124c794379db2e382"
     },
     {
       "path": "app/perfil/profile-page.tsx",
@@ -515,8 +535,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 149,
-      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
+      "size": 248,
+      "sha256": "db1026a045490cb62b63bb333b31a1885a1b719bc759e2ba05828cf38dcbf267"
     },
     {
       "path": "components.json",
@@ -840,8 +860,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9945,
-      "sha256": "fed5a4140693bb746cc0b8b3bf3a42421d89f881511fe90b7b10cb8e2a8d45a8"
+      "size": 10607,
+      "sha256": "025cb8d17ca1b765236feff724e89f0c0a24111bfc207476feccaea09ac9d7bb"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -1049,6 +1069,16 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
+      "path": "drizzle/0016_google_auth.sql",
+      "size": 697,
+      "sha256": "82129e8d2335150a82519d9db18756024bd81e83cb886334d269098dc0a3ed25"
+    },
+    {
+      "path": "drizzle/meta/_journal.json",
+      "size": 2520,
+      "sha256": "2a393beae80f5d308de0e0f76a505b9244109dcd2a68634b73153f6c82d8c0a2"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1129,9 +1159,9 @@
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
     },
     {
-      "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+      "path": "drizzle/meta/0016_snapshot.json",
+      "size": 46040,
+      "sha256": "38ec169e9c48d196700f7b7a4543b3b025337efd09027d269e10746169c292cb"
     },
     {
       "path": "eslint.config.mjs",
@@ -1222,6 +1252,11 @@
       "path": "lib/garment-fit.mjs",
       "size": 2393,
       "sha256": "38f0214b1e2d96501580c4ea8f52133283789696583d385ee5164b6b58967608"
+    },
+    {
+      "path": "lib/google-auth.mjs",
+      "size": 9569,
+      "sha256": "238b09583bbad0fc03c7053b9d947b4e4e174a9a4898091827d5f39cbea985f8"
     },
     {
       "path": "lib/installed-templates.mjs",
@@ -1790,8 +1825,8 @@
     },
     {
       "path": "public/project-session.js",
-      "size": 22814,
-      "sha256": "8171577c8f499381942cca01f27a9ec1eabfa567c0be8d6feef0f4250cc25595"
+      "size": 22800,
+      "sha256": "db1995dff9d7643e2201dfd405998e24c5e077d98c86d9772965ae80032de0d8"
     },
     {
       "path": "public/proposal-client.js",
@@ -1825,8 +1860,8 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 48350,
-      "sha256": "936e8cbe80d088d306d76a6339e0590a7438f25d0633edf98b95f3ff15a550a2"
+      "size": 48336,
+      "sha256": "2f37d6075e1775419fe33b0724c6fa8e8bf42c0d4303dac1d4610a408319e476"
     },
     {
       "path": "public/simulador/atlas.css",
@@ -1864,14 +1899,14 @@
       "sha256": "c02336711433a41fac4f484e3a07b0670e69e62edddc068922a0b000a4457b66"
     },
     {
-      "path": "public/simulador/fonts/LICENSE.txt",
-      "size": 3859,
-      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
-    },
-    {
       "path": "public/simulador/fonts/classic.ttf",
       "size": 380660,
       "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
+    },
+    {
+      "path": "public/simulador/fonts/LICENSE.txt",
+      "size": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
     },
     {
       "path": "public/simulador/fonts/mnz-autumn-26.ttf",
@@ -2049,6 +2084,11 @@
       "sha256": "c35cdd49f5008a35779d3ded86d4c7c2995be7e5b65ad4dba231426a7e0c61ff"
     },
     {
+      "path": "public/vendor/exceljs/exceljs.min.js",
+      "size": 947702,
+      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+    },
+    {
       "path": "public/vendor/exceljs/LICENSE",
       "size": 1084,
       "sha256": "2ed526b7e7c7681dc2347995b5036ddf73dc27d0539cdea59b6d4a72b63a57a0"
@@ -2059,9 +2099,9 @@
       "sha256": "fc4027cc263fcffbc0b2b9b7fda248a9d4003f64d11ce967f013a8df2e514c63"
     },
     {
-      "path": "public/vendor/exceljs/exceljs.min.js",
-      "size": 947702,
-      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+      "path": "public/vendor/fontkit/fontkit.umd.min.js",
+      "size": 758440,
+      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
     },
     {
       "path": "public/vendor/fontkit/README.md",
@@ -2069,9 +2109,9 @@
       "sha256": "7315fcc54511f5ffc906969c39333f93cd47f5217ab014fe45acff14bd5ec4c0"
     },
     {
-      "path": "public/vendor/fontkit/fontkit.umd.min.js",
-      "size": 758440,
-      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
+      "path": "public/vendor/jszip/jszip.min.js",
+      "size": 97781,
+      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
     },
     {
       "path": "public/vendor/jszip/LICENSE.markdown",
@@ -2084,19 +2124,9 @@
       "sha256": "1d89f128bc9a10c160421509788367e6d121da56603e0dc44820114c8e2cc007"
     },
     {
-      "path": "public/vendor/jszip/jszip.min.js",
-      "size": 97781,
-      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
-    },
-    {
       "path": "public/vendor/mp4-muxer/LICENSE",
       "size": 1065,
       "sha256": "75c54aae7ef6ad652f684f9dd3b71e4dcef86ccebd88cf441ceed7f5eec037c5"
-    },
-    {
-      "path": "public/vendor/mp4-muxer/README.md",
-      "size": 278,
-      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
     },
     {
       "path": "public/vendor/mp4-muxer/mp4-muxer.mjs",
@@ -2104,14 +2134,14 @@
       "sha256": "d2c4c782f180c86ed30b1f5d9487a34a0d370bf9b4535285734ea187d38f9bb5"
     },
     {
+      "path": "public/vendor/mp4-muxer/README.md",
+      "size": 278,
+      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
+    },
+    {
       "path": "public/vendor/pdf-lib/LICENSE.md",
       "size": 1070,
       "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
-    },
-    {
-      "path": "public/vendor/pdf-lib/README.md",
-      "size": 105,
-      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/pdf-lib/pdf-lib.min.js",
@@ -2119,9 +2149,9 @@
       "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
     },
     {
-      "path": "public/vendor/three/LICENSE",
-      "size": 1081,
-      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+      "path": "public/vendor/pdf-lib/README.md",
+      "size": 105,
+      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/three/build/three.core.min.js",
@@ -2157,6 +2187,11 @@
       "path": "public/vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
       "size": 35539,
       "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
+    },
+    {
+      "path": "public/vendor/three/LICENSE",
+      "size": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
     },
     {
       "path": "public/video-export.js",
@@ -2197,6 +2232,11 @@
       "path": "public/workspace-hub.js",
       "size": 8249,
       "sha256": "5b8c61f4a81cc8c2fd4a795f83aec9ebeae99e6b44fe214c7bec2e830cd8239b"
+    },
+    {
+      "path": "README.md",
+      "size": 28359,
+      "sha256": "f3d91bb5a6a2f8f72499742105925d7a9c3516d42db8925700c87056da7a03fb"
     },
     {
       "path": "scripts/build-verified.sh",
@@ -2407,6 +2447,11 @@
       "path": "tests/four-view-export.test.mjs",
       "size": 12480,
       "sha256": "5bcef35155e24dca4d606c88442d736e770cf880675fae16165889d43af7aa98"
+    },
+    {
+      "path": "tests/google-auth.test.mjs",
+      "size": 5771,
+      "sha256": "784567c6231d37148b2b037445908bfc024581aaedd47737932d0da819350862"
     },
     {
       "path": "tests/interface-theme.test.mjs",
@@ -2624,14 +2669,14 @@
       "sha256": "a4c1cc83b63ef9d39641d3babaefffa063dccbbc93338e18017b5013d713163e"
     },
     {
-      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
-      "size": 1063,
-      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
-    },
-    {
       "path": "vendor/shadcn-tailwind-4.13.0.css",
       "size": 16041,
       "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
+    },
+    {
+      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
+      "size": 1063,
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
     },
     {
       "path": "vite.config.ts",
