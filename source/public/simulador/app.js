@@ -208,7 +208,7 @@ function changeView(view,{select=true}={}){if(!scene)return;if(select&&!scene.cu
 function setMode(mode){scene?.setMode(mode);for(const id of ['edit','orbit']){$(`mode-${id}`).classList.toggle('active',mode===id);$(`mode-${id}`).setAttribute('aria-pressed',String(mode===id));}$('interaction-hint').textContent=mode==='edit'?'Arraste a arte para mover · arraste o fundo para girar':'Arraste o uniforme para girar';}
 
 async function api(path,options={}){const response=await fetch(path,{credentials:'same-origin',...options,headers:{...(options.body&&!(options.body instanceof FormData)?{'Content-Type':'application/json'}:{}),...options.headers}});let data;try{data=await response.json();}catch{throw Error('O servidor retornou uma resposta inválida. Tente novamente.');}if(!response.ok){const error=Error(data.error||'Não foi possível concluir.');error.status=response.status;throw error;}return data;}
-async function needLogin(){await saveNow();sessionStorage.setItem('mnz-simulator-login-draft',String(Date.now()));window.top.location.href='/signin-with-chatgpt?return_to=%2Fsimulador';}
+async function needLogin(){await saveNow();sessionStorage.setItem('mnz-simulator-login-draft',String(Date.now()));window.top.location.href='/login?return_to=%2Fsimulador';}
 async function captureCreation(){
  if(!scene)throw Error('A prévia 3D precisa estar disponível para conferir o uniforme.');
  const captured=clone(state),capturedRevision=revision,position=scene.camera.position.clone(),target=scene.controls.target.clone(),images=[];
