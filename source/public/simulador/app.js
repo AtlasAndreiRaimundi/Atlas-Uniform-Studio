@@ -5,6 +5,7 @@ import {UniformScene} from './scene.js?v=edge-20261031';
 import {ELITE_MODEL,eliteState,fetchEliteModel} from './elite.js?v=edge-20261031';
 import {COLORS,DEFAULT_BASE,DEFAULT_ACCENT,applyColor,paletteColor} from './catalog.js';
 import {GRAPHICS} from './graphics.js';
+import {tintSVGDataUrl} from './svg-graphics.js';
 import {isShirtFillPanel,GRADIENT_ANGLES} from './gradient.js';
 import {presentationMap} from './presentation-bridge.js?v=edge-20261031';
 import {setupSideCopy} from './symmetry-ui.js';
@@ -99,7 +100,7 @@ function renderProperties(){
  for(const [id,value] of [['layer-name',l.name],['layer-text',l.text??''],['layer-font',l.font??FONTS[0].id],['layer-size',Math.round(l.w*100)],['layer-rotation',l.rotation],['layer-opacity',l.opacity*100],['layer-x',+(l.x*100).toFixed(1)],['layer-y',+(l.y*100).toFixed(1)]]){if(document.activeElement!==$(id))$(id).value=value;}
  setColorChip($('layer-color'),l.colorId||l.color);
  $('size-output').value=`${(l.w*p.cm.w).toFixed(1)} cm`;$('rotation-output').value=`${Math.round(l.rotation)}°`;$('opacity-output').value=`${Math.round(l.opacity*100)}%`;
- $('text-properties').hidden=l.type!=='text';$('layer-color-field').hidden=l.type==='image';$('pattern-mirror-field').hidden=l.type!=='pattern';$('layer-mirror').checked=l.mirrorX===true;$('layer-mirror').disabled=l.locked;
+ $('text-properties').hidden=l.type!=='text';$('layer-color-field').hidden=l.type==='image';$('pattern-mirror-field').hidden=!['pattern','svg-graphic'].includes(l.type);$('layer-mirror').checked=l.mirrorX===true;$('layer-mirror').disabled=l.locked;
  const role=personalizationRole(l);$('rotation-field').hidden=l.type==='text';$('layer-text-field').hidden=!!role;$('proportion-note').hidden=l.type!=='text';$('personalization-note').hidden=!role;$('personalization-note').textContent=role?'Exibição fixa: '+l.text+'. Nomes e números reais vêm da lista do pedido.':'';
  $('lock').classList.toggle('active',l.locked);$('lock').lastElementChild.textContent=l.locked?'Fixado':'Fixar';
  for(const id of ['layer-size','layer-rotation','layer-x','layer-y','center-x'])$(id).disabled=l.locked||(id==='layer-rotation'&&l.type==='text');
@@ -108,7 +109,7 @@ function renderProperties(){
 function renderWarnings(){const w=warnings(state);$('warning-count').textContent=w.length?`${w.length} ${w.length===1?'aviso':'avisos'}`:'Sem avisos';$('warning-button').classList.toggle('warning',!!w.length);$('warning-button').firstElementChild.replaceChildren(...icon(w.length?'warning':'check').childNodes);$('warning-list').replaceChildren();if(!w.length)$('warning-list').append(node('p','warning-empty','Nenhum alerta de resolução ou de borda neste desenho. Medidas e costuras de produção ainda precisam de conferência.'));for(const item of w){const b=node('button',`warning-row ${item.level}`,item.message);b.onclick=()=>{state.active=item.panel;state.selected=item.layer;$('warning-list').hidden=true;render();};$('warning-list').append(b);}}
 function setColorChip(button,value){const c=paletteColor(value);if(!c)return;button.value=c.id;button.style.backgroundColor=c.hex;button.title=c.name+' · '+c.hex.toUpperCase()+(c.approximate?' · Aproximação de tela':'');}
 function paletteButton(c,full=false){const b=node('button',full?'palette-card':'');b.type='button';b.dataset.colorId=c.id;b.dataset.search=(c.name+' '+c.hex+' '+c.space).toLowerCase();b.title=c.name+' · '+c.hex.toUpperCase()+(c.approximate?' · Aproximação de tela':'');b.setAttribute('aria-label',c.name+(c.approximate?' · aproximação':'')+' · '+c.hex);if(full){const sample=node('span','palette-sample');sample.style.backgroundColor=c.hex;b.append(sample,node('strong',null,c.name),node('small',null,c.space+(c.approximate?' · referência de tela':'')));}else b.style.backgroundColor=c.hex;return b;}
-function chooseColor(c){if(typeof paletteTarget==='function'){paletteTarget(c);$('palette-dialog').close();return;}if(paletteTarget==='base')applyColor(activePanel(state),c.id);if(paletteTarget==='layer'){const l=selectedLayer(state);if(l)applyColor(l,c.id);}if(paletteTarget==='trim'){state.trim=c.hex;state.trimColorId=c.id;for(const p of state.panels)if(p.trim)applyColor(p,c.id);}commit();$('palette-dialog').close();}
+function chooseColor(c){if(typeof paletteTarget==='function'){paletteTarget(c);$('palette-dialog').close();return;}if(paletteTarget==='base')applyColor(activePanel(state),c.id);if(paletteTarget==='layer'){const l=selectedLayer(state);if(l&&l.type==='svg-graphic'){l.src=tintSVGDataUrl(l.src,c.hex);applyColor(l,c.id);imageFor(l.src).then(()=>commit()).catch(error=>toast(error.message));$('palette-dialog').close();return;}if(l)applyColor(l,c.id);}if(paletteTarget==='trim'){state.trim=c.hex;state.trimColorId=c.id;for(const p of state.panels)if(p.trim)applyColor(p,c.id);}commit();$('palette-dialog').close();}
 function openPalette(target){paletteTarget=target;$('palette-search').value='';$('palette-colors').querySelectorAll('button').forEach(b=>b.hidden=false);$('palette-dialog').showModal();$('palette-search').focus();}
 function setupLibrary(){
  for(const c of COLORS){const b=paletteButton(c);b.onclick=()=>{applyColor(activePanel(state),c.id);commit();};$('base-palette').append(b);const card=paletteButton(c,true);card.onclick=()=>chooseColor(c);$('palette-colors').append(card);}
@@ -121,6 +122,18 @@ function setupLibrary(){
    };$('pattern-library').append(b);}
  $('graphic-group').onchange=filterGraphicLibrary;filterGraphicLibrary();
   $('graphic-color').onclick=()=>openPalette(c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);renderGraphicPicker();});
+  $('advanced-graphic-upload').onchange=async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;
+   const apply=async colorId=>{try{
+    if(file.size>2*1024*1024)throw Error('Use um SVG de até 2 MB.');
+    const result=sanitizeSVG(await file.text()),color=paletteColor(colorId);
+    if(!color)throw Error('Escolha a cor do grafismo.');
+    const src=tintSVGDataUrl('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(result.source),color.hex);
+    await imageFor(src);const p=activePanel(state),w=.35,h=clamp(w*(result.h/result.w)*(p.cm.w/p.cm.h),.025,.8);
+    const imported=layer('svg-graphic',{name:file.name.slice(0,80),src,pixels:{w:result.w,h:result.h},vector:true,w,h,color:color.hex,colorId:color.id});
+    p.layers.push(imported);state.selected=imported.id;graphicTargets.set(p.id,imported.id);commit();toast('Grafismo Avançado importado sem deformação e com a cor escolhida.');
+   }catch(error){toast(error.message);}};
+   if(graphicColorId)await apply(graphicColorId);else openPalette(async c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);await apply(c.id);});
+  };
  $('graphic-target').onchange=e=>{newGraphicPanel=null;state.selected=e.target.value;graphicTargets.set(state.active,e.target.value);render();};
  $('graphic-new').onclick=()=>{state.selected=null;newGraphicPanel=state.active;render();};$('graphic-cancel-new').onclick=()=>{newGraphicPanel=null;state.selected=graphicTarget(state,graphicTargets.get(state.active))?.id??null;render();};
  for(const target of ['new-font','layer-font'])$(target).replaceChildren(...FONTS.map(f=>{const o=node('option',null,f.label);o.value=f.id;return o;}));
@@ -178,7 +191,7 @@ function setupControls(){
  $('layer-text').oninput=e=>modify(l=>{if(!personalizationRole(l))l.text=e.target.value.slice(0,80);normalizeText(l);},{finish:false});$('layer-text').onchange=commit;
  $('layer-font').onchange=e=>modify(l=>l.font=FONTS.some(f=>f.id===e.target.value)?e.target.value:FONTS[0].id);
  $('layer-color').onclick=()=>openPalette('layer');
- $('layer-mirror').onchange=e=>modify(l=>{if(l.type==='pattern'&&!l.locked)l.mirrorX=e.target.checked;});
+ $('layer-mirror').onchange=e=>modify(l=>{if(['pattern','svg-graphic'].includes(l.type)&&!l.locked)l.mirrorX=e.target.checked;});
  for(const [id,key] of [['layer-x','x'],['layer-y','y']]){$(id).oninput=e=>modify(l=>{if(!l.locked)l[key]=clamp(Number(e.target.value)/100,0,1);},{finish:false});$(id).onchange=()=>commit();}
  for(const [id,key] of [['panel-width','w'],['panel-height','h']])$(id).onchange=e=>{activePanel(state).cm[key]=clamp(Number(e.target.value),1,300);commit();};
  $('center-x').onclick=()=>modify(l=>{if(!l.locked)l.x=.5;});$('lock').onclick=()=>modify(l=>l.locked=!l.locked);
@@ -253,7 +266,7 @@ async function boot(){
  try{scene=new UniformScene($('viewer'),{deferModel:true,select:selectPanel,selection:pickLayer,dragStart:()=>{gesture=true;},dragMove:(x,y)=>modify(l=>move(l,x,y),{finish:false}),dragEnd:()=>{gesture=false;commit();}});if(scene.software)$('interaction-hint').textContent='3D compatível · arraste para editar ou girar';}catch{scene=null;$('webgl-error').hidden=false;setFlat(true);}
  const loaded=await fetchEliteModel(!!scene?.software);let panels=loaded.manifest.panels;if(scene?.software){scene.dispose();scene=null;$('view-3d').disabled=true;$('webgl-error').hidden=false;setFlat(true);toast('Sem aceleração 3D: personalização disponível no mapa 2D do KIT EDGE 2027.');}else if(scene)panels=await scene.loadGLB(loaded.buffer,{preset:ELITE_MODEL,presetPanels:loaded.manifest.panels});if(!restored){state=eliteState(panels);history=new History(state);}
  const query=new URLSearchParams(location.search);if(session&&query.get('design')){const {design}=await api('/api/simulator/designs/'+encodeURIComponent(query.get('design')));if(design.state.model!==ELITE_MODEL)throw Error('Este desenho usa uma base anterior. Seus dados foram preservados; comece um novo uniforme com o KIT EDGE 2027.');state=design.state;designId=design.id;serverVersion=design.version;cloudDirty=false;history=new History(state);}else if(session&&query.get('order')){const source=await api('/api/simulator/from-order/'+encodeURIComponent(query.get('order')));state=source.state;designId=null;serverVersion=null;cloudDirty=true;history=new History(state);toast('Desenho do pedido aberto como nova criação. O pedido original é preservado.');}
- try{await Promise.all(state.panels.flatMap(p=>p.layers).filter(l=>l.type==='image').map(l=>imageFor(l.src)));}catch{toast('Uma logo salva não pôde ser carregada. Envie o arquivo novamente.');}
+ try{await Promise.all(state.panels.flatMap(p=>p.layers).filter(l=>l.type==='image'||l.type==='svg-graphic').map(l=>imageFor(l.src)));}catch{toast('Uma logo salva não pôde ser carregada. Envie o arquivo novamente.');}
  await Promise.all(FONTS.map(f=>document.fonts.load('18px '+f.family)));
  render();if(scene)changeView(activePanel(state).view??'front',{select:false});$('loading').hidden=true;document.querySelector('main').inert=false;$('review').disabled=!scene;$('save-design').disabled=!scene;if(!scene)$('save-design').title='Para salvar na conta e conferir as quatro vistas, ative a aceleração gráfica. A edição 2D continua salva neste navegador.';$('save-status').textContent=db?'Salvo neste navegador':'Somente nesta sessão';
  const tutorial=setupTutorial({setTool,key:STORAGE_KEY,notify:toast,canOffer:()=>!busy&&!cloudSaving&&!gesture});requestAnimationFrame(()=>tutorial.offer());
