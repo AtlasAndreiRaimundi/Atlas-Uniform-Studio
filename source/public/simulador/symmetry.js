@@ -11,10 +11,10 @@ export const sidePairs=s=>{const ids=new Set(visiblePanels(s).map(p=>p.id));retu
 // a saved design: absence of a pair also records the user's choice to disable it.
 export const defaultLiveSymmetry=state=>Object.fromEntries(sidePairs(state).map(pair=>[pair.id,{mode:'mirror',scope:'patterns',colors:false,base:false}]));
 const key=l=>l.copyKey||l.id;
-const included=(l,scope)=>scope==='all'||l.type==='pattern';
+const included=(l,scope)=>scope==='all'||l.type==='pattern'||l.type==='svg-graphic';
 function score(a,b){
  if(a.type!==b.type)return 0;if(key(a)===key(b))return 100;
- if(a.type==='image')return a.src===b.src?80:0;
+ if(a.type==='image'||a.type==='svg-graphic')return a.src===b.src?80:0;
  if(a.type==='pattern'&&a.pattern!==b.pattern)return 0;
  if(a.type==='text'&&!(personalizationRole(a)&&personalizationRole(a)===personalizationRole(b))&&a.text!==b.text)return 0;
  return a.name===b.name?60:40;
@@ -22,7 +22,7 @@ function score(a,b){
 function counterpart(l,candidates,used){let match=null,best=0;for(const candidate of candidates){if(used.has(candidate.id))continue;const value=score(l,candidate);if(value>best){match=candidate;best=value;}}if(match)used.add(match.id);return match;}
 function copiedLayer(original,mirror,id,locked=false){
  const copied={...original,id,copyKey:key(original),locked};if(original.pixels)copied.pixels={...original.pixels};
- if(mirror){copied.x=1-original.x;copied.rotation=original.type==='text'?0:-original.rotation;if(original.type==='pattern')copied.mirrorX=!original.mirrorX;}
+ if(mirror){copied.x=1-original.x;copied.rotation=original.type==='text'?0:-original.rotation;if(['pattern','svg-graphic'].includes(original.type))copied.mirrorX=!original.mirrorX;}
  return normalizeText(copied);
 }
 function limits(state,checkBytes=true){
