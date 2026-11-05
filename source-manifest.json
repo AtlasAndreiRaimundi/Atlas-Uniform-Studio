@@ -411,6 +411,11 @@
       "sha256": "510b2d349faac6290f4853362c71f5109b0b0a2d13ed48042ef7aa6d0550db16"
     },
     {
+      "path": "app/login/studio-auth.css",
+      "size": 1675,
+      "sha256": "c41cf2270d6ef7d66faf805fce504ca0d3091f4fcaf97cc501b8116827c0dd45"
+    },
+    {
       "path": "app/not-found.tsx",
       "size": 284,
       "sha256": "7f60284ba24595f170aca367e01f3a0a99282dffd168fe01e4e31ec851868e59"
@@ -547,8 +552,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 149,
-      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
+      "size": 235,
+      "sha256": "12ae52169f707e3b4bd6eb2112c82104f13db101f3799236c7910653cccf8822"
     },
     {
       "path": "components.json",
@@ -872,8 +877,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9945,
-      "sha256": "fed5a4140693bb746cc0b8b3bf3a42421d89f881511fe90b7b10cb8e2a8d45a8"
+      "size": 11415,
+      "sha256": "df50fbe5b02c2271d1f2282ea124e74eeb90036c9b30eb4b963f761d6d1ab215"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -1081,9 +1086,14 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
+      "path": "drizzle/0016_studio_accounts.sql",
+      "size": 1367,
+      "sha256": "5c4dc45f22080561f833fcb1a90976e5d70eb2ef0d8fd5d75945f2d7342cb1b0"
+    },
+    {
       "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+      "size": 2524,
+      "sha256": "90cbe85f6fbb6db200b7d3c49040e3d33d6307d80fa6a42da8b82fa664cdf50e"
     },
     {
       "path": "drizzle/meta/0000_snapshot.json",
@@ -1164,6 +1174,11 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
+    },
+    {
+      "path": "drizzle/meta/0016_snapshot.json",
+      "size": 49429,
+      "sha256": "b892f4ff79b445c9c4fd21652586ddde6fd096d9dd5c2ff5d6164d54bc23eebb"
     },
     {
       "path": "eslint.config.mjs",
@@ -1337,13 +1352,18 @@
     },
     {
       "path": "lib/simulator-validation.mjs",
-      "size": 7642,
-      "sha256": "9890ebda6cf96a7059b2aada09f2a258532d64346ef4b09965530fd20decb906"
+      "size": 8211,
+      "sha256": "5fc9a1f3d33e64590d9815b59afe2234e65b13fe6476f834b7971d8d4eddc8ce"
     },
     {
       "path": "lib/static-mold-binaries.mjs",
       "size": 1394,
       "sha256": "9ec06932ecc18601e2139ad01e9a5d3260d335faa3c7aa3c4cd5ba68c5b26cff"
+    },
+    {
+      "path": "lib/studio-auth.mjs",
+      "size": 9842,
+      "sha256": "1b9c378867d934b846ddadad59f76702177a581c03f9e9a4661a2949f2ab5ad7"
     },
     {
       "path": "lib/template-generator.mjs",
@@ -1857,13 +1877,13 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 44860,
-      "sha256": "28e94408c3254df9253a7665d3fddd5e1d4bdc64e4d574df1862bed1d045bc84"
+      "size": 46921,
+      "sha256": "82702cb5840893bca7f58d9a73bdcde52addbe2e6138c912823e473d9f64dbef"
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 23984,
-      "sha256": "717ac2f99c834848f0c6fce1a6044ce79299088cbf9ccc80932a6bbcdddce9e5"
+      "size": 24875,
+      "sha256": "bd9a9f3d97bb6832d856499c4747b15297c6415954d54050beeff9db4ae937ce"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1887,8 +1907,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31959,
-      "sha256": "2b9f498673f05113a8191c3d4098b556332c46a190c91a2ecc8676de5e318c93"
+      "size": 33245,
+      "sha256": "bc0ba131fc893deea59929306b7dc0f782cb382f76308a8ae194979a9cdda9e1"
     },
     {
       "path": "public/simulador/elite.js",
