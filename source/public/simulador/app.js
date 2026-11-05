@@ -5,6 +5,8 @@ import {UniformScene} from './scene.js?v=edge-20261031';
 import {ELITE_MODEL,eliteState,fetchEliteModel} from './elite.js?v=edge-20261031';
 import {COLORS,DEFAULT_BASE,DEFAULT_ACCENT,applyColor,paletteColor} from './catalog.js';
 import {GRAPHICS} from './graphics.js';
+import {tintSVGDataUrl} from './svg-graphics.js';
+import {isShirtFillPanel,GRADIENT_ANGLES} from './gradient.js';
 import {presentationMap} from './presentation-bridge.js?v=edge-20261031';
 import {setupSideCopy} from './symmetry-ui.js';
 import {sidePairs,synchronizeLive,disableLiveSymmetry} from './symmetry.js';
@@ -22,7 +24,7 @@ function toast(text){$('toast').textContent=text;$('toast').hidden=false;clearTi
 let STORAGE_KEY='anonymous';
 let state=eliteState(),history=new History(state),scene=null,flat=false,db=null,saveTimer,dragFlat=null,gesture=false,revision=0,savedRevision=0,saveChain=Promise.resolve(),busy=false;
 let session=null,designId=null,serverVersion=null,cloudDirty=true,cloudSaving=null,reviewSnapshot=null,paletteTarget=null,reviewOrderId=null;
-let graphicPanels=state.panels,newGraphicPanel=null;const graphicTargets=new Map();
+let graphicPanels=state.panels,newGraphicPanel=null,graphicColorId=null;const graphicTargets=new Map();
 
 function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open('meinerz-uniform-simulator-v1',1);r.onupgradeneeded=()=>r.result.createObjectStore('projects');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
 function readProject(){return new Promise((resolve,reject)=>{const r=db.transaction('projects').objectStore('projects').get(STORAGE_KEY);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
@@ -50,6 +52,7 @@ function render(){
  $('model-card-title').textContent='KIT EDGE 2027';$('model-card-detail').textContent='Camiseta + calção · 19 painéis';
  setColorChip($('base-color'),p.colorId||p.color);setColorChip($('trim-color'),state.trimColorId||state.trim);const c=paletteColor(p.colorId||p.color);$('base-hex').textContent=c?.name??p.color;$('base-color-description').textContent=c?`${c.hex.toUpperCase()} · ${c.space}${c.approximate?' · Aproximação para a tela':''}`:'';
  $('base-palette').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.colorId===p.colorId));
+  renderGradient(p);
  $('layer-count').textContent=p.layers.length;$('layers-empty').hidden=!!p.layers.length;
  renderLayerList(p);
  $('undo').disabled=history.index===0;$('redo').disabled=history.index===history.items.length-1;
@@ -58,6 +61,15 @@ function render(){
  const activePair=linked.find(pair=>pair.panels.includes(p.id));$('symmetry-notice').hidden=!activePair;
  if(activePair){const settings=state.symmetry[activePair.id],other=state.panels.find(panel=>panel.id===activePair.panels.find(id=>id!==p.id));$('symmetry-notice-title').textContent='Simetria ligada · '+activePair.label;$('symmetry-notice-text').textContent=(settings.scope==='all'?'Os elementos também atualizam em ':'Os grafismos também atualizam em ')+other.label+'.'+(!settings.colors&&!settings.base?' Cores e fundos são independentes.':'');$('symmetry-disable').setAttribute('aria-label','Desligar simetria: '+activePair.label);}
  renderProperties();renderWarnings();updateScene();
+}
+function renderGradient(panel){
+ const allowed=isShirtFillPanel(panel),gradient=allowed?panel.gradient:null;
+ $('shirt-gradient').hidden=!allowed;
+ $('gradient-enabled').checked=!!gradient;
+ $('gradient-options').hidden=!gradient;
+ $('gradient-direction').value=String(gradient?.angle??90);
+ const color=paletteColor(gradient?.toColorId??DEFAULT_ACCENT.id);
+ if(color){setColorChip($('gradient-to-color'),color.id);$('gradient-to-hex').textContent=color.name+' · '+color.hex.toUpperCase();}
 }
 function renderLayerList(panel){
  const graphics=panel.layers.filter(isGraphic),ordered=drawingLayers(panel).reverse(),groups=[];
@@ -74,6 +86,8 @@ function renderGraphicPicker(){
  if(selected&&isGraphic(selected))graphicTargets.set(panel.id,selected.id);
  const target=graphicTarget(state,graphicTargets.get(panel.id)),graphics=panel.layers.filter(isGraphic),adding=newGraphicPanel===panel.id||!target;
  if(target)graphicTargets.set(panel.id,target.id);
+  if(graphicColorId)setColorChip($('graphic-color'),graphicColorId);
+  $('graphic-color-hint').textContent=graphicColorId?'A nova camada usará a cor selecionada, sem importar cores da arte original.':'Ao adicionar um grafismo, escolha sua cor na paleta.';
  $('graphic-target').replaceChildren(...graphics.map((l,i)=>{const o=node('option',null,`${i+1} · ${l.name}${l.locked?' · fixado':''}`);o.value=l.id;return o;}));$('graphic-target').disabled=!graphics.length;if(target)$('graphic-target').value=target.id;
  $('graphic-target-field').hidden=!graphics.length;$('graphic-cancel-new').hidden=newGraphicPanel!==panel.id;$('graphic-new').hidden=adding;
  $('graphic-edit-title').textContent=adding?'1. Adicionar grafismo':'1. Trocar grafismo';$('graphic-action-hint').textContent=adding?'Escolha a nova camada abaixo. Depois, os cliques voltam a trocar o grafismo.':target.locked?'O grafismo está fixado. Desfixe-o para trocar ou adicione outro grafismo.':'Escolher abaixo troca este grafismo. A cor e os ajustes são mantidos.';
@@ -86,7 +100,7 @@ function renderProperties(){
  for(const [id,value] of [['layer-name',l.name],['layer-text',l.text??''],['layer-font',l.font??FONTS[0].id],['layer-size',Math.round(l.w*100)],['layer-rotation',l.rotation],['layer-opacity',l.opacity*100],['layer-x',+(l.x*100).toFixed(1)],['layer-y',+(l.y*100).toFixed(1)]]){if(document.activeElement!==$(id))$(id).value=value;}
  setColorChip($('layer-color'),l.colorId||l.color);
  $('size-output').value=`${(l.w*p.cm.w).toFixed(1)} cm`;$('rotation-output').value=`${Math.round(l.rotation)}°`;$('opacity-output').value=`${Math.round(l.opacity*100)}%`;
- $('text-properties').hidden=l.type!=='text';$('layer-color-field').hidden=l.type==='image';$('pattern-mirror-field').hidden=l.type!=='pattern';$('layer-mirror').checked=l.mirrorX===true;$('layer-mirror').disabled=l.locked;
+ $('text-properties').hidden=l.type!=='text';$('layer-color-field').hidden=l.type==='image';$('pattern-mirror-field').hidden=!['pattern','svg-graphic'].includes(l.type);$('layer-mirror').checked=l.mirrorX===true;$('layer-mirror').disabled=l.locked;
  const role=personalizationRole(l);$('rotation-field').hidden=l.type==='text';$('layer-text-field').hidden=!!role;$('proportion-note').hidden=l.type!=='text';$('personalization-note').hidden=!role;$('personalization-note').textContent=role?'Exibição fixa: '+l.text+'. Nomes e números reais vêm da lista do pedido.':'';
  $('lock').classList.toggle('active',l.locked);$('lock').lastElementChild.textContent=l.locked?'Fixado':'Fixar';
  for(const id of ['layer-size','layer-rotation','layer-x','layer-y','center-x'])$(id).disabled=l.locked||(id==='layer-rotation'&&l.type==='text');
@@ -95,14 +109,31 @@ function renderProperties(){
 function renderWarnings(){const w=warnings(state);$('warning-count').textContent=w.length?`${w.length} ${w.length===1?'aviso':'avisos'}`:'Sem avisos';$('warning-button').classList.toggle('warning',!!w.length);$('warning-button').firstElementChild.replaceChildren(...icon(w.length?'warning':'check').childNodes);$('warning-list').replaceChildren();if(!w.length)$('warning-list').append(node('p','warning-empty','Nenhum alerta de resolução ou de borda neste desenho. Medidas e costuras de produção ainda precisam de conferência.'));for(const item of w){const b=node('button',`warning-row ${item.level}`,item.message);b.onclick=()=>{state.active=item.panel;state.selected=item.layer;$('warning-list').hidden=true;render();};$('warning-list').append(b);}}
 function setColorChip(button,value){const c=paletteColor(value);if(!c)return;button.value=c.id;button.style.backgroundColor=c.hex;button.title=c.name+' · '+c.hex.toUpperCase()+(c.approximate?' · Aproximação de tela':'');}
 function paletteButton(c,full=false){const b=node('button',full?'palette-card':'');b.type='button';b.dataset.colorId=c.id;b.dataset.search=(c.name+' '+c.hex+' '+c.space).toLowerCase();b.title=c.name+' · '+c.hex.toUpperCase()+(c.approximate?' · Aproximação de tela':'');b.setAttribute('aria-label',c.name+(c.approximate?' · aproximação':'')+' · '+c.hex);if(full){const sample=node('span','palette-sample');sample.style.backgroundColor=c.hex;b.append(sample,node('strong',null,c.name),node('small',null,c.space+(c.approximate?' · referência de tela':'')));}else b.style.backgroundColor=c.hex;return b;}
-function chooseColor(c){if(typeof paletteTarget==='function'){paletteTarget(c);$('palette-dialog').close();return;}if(paletteTarget==='base')applyColor(activePanel(state),c.id);if(paletteTarget==='layer'){const l=selectedLayer(state);if(l)applyColor(l,c.id);}if(paletteTarget==='trim'){state.trim=c.hex;state.trimColorId=c.id;for(const p of state.panels)if(p.trim)applyColor(p,c.id);}commit();$('palette-dialog').close();}
+function chooseColor(c){if(typeof paletteTarget==='function'){paletteTarget(c);$('palette-dialog').close();return;}if(paletteTarget==='base')applyColor(activePanel(state),c.id);if(paletteTarget==='layer'){const l=selectedLayer(state);if(l&&l.type==='svg-graphic'){l.src=tintSVGDataUrl(l.src,c.hex);applyColor(l,c.id);imageFor(l.src).then(()=>commit()).catch(error=>toast(error.message));$('palette-dialog').close();return;}if(l)applyColor(l,c.id);}if(paletteTarget==='trim'){state.trim=c.hex;state.trimColorId=c.id;for(const p of state.panels)if(p.trim)applyColor(p,c.id);}commit();$('palette-dialog').close();}
 function openPalette(target){paletteTarget=target;$('palette-search').value='';$('palette-colors').querySelectorAll('button').forEach(b=>b.hidden=false);$('palette-dialog').showModal();$('palette-search').focus();}
 function setupLibrary(){
  for(const c of COLORS){const b=paletteButton(c);b.onclick=()=>{applyColor(activePanel(state),c.id);commit();};$('base-palette').append(b);const card=paletteButton(c,true);card.onclick=()=>chooseColor(c);$('palette-colors').append(card);}
  for(const [input,container]of [['base-color-search','base-palette'],['palette-search','palette-colors']])$(input).oninput=e=>{const q=e.target.value.trim().toLowerCase();$(container).querySelectorAll('button').forEach(b=>b.hidden=!b.dataset.search.includes(q));};
  $('close-palette').onclick=()=>$('palette-dialog').close();
- for(const g of GRAPHICS){const b=node('button','pattern-card'),canvas=node('canvas');b.dataset.group=g.group;b.dataset.graphic=g.id;b.dataset.name=g.name;canvas.width=240;canvas.height=210;paint(canvas,{color:DEFAULT_BASE.hex,layers:[layer('pattern',{pattern:g.id,color:DEFAULT_ACCENT.hex,colorId:DEFAULT_ACCENT.id,w:g.id==='straight-line'?.06:1.2,h:g.id==='horizontal-line'?.06:1.2})]});const caption=node('span',null,g.name),action=icon('arrow');action.classList.add('graphic-card-action');caption.append(action);b.append(canvas,caption);b.onclick=()=>{try{const target=graphicTarget(state,graphicTargets.get(state.active)),result=applyGraphic(state,g.id,{createNew:newGraphicPanel===state.active,...(target?{targetId:target.id}:{})});newGraphicPanel=null;graphicTargets.set(state.active,result.layer.id);if(commit())toast(result.created?'Grafismo adicionado. Escolher outro desenho agora troca esta camada.':'Grafismo trocado. Cor e ajustes foram mantidos.');}catch(error){toast(error.message);}};$('pattern-library').append(b);}
+ for(const g of GRAPHICS){const b=node('button','pattern-card'),canvas=node('canvas');b.dataset.group=g.group;b.dataset.graphic=g.id;b.dataset.name=g.name;canvas.width=240;canvas.height=210;paint(canvas,{color:DEFAULT_BASE.hex,layers:[layer('pattern',{pattern:g.id,color:DEFAULT_ACCENT.hex,colorId:DEFAULT_ACCENT.id,w:g.id==='straight-line'?.06:1.2,h:g.id==='horizontal-line'?.06:1.2})]});const caption=node('span',null,g.name),action=icon('arrow');action.classList.add('graphic-card-action');caption.append(action);b.append(canvas,caption);b.onclick=()=>{const target=graphicTarget(state,graphicTargets.get(state.active)),adding=newGraphicPanel===state.active||!target,chosen=graphicColorId??(adding?null:target?.colorId);
+    const applySelected=(colorId)=>{try{const result=applyGraphic(state,g.id,{createNew:newGraphicPanel===state.active,...(target?{targetId:target.id}:{})});if(colorId)applyColor(result.layer,colorId);newGraphicPanel=null;graphicTargets.set(state.active,result.layer.id);if(commit())toast(result.created?'Grafismo adicionado com a cor escolhida.':'Grafismo trocado sem recuperar cores da arte original.');}catch(error){toast(error.message);}};
+    if(!chosen){openPalette(c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);applySelected(c.id);});toast('Escolha a cor do grafismo na paleta antes de adicionar.');return;}
+    applySelected(chosen);
+   };$('pattern-library').append(b);}
  $('graphic-group').onchange=filterGraphicLibrary;filterGraphicLibrary();
+  $('graphic-color').onclick=()=>openPalette(c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);renderGraphicPicker();});
+  $('advanced-graphic-upload').onchange=async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;
+   const apply=async colorId=>{try{
+    if(file.size>2*1024*1024)throw Error('Use um SVG de até 2 MB.');
+    const result=sanitizeSVG(await file.text()),color=paletteColor(colorId);
+    if(!color)throw Error('Escolha a cor do grafismo.');
+    const src=tintSVGDataUrl('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(result.source),color.hex);
+    await imageFor(src);const p=activePanel(state),w=.35,h=clamp(w*(result.h/result.w)*(p.cm.w/p.cm.h),.025,.8);
+    const imported=layer('svg-graphic',{name:file.name.slice(0,80),src,pixels:{w:result.w,h:result.h},vector:true,w,h,color:color.hex,colorId:color.id});
+    p.layers.push(imported);state.selected=imported.id;graphicTargets.set(p.id,imported.id);commit();toast('Grafismo Avançado importado sem deformação e com a cor escolhida.');
+   }catch(error){toast(error.message);}};
+   if(graphicColorId)await apply(graphicColorId);else openPalette(async c=>{graphicColorId=c.id;setColorChip($('graphic-color'),c.id);await apply(c.id);});
+  };
  $('graphic-target').onchange=e=>{newGraphicPanel=null;state.selected=e.target.value;graphicTargets.set(state.active,e.target.value);render();};
  $('graphic-new').onclick=()=>{state.selected=null;newGraphicPanel=state.active;render();};$('graphic-cancel-new').onclick=()=>{newGraphicPanel=null;state.selected=graphicTarget(state,graphicTargets.get(state.active))?.id??null;render();};
  for(const target of ['new-font','layer-font'])$(target).replaceChildren(...FONTS.map(f=>{const o=node('option',null,f.label);o.value=f.id;return o;}));
@@ -141,7 +172,10 @@ function setupControls(){
  $('symmetry-disable').onclick=()=>{const pair=sidePairs(state).find(pair=>pair.panels.includes(state.active)&&state.symmetry?.[pair.id]);if(!pair)return;state=disableLiveSymmetry(state,pair.id);if(commit()){$('active-panel').focus();toast('Simetria desligada: '+pair.label+'. Os desenhos foram mantidos. Agora você pode editar cada lado separadamente.');}};
  $('product').onchange=e=>{state.product=e.target.value;if(!visiblePanels(state).some(p=>p.id===state.active))state.active=visiblePanels(state)[0].id;state.selected=null;commit();};
  $('base-color').onclick=()=>openPalette('base');
- $('apply-all').onclick=()=>{const c=activePanel(state).colorId;for(const p of state.panels)applyColor(p,c);state.trim=paletteColor(c).hex;state.trimColorId=c;commit();};
+  $('gradient-enabled').onchange=e=>{const p=activePanel(state);if(!isShirtFillPanel(p))return;if(e.target.checked){const c=paletteColor(p.gradient?.toColorId??DEFAULT_ACCENT.id);p.gradient={toColor:c.hex,toColorId:c.id,angle:p.gradient?.angle??90};}else delete p.gradient;commit();};
+  $('gradient-to-color').onclick=()=>openPalette(c=>{const p=activePanel(state);if(isShirtFillPanel(p)&&p.gradient){p.gradient.toColor=c.hex;p.gradient.toColorId=c.id;commit();}});
+  $('gradient-direction').onchange=e=>{const p=activePanel(state),angle=Number(e.target.value);if(isShirtFillPanel(p)&&p.gradient&&GRADIENT_ANGLES.includes(angle)){p.gradient.angle=angle;commit();}};
+ $('apply-all').onclick=()=>{const c=activePanel(state).colorId;for(const p of state.panels){applyColor(p,c);delete p.gradient;}state.trim=paletteColor(c).hex;state.trimColorId=c;commit();};
  $('trim-color').onclick=()=>openPalette('trim');
  $('project-title').oninput=e=>{state.title=e.target.value.slice(0,80);cloudDirty=true;scheduleSave();};$('project-title').onchange=commit;
  function restoreHistory(action){if(busy||cloudSaving||gesture)return;const index=history.index;const restored=history[action]();if(history.index===index)return;state=restored;state.order=null;cloudDirty=true;scheduleSave();render();}
@@ -157,7 +191,7 @@ function setupControls(){
  $('layer-text').oninput=e=>modify(l=>{if(!personalizationRole(l))l.text=e.target.value.slice(0,80);normalizeText(l);},{finish:false});$('layer-text').onchange=commit;
  $('layer-font').onchange=e=>modify(l=>l.font=FONTS.some(f=>f.id===e.target.value)?e.target.value:FONTS[0].id);
  $('layer-color').onclick=()=>openPalette('layer');
- $('layer-mirror').onchange=e=>modify(l=>{if(l.type==='pattern'&&!l.locked)l.mirrorX=e.target.checked;});
+ $('layer-mirror').onchange=e=>modify(l=>{if(['pattern','svg-graphic'].includes(l.type)&&!l.locked)l.mirrorX=e.target.checked;});
  for(const [id,key] of [['layer-x','x'],['layer-y','y']]){$(id).oninput=e=>modify(l=>{if(!l.locked)l[key]=clamp(Number(e.target.value)/100,0,1);},{finish:false});$(id).onchange=()=>commit();}
  for(const [id,key] of [['panel-width','w'],['panel-height','h']])$(id).onchange=e=>{activePanel(state).cm[key]=clamp(Number(e.target.value),1,300);commit();};
  $('center-x').onclick=()=>modify(l=>{if(!l.locked)l.x=.5;});$('lock').onclick=()=>modify(l=>l.locked=!l.locked);
@@ -174,7 +208,7 @@ function changeView(view,{select=true}={}){if(!scene)return;if(select&&!scene.cu
 function setMode(mode){scene?.setMode(mode);for(const id of ['edit','orbit']){$(`mode-${id}`).classList.toggle('active',mode===id);$(`mode-${id}`).setAttribute('aria-pressed',String(mode===id));}$('interaction-hint').textContent=mode==='edit'?'Arraste a arte para mover · arraste o fundo para girar':'Arraste o uniforme para girar';}
 
 async function api(path,options={}){const response=await fetch(path,{credentials:'same-origin',...options,headers:{...(options.body&&!(options.body instanceof FormData)?{'Content-Type':'application/json'}:{}),...options.headers}});let data;try{data=await response.json();}catch{throw Error('O servidor retornou uma resposta inválida. Tente novamente.');}if(!response.ok){const error=Error(data.error||'Não foi possível concluir.');error.status=response.status;throw error;}return data;}
-async function needLogin(){await saveNow();sessionStorage.setItem('mnz-simulator-login-draft',String(Date.now()));window.top.location.href='/signin-with-chatgpt?return_to=%2Fsimulador';}
+async function needLogin(){await saveNow();sessionStorage.setItem('mnz-simulator-login-draft',String(Date.now()));window.top.location.href='/login?return_to=%2Fsimulador';}
 async function captureCreation(){
  if(!scene)throw Error('A prévia 3D precisa estar disponível para conferir o uniforme.');
  const captured=clone(state),capturedRevision=revision,position=scene.camera.position.clone(),target=scene.controls.target.clone(),images=[];
@@ -232,7 +266,7 @@ async function boot(){
  try{scene=new UniformScene($('viewer'),{deferModel:true,select:selectPanel,selection:pickLayer,dragStart:()=>{gesture=true;},dragMove:(x,y)=>modify(l=>move(l,x,y),{finish:false}),dragEnd:()=>{gesture=false;commit();}});if(scene.software)$('interaction-hint').textContent='3D compatível · arraste para editar ou girar';}catch{scene=null;$('webgl-error').hidden=false;setFlat(true);}
  const loaded=await fetchEliteModel(!!scene?.software);let panels=loaded.manifest.panels;if(scene?.software){scene.dispose();scene=null;$('view-3d').disabled=true;$('webgl-error').hidden=false;setFlat(true);toast('Sem aceleração 3D: personalização disponível no mapa 2D do KIT EDGE 2027.');}else if(scene)panels=await scene.loadGLB(loaded.buffer,{preset:ELITE_MODEL,presetPanels:loaded.manifest.panels});if(!restored){state=eliteState(panels);history=new History(state);}
  const query=new URLSearchParams(location.search);if(session&&query.get('design')){const {design}=await api('/api/simulator/designs/'+encodeURIComponent(query.get('design')));if(design.state.model!==ELITE_MODEL)throw Error('Este desenho usa uma base anterior. Seus dados foram preservados; comece um novo uniforme com o KIT EDGE 2027.');state=design.state;designId=design.id;serverVersion=design.version;cloudDirty=false;history=new History(state);}else if(session&&query.get('order')){const source=await api('/api/simulator/from-order/'+encodeURIComponent(query.get('order')));state=source.state;designId=null;serverVersion=null;cloudDirty=true;history=new History(state);toast('Desenho do pedido aberto como nova criação. O pedido original é preservado.');}
- try{await Promise.all(state.panels.flatMap(p=>p.layers).filter(l=>l.type==='image').map(l=>imageFor(l.src)));}catch{toast('Uma logo salva não pôde ser carregada. Envie o arquivo novamente.');}
+ try{await Promise.all(state.panels.flatMap(p=>p.layers).filter(l=>l.type==='image'||l.type==='svg-graphic').map(l=>imageFor(l.src)));}catch{toast('Uma logo salva não pôde ser carregada. Envie o arquivo novamente.');}
  await Promise.all(FONTS.map(f=>document.fonts.load('18px '+f.family)));
  render();if(scene)changeView(activePanel(state).view??'front',{select:false});$('loading').hidden=true;document.querySelector('main').inert=false;$('review').disabled=!scene;$('save-design').disabled=!scene;if(!scene)$('save-design').title='Para salvar na conta e conferir as quatro vistas, ative a aceleração gráfica. A edição 2D continua salva neste navegador.';$('save-status').textContent=db?'Salvo neste navegador':'Somente nesta sessão';
  const tutorial=setupTutorial({setTool,key:STORAGE_KEY,notify:toast,canOffer:()=>!busy&&!cloudSaving&&!gesture});requestAnimationFrame(()=>tutorial.offer());

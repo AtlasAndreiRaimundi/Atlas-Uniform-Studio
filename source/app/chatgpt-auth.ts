@@ -1,11 +1,15 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { env } from "cloudflare:workers";
+import { readSessionToken, sessionAccount } from "@/lib/studio-auth.mjs";
 
 export type ChatGPTUser = {
   userId: string;
   displayName: string;
   email: string;
   fullName: string | null;
+  role?: 'designer' | 'vendedor';
+  provider?: 'chatgpt' | 'studio';
 };
 
 const USER_ID_HEADER = "oai-authenticated-user-id";
@@ -20,6 +24,11 @@ const CALLBACK_PATH = "/callback";
 
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
   const requestHeaders = await headers();
+  const token=readSessionToken(requestHeaders.get('cookie')??'');
+  if(token&&env.DB){
+    try{const registered=await sessionAccount(env.DB,token);if(registered)return registered;}
+    catch{ /* A legacy identity can remain usable during an auth migration. */ }
+  }
   const userId = requestHeaders.get(USER_ID_HEADER);
   const email = requestHeaders.get(USER_EMAIL_HEADER);
   if (!userId || !email) return null;
@@ -36,6 +45,7 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
     displayName: fullName ?? email,
     email,
     fullName,
+    provider: 'chatgpt',
   };
 }
 
@@ -45,7 +55,7 @@ export async function requireChatGPTUser(
   const user = await getChatGPTUser();
   if (user) return user;
 
-  redirect(chatGPTSignInPath(returnTo));
+  redirect('/login?return_to='+encodeURIComponent(safeRelativeReturnPath(returnTo)));
 }
 
 export function chatGPTSignInPath(returnTo: string): string {

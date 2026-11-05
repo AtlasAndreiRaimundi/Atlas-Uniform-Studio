@@ -137,3 +137,34 @@ export const salesQuotations=sqliteTable('sales_quotations',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),documentJson:text('document_json').notNull(),
  version:integer('version').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
 },t=>[index('sales_quotations_owner_updated_idx').on(t.ownerId,t.updatedAt),uniqueIndex('sales_quotations_share_token_idx').on(t.shareToken)]);
+
+export const studioAccounts=sqliteTable('studio_accounts',{
+ id:text('id').primaryKey(),
+ email:text('email').notNull(),
+ displayName:text('display_name').notNull(),
+ role:text('role').notNull(),
+ passwordSalt:text('password_salt').notNull(),
+ passwordHash:text('password_hash').notNull(),
+ passwordIterations:integer('password_iterations').notNull(),
+ verifiedAt:text('verified_at'),
+ lastVerificationSentAt:text('last_verification_sent_at'),
+ createdAt:text('created_at').notNull(),
+ updatedAt:text('updated_at').notNull(),
+},t=>[uniqueIndex('studio_accounts_email_idx').on(t.email)]);
+export const studioVerifications=sqliteTable('studio_verifications',{
+ tokenHash:text('token_hash').primaryKey(),
+ accountId:text('account_id').notNull().references(()=>studioAccounts.id,{onDelete:'cascade'}),
+ expiresAt:text('expires_at').notNull(),
+ createdAt:text('created_at').notNull(),
+},t=>[index('studio_verifications_account_idx').on(t.accountId)]);
+export const studioSessions=sqliteTable('studio_sessions',{
+ tokenHash:text('token_hash').primaryKey(),
+ accountId:text('account_id').notNull().references(()=>studioAccounts.id,{onDelete:'cascade'}),
+ expiresAt:text('expires_at').notNull(),
+ createdAt:text('created_at').notNull(),
+},t=>[index('studio_sessions_account_idx').on(t.accountId)]);
+export const studioAuthLimits=sqliteTable('studio_auth_limits',{
+ key:text('key').primaryKey(),
+ attempts:integer('attempts').notNull(),
+ resetAt:text('reset_at').notNull(),
+});

@@ -1,7 +1,4 @@
 {
-  "project_id": "appgprj_6ad921f302148191932d8c1e12374ce3",
-  "source_commit": "8c1f48c7bffd6f3478cee3f3a8a5cb32461d3589",
-  "exported_at": "2026-11-04T20:48:18.774Z",
   "files": [
     {
       "path": ".gitignore",
@@ -62,6 +59,36 @@
       "path": "app/api/admin/templates/route.ts",
       "size": 689,
       "sha256": "81dbba15537b519ab7ac4e79c1430b753b6ada9d83b637bc47061cf69f3a1a0c"
+    },
+    {
+      "path": "app/api/auth/login/route.ts",
+      "size": 608,
+      "sha256": "9fd3ecadc5f85aa6efaa35b46cb5013c83dcf20216528a51c0bfcad91df9221c"
+    },
+    {
+      "path": "app/api/auth/logout/route.ts",
+      "size": 521,
+      "sha256": "a2239895ca3d400c409185ed8dd36b9683300c4833b0b9d1e81a549ee996f241"
+    },
+    {
+      "path": "app/api/auth/register/route.ts",
+      "size": 428,
+      "sha256": "4912ac4cc465901547902830a111a86d5613f48d6c85489c78c21a563f56742c"
+    },
+    {
+      "path": "app/api/auth/resend/route.ts",
+      "size": 404,
+      "sha256": "0bf0f7a67a2f48713c424e5ee74eac6a2ec3f14e1fb7f5000e1a55b8915aa45f"
+    },
+    {
+      "path": "app/api/auth/session/route.ts",
+      "size": 328,
+      "sha256": "83166c58a4eaed884c6efdce2c439a6f1d43628a9749ca3cb12a4265d321f510"
+    },
+    {
+      "path": "app/api/auth/verify/route.ts",
+      "size": 347,
+      "sha256": "b5ffaf2f66160f1327655a9091f24fb72fc6d1086b0bb8fcb5d6345e4f81ffe9"
     },
     {
       "path": "app/api/designers/[id]/photo/route.ts",
@@ -290,8 +317,8 @@
     },
     {
       "path": "app/api/simulator/session/route.ts",
-      "size": 301,
-      "sha256": "4d0a5da2a4b8856c3fe485450e16feb751ca0cfb5ab05d055db37bdde93f1d9d"
+      "size": 362,
+      "sha256": "12f7ef59a4c82c4a45157df340619bcfc630b8a422a0b96e5c97aec92c2b6d08"
     },
     {
       "path": "app/api/templates/[id]/assets/[kind]/route.ts",
@@ -345,8 +372,13 @@
     },
     {
       "path": "app/chatgpt-auth.ts",
-      "size": 2550,
-      "sha256": "4265a2e7c2dcb3a6f4b7026f762bf5b6e4caec76cc13c0a45987ee9a9f2e42cc"
+      "size": 3071,
+      "sha256": "79069bb161fe16cb2ba7fcf92bc0215986e375779cae5c9b8ee72d23124a594a"
+    },
+    {
+      "path": "app/conta/confirmar/page.tsx",
+      "size": 1766,
+      "sha256": "c53f48bb4cf8675e6d53530b67112e0dc4c8b2d23deae1da674319d97475b720"
     },
     {
       "path": "app/globals.css",
@@ -370,8 +402,18 @@
     },
     {
       "path": "app/login/page.tsx",
-      "size": 2892,
-      "sha256": "670c6ac49ee38a2c91c44a0446256d4cc3ec6e6e98d8812f880066e34a5b41c3"
+      "size": 3239,
+      "sha256": "e32da85b6c6ef3c7c8fc3bfb0907c05b5b7ed17eee87ca4690da72cddfc3379a"
+    },
+    {
+      "path": "app/login/studio-auth-panel.tsx",
+      "size": 4428,
+      "sha256": "510b2d349faac6290f4853362c71f5109b0b0a2d13ed48042ef7aa6d0550db16"
+    },
+    {
+      "path": "app/login/studio-auth.css",
+      "size": 1675,
+      "sha256": "c41cf2270d6ef7d66faf805fce504ca0d3091f4fcaf97cc501b8116827c0dd45"
     },
     {
       "path": "app/not-found.tsx",
@@ -510,8 +552,8 @@
     },
     {
       "path": "cloudflare-env.d.ts",
-      "size": 149,
-      "sha256": "f2d42ebedc663d2ffc3a0fc50c8d7729a142c6c4a418ebfe87ba85338896b94f"
+      "size": 235,
+      "sha256": "12ae52169f707e3b4bd6eb2112c82104f13db101f3799236c7910653cccf8822"
     },
     {
       "path": "components.json",
@@ -835,8 +877,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9945,
-      "sha256": "fed5a4140693bb746cc0b8b3bf3a42421d89f881511fe90b7b10cb8e2a8d45a8"
+      "size": 11415,
+      "sha256": "df50fbe5b02c2271d1f2282ea124e74eeb90036c9b30eb4b963f761d6d1ab215"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -955,8 +997,8 @@
     },
     {
       "path": "docs/simulador-uniformes.md",
-      "size": 13103,
-      "sha256": "70755d227d84e746cb601f88e721a665be5dbdf718d50a797e96c93389f504d4"
+      "size": 14010,
+      "sha256": "0fb474115c1b98d185e012f106930a5d95e0c12d197bdcbeb3ff5c066dd156af"
     },
     {
       "path": "drizzle.config.ts",
@@ -1044,9 +1086,14 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
+      "path": "drizzle/0016_studio_accounts.sql",
+      "size": 1367,
+      "sha256": "5c4dc45f22080561f833fcb1a90976e5d70eb2ef0d8fd5d75945f2d7342cb1b0"
+    },
+    {
       "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+      "size": 2524,
+      "sha256": "90cbe85f6fbb6db200b7d3c49040e3d33d6307d80fa6a42da8b82fa664cdf50e"
     },
     {
       "path": "drizzle/meta/0000_snapshot.json",
@@ -1127,6 +1174,11 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
+    },
+    {
+      "path": "drizzle/meta/0016_snapshot.json",
+      "size": 49429,
+      "sha256": "b892f4ff79b445c9c4fd21652586ddde6fd096d9dd5c2ff5d6164d54bc23eebb"
     },
     {
       "path": "eslint.config.mjs",
@@ -1300,13 +1352,18 @@
     },
     {
       "path": "lib/simulator-validation.mjs",
-      "size": 7642,
-      "sha256": "9890ebda6cf96a7059b2aada09f2a258532d64346ef4b09965530fd20decb906"
+      "size": 8473,
+      "sha256": "b4d8550747a1947e742a91fc615c1cbe06013dfac5d8d6bed633a6d8870b5b7e"
     },
     {
       "path": "lib/static-mold-binaries.mjs",
       "size": 1394,
       "sha256": "9ec06932ecc18601e2139ad01e9a5d3260d335faa3c7aa3c4cd5ba68c5b26cff"
+    },
+    {
+      "path": "lib/studio-auth.mjs",
+      "size": 9842,
+      "sha256": "1b9c378867d934b846ddadad59f76702177a581c03f9e9a4661a2949f2ab5ad7"
     },
     {
       "path": "lib/template-generator.mjs",
@@ -1785,8 +1842,8 @@
     },
     {
       "path": "public/project-session.js",
-      "size": 22814,
-      "sha256": "8171577c8f499381942cca01f27a9ec1eabfa567c0be8d6feef0f4250cc25595"
+      "size": 22800,
+      "sha256": "db1995dff9d7643e2201dfd405998e24c5e077d98c86d9772965ae80032de0d8"
     },
     {
       "path": "public/proposal-client.js",
@@ -1820,13 +1877,13 @@
     },
     {
       "path": "public/simulador/app.js",
-      "size": 44860,
-      "sha256": "28e94408c3254df9253a7665d3fddd5e1d4bdc64e4d574df1862bed1d045bc84"
+      "size": 48336,
+      "sha256": "2f37d6075e1775419fe33b0724c6fa8e8bf42c0d4303dac1d4610a408319e476"
     },
     {
       "path": "public/simulador/atlas.css",
-      "size": 23984,
-      "sha256": "717ac2f99c834848f0c6fce1a6044ce79299088cbf9ccc80932a6bbcdddce9e5"
+      "size": 24875,
+      "sha256": "bd9a9f3d97bb6832d856499c4747b15297c6415954d54050beeff9db4ae937ce"
     },
     {
       "path": "public/simulador/catalog.js",
@@ -1850,8 +1907,8 @@
     },
     {
       "path": "public/simulador/editor.html",
-      "size": 31959,
-      "sha256": "2b9f498673f05113a8191c3d4098b556332c46a190c91a2ecc8676de5e318c93"
+      "size": 33602,
+      "sha256": "6be027efbe07512c037c834362f9276e1d54f109650e5e5441b65eb5d43ed998"
     },
     {
       "path": "public/simulador/elite.js",
@@ -1894,9 +1951,19 @@
       "sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895"
     },
     {
+      "path": "public/simulador/gradient.js",
+      "size": 749,
+      "sha256": "9f79360b6cacfdad378e36b73d5723ec28b4dbdaced35e803a13c23e65e42fe1"
+    },
+    {
+      "path": "public/simulador/graphic-fit.js",
+      "size": 550,
+      "sha256": "862705c442e4f9acea1d6f56c681bb7722643f8d29c19ad408b9f39b7f5abdd6"
+    },
+    {
       "path": "public/simulador/graphics.js",
-      "size": 3736,
-      "sha256": "5f4863f2571db9ddd614df21c21c28681336c9fbad4d3f7a419262e307c109c8"
+      "size": 3784,
+      "sha256": "ab6455905c4654754318052e3a2eb495b8b07b3cb1c8e8c960c635bb1f28e3ae"
     },
     {
       "path": "public/simulador/history-shortcuts.js",
@@ -1905,8 +1972,8 @@
     },
     {
       "path": "public/simulador/layers.js",
-      "size": 2593,
-      "sha256": "9b3592a3401314f6012a9226f8439554edcaaf514bba687fa6fa3bed8ebab5c6"
+      "size": 2699,
+      "sha256": "2068a017d21c81d88b9b7d3b5788e4623ea60bfe8acfdb44ce5e2b2e1491e572"
     },
     {
       "path": "public/simulador/models/kit-edge-2027.json",
@@ -1915,8 +1982,8 @@
     },
     {
       "path": "public/simulador/paint.js",
-      "size": 2825,
-      "sha256": "ca34cc2c4796d2e125f3ec152df39010b0e711afc5896d953e63ee362c63cfb2"
+      "size": 3407,
+      "sha256": "22962b844ec2b5fb43ebac81bd1d9cfae65d500bf44759b3801adeb2c90e067b"
     },
     {
       "path": "public/simulador/paleta-sublimacao-2026.xml",
@@ -1935,13 +2002,18 @@
     },
     {
       "path": "public/simulador/scene.js",
-      "size": 14629,
-      "sha256": "bc525b14e4963a3429953677fb63b38df1c4fb9ddad28d55b8c1a8537cd9c8f7"
+      "size": 14640,
+      "sha256": "101feb6fd02ff3d0a54e5358451612d8dc163bf22d4d7c6e866140e1af51b210"
     },
     {
       "path": "public/simulador/style.css",
       "size": 21248,
       "sha256": "f62f07f634119aa055faae3e1f21400e4731a92d82d8df73b381e8333ceb25bc"
+    },
+    {
+      "path": "public/simulador/svg-graphics.js",
+      "size": 1473,
+      "sha256": "4b39849b098f4d341ffd8c76ee402a0fb8bafa730cbccb47733ca3d8a4a243e9"
     },
     {
       "path": "public/simulador/symmetry-ui.js",
@@ -1950,8 +2022,8 @@
     },
     {
       "path": "public/simulador/symmetry.js",
-      "size": 8734,
-      "sha256": "8ec3ec7f179fc2add48ac2c9063f3174d7c3bacfc443f6e10efedbd01b33a967"
+      "size": 9147,
+      "sha256": "658bce1a20031149cf847c500c00432ff4627445b8d2a2fd237f4f3f58444992"
     },
     {
       "path": "public/simulador/tutorial.css",
@@ -2180,8 +2252,8 @@
     },
     {
       "path": "README.md",
-      "size": 26518,
-      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
+      "size": 28338,
+      "sha256": "8386e85311344039884a4390a2835c4b27c3d6c63fb19b2ef8ad660907dff2ec"
     },
     {
       "path": "scripts/build-verified.sh",
@@ -2562,6 +2634,11 @@
       "path": "tests/static-mold-binaries.test.mjs",
       "size": 2621,
       "sha256": "9bd6f59f0f152815575a5eb63b8ca4e5d57e4c6fa4b0d4d7a451489ac1abad7b"
+    },
+    {
+      "path": "tests/studio-auth.test.mjs",
+      "size": 5320,
+      "sha256": "f329c90f270e5102c02aa0e8e2b2d955fde57dd6372cf8349f2dcefcd70fb17a"
     },
     {
       "path": "tests/technical-fixture.mjs",

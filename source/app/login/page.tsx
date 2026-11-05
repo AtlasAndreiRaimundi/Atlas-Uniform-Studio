@@ -3,6 +3,7 @@ import { service } from '@/lib/api';
 import { Brand } from '../brand';
 import { chatGPTSignInPath, getChatGPTUser } from '../chatgpt-auth';
 import HeroComposition from './hero-composition';
+import StudioAuthPanel,{StudioLogout} from './studio-auth-panel';
 import './home-hero.css';
 export const dynamic = 'force-dynamic';
 export default async function Login() {
@@ -20,8 +21,13 @@ export default async function Login() {
     </section>
     <section className="login-form-section" id="studio-access">
       <div className="login-form"><ThemeSelector/><span className="tiny-line" /><p className="eyebrow">SUA PRÓXIMA CRIAÇÃO COMEÇA AQUI</p><h2>{user ? `Olá, ${displayName.split(' ')[0]}.` : 'Entre no seu estúdio.'}</h2><p className="body-copy">Desenhe uniformes, apresente suas ideias e conecte cada detalhe ao pedido. Tudo no seu ritmo, em um só lugar.</p>
-        {user ? <a className="gold-button login-cta" href="/pedidos">Acessar meus pedidos <span>↗</span></a> : <a className="gold-button login-cta" href={chatGPTSignInPath('/pedidos')} target="_top">Entrar com ChatGPT <span>↗</span></a>}
-        <p className="signin-explanation">Use o e-mail da sua conta ChatGPT.<br />Seus projetos ficam vinculados à sua conta.</p>
+        {user ? <><a className="gold-button login-cta" href="/pedidos">Acessar meus pedidos <span>↗</span></a>
+          <p className="signin-explanation">Conta: {user.email}{user.role?' · '+(user.role==='vendedor'?'Vendedor':'Desenhista'):''}</p>
+          {user.provider==='studio'&&<StudioLogout/>}
+         </> : <><StudioAuthPanel/>
+          <a className="legacy-signin" href={chatGPTSignInPath('/pedidos')} target="_top">Já usava o acesso ChatGPT? Entre pela conta anterior</a>
+          <p className="signin-explanation">Cada profissional tem seu login e sua senha. O acesso é liberado após confirmar o e-mail cadastrado.</p>
+         </>}
         <a className="outline-button simulator-entry-cta" href="/simulador" target="_top">CRIE SEU UNIFORME COM NOSSO SIMULADOR <span>↗</span></a>
         <div className="login-features"><p><span>01</span><span><strong>Criação com liberdade</strong>Seu uniforme, suas cores, sua identidade.</span></p><p><span>02</span><span><strong>Ideias que ganham forma</strong>Apresentações em 3D para ver cada detalhe.</span></p><p><span>03</span><span><strong>Produção conectada</strong>Desenho, lista e pedido no mesmo fluxo.</span></p></div>
       </div><p className="login-bottom">ATLAS UNIFORM STUDIO · POR ANDREI RAIMUNDI</p>

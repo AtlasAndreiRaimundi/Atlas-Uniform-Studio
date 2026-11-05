@@ -1,0 +1,17 @@
+
+.studio-auth{width:100%;max-width:440px;margin:17px 0 18px}
+.studio-auth-tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid #ffffff36;border-radius:7px;overflow:hidden;margin-bottom:17px}
+.studio-auth-tabs button{font-size:11px;padding:13px 8px;background:transparent;color:var(--ui-text,#dedcda);cursor:pointer}
+.studio-auth-tabs button.active{background:#c4a874;color:#1d1d1d;font-weight:700}
+.studio-auth form{display:flex;flex-direction:column;gap:10px}
+.studio-auth label{font-size:10px;letter-spacing:.02em;display:flex;flex-direction:column;gap:7px;color:var(--ui-text,#d9d9d9)}
+.studio-auth label input,.studio-auth label select{width:100%;height:43px;border:1px solid var(--ui-line,#555);background:var(--ui-input,#121314);color:var(--ui-text,#eee);padding:10px 12px;border-radius:5px;font-size:12px}
+.studio-auth-hint{font-size:10px;line-height:1.6;opacity:.78;margin:0}
+.studio-auth-error,.studio-auth-success{font-size:11px;line-height:1.55;padding:11px;border-radius:5px;margin:0}
+.studio-auth-error{background:#d8242430;color:#ee9999;border:1px solid #e443435e}
+.studio-auth-success{background:#287a3a30;color:#a1d8a8;border:1px solid #3f97545e}
+.studio-auth .login-cta{width:100%;text-align:left;border:0;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between}
+.studio-auth .login-cta:disabled{opacity:.6;cursor:wait}
+.studio-auth-links{padding:13px 0 0;font-size:10px;text-align:right}
+.studio-auth-links button{color:var(--ui-accent,#c4a874);text-decoration:underline;text-underline-offset:3px}
+.legacy-signin{display:block;margin-top:12px;font-size:10px;color:var(--ui-text,#ccc);opacity:.75;text-decoration:underline}

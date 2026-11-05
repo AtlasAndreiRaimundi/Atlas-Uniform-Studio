@@ -44,3 +44,13 @@ aside.site-nav.studio-sidebar{position:fixed;inset:0 auto 0 0;display:flex;width
 @media(max-width:700px){.canvas-head select{max-width:170px}.side-copy-fields{min-width:0}.side-copy-fields select{min-width:0}}
 
 .graphic-workspace{position:relative;top:auto}.graphic-workspace .button{min-height:42px}.pattern-card{min-width:0}.pattern-card span{overflow-wrap:anywhere}
+
+/* Uniform backgrounds: gradients do not affect trim or overlaid graphics. */
+.fill-gradient{margin:18px 0 0;padding:15px 12px 5px;border:1px solid var(--line);border-radius:5px;background:var(--input)}
+.fill-gradient h2{font-size:11px;font-weight:600;margin:0 0 13px;color:var(--text)}
+.fill-gradient .side-copy-check{margin-bottom:12px;display:flex;gap:9px;align-items:center;font-size:10px}
+.fill-gradient .small-note{margin:8px 0 12px}
+.fill-gradient #gradient-to-hex{display:inline-block;margin:8px 0 0 8px;font-size:9px;color:var(--muted)}
+.graphic-color-choice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:13px 9px;margin:8px 0 14px;background:var(--input);border:1px solid var(--line);border-radius:5px}
+.graphic-color-choice>span{font-size:10px;flex:1;min-width:95px}
+.graphic-color-choice>small{flex-basis:100%;font-size:9px;color:var(--muted);line-height:1.5}
