@@ -1380,8 +1380,8 @@
     },
     {
       "path": "public/app.js",
-      "size": 37992,
-      "sha256": "808a10c175b16ab3724e2a5da414849cf6c567f1244ed56ebc6390c1cc1b8851"
+      "size": 38213,
+      "sha256": "9893b8d833edeeaeec74b7b0571241ff1ca10d1bcfd0ca837c62a1c3e5fd9609"
     },
     {
       "path": "public/apple-touch-icon.png",
@@ -1805,8 +1805,8 @@
     },
     {
       "path": "public/proposta.html",
-      "size": 4460,
-      "sha256": "26d0eb442e0bc2e3871f388b8a0d6f7e1f5b7d95b565fa532e421f8742e2089e"
+      "size": 4500,
+      "sha256": "e941c47559dd8c56cc4db9be8e9818c262cd55ac86e2b7f89b94e9b5c4441ddd"
     },
     {
       "path": "public/quotation-core.js",
@@ -2170,8 +2170,8 @@
     },
     {
       "path": "public/viewer.html",
-      "size": 25430,
-      "sha256": "338e8096b65abddf5ae2958fa18bdf39cc5c277ebd70c2130915299fa5ce3d75"
+      "size": 25448,
+      "sha256": "8344b49c11d69fbd0e7e80c7929349c4871f60b534ba807239ee44044ec620af"
     },
     {
       "path": "public/workflow-contract.js",
@@ -2502,6 +2502,11 @@
       "path": "tests/passeio-v2.test.mjs",
       "size": 3482,
       "sha256": "a1eb417d45d5f71fc7b915d237cb174cd6dfcd6b36b2c906149373737573a25f"
+    },
+    {
+      "path": "tests/presentation-cursor-zoom.test.mjs",
+      "size": 1121,
+      "sha256": "60704ef839854be57486040fb481debeba48c446e6f9a3a9d980c83c801d0eda"
     },
     {
       "path": "tests/presentation-mold-switch.test.mjs",

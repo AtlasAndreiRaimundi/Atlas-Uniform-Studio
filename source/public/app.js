@@ -174,7 +174,7 @@ async function init3D() {
   renderer.toneMappingExposure = STUDIO_LIGHTING.exposure;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.domElement.setAttribute('aria-label', 'Modelo 3D da peça. Arraste para girar e use dois dedos para dar zoom.');
+  renderer.domElement.setAttribute('aria-label', 'Modelo 3D da peça. Arraste para girar, role sobre o detalhe para ampliar ou use dois dedos na tela.');
   renderer.domElement.tabIndex = 0;
   stage.append(renderer.domElement);
   scene = new THREE.Scene();
@@ -184,6 +184,9 @@ async function init3D() {
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = 0.08;
   controls.enablePan = true; controls.minDistance = .18; controls.maxDistance = 20;
+  // Wheel zoom follows the pointer and pinch zoom follows the touch midpoint.
+  // This lets clients inspect any uniform detail, not only the garment center.
+  controls.zoomToCursor = true;
   controls.minPolarAngle = Math.PI * 0.12; controls.maxPolarAngle = Math.PI * 0.85;
   controls.autoRotateSpeed = 1.3;
   controls.addEventListener('start', () => { cameraTween = null;activeAnchor=null;$('#piecePin').hidden=true; $$('.view-button').forEach((b) => b.classList.remove('active')); });

@@ -9,7 +9,7 @@
   <link rel="icon" href="/favicon.ico?v=atlas-20261024" type="image/x-icon" sizes="16x16 32x32 48x48 64x64"><link rel="icon" href="/atlas-favicon-32.png?v=atlas-20261024" type="image/png" sizes="32x32"><link rel="icon" href="/atlas-favicon.svg?v=atlas-20261024" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=atlas-20261024" sizes="180x180">
   <link rel="stylesheet" href="/style.css?v=5">
   <script type="importmap">{"imports":{"three":"/vendor/three/build/three.module.min.js","three/addons/":"/vendor/three/examples/jsm/"}}</script>
-  <script type="module" src="/app.js?v=quotation-20261031"></script>
+  <script type="module" src="/app.js?v=zoom-cursor-20261109"></script>
   <meta name="author" content="Andrei Raimundi">
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="/studio-theme.css?v=12">
@@ -34,7 +34,7 @@
         <div class="stage-error" id="stageError" hidden><strong>Não foi possível abrir o 3D.</strong><p id="errorMessage"></p><button class="secondary-button" id="retryBtn">Tentar novamente</button></div>
       </div>
       <div class="viewer-overlays"><div class="model-badge"><span class="model-badge-line"></span><span><span id="moldNameBadge">CAMISETA CLÁSSICA</span><br><strong>CADA DETALHE, EM 3D</strong></span></div><button class="circle-button" id="resetBtn" title="Redefinir câmera" aria-label="Redefinir câmera"><svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 2 6M4 11V4m0 7h7"/></svg></button></div>
-      <div class="viewer-bottom"><p class="gesture-hint"><svg viewBox="0 0 24 24"><path d="M8 11V5a2 2 0 0 1 4 0v6-3a2 2 0 0 1 4 0v3-1a2 2 0 0 1 4 0v5c0 4-3 6-6 6h-2c-2 0-3-1-5-3l-4-5a2 2 0 0 1 3-2l2 2"/></svg>Arraste para girar <span>·</span> Role para aproximar</p></div>
+      <div class="viewer-bottom"><p class="gesture-hint"><svg viewBox="0 0 24 24"><path d="M8 11V5a2 2 0 0 1 4 0v6-3a2 2 0 0 1 4 0v3-1a2 2 0 0 1 4 0v5c0 4-3 6-6 6h-2c-2 0-3-1-5-3l-4-5a2 2 0 0 1 3-2l2 2"/></svg>Arraste para girar <span>·</span> Role sobre o detalhe para aproximar</p></div>
     </section>
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-tabs" role="tablist" aria-label="Ferramentas"><button class="sidebar-tab active" id="artTab" data-tab="art" role="tab" aria-selected="true" aria-controls="artPanel">Aplicar arte</button><button class="sidebar-tab" id="presentationTab" data-tab="presentation" role="tab" aria-selected="false" aria-controls="presentationPanel">Visualização</button><button class="sidebar-tab" id="deliveryTab" data-tab="delivery" role="tab" aria-selected="false" aria-controls="deliveryPanel">Cliente</button></div>
