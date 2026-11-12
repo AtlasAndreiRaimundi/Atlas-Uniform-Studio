@@ -87,7 +87,7 @@ function renderSectionState(){
  $('#listQuantitySummary').innerHTML=doc.listSource?'<h3>Quantidades aplicadas ao layout</h3>'+doc.pages.map(pg=>pieceFamilies(pg).map(f=>'<p><strong>'+esc(f[0].type)+'</strong> · '+f.reduce((n,p)=>n+Number(p.quantity||0),0)+' unidades</p>'+f.map(p=>'<pre>'+esc(p.grade||'')+'</pre>').join('')).join('')).join(''):'';
  renderUnifiedApplications();renderProductStage();
 }
-function reviewReady(){return !orderEditable()||Boolean(doc.technicalFiles?.length)&&releaseProblems(doc).length===0;}
+function reviewReady(){return !orderEditable()||Boolean(doc.factoryId)&&Boolean(doc.technicalFiles?.length)&&releaseProblems(doc).length===0;}
 function showOrderStage(value,{focus=true,select=true}={}){if(!['identity','general'].includes(value)&&initialCompositionState().kind==='unselected'){error('Escolha primeiro: Kit, Peça avulsa ou 2 peças independentes.');return;}if(!ORDER_STAGES.some(s=>s.id===value))return;if(value==='review'&&orderEditable()&&!doc.technicalFiles?.length){orderStage='files';error('Anexe o CDR do desenho para continuar.');renderPreview();return;}if(value==='review'&&!reviewReady()){error('Antes de revisar: '+releaseProblems(doc).slice(0,5).join(' '));$('#error').scrollIntoView({behavior:'smooth',block:'nearest'});return;}orderStage=value;if(pieceStage()){if(select&&value!=='personalization'){const family=pieceFamilies(page())[value==='pieces'?0:1];if(family)productIndex=page().products.indexOf(family[0]);}productStage=value==='personalization'?'art':'model';renderProduct();}if(value==='review')sheetIndex=0;error();renderPreview();if(focus){$('#stageTitle').focus({preventScroll:true});$('#stageTitle').scrollIntoView({behavior:'smooth',block:'start'});if(value==='review')visualTools.openFinalPreview({mode:'review',sheet:sheetIndex});}}
 function renderProductStage(){
  if(!$('#productStepTitle'))return;const index=PRODUCT_STAGES.findIndex(s=>s.id===productStage),stage=PRODUCT_STAGES[index];
@@ -545,7 +545,7 @@ async function boot(){
 boot().catch(e=>error(e.message));
 
 function renderOverview(){
- const w=doc.workflow||{status:'draft',revision:1,history:[]},locked=w.status==='released'||viewingRelease||['sent','accepted'].includes(doc.factoryTracking?.stage),items=doc.pages.flatMap(page=>page.products.map(p=>({page,p}))),issues=releaseProblems(doc);
+ const w=doc.workflow||{status:'draft',revision:1,history:[]},locked=w.status==='released'||viewingRelease||['sent','accepted'].includes(doc.factoryTracking?.stage),items=doc.pages.flatMap(page=>page.products.map(p=>({page,p}))),issues=[...releaseProblems(doc),...(doc.factoryId?[]:['Selecione a indústria de produção: MEINERZ ou ADIPRIME.'])];
  $('#workflowStatus').textContent=(viewingRelease?'CONSULTA HISTÓRICA · ':locked?'REVISÃO CONFERIDA · ':'RASCUNHO · ')+'Revisão '+w.revision+(w.releasedAt&&locked?' · '+new Date(w.releasedAt).toLocaleString('pt-BR')+' · '+w.releasedBy:'');
  $('#overviewSummary').innerHTML='<p><strong>'+esc(doc.client||'Cliente pendente')+'</strong> · '+items.reduce((n,{p})=>n+Number(p.quantity||0),0)+' peças</p><p>Lista: '+esc(doc.listSource?doc.listSource.name+' · V'+(doc.listSource.version||'arquivo'):'Não vinculada; grade manual')+'</p><ul>'+items.map(({page,p})=>'<li><b>'+esc(p.type)+'</b> · '+esc(page.listGroup||page.title||'Sem grupo')+' · '+p.quantity+' un. · '+esc(p.fabric||'Tecido pendente')+' · '+esc(page.visual?.mode==='shared'&&page.visual.image?'Imagem única do kit':p.projectRef?p.projectRef.name+' V'+p.projectRef.version:p.images?.some(Boolean)?'Imagem manual':'Sem mockup; montagem posterior')+'</li>').join('')+'</ul>';
  $('#releaseIssues').innerHTML=issues.length?'<p>Para concluir a conferência:</p><ul>'+issues.map(issue=>'<li>'+esc(issue)+'</li>').join('')+'</ul>':'<p>Pedido pronto para a conferência final em tela cheia.</p>';
@@ -560,6 +560,7 @@ for(const e of $$('#releaseChecks input'))e.addEventListener('change',renderOver
 async function workflowAction(action){
  try{
   if(technicalBusy)throw new Error('Aguarde o envio do arquivo técnico terminar.');
+  if(action==='release'&&!['meinerz','adiprime'].includes(doc.factoryId))throw new Error('Escolha a indústria de produção antes de aprovar.');
   const checks={art:$('#checkArt').checked,list:$('#checkList').checked,technical:$('#checkTechnical').checked};
   const start=revision;if(action==='release'&&!await save(true))return;
   if(action==='release'&&(revision!==start||dirty))throw new Error('O pedido mudou. Confira novamente antes de liberar.');
