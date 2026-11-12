@@ -14,7 +14,7 @@ import {prepareListSheets,prepareListText,parseListMatrix,needsListMapping,listP
 import {CATALOG_VERSION,catalogOrder,attachCatalog,productCodeFor,productionSummary,fitOfSize,fitLabel,productDisplayName,applyFactoryDefaults} from './product-catalog.js?v=7';
 import {catalogTypeField,catalogModelFields,catalogFabricFields,catalogFinishFields,catalogSpecialFields,setupCatalogEditor} from './product-catalog-ui.js?v=7';
 const PRODUCTS=ORDER_PRODUCTS;
-const newOrder=()=>catalogOrder({...legacyNewOrder(),compositionKind:''});
+const newOrder=()=>catalogOrder({...legacyNewOrder(),factoryId:'',compositionKind:''});
 const newPage=(type='Camiseta')=>{const page=legacyNewPage(type);for(const p of page.products)prepareOrderProduct(p,page.id);return page;};
 const newProduct=(type='Camiseta')=>createOrderProduct(type);
 const newKitPage=(types=['Camiseta','Calção'])=>{const page=legacyNewKitPage(types);for(const p of page.products){prepareOrderProduct(p,page.id);p.kitGroupId=page.id;}return page;};
@@ -28,7 +28,7 @@ let orderReset=null,pageRemoval=null,bootReady=false,draftWriteQueue=Promise.res
 let orderPickerPage=0;
 let displayedOrderThumbnail=null;
 const ORDER_PICKER_SIZE=12;
-const ORDER_STATE_LABELS={draft:'Em preparação',checked:'Conferido · não enviado',sent:'Enviado · aguardando aceite',accepted:'Aceito pela fábrica',returned:'Devolvido para correção'};
+const ORDER_STATE_LABELS={draft:'Em preparação',checked:'Conferido · escolher indústria',sent:'Disponível para produção',accepted:'Aceito pela fábrica',returned:'Devolvido para correção'};
 let doc=newOrder(),pageIndex=0,productIndex=0,sheetIndex=0,sheets=[],assets={},id=null,version=0,profile=null,projects=[],dirty=false,example=params.get('exemplo')==='1',conflict=false,savePromise=null,autoTimer,draftTimer,toastTimer,pendingAnchor=null,draftKey='demo',pdfURL,revision=0;
 const page=()=>doc.pages[pageIndex],product=()=>page().products[productIndex];
 const ORDER_STAGES=[
@@ -40,7 +40,7 @@ const ORDER_STAGES=[
  {id:'personalization',title:'Aplicações e setas',description:'Escolha a peça, adicione TPU ou outras aplicações e posicione as setas no layout.',next:'Continuar para a lista →'},
  {id:'list',title:'Lista do pedido',description:'A lista preenche automaticamente as quantidades e tamanhos na frente do layout.',next:'Continuar para CDR do desenho →'},
  {id:'files',title:'CDR do desenho',description:'Anexe o arquivo original do CorelDRAW para produzir este pedido.',next:'Continuar para a conferência final →'},
- {id:'review',title:'Conferência geral',description:'Revise o pedido completo e as listas antes de conferir e enviar.'}
+ {id:'review',title:'Conferência geral',description:'Revise o pedido completo; a aprovação o coloca automaticamente na fila da indústria selecionada.'}
 ];
 function flowStages(){return ORDER_STAGES.filter(s=>s.id!=='piece2'||pieceFamilies(page()).length>1);}
 function pieceStage(){return ['pieces','piece2'].includes(orderStage);}
@@ -284,7 +284,7 @@ function renderProduct(){
  </div>`;gradeStatus();renderProductStage();catalogEditor.refresh();
 }
 function gradeStatus(){if(!$('#gradeTotal'))return;const p=product(),g=parseGrade(p.grade,p.type);$('#gradeTotal').textContent='Soma da grade: '+g.total+' · Quantidade da peça: '+p.quantity+(g.errors.length?' · '+g.errors.join(' '):'');$('#gradeTotal').classList.toggle('invalid',Boolean(g.errors.length||g.groups.length&&g.total!==Number(p.quantity)));}
-function renderPreview(){pricingEditor.render();renderOverview();renderSectionState();$('#openFinalPreview').disabled=orderStage==='review'&&!reviewReady();$('#finalPreviewHelp').textContent='Leia o pedido no tamanho ampliado. Use o zoom e confira todas as folhas; depois marque as três conferências abaixo. A revisão não envia o pedido à fábrica.';sheets=buildSheets(doc,assets,{draft:true});sheetIndex=Math.max(0,Math.min(sheetIndex,sheets.length-1));$('#sheet').innerHTML=sheets[sheetIndex]?sheetSVG(sheets[sheetIndex],{placeholders:orderStage!=='review'}):'';$('#sheetSelect').innerHTML=sheets.map((s,i)=>`<option value="${i}"${i===sheetIndex?' selected':''}>${esc(sheetLabel(s))}</option>`).join('');const layouts=sheets.filter(s=>s.kind==='sheet').length;$('#sheetCount').textContent=layouts+' '+(layouts===1?'desenho':'desenhos')+' · '+sheets.length+' '+(sheets.length===1?'folha para impressão':'folhas para impressão');$('#previousSheet').disabled=sheetIndex===0;$('#nextSheet').disabled=sheetIndex>=sheets.length-1;$('#anchorHint').hidden=!pendingAnchor;$('#sheetStage').classList.toggle('marking',Boolean(pendingAnchor));const problems=validateOrder(doc);$('#validation').classList.toggle('invalid',Boolean(problems.length));$('#validation').innerHTML=problems.length?'<b>Confira antes de exportar:</b><ul>'+problems.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>':'Grade e quantidades conferidas. Consulte a conferência acima para liberar para produção.';$('#downloadPDF').disabled=Boolean(problems.length);$('#downloadSVG').disabled=Boolean(problems.length);if($('#gradeTotal'))gradeStatus();}
+function renderPreview(){pricingEditor.render();renderOverview();renderSectionState();$('#openFinalPreview').disabled=orderStage==='review'&&!reviewReady();$('#finalPreviewHelp').textContent='Leia o pedido no tamanho ampliado. Use o zoom e confira todas as folhas; depois marque as três conferências abaixo. A aprovação disponibiliza automaticamente esta revisão à indústria selecionada.';sheets=buildSheets(doc,assets,{draft:true});sheetIndex=Math.max(0,Math.min(sheetIndex,sheets.length-1));$('#sheet').innerHTML=sheets[sheetIndex]?sheetSVG(sheets[sheetIndex],{placeholders:orderStage!=='review'}):'';$('#sheetSelect').innerHTML=sheets.map((s,i)=>`<option value="${i}"${i===sheetIndex?' selected':''}>${esc(sheetLabel(s))}</option>`).join('');const layouts=sheets.filter(s=>s.kind==='sheet').length;$('#sheetCount').textContent=layouts+' '+(layouts===1?'desenho':'desenhos')+' · '+sheets.length+' '+(sheets.length===1?'folha para impressão':'folhas para impressão');$('#previousSheet').disabled=sheetIndex===0;$('#nextSheet').disabled=sheetIndex>=sheets.length-1;$('#anchorHint').hidden=!pendingAnchor;$('#sheetStage').classList.toggle('marking',Boolean(pendingAnchor));const problems=validateOrder(doc);$('#validation').classList.toggle('invalid',Boolean(problems.length));$('#validation').innerHTML=problems.length?'<b>Confira antes de exportar:</b><ul>'+problems.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>':'Grade e quantidades conferidas. Consulte a conferência acima para liberar para produção.';$('#downloadPDF').disabled=Boolean(problems.length);$('#downloadSVG').disabled=Boolean(problems.length);if($('#gradeTotal'))gradeStatus();}
 $$('[data-order]').forEach(e=>e.addEventListener('input',()=>{if(e.dataset.order==='number')return;const previousClient=doc.client;doc[e.dataset.order]=e.type==='checkbox'?e.checked:e.value;if(e.dataset.order==='client'&&(!doc.title.trim()||doc.title==='Novo pedido'||doc.title===previousClient)){doc.title=e.value;$('[data-order="title"]').value=doc.title;}changed();}));
 $$('[data-page]').forEach(e=>e.addEventListener('input',()=>{page()[e.dataset.page]=e.value;changed();if(e.dataset.page==='mode')render();}));
 $('#techniques').addEventListener('change',e=>{if(!e.target.dataset.technique)return;doc.techniques=$$('[data-technique]:checked').map(e=>e.dataset.technique);changed();});
@@ -550,7 +550,7 @@ function renderOverview(){
  $('#overviewSummary').innerHTML='<p><strong>'+esc(doc.client||'Cliente pendente')+'</strong> · '+items.reduce((n,{p})=>n+Number(p.quantity||0),0)+' peças</p><p>Lista: '+esc(doc.listSource?doc.listSource.name+' · V'+(doc.listSource.version||'arquivo'):'Não vinculada; grade manual')+'</p><ul>'+items.map(({page,p})=>'<li><b>'+esc(p.type)+'</b> · '+esc(page.listGroup||page.title||'Sem grupo')+' · '+p.quantity+' un. · '+esc(p.fabric||'Tecido pendente')+' · '+esc(page.visual?.mode==='shared'&&page.visual.image?'Imagem única do kit':p.projectRef?p.projectRef.name+' V'+p.projectRef.version:p.images?.some(Boolean)?'Imagem manual':'Sem mockup; montagem posterior')+'</li>').join('')+'</ul>';
  $('#releaseIssues').innerHTML=issues.length?'<p>Para concluir a conferência:</p><ul>'+issues.map(issue=>'<li>'+esc(issue)+'</li>').join('')+'</ul>':'<p>Pedido pronto para a conferência final em tela cheia.</p>';
  $('#orderEditor').disabled=locked;$('#saveOrder').disabled=locked||technicalBusy;$('#continueOrderList').disabled=locked||technicalBusy;$('#releaseChecks').disabled=locked||technicalBusy;$('#releaseOrder').hidden=true;$('#reviseOrder').hidden=!locked||viewingRelease||['sent','accepted'].includes(doc.factoryTracking?.stage);
- const stage=doc.factoryTracking?.stage;if(stage)$('#workflowStatus').textContent+=' · '+({checked:'CONFERIDO · NÃO ENVIADO',sent:'ENVIADO · AGUARDANDO ACEITE',accepted:'ACEITO PELA FÁBRICA · BLOQUEADO',returned:'DEVOLVIDO PARA CORREÇÃO',draft:'EM PREPARAÇÃO'}[stage]||stage);
+ const stage=doc.factoryTracking?.stage;if(stage)$('#workflowStatus').textContent+=' · '+({checked:'CONFERIDO · NÃO ENVIADO',sent:'DISPONÍVEL NA FILA DE PRODUÇÃO',accepted:'ACEITO PELA FÁBRICA · BLOQUEADO',returned:'DEVOLVIDO PARA CORREÇÃO',draft:'EM PREPARAÇÃO'}[stage]||stage);
  $('#releaseOrder').disabled=technicalBusy||issues.length>0||!profile||!['Art','List','Technical'].every(key=>$('#check'+key).checked);$('#reviseOrder').disabled=technicalBusy;
  $('#releaseHistory').innerHTML=(w.history||[]).map(entry=>'<p>Revisão '+entry.revision+' · '+esc(entry.name)+' · '+esc(new Date(entry.at).toLocaleString('pt-BR'))+' <button class="text-link" data-history="'+entry.revision+'">Abrir cópia liberada</button></p>').join('')||'<p>Nenhuma revisão liberada.</p>';
  if(viewingRelease)$('#releaseHistory').innerHTML+='<button id="backToCurrent" class="outline-button">Voltar ao pedido atual</button>';
@@ -566,7 +566,7 @@ async function workflowAction(action){
   $('#orderEditor').disabled=true;
   $('#releaseOrder').disabled=$('#reviseOrder').disabled=true;
   const {order}=await api('/api/production-orders/'+encodeURIComponent(id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({document:doc,version,action,checks})});
-  await openSavedOrder(order.id);orderStage='review';render();updateOrderGuide(action==='release');toast(action==='release'?'Pedido conferido. Agora você pode enviar à fábrica.':'Nova revisão aberta. A liberação anterior permanece no histórico.');if(action==='release')packageInvitePending=true;return true;
+  await openSavedOrder(order.id);orderStage='review';render();updateOrderGuide(action==='release');toast(action==='release'?'Pedido aprovado e disponibilizado à indústria '+(doc.factoryId==='adiprime'?'ADIPRIME':'MEINERZ')+'.':'Nova revisão aberta. A liberação anterior permanece no histórico.');if(action==='release')packageInvitePending=true;return true;
  }catch(e){error(e.message);return false;}finally{$('#reviseOrder').disabled=false;renderOverview();}
 }
 $('#releaseOrder').addEventListener('click',()=>workflowAction('release'));
@@ -576,7 +576,7 @@ $('#releaseHistory').addEventListener('click',async event=>{
 });
 
 function orderEditable(){return !viewingRelease&&doc.workflow?.status!=='released'&&!['sent','accepted'].includes(doc.factoryTracking?.stage);}
-function updateOrderGuide(created=false){orderGuide.update({kind:'order',id,title:doc.number||doc.title,created,completed:doc.workflow?.status==='released',locked:!orderEditable(),message:!orderEditable()?'Esta revisão está protegida. Consulte o envio e o aceite no painel. Para alterar uma revisão apenas conferida, use Iniciar nova revisão.':undefined});}
+function updateOrderGuide(created=false){orderGuide.update({kind:'order',id,title:doc.number||doc.title,created,completed:doc.workflow?.status==='released',locked:!orderEditable(),message:!orderEditable()?'Esta revisão está protegida. Consulte a fila de produção e o aceite no painel. Para alterar uma revisão apenas conferida, use Iniciar nova revisão.':undefined});}
 async function orderWorkflowAction(action){
  if(action==='tracking'){if(await canSwitch())window.top.location.href='/acompanhamento';return;}
  if(!orderEditable())throw new Error('Esta revisão está protegida. Abra uma nova revisão antes de anexar informações.');
