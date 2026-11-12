@@ -77,6 +77,16 @@ test('admin transfer revokes old-industry access immediately and revoking member
  await f.tracking.setMember(f.admin,{id:'adi',factoryId:'adiprime',enabled:true});
  order=await f.tracking.transition(f.adi,order.id,{action:'accept',version:order.version});
  assert.equal(order.tracking.stage,'accepted');
+ await assert.rejects(f.tracking.transition(f.adi,order.id,{action:'complete',version:order.version}),{status:400});
+ order=await f.tracking.transition(f.adi,order.id,{action:'start',version:order.version,note:'Corte e impressão'});
+ assert.equal(order.tracking.stage,'in_production');
+ assert.ok(order.tracking.startedAt);
+ await assert.rejects(f.production.remove(f.owner,order.id,{version:order.version}),{status:400});
+ order=await f.tracking.transition(f.adi,order.id,{action:'complete',version:order.version,note:'Produção finalizada'});
+ assert.equal(order.tracking.stage,'completed');
+ assert.ok(order.tracking.completedAt);
+ assert.equal((await f.tracking.list(f.adi,{factory:true})).orders.length,1,'completed orders stay available for retrieval');
+ await assert.rejects(f.tracking.detail(f.mnz,order.id,{factory:true}),{status:404});
  await assert.rejects(f.tracking.transition(f.admin,order.id,{action:'transfer',version:order.version,factoryId:'meinerz'}),{status:400});
 });
 
