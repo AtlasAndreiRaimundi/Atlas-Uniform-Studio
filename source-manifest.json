@@ -1760,8 +1760,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 33980,
-      "sha256": "0fca6e0758d310dff9d7db08c7665dad0c467a44e306cdc64356a5e39018543b"
+      "size": 34447,
+      "sha256": "f28c322fd037de98f8d027a41670f48bfbb3a4aea7d5de9fb1230c908647392c"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1800,8 +1800,8 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 107588,
-      "sha256": "28b52e4d2ac46cfe8e72849059a280e23db4967febd5ca8b0eb2a3c4bb2710d8"
+      "size": 108009,
+      "sha256": "09e33f8158a99a3fedb681ffc479328f052d2e7b1ebedfa07b0d9bfe250c560a"
     },
     {
       "path": "public/production.css",
@@ -2414,6 +2414,11 @@
       "sha256": "20f0a0c9358c0fe9b3c4d5021adb1f09b3b46b52c8f826dd97f01e32764616cc"
     },
     {
+      "path": "tests/factory-isolation.test.mjs",
+      "size": 7193,
+      "sha256": "46e9e7f37ddad3434cf6c855a6daf8048b9f8495e46382d9880f2b18cb170c82"
+    },
+    {
       "path": "tests/fixtures/black-64-avc.json",
       "size": 915,
       "sha256": "863711183ab6eee958731bbbf42106225140111169c73e31a066b4441a6b1911"
@@ -2510,8 +2515,8 @@
     },
     {
       "path": "tests/order-technical.test.mjs",
-      "size": 11298,
-      "sha256": "a4b15d591629b4059839c1a0e2496b5fc1dfb8433a2a711d33f98e5f5a9767b5"
+      "size": 11594,
+      "sha256": "a1a6d0bc6300ecf5337976bf2c4affd5a50ab49052383ead877bcb56f7134286"
     },
     {
       "path": "tests/order-visuals.test.mjs",
@@ -2555,8 +2560,8 @@
     },
     {
       "path": "tests/production.test.mjs",
-      "size": 31874,
-      "sha256": "9b964d80196752f5f6e307d1691346f66694b6dfaf512f5109e76ea27e506d94"
+      "size": 32074,
+      "sha256": "9676ae8fffc45822ff5f7f3411920fd31fcccc7fdde737268b3a223ea9a71397"
     },
     {
       "path": "tests/projects.test.mjs",
@@ -2630,8 +2635,8 @@
     },
     {
       "path": "tests/tracking-panel.test.mjs",
-      "size": 10475,
-      "sha256": "815a1d23a02f56d34a7962ee20cdbc89b0f8a5a5a2f1aece3da614316ffaef48"
+      "size": 10480,
+      "sha256": "5c376fa5ab400d23e98ad26f1b415fe4702f18f6fd9ef1733a3a185814c40ac0"
     },
     {
       "path": "tests/video-export.test.mjs",
