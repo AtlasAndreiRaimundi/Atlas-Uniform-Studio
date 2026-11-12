@@ -129,6 +129,7 @@ export function dateProblems(order={}){
 }
 export function releaseProblems(order){
  const errors=[...validateOrder(order),...pricingProblems(order)];
+ if(order.factoryId!==undefined&&!['meinerz','adiprime'].includes(order.factoryId))errors.push('Selecione a indústria de produção: MEINERZ ou ADIPRIME.');
  if(order.origin&&order.type==='COMPLEMENTO COM ALTERAÇÕES'&&!String(order.complementChanges||'').trim())errors.push('Descreva as alterações deste complemento antes de conferir.');
  for(const [field,label] of [['number','Número do pedido'],['client','Cliente'],['orderDate','Data do pedido'],['deliveryDate','Previsão de entrega'],['artist','Responsável técnico']])if(!String(order[field]||'').trim())errors.push(label+': preencha antes de liberar.');
  for(const page of order.pages||[])for(const p of page.products||[])for(const [field,label] of [['model','modelo / molde'],['fabric','tecido principal'],['print','técnica de aplicação']])if(!(field==='model'&&String(p.type||'').trim())&&!String(p[field]||'').trim())errors.push(p.type+': informe '+label+'.');
