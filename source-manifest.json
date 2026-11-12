@@ -25,8 +25,8 @@
     },
     {
       "path": "app/acompanhamento/tracking-panel.tsx",
-      "size": 27959,
-      "sha256": "e3bc4d3a696a5ed1857337baa0e3b8545c3fae8716b50f3e8ceac0373b83bb4a"
+      "size": 27973,
+      "sha256": "297489c130a28e102a83562cba32b83e5294844b41cff8c6c65ca20208995036"
     },
     {
       "path": "app/acompanhamento/tracking.css",
@@ -1700,8 +1700,8 @@
     },
     {
       "path": "public/order-delivery.js",
-      "size": 3156,
-      "sha256": "58c226a8a9f46ca29cdd01980eb7b2ef696b36488e9126f03ba62661ac5e879c"
+      "size": 3170,
+      "sha256": "6f03f4b391858ea085576fb78aa9051b84abc8d4a7fe724307e60e10df1c09ae"
     },
     {
       "path": "public/order-files.js",
@@ -1761,7 +1761,7 @@
     {
       "path": "public/pedido.html",
       "size": 34447,
-      "sha256": "759984ac8484982bac94878658232f477fb26449967548c5d30b9201fb5915dd"
+      "sha256": "72026b2373e96ff3624adadcbf21e07bf29a5eab15317d23860024951c55e4ec"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1795,13 +1795,13 @@
     },
     {
       "path": "public/production-sheet.js",
-      "size": 32597,
-      "sha256": "d2e0878ae88fa2e5657dcb053eeabac9b32624d51a9e87cdf5374038e2666051"
+      "size": 34030,
+      "sha256": "ad5ef87961db353fbac2add2761d9d43679265db51a568e02d838a10b99d5b6e"
     },
     {
       "path": "public/production-ui.js",
-      "size": 108297,
-      "sha256": "441d794f117acd90eaaaee5a4bfa9fbe0ababecd8fbe4dbe6db3966a22ef1fef"
+      "size": 108311,
+      "sha256": "243f37c13d3ec61b6725cf81fe687ec967efaa80284505ebef125e5ebbf476f3"
     },
     {
       "path": "public/production.css",
@@ -2505,8 +2505,8 @@
     },
     {
       "path": "tests/order-print-list.test.mjs",
-      "size": 8897,
-      "sha256": "26cca7165066731245c5c23a74a5fe93ef57eec77078c4fe9f00cd9021ee2d19"
+      "size": 10846,
+      "sha256": "5da233ecb11165e471e02b3bb5e4bf58c717cbcf0bcbb87115bf95a69cebe8cc"
     },
     {
       "path": "tests/order-reminder-ui.test.mjs",
@@ -2687,6 +2687,11 @@
       "path": "public/fonts/ArialRoundedMTBold.ttf",
       "size": 45260,
       "sha256": "d9352e7d73711f006a27f44e71808a74fec109e2342e680e054c4458569f0a94"
+    },
+    {
+      "path": "public/fonts/ArialRoundedMTBold-Orders.ttf",
+      "size": 45272,
+      "sha256": "b1aea4b3740c4f0ebdd056800a07d30d33f39aa36487a16f0d3930d32c3069f5"
     }
   ]
 }

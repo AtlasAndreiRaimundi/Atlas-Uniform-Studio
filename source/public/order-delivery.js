@@ -1,5 +1,5 @@
 import {orderFileStem} from './order-pricing.js';
-import {buildSheets,createPDF} from './production-sheet.js?v=22';
+import {buildSheets,createPDF} from './production-sheet.js?v=23';
 
 const safe=value=>String(value||'pedido').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_.-]+/g,'_').replace(/^\.+/,'').slice(0,100)||'pedido';
 let libraries;
@@ -8,7 +8,7 @@ export async function loadDeliveryLibraries(){
  const script=(path,name)=>globalThis[name]?Promise.resolve(globalThis[name]):new Promise((resolve,reject)=>{const element=document.createElement('script');element.src=path;element.onload=()=>resolve(globalThis[name]);element.onerror=()=>reject(new Error('Não foi possível carregar o pacote de produção.'));document.head.appendChild(element);});
  const bytes=async path=>{const response=await fetch(path);if(!response.ok)throw new Error('Não foi possível carregar a fonte do pedido.');return response.arrayBuffer();};
  const logo=fetch('/assets/atlas/atlas-logo-print.png').then(async response=>{if(!response.ok)return undefined;const blob=await response.blob();return new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.readAsDataURL(blob);});}).catch(()=>undefined);
- libraries=Promise.all([script('/vendor/pdf-lib/pdf-lib.min.js','PDFLib'),script('/vendor/jszip/jszip.min.js','JSZip'),script('/vendor/fontkit/fontkit.umd.min.js','fontkit'),bytes('/fonts/ArialRoundedMTBold.ttf'),bytes('/fonts/ArialRoundedMTBold.ttf'),logo]).then(([PDF,Zip,fontkit,regular,bold,logo])=>({PDF,Zip,fontkit,regular,bold,logo})).catch(error=>{libraries=null;throw error;});return libraries;
+ libraries=Promise.all([script('/vendor/pdf-lib/pdf-lib.min.js','PDFLib'),script('/vendor/jszip/jszip.min.js','JSZip'),script('/vendor/fontkit/fontkit.umd.min.js','fontkit'),bytes('/fonts/ArialRoundedMTBold-Orders.ttf'),bytes('/fonts/ArialRoundedMTBold-Orders.ttf'),logo]).then(([PDF,Zip,fontkit,regular,bold,logo])=>({PDF,Zip,fontkit,regular,bold,logo})).catch(error=>{libraries=null;throw error;});return libraries;
 }
 export async function createProductionPackage(delivery,{PDF,Zip,fontkit,regular,bold,logo,readFile}={}){
  const {order,files}=delivery,document=order?.document;

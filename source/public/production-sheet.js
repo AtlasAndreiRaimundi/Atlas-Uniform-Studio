@@ -61,12 +61,13 @@ function metadata(d,o,extra){
  const previous=wrap('PEDIDO ANTERIOR: '+(o.previousOrder||'—'),196,7);d.text(previous[0],x+5,561,7,C.muted);if(previous.length>1)extra.push('PEDIDO ANTERIOR: '+o.previousOrder);d.line(x,566,x+w,566);
  const artist=wrap(o.artist||'ARTE-FINALISTA',196,9);d.text(artist[0],x+7,577,9,C.ink,true);if(artist.length>1)extra.push('ARTE-FINALISTA: '+o.artist);
 }
+function printedTitle(page){return /^KIT\s*[·-]?\s*CAMISETA\s*\+\s*CALÇÃO$/iu.test((page.title||'').trim())?'':page.title||'';}
 function primary(order,page,products,assets,sourcePage=1){
  const d=base(order,assets,'DESENHO '+sourcePage),extra=[];metadata(d,order,extra);
  d.rect(16,65,215,46,'none',C.line,5);const label=wrap(page.label||'',202,11);label.slice(0,2).forEach((s,i)=>d.text(s,23,85+i*14,11,C.red,true));if(label.length>2)extra.push('ETIQUETA / DESTAQUE: '+page.label);
  d.rect(237,65,178,46,'none',C.line,5);const techniques=detectedTechniques(order,products);TECH_ROWS(d,techniques,extra);
  d.rect(421,65,190,46,'none',C.line,5);['PEDIDO NOVO','COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].forEach((s,i)=>{const chosen=order.type===s;d.text('('+ (chosen?'X':' ')+') '+s,427,79+i*12,6.8,chosen?C.red:C.muted,chosen);});
- const title=wrap(page.title||'',581,13);title.slice(0,2).forEach((s,i)=>d.text(s,24,132+i*15,13,C.red,true));if(title.length>2)extra.push('TÍTULO: '+page.title);
+ const title=wrap(printedTitle(page),581,13);title.slice(0,2).forEach((s,i)=>d.text(s,24,132+i*15,13,C.red,true));if(title.length>2)extra.push('TÍTULO: '+page.title);
  const top=title.length>1?157:145,bottom=452,slot=595/products.length;
  const anchors=[],imageEntries=[],placeholderEntries=[],componentArrows=[],shared=page.visual?.mode==='shared'&&page.visual.image,applications=products.some(p=>p.technical?.applications.length||p.extraApplications?.length||p.technical?.drawstringColor);
  const appTop=applications?458-products.length*20-3:458;
@@ -105,7 +106,7 @@ function primary(order,page,products,assets,sourcePage=1){
  const notice=wrap(order.notice,190,noticeSize),visibleNotice=notice.length>noticeMax?[...notice.slice(0,noticeMax-1),'(lembrete em detalhes)']:notice;visibleNotice.forEach((s,i)=>d.text(s,420,noticeY+i*8.5,noticeSize,C.red));if(notice.length>noticeMax)extra.push('LEMBRETE: '+order.notice);
  d.line(420,566,607,566,C.red,.7);d.text('ASSINATURA RESPONSÁVEL',445,578,7,C.red,true);
  drawAnnotations(d,page.annotations||[],products,extra);
- return {ops:d.ops,extra,anchors,title:page.title||products.map(p=>p.type).join(' + '),mode:page.mode,kind:'sheet',sourcePage};
+ return {ops:d.ops,extra,anchors,title:printedTitle(page)||products.map(p=>p.type).join(' + '),mode:page.mode,kind:'sheet',sourcePage};
 }
 
 function drawBudget(d,order,products,extra){
@@ -124,7 +125,7 @@ function printRows(product){
  if(product.names?.length)return product.names.map(n=>({name:String(n.name??'').trim(),number:String(n.number??'').trim(),additional:String(n.additional??'').trim(),size:n.size,quantity:n.quantity,athleteId:n.athleteId||'',kitId:n.kitId||'',specialReference:n.specialReference||'',specialDescription:n.specialDescription||''}));
  return parseGrade(product.grade,product.type).groups.flatMap(group=>group.rows.filter(row=>row.quantity>0).map(row=>({name:'',number:'',additional:'',size:(group.category===product.type.toUpperCase()?'':group.category+' ')+row.size,quantity:row.quantity})));
 }
-export function listSections(products,{kit=false}={}){
+function rawListSections(products,{kit=false}={}){
  const rows=products.map(printRows);
  if(products.length===2&&products.every(p=>p.technical&&p.names?.length)&&rows[0].every(r=>r.kitId)&&rows[1].every(r=>r.kitId)){
   const keys=rows.map(items=>new Set(items.map(r=>r.kitId))),same=keys[0].size===rows[0].length&&keys[1].size===rows[1].length&&keys[0].size===keys[1].size&&[...keys[0]].every(k=>keys[1].has(k));
@@ -136,12 +137,29 @@ export function listSections(products,{kit=false}={}){
  if(paired)return [{title:title(products),columns:[['ITEM',30],['NOME',200],['NÚMERO',70],[products[0].type+(products[0].type===products[1].type?' 1':''),105],[products[1].type+(products[0].type===products[1].type?' 2':''),105],['QTD. KITS',60],['ADICIONAL',240]],rows:rows[0].map((row,i)=>{const [name,number,additional]=values(row);return [String(i+1),name,number,row.size,rows[1][i].size,String(row.quantity),additional];}),totals:products.map(p=>({type:p.type,quantity:p.quantity}))}];
  return products.map((product,index)=>({title:title([product])+(product.names?.length?'':' · GRADE SEM PERSONALIZAÇÃO'),columns:[['ITEM',30],['NOME',230],['NÚMERO',80],['TAMANHO',100],['QTD.',60],['ADICIONAL',310]],rows:rows[index].map((row,i)=>{const [name,number,additional]=values(row),special=isSpecialSize(row.size);return [String(i+1),name,number,special?'TAMANHO ESPECIAL':row.size,String(row.quantity),[additional,...(special?[row.specialReference,row.specialDescription]:[])].filter(Boolean).join(' · ')];}),totals:[{type:product.type,quantity:product.quantity}]})).filter(section=>section.rows.length);
 }
+// Hide empty name personalization on shorts, retaining names when supplied.
+export function listSections(products,options={}){
+ const sections=rawListSections(products,options);
+ const hasNames=p=>printRows(p).some(row=>row.name&&!/^SEM NOME$/i.test(row.name));
+ return sections.map((section,index)=>{
+  const columns=section.columns.map(column=>[...column]),rows=section.rows.map(row=>[...row]);
+  const omitName=()=>{const at=columns.findIndex(([label])=>label==='NOME');if(at<0)return;const width=columns[at][1];columns.splice(at,1);rows.forEach(row=>row.splice(at,1));const target=columns.findIndex(([label])=>label==='TAMANHO');columns[target>=0?target:columns.length-1][1]+=width;};
+  if(sections.length===products.length&&/calção/i.test(products[index].type)&&!hasNames(products[index]))omitName();
+  products.forEach(product=>{
+   if(!/calção/i.test(product.type)||hasNames(product))return;
+   const at=columns.findIndex(([label])=>label==='NOME / Nº · '+product.type);
+   if(at>=0){columns[at][0]='Nº · '+product.type;rows.forEach(row=>{row[at]=row[at].replace(/^SEM NOME \/ /,'');});}
+  });
+  if(sections.length===1&&products.length>1&&products.some(p=>/calção/i.test(p.type))&&products.every(p=>!hasNames(p)))omitName();
+  return {...section,columns,rows};
+ });
+}
 function listSheets(order,page,products,assets,sourcePage){
  const sections=listSections(products,{kit:page.mode==='conjunto'||page.visual?.mode==='shared'});if(!sections.length)return [];
  const result=[];let d,y,current;
  function start(){d=base(order,assets,'LISTA · DESENHO '+sourcePage);current={ops:d.ops,extra:[],anchors:[],title:'Lista do desenho '+sourcePage,mode:'lista',kind:'list',sourcePage};result.push(current);
   const title='LISTA DE '+(order.number||'PEDIDO SEM NÚMERO')+' · DESENHO '+sourcePage,fit=fitFieldText(title,800,44,{size:15,minSize:7,max:3});fit.lines.forEach((line,i)=>d.text(line,21,82+i*(fit.size+2),fit.size,C.ink,true));
-  const subtitle=wrapField([order.client,page.title||page.listGroup].filter(Boolean).join(' · '),800,8);subtitle.slice(0,2).forEach((line,i)=>d.text(line,21,119+i*10,8,C.muted));y=145;
+  const subtitle=wrapField([order.client,printedTitle(page)||page.listGroup].filter(Boolean).join(' · '),800,8);subtitle.slice(0,2).forEach((line,i)=>d.text(line,21,119+i*10,8,C.muted));y=145;
  }
  function heading(section){const lines=wrapField(section.title,800,9.2);for(const line of lines){d.text(line,21,y+10,9.2,C.blue,true);y+=12;}y+=4;const headings=section.columns.map(([label,w])=>wrapField(label,w-10,7));const h=Math.max(...headings.map(lines=>lines.length))*9+10;let x=16;d.rect(16,y,810,h,C.light,C.line);headings.forEach((lines,i)=>{lines.forEach((line,j)=>d.text(line,x+5,y+12+j*9,7,C.ink,true));x+=section.columns[i][1];});y+=h;}
  start();
