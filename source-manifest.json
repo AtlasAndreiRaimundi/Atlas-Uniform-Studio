@@ -19,19 +19,14 @@
       "sha256": "1a5162a69c65d70923b863794b50d5f4a8f5cbc09051084a8849a3909b3455b4"
     },
     {
-      "path": "README.md",
-      "size": 26518,
-      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
-    },
-    {
       "path": "app/acompanhamento/page.tsx",
       "size": 310,
       "sha256": "3f94d0380073f91e0dec35c886065c4ee06fa44c76a26daa01832431dfc226b5"
     },
     {
       "path": "app/acompanhamento/tracking-panel.tsx",
-      "size": 23769,
-      "sha256": "68cd1e9ad7f872eeebc99c729de450e86988909cb37912cbf1e0a6affdd18172"
+      "size": 26822,
+      "sha256": "943a9d5b30c929f48d66824e435c7cd975c0a8358b0948de7176d6ac0900b95e"
     },
     {
       "path": "app/acompanhamento/tracking.css",
@@ -110,8 +105,8 @@
     },
     {
       "path": "app/api/order-tracking/route.ts",
-      "size": 341,
-      "sha256": "8ce240eaabf4c9c40d20b639b6fd6528dd6bfcc3f5fe8d02ff2c4e8f33d38beb"
+      "size": 368,
+      "sha256": "ac634474c2db1a6010309a40a0c41794e139bf69aacd473a43ab334a2d012d3f"
     },
     {
       "path": "app/api/presentations/[token]/assets/[kind]/route.ts",
@@ -137,6 +132,11 @@
       "path": "app/api/production-orders/[id]/delivery/route.ts",
       "size": 436,
       "sha256": "49a61552ecd2e5092efbd219e0bbdc9ec7f834bdc71f883824c366bd83cf0056"
+    },
+    {
+      "path": "app/api/production-orders/[id]/download-events/route.ts",
+      "size": 372,
+      "sha256": "da4f03d2f384e5d50d7ec34763519ddc1c3fd21ed3708df931ec1e1722736648"
     },
     {
       "path": "app/api/production-orders/[id]/list/route.ts",
@@ -840,8 +840,8 @@
     },
     {
       "path": "db/schema.ts",
-      "size": 9945,
-      "sha256": "fed5a4140693bb746cc0b8b3bf3a42421d89f881511fe90b7b10cb8e2a8d45a8"
+      "size": 11000,
+      "sha256": "70f0df75dfbc13bf7fd62bbba42fa4b19f78675be722deed95aad5849e45060e"
     },
     {
       "path": "docs/atlas-rebrand.md",
@@ -912,6 +912,11 @@
       "path": "docs/pedidos-producao.md",
       "size": 3670,
       "sha256": "787a7156847cdad4efcf6efecd6c946a8651aff4628b8b47b3212dc1d23f85fb"
+    },
+    {
+      "path": "docs/portal-producao-2026-11-12.md",
+      "size": 2823,
+      "sha256": "5427063167be34fca1759846bfc2bb600ceeaab39dd4640dde794d56ab81ff0d"
     },
     {
       "path": "docs/produtos/00_LEIA_PRIMEIRO_WORK.md",
@@ -1049,6 +1054,16 @@
       "sha256": "8fc7aed9a9d2ea273f832be9bfd918410ce879ff7cae7c9bbc06aadedb18eac0"
     },
     {
+      "path": "drizzle/0016_factory_queues.sql",
+      "size": 1217,
+      "sha256": "7e09cccc0b2b9bb273c38e03f8a6f9ff448be034e27fc093a3c9b242f2616469"
+    },
+    {
+      "path": "drizzle/meta/_journal.json",
+      "size": 2379,
+      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+    },
+    {
       "path": "drizzle/meta/0000_snapshot.json",
       "size": 4337,
       "sha256": "5a177d57f6fcd79e63a300f98557b4dfa43c398eee3454c03133584b1718ef61"
@@ -1127,11 +1142,6 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
-    },
-    {
-      "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
     },
     {
       "path": "eslint.config.mjs",
@@ -1864,14 +1874,14 @@
       "sha256": "c02336711433a41fac4f484e3a07b0670e69e62edddc068922a0b000a4457b66"
     },
     {
-      "path": "public/simulador/fonts/LICENSE.txt",
-      "size": 3859,
-      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
-    },
-    {
       "path": "public/simulador/fonts/classic.ttf",
       "size": 380660,
       "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
+    },
+    {
+      "path": "public/simulador/fonts/LICENSE.txt",
+      "size": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
     },
     {
       "path": "public/simulador/fonts/mnz-autumn-26.ttf",
@@ -2049,6 +2059,11 @@
       "sha256": "c35cdd49f5008a35779d3ded86d4c7c2995be7e5b65ad4dba231426a7e0c61ff"
     },
     {
+      "path": "public/vendor/exceljs/exceljs.min.js",
+      "size": 947702,
+      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+    },
+    {
       "path": "public/vendor/exceljs/LICENSE",
       "size": 1084,
       "sha256": "2ed526b7e7c7681dc2347995b5036ddf73dc27d0539cdea59b6d4a72b63a57a0"
@@ -2059,9 +2074,9 @@
       "sha256": "fc4027cc263fcffbc0b2b9b7fda248a9d4003f64d11ce967f013a8df2e514c63"
     },
     {
-      "path": "public/vendor/exceljs/exceljs.min.js",
-      "size": 947702,
-      "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+      "path": "public/vendor/fontkit/fontkit.umd.min.js",
+      "size": 758440,
+      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
     },
     {
       "path": "public/vendor/fontkit/README.md",
@@ -2069,9 +2084,9 @@
       "sha256": "7315fcc54511f5ffc906969c39333f93cd47f5217ab014fe45acff14bd5ec4c0"
     },
     {
-      "path": "public/vendor/fontkit/fontkit.umd.min.js",
-      "size": 758440,
-      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
+      "path": "public/vendor/jszip/jszip.min.js",
+      "size": 97781,
+      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
     },
     {
       "path": "public/vendor/jszip/LICENSE.markdown",
@@ -2084,19 +2099,9 @@
       "sha256": "1d89f128bc9a10c160421509788367e6d121da56603e0dc44820114c8e2cc007"
     },
     {
-      "path": "public/vendor/jszip/jszip.min.js",
-      "size": 97781,
-      "sha256": "7f839b2d4688b845c105ebf5d2f9803075f91ea0fe72bdaac176c3a04dd3d2c1"
-    },
-    {
       "path": "public/vendor/mp4-muxer/LICENSE",
       "size": 1065,
       "sha256": "75c54aae7ef6ad652f684f9dd3b71e4dcef86ccebd88cf441ceed7f5eec037c5"
-    },
-    {
-      "path": "public/vendor/mp4-muxer/README.md",
-      "size": 278,
-      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
     },
     {
       "path": "public/vendor/mp4-muxer/mp4-muxer.mjs",
@@ -2104,14 +2109,14 @@
       "sha256": "d2c4c782f180c86ed30b1f5d9487a34a0d370bf9b4535285734ea187d38f9bb5"
     },
     {
+      "path": "public/vendor/mp4-muxer/README.md",
+      "size": 278,
+      "sha256": "000a6f7383519cf13f4be91c040c1b82f4f1d79f4f739d88e07f94ff736e4d2e"
+    },
+    {
       "path": "public/vendor/pdf-lib/LICENSE.md",
       "size": 1070,
       "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
-    },
-    {
-      "path": "public/vendor/pdf-lib/README.md",
-      "size": 105,
-      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/pdf-lib/pdf-lib.min.js",
@@ -2119,9 +2124,9 @@
       "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
     },
     {
-      "path": "public/vendor/three/LICENSE",
-      "size": 1081,
-      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+      "path": "public/vendor/pdf-lib/README.md",
+      "size": 105,
+      "sha256": "0ece632f4f2242759ee4d697841c42c24500c276f7f6f6e4efb348027d3f9e58"
     },
     {
       "path": "public/vendor/three/build/three.core.min.js",
@@ -2157,6 +2162,11 @@
       "path": "public/vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
       "size": 35539,
       "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
+    },
+    {
+      "path": "public/vendor/three/LICENSE",
+      "size": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
     },
     {
       "path": "public/video-export.js",
@@ -2197,6 +2207,11 @@
       "path": "public/workspace-hub.js",
       "size": 8249,
       "sha256": "5b8c61f4a81cc8c2fd4a795f83aec9ebeae99e6b44fe214c7bec2e830cd8239b"
+    },
+    {
+      "path": "README.md",
+      "size": 26518,
+      "sha256": "6ca2e1801ff2b4c62dce84ee0083baafd8c679f6dbcef97a741e7eb96b4f5f15"
     },
     {
       "path": "scripts/build-verified.sh",
@@ -2634,14 +2649,14 @@
       "sha256": "a4c1cc83b63ef9d39641d3babaefffa063dccbbc93338e18017b5013d713163e"
     },
     {
-      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
-      "size": 1063,
-      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
-    },
-    {
       "path": "vendor/shadcn-tailwind-4.13.0.css",
       "size": 16041,
       "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
+    },
+    {
+      "path": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
+      "size": 1063,
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
     },
     {
       "path": "vite.config.ts",
