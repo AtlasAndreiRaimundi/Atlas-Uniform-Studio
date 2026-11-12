@@ -26,14 +26,14 @@ export class OrderTrackingService{
   if(factory&&!factories.length)throw new AppError(403,'Sem acesso à produção.');
   if(industry!==null){requireFactoryId(industry);if(factory&&!factories.includes(industry))throw new AppError(403,'Sem acesso à indústria selecionada.');}
   page=Number(page);if(!Number.isSafeInteger(page)||page<0||page>100000)throw new AppError(400,'Página inválida.');
-  const where=factory?("o.production_state IN ('sent','accepted','returned') AND o.factory_id IS NOT NULL"+(industry?' AND o.factory_id=?':'')+(isAdmin?'':' AND EXISTS (SELECT 1 FROM factory_memberships fm WHERE fm.user_id=? AND fm.factory_id=o.factory_id AND fm.enabled=1)')):'o.owner_id=?';
+  const where=factory?("o.production_state IN ('sent','accepted','in_production','completed','returned') AND o.factory_id IS NOT NULL"+(industry?' AND o.factory_id=?':'')+(isAdmin?'':' AND EXISTS (SELECT 1 FROM factory_memberships fm WHERE fm.user_id=? AND fm.factory_id=o.factory_id AND fm.enabled=1)')):'o.owner_id=?';
   const args=factory?[...(industry?[industry]:[]),...(isAdmin?[]:[owner])]:[owner];
   const count=await this.db.prepare('SELECT COUNT(*) AS total FROM production_orders o WHERE '+where).bind(...args).first();
   const rows=await this.db.prepare("SELECT o.*,p.display_name AS designer_name,json_extract(p.details_json,'$.city') AS city,json_extract(p.details_json,'$.store') AS store,(SELECT MAX(e.created_at) FROM factory_download_events e WHERE e.order_id=o.id) AS last_download_at FROM production_orders o LEFT JOIN profiles p ON p.user_id=o.owner_id WHERE "+where+' ORDER BY o.updated_at DESC,o.id LIMIT 100 OFFSET ?').bind(...args,page*100).all();
   return {orders:await Promise.all(rows.results.map(row=>this.summary(row))),total:count.total,page,hasMore:(page+1)*100<count.total,factoryAccess:factories.length>0,factories,isAdmin};
  }
  async detail(user,id,{factory=false}={}){
-  let row;if(factory){await this.requireFactory(user);row=await this.db.prepare("SELECT * FROM production_orders WHERE id=? AND factory_id IS NOT NULL AND production_state IN ('sent','accepted','returned')").bind(id).first();if(!row)throw new AppError(404,'Pedido não encontrado na fila de produção.');
+  let row;if(factory){await this.requireFactory(user);row=await this.db.prepare("SELECT * FROM production_orders WHERE id=? AND factory_id IS NOT NULL AND production_state IN ('sent','accepted','in_production','completed','returned')").bind(id).first();if(!row)throw new AppError(404,'Pedido não encontrado na fila de produção.');
    try{await requireFactoryAccess(this.db,user,row.factory_id,this.adminId);}catch(error){if(error.status===403)throw new AppError(404,'Pedido não encontrado na sua indústria.');throw error;}
   }else row=await this.production.own(user,id);
   const object=await this.bucket.get(row.object_key);if(!object)throw new AppError(503,'Pedido indisponível.');const document=await object.json();document.factoryId=row.factory_id||'';return {...this.production.summary(row),document};
@@ -45,7 +45,7 @@ export class OrderTrackingService{
   return orderPreviewSVG(order.document);
  }
  async transition(user,id,input){
-  this.owner(user);const action=input?.action,factory=['accept','return'].includes(action);let row;
+  this.owner(user);const action=input?.action,factory=['accept','return','start','complete'].includes(action);let row;
   if(factory){await this.requireFactory(user);row=await this.db.prepare('SELECT * FROM production_orders WHERE id=?').bind(id).first();if(!row||!row.factory_id)throw new AppError(404,'Pedido não encontrado na indústria.');await requireFactoryAccess(this.db,user,row.factory_id,this.adminId);}else if(action==='transfer'){
    if(!isAdminUser(user,this.adminId))throw new AppError(403,'Somente o administrador pode transferir pedidos entre indústrias.');
    row=await this.db.prepare('SELECT * FROM production_orders WHERE id=?').bind(id).first();if(!row)throw new AppError(404,'Pedido não encontrado.');
@@ -62,6 +62,12 @@ export class OrderTrackingService{
   }else if(action==='accept'){
    if(tracking.stage!=='sent')throw new AppError(400,'Somente pedidos enviados e aguardando aceite podem ser aceitos.');
    tracking.stage='accepted';tracking.acceptedAt=at;tracking.acceptedBy=actor;tracking.acceptedById=user.userId;tracking.acceptanceNote=note;
+  }else if(action==='start'){
+   if(tracking.stage!=='accepted')throw new AppError(400,'Somente pedidos recebidos podem iniciar a produção.');
+   tracking.stage='in_production';tracking.startedAt=at;tracking.startedBy=actor;tracking.startedById=user.userId;tracking.productionNote=note;
+  }else if(action==='complete'){
+   if(tracking.stage!=='in_production')throw new AppError(400,'Inicie a produção antes de concluí-la.');
+   tracking.stage='completed';tracking.completedAt=at;tracking.completedBy=actor;tracking.completedById=user.userId;tracking.completionNote=note;
   }else if(action==='return'){
    if(tracking.stage!=='sent')throw new AppError(400,'Somente pedidos aguardando aceite podem ser devolvidos.');
    if(!note)throw new AppError(400,'Informe o motivo da devolução.');tracking.stage='returned';tracking.returnedAt=at;tracking.returnedBy=actor;tracking.returnReason=note;
