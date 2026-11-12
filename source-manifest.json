@@ -2480,8 +2480,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 66580,
-      "sha256": "e9e7fea9864af9d11ae494f9c66ca692b5b467533f36b9517f78d61f6162774a"
+      "size": 66620,
+      "sha256": "674253f38a2f75a3231ffcccce20b4fd290a660983d91662f388c406b0f5bd1a"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2560,8 +2560,8 @@
     },
     {
       "path": "tests/production.test.mjs",
-      "size": 32074,
-      "sha256": "9676ae8fffc45822ff5f7f3411920fd31fcccc7fdde737268b3a223ea9a71397"
+      "size": 32206,
+      "sha256": "c15ad620cd5a2ee84695a6a2b938c0b437d86ca5f74a1ffc9d6c5529eb65b9a0"
     },
     {
       "path": "tests/projects.test.mjs",
