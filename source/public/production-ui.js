@@ -28,7 +28,7 @@ let orderReset=null,pageRemoval=null,bootReady=false,draftWriteQueue=Promise.res
 let orderPickerPage=0;
 let displayedOrderThumbnail=null;
 const ORDER_PICKER_SIZE=12;
-const ORDER_STATE_LABELS={draft:'Em preparação',checked:'Conferido · escolher indústria',sent:'Disponível para produção',accepted:'Aceito pela fábrica',returned:'Devolvido para correção'};
+const ORDER_STATE_LABELS={draft:'Em preparação',checked:'Conferido · escolher indústria',sent:'Disponível para produção',accepted:'Recebido pela fábrica',in_production:'Em produção',completed:'Concluído',returned:'Devolvido para correção'};
 let doc=newOrder(),pageIndex=0,productIndex=0,sheetIndex=0,sheets=[],assets={},id=null,version=0,profile=null,projects=[],dirty=false,example=params.get('exemplo')==='1',conflict=false,savePromise=null,autoTimer,draftTimer,toastTimer,pendingAnchor=null,draftKey='demo',pdfURL,revision=0;
 const page=()=>doc.pages[pageIndex],product=()=>page().products[productIndex];
 const ORDER_STAGES=[
@@ -123,7 +123,7 @@ $('#savedListCards').addEventListener('click',async event=>{const use=event.targ
 $('#cancelSavedListDelete').addEventListener('click',()=>{pendingListDeletion=null;$('#deleteSavedListDialog').close();});
 $('#confirmSavedListDelete').addEventListener('click',async()=>{const target=pendingListDeletion,b=$('#confirmSavedListDelete');if(!target||b.disabled)return;b.disabled=true;try{await api('/api/order-lists/'+encodeURIComponent(target.id),{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:target.version})});pendingListDeletion=null;$('#deleteSavedListDialog').close();await refreshSavedLists();toast('Lista excluída. Os pedidos continuam preservados.');}catch(e){$('#deleteSavedListError').textContent=e.message;}finally{b.disabled=false;}});
 
-const deletionBlocked=order=>order?.tracking?.stage==='accepted';
+const deletionBlocked=order=>['accepted','in_production','completed'].includes(order?.tracking?.stage);
 const orderThumbnail=order=>order.thumbnailUrl||'/api/order-tracking/'+encodeURIComponent(order.id)+'/thumbnail?version='+order.version;
 const orderStateLabel=order=>ORDER_STATE_LABELS[order.tracking?.stage]||'Situação não informada';
 function orderPreviewMarkup(order){return `<span data-order-preview><img src="${esc(orderThumbnail(order))}" alt="Prévia do pedido ${esc(order.title||order.number||'Sem nome')}" loading="lazy" decoding="async"><span data-preview-fallback hidden>Prévia indisponível</span></span>`;}
@@ -131,7 +131,7 @@ function renderSelectedOrder(){
  const selected=savedOrders.find(o=>o.id===$('#savedOrders').value);$('#openOrderPicker').disabled=!profile;
  const previewKey=selected?orderThumbnail(selected):'';if(displayedOrderThumbnail!==previewKey){displayedOrderThumbnail=previewKey;$('#selectedOrderPreview').innerHTML=selected?orderPreviewMarkup(selected):'<span aria-hidden="true">▤</span>';}
  $('#selectedOrderSummary').innerHTML=selected?'<strong>'+esc(selected.title||'Pedido sem nome')+'</strong><small>'+esc([selected.number,selected.client].filter(Boolean).join(' · ')||'Cliente não informado')+'</small><small>'+esc(orderStateLabel(selected))+'</small>':'<strong>Escolher um pedido salvo</strong><small>Veja a miniatura, o nome e a situação antes de abrir.</small>';
- $('#openOrder').disabled=!selected;$('#openOrder').textContent=selected&&['sent','accepted'].includes(selected.tracking?.stage)?'Consultar pedido':'Abrir pedido';
+ $('#openOrder').disabled=!selected;$('#openOrder').textContent=selected&&['sent','accepted','in_production','completed'].includes(selected.tracking?.stage)?'Consultar pedido':'Abrir pedido';
 }
 function renderOrderLibraryActions(){const selected=savedOrders.find(o=>o.id===$('#savedOrders').value);$('#deleteOrder').disabled=!profile||!selected||Boolean(orderDeletion)||deletionBlocked(selected);$('#deleteOrderHelp').hidden=!deletionBlocked(selected);renderSelectedOrder();}
 function renderSavedOrders(selected=id||$('#savedOrders').value){$('#savedOrders').innerHTML='<option value="">Selecione um pedido…</option>'+savedOrders.map(o=>`<option value="${esc(o.id)}">${esc([o.title||'Pedido sem nome',o.number,o.client].filter(Boolean).join(' · '))}</option>`).join('');$('#savedOrders').value=savedOrders.some(o=>o.id===selected)?selected:'';renderOrderLibraryActions();if($('#savedOrderPicker').open)renderOrderPicker();}
@@ -173,7 +173,7 @@ async function requestOrderDeletion(){
   // A save already in flight must settle before the version is shown for confirmation.
   if(state.id===id&&savePromise)await savePromise;if(orderDeletion!==state)return;
   const {order}=await api('/api/production-orders/'+encodeURIComponent(state.id));if(orderDeletion!==state)return;
-  state.order=order;if(deletionBlocked(order))deletionError('Pedidos aceitos pela fábrica não podem ser excluídos.');
+  state.order=order;if(deletionBlocked(order))deletionError('Pedidos recebidos ou em produção não podem ser excluídos.');
  }catch(e){if(orderDeletion!==state)return;state.invalid=true;deletionError(e.message);}
  finally{if(orderDeletion===state){state.loading=false;renderOrderDeletion();}}
 }
@@ -545,12 +545,12 @@ async function boot(){
 boot().catch(e=>error(e.message));
 
 function renderOverview(){
- const w=doc.workflow||{status:'draft',revision:1,history:[]},locked=w.status==='released'||viewingRelease||['sent','accepted'].includes(doc.factoryTracking?.stage),items=doc.pages.flatMap(page=>page.products.map(p=>({page,p}))),issues=[...releaseProblems(doc),...(doc.factoryId?[]:['Selecione a indústria de produção: MEINERZ ou ADIPRIME.'])];
+ const w=doc.workflow||{status:'draft',revision:1,history:[]},locked=w.status==='released'||viewingRelease||['sent','accepted','in_production','completed'].includes(doc.factoryTracking?.stage),items=doc.pages.flatMap(page=>page.products.map(p=>({page,p}))),issues=[...releaseProblems(doc),...(doc.factoryId?[]:['Selecione a indústria de produção: MEINERZ ou ADIPRIME.'])];
  $('#workflowStatus').textContent=(viewingRelease?'CONSULTA HISTÓRICA · ':locked?'REVISÃO CONFERIDA · ':'RASCUNHO · ')+'Revisão '+w.revision+(w.releasedAt&&locked?' · '+new Date(w.releasedAt).toLocaleString('pt-BR')+' · '+w.releasedBy:'');
  $('#overviewSummary').innerHTML='<p><strong>'+esc(doc.client||'Cliente pendente')+'</strong> · '+items.reduce((n,{p})=>n+Number(p.quantity||0),0)+' peças</p><p>Lista: '+esc(doc.listSource?doc.listSource.name+' · V'+(doc.listSource.version||'arquivo'):'Não vinculada; grade manual')+'</p><ul>'+items.map(({page,p})=>'<li><b>'+esc(p.type)+'</b> · '+esc(page.listGroup||page.title||'Sem grupo')+' · '+p.quantity+' un. · '+esc(p.fabric||'Tecido pendente')+' · '+esc(page.visual?.mode==='shared'&&page.visual.image?'Imagem única do kit':p.projectRef?p.projectRef.name+' V'+p.projectRef.version:p.images?.some(Boolean)?'Imagem manual':'Sem mockup; montagem posterior')+'</li>').join('')+'</ul>';
  $('#releaseIssues').innerHTML=issues.length?'<p>Para concluir a conferência:</p><ul>'+issues.map(issue=>'<li>'+esc(issue)+'</li>').join('')+'</ul>':'<p>Pedido pronto para a conferência final em tela cheia.</p>';
  $('#orderEditor').disabled=locked;$('#saveOrder').disabled=locked||technicalBusy;$('#continueOrderList').disabled=locked||technicalBusy;$('#releaseChecks').disabled=locked||technicalBusy;$('#releaseOrder').hidden=true;$('#reviseOrder').hidden=!locked||viewingRelease||['sent','accepted'].includes(doc.factoryTracking?.stage);
- const stage=doc.factoryTracking?.stage;if(stage)$('#workflowStatus').textContent+=' · '+({checked:'CONFERIDO · NÃO ENVIADO',sent:'DISPONÍVEL NA FILA DE PRODUÇÃO',accepted:'ACEITO PELA FÁBRICA · BLOQUEADO',returned:'DEVOLVIDO PARA CORREÇÃO',draft:'EM PREPARAÇÃO'}[stage]||stage);
+ const stage=doc.factoryTracking?.stage;if(stage)$('#workflowStatus').textContent+=' · '+({checked:'CONFERIDO · NÃO ENVIADO',sent:'DISPONÍVEL NA FILA DE PRODUÇÃO',accepted:'RECEBIDO PELA FÁBRICA · BLOQUEADO',in_production:'EM PRODUÇÃO · BLOQUEADO',completed:'CONCLUÍDO · BLOQUEADO',returned:'DEVOLVIDO PARA CORREÇÃO',draft:'EM PREPARAÇÃO'}[stage]||stage);
  $('#releaseOrder').disabled=technicalBusy||issues.length>0||!profile||!['Art','List','Technical'].every(key=>$('#check'+key).checked);$('#reviseOrder').disabled=technicalBusy;
  $('#releaseHistory').innerHTML=(w.history||[]).map(entry=>'<p>Revisão '+entry.revision+' · '+esc(entry.name)+' · '+esc(new Date(entry.at).toLocaleString('pt-BR'))+' <button class="text-link" data-history="'+entry.revision+'">Abrir cópia liberada</button></p>').join('')||'<p>Nenhuma revisão liberada.</p>';
  if(viewingRelease)$('#releaseHistory').innerHTML+='<button id="backToCurrent" class="outline-button">Voltar ao pedido atual</button>';
