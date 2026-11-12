@@ -5,9 +5,9 @@ CREATE TABLE factory_memberships (
  user_id TEXT NOT NULL,
  factory_id TEXT NOT NULL CHECK(factory_id IN ('meinerz','adiprime')),
  enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0,1)),
- updated_at TEXT NOT NULL,
- UNIQUE (user_id,factory_id)
+ updated_at TEXT NOT NULL
 );
+CREATE UNIQUE INDEX factory_memberships_user_factory_idx ON factory_memberships(user_id,factory_id);
 CREATE INDEX factory_memberships_factory_idx ON factory_memberships(factory_id,enabled);
 CREATE TABLE factory_download_events (
  id TEXT PRIMARY KEY NOT NULL,
