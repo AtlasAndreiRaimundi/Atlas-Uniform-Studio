@@ -93,7 +93,7 @@ export class ProductionService{
   document.number=stored?.number||'';
   if(stored?.origin||trusted.origin){document.origin=stored?.origin||trusted.origin;document.previousOrder=document.origin.number;if(!['COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].includes(document.type))throw new AppError(400,'Mantenha o tipo de complemento neste pedido vinculado.');}
   const tracking=previous?trackingOf(previous,stored):{stage:'draft',events:[],revision:1};
-  if(['sent','accepted','in_production','completed'].includes(tracking.stage))throw new AppError(400,tracking.stage==='sent'?'Pedido disponibilizado à fábrica. Aguarde o aceite ou a devolução.':'Pedido recebido ou em produção. Não pode ser alterado.');
+  if(['sent','accepted','in_production','completed'].includes(tracking.stage))throw new AppError(400,tracking.stage==='sent'?'Pedido disponibilizado à fábrica. Aguarde o aceite ou a devolução.':'Pedido aceito, em produção ou concluído. Não pode ser alterado.');
   const action=input.action||'save';if(!['save','release','revise'].includes(action))throw new AppError(400,'Ação inválida.');
   if(stored?.workflow?.status==='released'&&action!=='revise')throw new AppError(400,'Pedido liberado. Inicie uma nova revisão antes de editar.');
   document.workflow=stored?.workflow||{status:'draft',revision:1,history:[]};
