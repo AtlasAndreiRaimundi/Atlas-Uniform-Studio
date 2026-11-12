@@ -68,8 +68,8 @@ export class ProductionService{
  async remove(user,id,input){
   const row=await this.own(user,id);
   if(!Number.isSafeInteger(input?.version)||input.version!==row.version)throw new AppError(409,'Este pedido mudou. Feche a confirmação e selecione o pedido novamente antes de excluir.');
-  if(row.production_state==='accepted')throw new AppError(400,'Pedidos aceitos pela fábrica não podem ser excluídos.');
-  const deleted=await this.db.prepare("DELETE FROM production_orders WHERE id=? AND owner_id=? AND version=? AND production_state<>'accepted' RETURNING id").bind(id,this.owner(user),input.version).first();
+  if(['accepted','in_production','completed'].includes(row.production_state))throw new AppError(400,'Pedidos recebidos ou em produção não podem ser excluídos.');
+  const deleted=await this.db.prepare("DELETE FROM production_orders WHERE id=? AND owner_id=? AND version=? AND production_state NOT IN ('accepted','in_production','completed') RETURNING id").bind(id,this.owner(user),input.version).first();
   if(!deleted)throw new AppError(409,'Este pedido mudou. Feche a confirmação e selecione o pedido novamente antes de excluir.');
   // The list foreign key is SET NULL. Independent lists and presentations stay intact.
   // Remove only this order's files, including its old autosaves and released snapshots.
@@ -93,7 +93,7 @@ export class ProductionService{
   document.number=stored?.number||'';
   if(stored?.origin||trusted.origin){document.origin=stored?.origin||trusted.origin;document.previousOrder=document.origin.number;if(!['COMPLEMENTO','COMPLEMENTO COM ALTERAÇÕES'].includes(document.type))throw new AppError(400,'Mantenha o tipo de complemento neste pedido vinculado.');}
   const tracking=previous?trackingOf(previous,stored):{stage:'draft',events:[],revision:1};
-  if(['sent','accepted'].includes(tracking.stage))throw new AppError(400,tracking.stage==='accepted'?'Pedido aceito pela fábrica. Não pode ser alterado.':'Pedido enviado. Aguarde o aceite ou a devolução pela fábrica.');
+  if(['sent','accepted','in_production','completed'].includes(tracking.stage))throw new AppError(400,tracking.stage==='sent'?'Pedido disponibilizado à fábrica. Aguarde o aceite ou a devolução.':'Pedido recebido ou em produção. Não pode ser alterado.');
   const action=input.action||'save';if(!['save','release','revise'].includes(action))throw new AppError(400,'Ação inválida.');
   if(stored?.workflow?.status==='released'&&action!=='revise')throw new AppError(400,'Pedido liberado. Inicie uma nova revisão antes de editar.');
   document.workflow=stored?.workflow||{status:'draft',revision:1,history:[]};
