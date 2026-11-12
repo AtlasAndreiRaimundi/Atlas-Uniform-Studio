@@ -6,7 +6,7 @@
 - A conferência final (**Aprovar para produção**) grava a revisão e a publica automaticamente na fila da indústria escolhida. O envio manual foi removido do caminho normal.
 - **Meus pedidos / Pedidos aprovados** permanece para o dono; **Central de produção** atende funcionários das fábricas. PDF, lista incorporada e ZIP com CDR têm downloads autenticados.
 - O dono escolhe a indústria de pedidos antigos já conferidos, antes de torná-los visíveis à fábrica. Pedidos antigos sem indústria ficam fora das duas filas.
-- Ao aceitar o pedido, a fábrica confirma o recebimento. Devolução exige justificativa; o designer pode iniciar uma nova revisão após devolução. Download não equivale a início de fabricação.
+- Ao confirmar o recebimento, a fábrica pode clicar em **Iniciar produção** e, depois, **Concluir produção**. Devolução antes do aceite exige justificativa; o designer pode iniciar nova revisão após devolução. Download não equivale a início de fabricação. Pedidos aceitos, em produção ou concluídos permanecem congelados.
 - A administração pode transferir um pedido ainda pendente de uma indústria para outra; a empresa anterior perde acesso imediatamente. Pedidos aceitos não podem ser transferidos.
 
 ## Controle de acesso
