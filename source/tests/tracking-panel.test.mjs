@@ -42,7 +42,7 @@ test('the tracking row offers deletion for sent orders, names the target and can
  await click(findButton('Excluir pedido',row('0000-MNZ')));assert.equal(dialog().props.ref.current.open,true);assert.match(text(dialog()),/0000-MNZ.*Cliente 0/);assert.match(text(dialog()),/removido da fila de recebimento/);assert.equal(screen.all('textarea',dialog()).length,0);
  await click(findButton('Cancelar',dialog()));assert.equal(dialog().props.ref.current.open,false);assert.equal(calls.some(call=>call.options.method==='DELETE'),false);assert.equal(screen.records.size,3);
  assert.equal(findButton('Excluir pedido',row('0002-MNZ')).props.disabled,true);
- await click(findButton('Fila da fábrica'));assert.equal(screen.all('button').filter(button=>text(button)==='Excluir pedido').length,0,'factory permission cannot delete other designers’ orders');assert.match(screen.all('img')[0].props.src,/factory=1/);
+ await click(findButton('Central de produção'));assert.equal(screen.all('button').filter(button=>text(button)==='Excluir pedido').length,0,'factory permission cannot delete other designers’ orders');assert.match(screen.all('img')[0].props.src,/factory=1/);
 });
 
 test('confirmation deletes precisely one sent order, blocks duplicate clicks and updates the rows and counters',async()=>{
