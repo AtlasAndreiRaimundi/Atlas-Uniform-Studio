@@ -25,8 +25,8 @@
     },
     {
       "path": "app/acompanhamento/tracking-panel.tsx",
-      "size": 27962,
-      "sha256": "3f0e2dd4bbd7ed9c4d2af2d74f2955932041531f52908a77ce0f8b51be9608f1"
+      "size": 27959,
+      "sha256": "e3bc4d3a696a5ed1857337baa0e3b8545c3fae8716b50f3e8ceac0373b83bb4a"
     },
     {
       "path": "app/acompanhamento/tracking.css",
@@ -1700,8 +1700,8 @@
     },
     {
       "path": "public/order-delivery.js",
-      "size": 3159,
-      "sha256": "50e89ee439dbd8130f97c3ad12a422d2aeac244832561898164a906c7552250a"
+      "size": 3156,
+      "sha256": "58c226a8a9f46ca29cdd01980eb7b2ef696b36488e9126f03ba62661ac5e879c"
     },
     {
       "path": "public/order-files.js",
@@ -1761,7 +1761,7 @@
     {
       "path": "public/pedido.html",
       "size": 34447,
-      "sha256": "f28c322fd037de98f8d027a41670f48bfbb3a4aea7d5de9fb1230c908647392c"
+      "sha256": "759984ac8484982bac94878658232f477fb26449967548c5d30b9201fb5915dd"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1800,8 +1800,8 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 108300,
-      "sha256": "c1638a6c4aa94605590c8c51eadb48fec9eee889b1057705385448e54d1dc9ea"
+      "size": 108297,
+      "sha256": "441d794f117acd90eaaaee5a4bfa9fbe0ababecd8fbe4dbe6db3966a22ef1fef"
     },
     {
       "path": "public/production.css",
@@ -2682,6 +2682,11 @@
       "path": "worker/index.ts",
       "size": 1740,
       "sha256": "b5ad26b9cb1faf2045d47352bfe089c201333e3562dd2287e15cd9edc691a186"
+    },
+    {
+      "path": "public/fonts/ArialRoundedMTBold.ttf",
+      "size": 45260,
+      "sha256": "d9352e7d73711f006a27f44e71808a74fec109e2342e680e054c4458569f0a94"
     }
   ]
 }
