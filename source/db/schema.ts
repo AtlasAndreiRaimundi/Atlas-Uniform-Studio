@@ -105,10 +105,10 @@ export const productionOrders = sqliteTable('production_orders', {
   id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),title:text('title').notNull(),
   client:text('client').notNull().default(''),orderNumber:text('order_number').notNull().default(''),
   objectKey:text('object_key').notNull(),version:integer('version').notNull().default(1),
-  productionState:text('production_state').notNull().default(''),
+  productionState:text('production_state').notNull().default(''),factoryId:text('factory_id'),
   trackingJson:text('tracking_json').notNull().default('{}'),
   createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
-},t=>[index('production_orders_state_idx').on(t.productionState),index('production_orders_owner_updated_idx').on(t.ownerId,t.updatedAt)]);
+},t=>[index('production_orders_state_idx').on(t.productionState),index('production_orders_owner_updated_idx').on(t.ownerId,t.updatedAt),index('production_orders_factory_state_idx').on(t.factoryId,t.productionState,t.updatedAt)]);
 
 export const orderLists = sqliteTable('order_lists', {
   id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),title:text('title').notNull(),
@@ -137,3 +137,13 @@ export const salesQuotations=sqliteTable('sales_quotations',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),documentJson:text('document_json').notNull(),
  version:integer('version').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),
 },t=>[index('sales_quotations_owner_updated_idx').on(t.ownerId,t.updatedAt),uniqueIndex('sales_quotations_share_token_idx').on(t.shareToken)]);
+
+// Factory access is explicit per-industry; legacy factory_access does not grant access.
+export const factoryMemberships=sqliteTable('factory_memberships',{
+ userId:text('user_id').notNull(),factoryId:text('factory_id').notNull(),enabled:integer('enabled').notNull().default(1),updatedAt:text('updated_at').notNull(),
+},t=>[uniqueIndex('factory_memberships_user_factory_idx').on(t.userId,t.factoryId),index('factory_memberships_factory_idx').on(t.factoryId,t.enabled)]);
+
+export const factoryDownloadEvents=sqliteTable('factory_download_events',{
+ id:text('id').primaryKey(),orderId:text('order_id').notNull().references(()=>productionOrders.id,{onDelete:'cascade'}),
+ userId:text('user_id').notNull(),factoryId:text('factory_id').notNull(),kind:text('kind').notNull(),revision:integer('revision').notNull(),createdAt:text('created_at').notNull(),
+},t=>[index('factory_download_events_order_created_idx').on(t.orderId,t.createdAt)]);
