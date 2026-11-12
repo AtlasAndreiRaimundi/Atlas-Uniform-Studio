@@ -16,6 +16,10 @@ O catálogo continua com somente KIT EDGE2027. Moldes antigos permanecem excluí
 
 **ATLAS VECTOR BETA** permanece nas PRs separadas #26 (Studio) e Atlas-Vector#1. Não está publicado nem habilitado: depende de serviço Python externo. Esta versão não incorpora o VECTOR.
 
+## Central de Produção · Meinerz / Adiprime
+
+Aprovações novas com indústria selecionada entram automaticamente na fila correspondente. Usuários autorizados acessam somente a indústria atribuída; as permissões são individuais e o histórico de downloads é registrado. Pedidos antigos sem destino permanecem privados até classificação. A migração **0016** precisa ser aplicada no D1 antes da atualização do Site. [Orientações de implantação](source/docs/portal-producao-2026-11-12.md).
+
 ## Implementação e validação
 
 [Orçamento e simulador EDGE](source/docs/orcamentos-2026-10-31.md) · [Tabela de preços](source/docs/orcamento-anexo-01-2026.md) · [Limpeza do catálogo](source/docs/mold-reset-2026-10-29.md) · [Histórico](CHANGELOG.md).
