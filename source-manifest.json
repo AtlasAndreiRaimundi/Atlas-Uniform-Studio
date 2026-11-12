@@ -25,13 +25,13 @@
     },
     {
       "path": "app/acompanhamento/tracking-panel.tsx",
-      "size": 26822,
-      "sha256": "943a9d5b30c929f48d66824e435c7cd975c0a8358b0948de7176d6ac0900b95e"
+      "size": 27962,
+      "sha256": "3f0e2dd4bbd7ed9c4d2af2d74f2955932041531f52908a77ce0f8b51be9608f1"
     },
     {
       "path": "app/acompanhamento/tracking.css",
-      "size": 10853,
-      "sha256": "74dfe4ac6975a762f828c1e920b1ab22ff7d2290fa251754b946597088681899"
+      "size": 11118,
+      "sha256": "01626b009fca85cabe674b87e4da242b93b85ce008aa0c303565d606647b0f9f"
     },
     {
       "path": "app/admin/molds/[id]/preview/page.tsx",
@@ -915,8 +915,8 @@
     },
     {
       "path": "docs/portal-producao-2026-11-12.md",
-      "size": 2823,
-      "sha256": "5427063167be34fca1759846bfc2bb600ceeaab39dd4640dde794d56ab81ff0d"
+      "size": 2961,
+      "sha256": "d49d6f9f817873dae0c64af1cbe4d3d0998387dbd4034824fd0bda0b036569ff"
     },
     {
       "path": "docs/produtos/00_LEIA_PRIMEIRO_WORK.md",
@@ -2415,8 +2415,8 @@
     },
     {
       "path": "tests/factory-isolation.test.mjs",
-      "size": 7193,
-      "sha256": "46e9e7f37ddad3434cf6c855a6daf8048b9f8495e46382d9880f2b18cb170c82"
+      "size": 8041,
+      "sha256": "bedb2b1204ece3a7e2b62b0bcb1daa58a595676b4478ddbf9c372d5123425a3b"
     },
     {
       "path": "tests/fixtures/black-64-avc.json",
