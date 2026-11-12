@@ -1,4 +1,4 @@
-import {PRODUCTS,newProduct,newId} from './production-core.js?v=15';
+import {PRODUCTS,newProduct,newId} from './production-core.js?v=16';
 import {FITS,productCodeFor,attachCatalog,technicalFieldChange,cloneFitVariant} from './product-catalog.js?v=7';
 
 export const ORDER_PRODUCTS=PRODUCTS;

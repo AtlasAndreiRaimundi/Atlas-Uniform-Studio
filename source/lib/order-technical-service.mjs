@@ -6,11 +6,11 @@ import {createHash} from 'node:crypto';
 const MAX_CDR=20*1024*1024;
 export class OrderTechnicalService{
  constructor(db,bucket,production,tracking){Object.assign(this,{db,bucket,production,tracking});}
- async authorizeUpload(user,id){const row=await this.production.own(user,id);if(['checked','sent','accepted'].includes(row.production_state))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');return row;}
+ async authorizeUpload(user,id){const row=await this.production.own(user,id);if(['checked','sent','accepted','in_production','completed'].includes(row.production_state))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');return row;}
  async editable(user,id,version){
   const order=await this.production.get(user,id);
   if(!Number.isSafeInteger(version)||version!==order.version)throw new AppError(409,'O pedido mudou. Atualize antes de anexar ou remover o CDR.');
-  if(order.document.workflow?.status==='released'||['sent','accepted'].includes(order.tracking.stage))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');
+  if(order.document.workflow?.status==='released'||['sent','accepted','in_production','completed'].includes(order.tracking.stage))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');
   return order;
  }
  async record(user,id,file){
@@ -61,6 +61,7 @@ export class OrderTechnicalService{
   const row=await this.db.prepare('SELECT * FROM order_technical_files WHERE id=? AND order_id=? AND owner_id=?').bind(file,id,owner).first();
   if(!row||row.sha256!==ref.sha256||row.size!==ref.size)throw new AppError(409,'O arquivo técnico diverge da revisão conferida.');
   const object=await this.bucket.get(row.object_key);if(!object)throw new AppError(503,'O CDR está indisponível. Tente novamente.');
+  if(options.factory)await this.tracking.recordDownload(user,id,{kind:'cdr',version:order.version});
   return {object,name:orderFileStem(order.document)+' - '+row.file_name.replace(/\.cdr$/i,'').replace(/[<>:"/\\|?*\x00-\x1f]/g,' ').slice(0,60)+'.cdr',size:row.size,sha256:row.sha256};
  }
  async delivery(user,id,options={}){

@@ -1,0 +1,42 @@
+{
+  "id": "pack26-raglan-brasil-sem-recorte",
+  "name": "KIT · RAGLAN · BRASIL · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT BASICO RAGLAN GOLA BRASIL - CALÇAO BASICO.glb",
+  "originalSourceSha256": "ab263d95b2f75f291604c0e1229ec9c9957dec6921d7334cb3a64d33a99d68ca",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Frente",
+    "Costas",
+    "Manga esquerda",
+    "Filete manga esquerda",
+    "Manga direita",
+    "Filete manga direita",
+    "Gola frente",
+    "Gola inteira"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "body",
+    "body",
+    "sleeve",
+    "filet",
+    "sleeve",
+    "filet",
+    "collar",
+    "collar"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "RAGLAN",
+  "collar": "BRASIL",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}
