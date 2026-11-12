@@ -1800,8 +1800,8 @@
     },
     {
       "path": "public/production-ui.js",
-      "size": 108244,
-      "sha256": "2421a06f9e8cb2c36e22ecfa98e06ec22919da446928c72833b62c2174a8bd46"
+      "size": 108300,
+      "sha256": "c1638a6c4aa94605590c8c51eadb48fec9eee889b1057705385448e54d1dc9ea"
     },
     {
       "path": "public/production.css",
