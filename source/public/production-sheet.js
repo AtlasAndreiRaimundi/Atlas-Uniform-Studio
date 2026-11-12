@@ -2,7 +2,7 @@ import {quoteOrder,groupedQuoteRows,money} from './order-pricing.js';
 import {pieceFamilies} from './order-linked-applications.js?v=3';
 import {catalogProblems,technicalLines,physicalApplications,fitLabel,moldFor,catalogSheetGroups,productionSummary,isSpecialSize,productDisplayName,finishSummary,detectedTechniques} from './product-catalog.js?v=7';
 import {NOTE_AREA,annotationVisible} from './order-annotations.js?v=2';
-import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=15';
+import {parseGrade,EXTRA_APPLICATIONS} from './production-core.js?v=16';
 import {placeOrderImage,ORDER_PAGE} from './order-image-layout.js?v=3';
 export const PAPER={width:841.89,height:595.28};
 const C={ink:'#17202b',muted:'#68717d',line:'#b9bec5',red:'#c52a36',blue:'#235394',light:'#f4f5f7',white:'#ffffff'};

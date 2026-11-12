@@ -1,13 +1,15 @@
+import {setupOrderListEntry} from './order-list-entry.js?v=1';
+import {requiredFinishes,finishMarked,syncFinishNotes} from './order-finishes.js?v=1';
 import {setupOrderPricing} from './order-pricing-ui.js';
 import {orderFileStem} from './order-pricing.js';
 import {usePresentationKit} from './order-presentation.js?v=3';
 import {pieceFamilies,pieceFamilyKey,applicationGroups,syncFamilyCharacteristics,syncApplicationArrows,syncConfirmedApplicationPositions} from './order-linked-applications.js?v=3';
 import {ORDER_PRODUCTS,KIT_PRESETS,createOrderProduct,prepareOrderProduct} from './order-composition.js';
-import {createOrderVisualTools} from './order-visual-tools.js?v=15';
+import {createOrderVisualTools} from './order-visual-tools.js?v=16';
 import {createProductionPackage,loadDeliveryLibraries} from './order-delivery.js?v=8';
 import {createWorkflowGuide,workflowChoose,canonicalWorkflowPath} from './workflow-guide.js?v=3';
 import {workflowRoute} from './workflow-contract.js?v=2';
-import {TECHNIQUES,PRODUCTS as LEGACY_PRODUCTS,FABRICS,newId,newOrder as legacyNewOrder,newPage as legacyNewPage,newProduct as legacyNewProduct,newKitPage as legacyNewKitPage,kitTitle,demoOrder,parseGrade,validateOrder,releaseProblems,compareOrders,applyListToOrder} from './production-core.js?v=15';
+import {TECHNIQUES,PRODUCTS as LEGACY_PRODUCTS,FABRICS,newId,newOrder as legacyNewOrder,newPage as legacyNewPage,newProduct as legacyNewProduct,newKitPage as legacyNewKitPage,kitTitle,demoOrder,parseGrade,validateOrder,releaseProblems,compareOrders,applyListToOrder} from './production-core.js?v=16';
 import {buildSheets,sheetSVG,createPDF,PAPER,sheetLabel} from './production-sheet.js?v=23';
 import {loadExcelLibrary,readOrderWorkbook} from './order-files.js?v=5';
 import {prepareListSheets,prepareListText,parseListMatrix,needsListMapping,listProblems,listSummary} from './order-list.js?v=7';
@@ -37,7 +39,7 @@ const ORDER_STAGES=[
  {id:'information',title:'Informações sobre o pedido e observações',description:'Registre as técnicas e orientações gerais.',next:'Continuar para a 1ª peça →'},
  {id:'pieces',title:'1ª peça',description:'Defina modelo, tecido, acabamento e desenho da primeira peça.'},
  {id:'piece2',title:'2ª peça',description:'Defina modelo, tecido, acabamento e desenho da segunda peça.'},
- {id:'personalization',title:'Aplicações e setas',description:'Escolha a peça, adicione TPU ou outras aplicações e posicione as setas no layout.',next:'Continuar para a lista →'},
+ {id:'personalization',title:'Aplicações e setas',description:'Marque os acabamentos escolhidos e adicione aplicações extras quando precisar.',next:'Continuar para a lista →'},
  {id:'list',title:'Lista do pedido',description:'A lista preenche automaticamente as quantidades e tamanhos na frente do layout.',next:'Continuar para CDR do desenho →'},
  {id:'files',title:'CDR do desenho',description:'Anexe o arquivo original do CorelDRAW para produzir este pedido.',next:'Continuar para a conferência final →'},
  {id:'review',title:'Conferência geral',description:'Revise o pedido completo; a aprovação o coloca automaticamente na fila da indústria selecionada.'}
@@ -84,7 +86,7 @@ function renderSectionState(){
  $('#stageBack').hidden=index===0;$('#stageBack').textContent='← '+(stages[index-1]?.title||'Voltar');$('#stageNext').hidden=['pieces','piece2','review'].includes(orderStage);$('#stageNext').textContent=stage.next||'';$('#stageNext').classList.toggle('gold-button',orderStage==='identity');$('#stageNext').classList.toggle('outline-button',orderStage!=='identity');
  const showPreview=pieceStage()&&previewOpen;$('#orderPreview').hidden=!showPreview;$('#orderWorkspace').classList.toggle('has-preview',showPreview);$('#toggleOrderPreview').hidden=!pieceStage();$('#toggleOrderPreview').textContent='Ver prévia ampliada';$('#reviewGateStatus').hidden=ready||orderStage==='review';$('#openFinalPreview').textContent=orderStage==='review'?'Revisar em tela cheia':'Ampliar prévia';$$('[data-review-only]').forEach(el=>el.hidden=orderStage!=='review');
  const variants=doc.pages.reduce((n,p)=>n+p.products.length,0),count=doc.pages.reduce((n,pg)=>n+new Set(pg.products.map(p=>p.technical?p.technical.productCode+'|'+p.technical.designId:p.id)).size,0);$('#piecesStageSummary').textContent=count+' '+(count===1?'peça':'peças')+' no pedido'+(variants>count?' · '+variants+' configurações':'');$('#listStageSummary').textContent=doc.listSource?doc.listSource.rows.length+' itens vinculados':'Tamanhos e personalização';
- $('#listQuantitySummary').innerHTML=doc.listSource?'<h3>Quantidades aplicadas ao layout</h3>'+doc.pages.map(pg=>pieceFamilies(pg).map(f=>'<p><strong>'+esc(f[0].type)+'</strong> · '+f.reduce((n,p)=>n+Number(p.quantity||0),0)+' unidades</p>'+f.map(p=>'<pre>'+esc(p.grade||'')+'</pre>').join('')).join('')).join(''):'';
+ $('#listQuantitySummary').innerHTML=doc.listSource?'<details><summary>Ver quantidades por tamanho</summary>'+doc.pages.map(pg=>pieceFamilies(pg).map(f=>'<p><strong>'+esc(f[0].type)+'</strong> · '+f.reduce((n,p)=>n+Number(p.quantity||0),0)+' unidades</p>'+f.map(p=>'<pre>'+esc(p.grade||'')+'</pre>').join('')).join('')).join('')+'</details>':'';
  renderUnifiedApplications();renderProductStage();
 }
 function reviewReady(){return !orderEditable()||Boolean(doc.factoryId)&&Boolean(doc.technicalFiles?.length)&&releaseProblems(doc).length===0;}
@@ -113,7 +115,7 @@ async function localDraft(value){const db=await database();return new Promise((r
 function snapshot(){return {id,version,document:structuredClone(doc),dirty,updatedAt:new Date().toISOString()};}
 async function persist(force=false){if(example||!profile||orderReset&&!force)return true;const value=snapshot(),write=draftWriteQueue.catch(()=>{}).then(()=>localDraft(value));draftWriteQueue=write;try{await write;return true;}catch{error('Não foi possível guardar o rascunho neste navegador. Salve no estúdio ou baixe a cópia .json.');return false;}}
 function status(text){$('#saveStatus').textContent=text;}
-function changed(){if($('#readyReviewDialog').open)$('#readyReviewDialog').close();finalInvite=null;if(product()?.technical)syncFamilyCharacteristics(page(),product());if(doc.workflow?.status==='released'||viewingRelease)return;for(const e of $$('#releaseChecks input'))e.checked=false;dirty=true;revision++;clearTimeout(draftTimer);draftTimer=setTimeout(persist,200);clearTimeout(autoTimer);if(profile&&!example)autoTimer=setTimeout(()=>save(false),1600);status(example?'Exemplo · clique em Salvar para guardar uma cópia':'Alterações no rascunho…');renderPreview();}
+function changed(){if($('#readyReviewDialog').open)$('#readyReviewDialog').close();finalInvite=null;if(product()?.technical)syncFamilyCharacteristics(page(),product());if(doc.workflow?.status==='released'||viewingRelease)return;for(const pg of doc.pages)syncFinishNotes(pg);for(const e of $$('#releaseChecks input'))e.checked=false;dirty=true;revision++;clearTimeout(draftTimer);draftTimer=setTimeout(persist,200);clearTimeout(autoTimer);if(profile&&!example)autoTimer=setTimeout(()=>save(false),1600);status(example?'Exemplo · clique em Salvar para guardar uma cópia':'Alterações no rascunho…');renderPreview();}
 let savedListSummaries=[],pendingListDeletion=null;
 async function refreshSavedLists(){const {lists}=await api('/api/order-lists');savedListSummaries=lists;
  $('#savedOrderLists').innerHTML='<option value="">Selecione uma lista salva…</option>'+lists.map(list=>`<option value="${esc(list.id)}">${esc(list.title)}</option>`).join('');
@@ -235,7 +237,7 @@ async function applyOrderList(rows,source){
  doc=next;for(const pg of doc.pages)syncConfirmedApplicationPositions(pg);pageIndex=productIndex=sheetIndex=0;changed();render();toast('Lista anexada. As quantidades já estão no pedido.');if(bootReady){const applied=doc;if(profile&&!example&&!await save(true))return true;if(doc===applied)offerFinalReview();}return true;
 }
 async function openSavedOrder(orderId){const {order}=await api('/api/production-orders/'+encodeURIComponent(orderId)),{document,...summary}=order;const index=savedOrders.findIndex(item=>item.id===order.id);if(index>=0)savedOrders[index]=summary;else savedOrders.unshift(summary);example=false;await replaceDocument(document,order);status('Salvo no estúdio · versão '+version);}
-function renderListStatus(){const source=doc.listSource;$('#orderListStatus').textContent=source?`${source.name}${source.version?' · versão '+source.version:''} · ${source.rows.length} linhas · ${listSummary(source.rows).pieces} peças`:'Importe o Excel para preencher as quantidades e a personalização deste pedido.';}
+function renderListStatus(){const source=doc.listSource;$('#orderListStatus').textContent=source?`${source.name}${source.version?' · versão '+source.version:''} · ${source.rows.length} linhas · ${listSummary(source.rows).pieces} peças`:'Escolha como adicionar os tamanhos e as quantidades.';}
 function renderProjectLink(p){
  const ref=p.projectRef,current=ref&&projects.find(project=>project.id===ref.id),newer=current?.reviewed&&current.version>ref.version;
  const linked=ref?`<div class="linked-project"><strong>${esc(ref.name)} · versão ${ref.version}</strong><span>Quatro vistas em PNG transparente, guardadas neste pedido.</span><a href="/studio/${encodeURIComponent(ref.id)}" data-action="open-linked-project" target="_top">Abrir apresentação →</a>${newer?'<p>Há uma versão mais nova. O desenho anexado continua na versão '+ref.version+'.</p><button class="outline-button" data-action="refresh-project">Atualizar desenho para versão '+current.version+'</button>':''}</div>`:'';
@@ -423,17 +425,16 @@ $('#resetOrderDialog').addEventListener('close',cancelOrderReset);
 
 $('#sheetSelect').addEventListener('change',e=>{sheetIndex=Number(e.target.value);renderPreview();});$('#previousSheet').addEventListener('click',()=>{sheetIndex--;renderPreview();});$('#nextSheet').addEventListener('click',()=>{sheetIndex++;renderPreview();});
 $('#saveOrder').addEventListener('click',()=>save(true));
+const simpleOrderList=setupOrderListEntry({getOrder:()=>doc,getGeneration:()=>orderGeneration,canEdit:orderEditable,onApply:applyOrderList});
+$('#manualOrderList').addEventListener('click',()=>simpleOrderList.openManual());
+$('#pasteOrderList').addEventListener('click',()=>simpleOrderList.openPaste());
 $('#importOrderList').addEventListener('click',()=>$('#orderListFile').click());
 $('#orderListFile').addEventListener('change',async event=>{
  const file=event.target.files[0];if(!file)return;const destination=doc,button=$('#importOrderList');button.disabled=true;error();
  try{if(file.size>10*1024*1024)throw new Error('Use uma planilha de até 10 MB.');const extension=file.name.split('.').at(-1).toLowerCase();let source;
  if(extension==='xlsx')source={sheets:prepareListSheets(await readOrderWorkbook(await file.arrayBuffer(),await loadExcelLibrary()))};
  else if(['csv','tsv','txt'].includes(extension))source=prepareListText(await file.text());else throw new Error('Envie uma planilha XLSX, CSV, TSV ou TXT.');
- if(source.free||needsListMapping(source))throw new Error('Esta lista precisa de ajuste de colunas. Use Abrir lista no organizador para conferir antes de aplicar ao pedido.');
- const parts=source.sheets.filter(sheet=>sheet.enabled!==false).map(sheet=>parseListMatrix(sheet)),rows=parts.flatMap(part=>part.records),pending=parts.flatMap(part=>part.unresolved);
- if(pending.length)throw new Error('Há '+pending.length+' linhas para conferir. Abra a lista no organizador.');
- const invalid=rows.filter(row=>listProblems(row).length);if(invalid.length)throw new Error(invalid.length+' itens precisam de ajuste. '+listProblems(invalid[0]).join(' '));
- if(rows.length>5000)throw new Error('Use até 5.000 linhas por lista.');if(doc!==destination)throw new Error('O pedido aberto mudou durante a leitura. Importe novamente a lista no pedido correto.');await applyOrderList(rows,{name:file.name});
+ if(doc!==destination)throw new Error('O pedido mudou durante a leitura. Anexe a lista ao pedido correto.');simpleOrderList.reviewSource(source,file.name);
  }catch(e){error(e.message);}finally{button.disabled=false;event.target.value='';}
 });
 $('#continueOrderList').addEventListener('click',continueToList);
@@ -612,7 +613,7 @@ function applyVisualEdit(edit){
  target.visual=edit.page.visual?structuredClone(edit.page.visual):undefined;target.mode=edit.page.mode;target.imageArea=edit.page.imageArea;target.annotations=structuredClone(edit.page.annotations||[]);target.freeComponents=Boolean(edit.page.freeComponents);
  const source=edit.page.products.find(product=>product.id===edit.productId);if(edit.applicationId&&source.technical&&p.technical)p.technical.applications=structuredClone(source.technical.applications);for(const member of target.products){const incoming=edit.page.products.find(item=>item.id===member.id);if(incoming?.technical&&member.technical&&edit.applicationId)member.technical.applications=structuredClone(incoming.technical.applications);}syncConfirmedApplicationPositions(target);for(const member of edit.applicationId?[p]:target.products)for(const app of member.technical?.applications||[]){if(!app.position.trim()&&(target.annotations||[]).some(a=>a.applicationId===app.id))app.position='Conforme seta no desenho';}p.images=source.images;p.imageTransforms=source.imageTransforms;
  const affected=target.visual?.mode==='shared'?target.products:[p];let anchors=false;for(const item of affected){if(edit.sourceChanged)delete item.projectRef;for(const component of item.components){if(component.anchor){anchors=true;delete component.anchor;}}}
- changed();render();toast(anchors?'Imagem ajustada. Reposicione as setas dos componentes na nova composição.':'Imagem e enquadramento aplicados no pedido.');
+ changed();render();toast(edit.finishId?'Acabamento marcado e confirmado no pedido.':anchors?'Imagem ajustada. Reposicione as setas dos componentes na nova composição.':'Imagem e enquadramento aplicados no pedido.');
 }
 
 $('#productEditor').addEventListener('change',event=>{if(event.target.id==='familyVariant'){productIndex=Number(event.target.value);render();}});
@@ -622,13 +623,14 @@ function renderUnifiedApplications(){
  const targets=applicationTargets(),selected=$('#applicationTarget').value;
  $('#applicationTarget').innerHTML=targets.map(t=>'<option value="'+esc(t.key)+'"'+(t.key===selected?' selected':'')+'>'+esc((doc.pages.length>1?(t.page.title||'Desenho '+(t.pi+1))+' · ':'')+t.product.type)+'</option>').join('');
  const rows=targets.flatMap(t=>applicationGroups(t.page,t.product).map(group=>{const chosen=group.find(x=>x.product.technical.fit==='INFANTIL'&&x.app.type==='TPU ALTO RELEVO'&&!x.app.exception)||group[0];return {pg:t.page,p:chosen.product,a:chosen.app};}));
- $('#allApplications').innerHTML=rows.map(({pg,p,a})=>'<div class="catalog-application"><strong>'+esc(a.type)+'</strong><p>'+esc(p.type)+' · '+a.perUnit+' por peça · '+(a.position?'Seta confirmada':'Posicione e confirme a seta')+'</p><div class="row-actions"><button type="button" class="outline-button" data-edit-order-application="'+esc(a.id)+'" data-application-product="'+esc(p.id)+'" data-application-page="'+esc(pg.id)+'">Editar aplicação e seta</button><button type="button" class="text-link" data-remove-order-application="'+esc(a.id)+'" data-application-product="'+esc(p.id)+'" data-application-page="'+esc(pg.id)+'">Remover</button></div></div>').join('')||'<p class="helper">Nenhuma aplicação extra. Se não precisar, continue para a lista.</p>';
+ const finishRows=targets.flatMap(t=>pieceFamilies(t.page).find(f=>f.includes(t.product)).flatMap(p=>requiredFinishes(p).map(f=>({pg:t.page,p,f})))).filter((row,i,all)=>all.findIndex(r=>r.pg===row.pg&&pieceFamilyKey(r.p)===pieceFamilyKey(row.p)&&r.f.signature===row.f.signature)===i);
+ $('#allApplications').innerHTML=finishRows.map(({pg,p,f})=>'<div class="catalog-application"><strong>'+esc(f.label)+'</strong><p>'+esc(p.type)+' · '+(finishMarked(pg,p,f)?'Seta confirmada':'Marcação obrigatória pendente')+'</p><button type="button" class="outline-button" data-edit-finish="'+esc(f.id)+'" data-application-product="'+esc(p.id)+'" data-application-page="'+esc(pg.id)+'">'+(finishMarked(pg,p,f)?'Conferir marcação':'Marcar no desenho')+'</button></div>').join('')+rows.map(({pg,p,a})=>'<div class="catalog-application"><strong>'+esc(a.type)+'</strong><p>'+esc(p.type)+' · '+a.perUnit+' por peça · '+(a.position?'Seta confirmada':'Posicione e confirme a seta')+'</p><div class="row-actions"><button type="button" class="outline-button" data-edit-order-application="'+esc(a.id)+'" data-application-product="'+esc(p.id)+'" data-application-page="'+esc(pg.id)+'">Editar aplicação e seta</button><button type="button" class="text-link" data-remove-order-application="'+esc(a.id)+'" data-application-product="'+esc(p.id)+'" data-application-page="'+esc(pg.id)+'">Remover</button></div></div>').join('')||'<p class="helper">Nenhuma aplicação extra. Se não precisar, continue para a lista.</p>';
  $('#addOrderApplication').disabled=!orderEditable()||!targets.length;
 }
 function chooseApplicationTarget(pageId,productId){const pi=doc.pages.findIndex(pg=>pg.id===pageId),index=doc.pages[pi]?.products.findIndex(p=>p.id===productId);if(pi<0||index<0)throw Error('Esta peça mudou. Escolha novamente.');pageIndex=pi;productIndex=index;}
 $('#addOrderApplication').addEventListener('click',()=>{try{const target=applicationTargets().find(t=>t.key===$('#applicationTarget').value);if(!target)return;chooseApplicationTarget(target.page.id,target.product.id);visualTools.openImageEditor({create:true});}catch(e){error(e.message);}});
 $('#freeOrderAnnotation').addEventListener('click',()=>{try{const target=applicationTargets().find(t=>t.key===$('#applicationTarget').value);if(!target)return;chooseApplicationTarget(target.page.id,target.product.id);visualTools.openImageEditor();}catch(e){error(e.message);}});
-$('#allApplications').addEventListener('click',event=>{const b=event.target.closest('[data-application-product]');if(!b||!orderEditable())return;try{chooseApplicationTarget(b.dataset.applicationPage,b.dataset.applicationProduct);if(b.dataset.editOrderApplication)visualTools.openImageEditor({applicationId:b.dataset.editOrderApplication});else{const group=applicationGroups(page(),product()).find(g=>g.some(x=>x.app.id===b.dataset.removeOrderApplication))||[],ids=new Set(group.map(x=>x.app.id));for(const member of page().products)if(member.technical)member.technical.applications=member.technical.applications.filter(a=>!ids.has(a.id));syncApplicationArrows(page(),product());changed();render();}}catch(e){error(e.message);}});
+$('#allApplications').addEventListener('click',event=>{const b=event.target.closest('[data-application-product]');if(!b||!orderEditable())return;try{chooseApplicationTarget(b.dataset.applicationPage,b.dataset.applicationProduct);if(b.dataset.editFinish)visualTools.openImageEditor({finishId:b.dataset.editFinish});else if(b.dataset.editOrderApplication)visualTools.openImageEditor({applicationId:b.dataset.editOrderApplication});else{const group=applicationGroups(page(),product()).find(g=>g.some(x=>x.app.id===b.dataset.removeOrderApplication))||[],ids=new Set(group.map(x=>x.app.id));for(const member of page().products)if(member.technical)member.technical.applications=member.technical.applications.filter(a=>!ids.has(a.id));syncApplicationArrows(page(),product());changed();render();}}catch(e){error(e.message);}});
 function offerFinalReview(){if(doc.listSource&&orderEditable()&&!doc.technicalFiles?.length){showOrderStage('files');return;}if(!doc.listSource||!orderEditable()||!reviewReady()||$('#readyReviewDialog').open)return;finalInvite={document:doc,generation:orderGeneration,revision};$('#readyReviewDialog').showModal();}
 $('#reviewLater').addEventListener('click',()=>{$('#readyReviewDialog').close();finalInvite=null;});
 $('#reviewNow').addEventListener('click',()=>{const invite=finalInvite;$('#readyReviewDialog').close();finalInvite=null;if(!invite||invite.document!==doc||invite.generation!==orderGeneration||invite.revision!==revision)return;showOrderStage('review');});

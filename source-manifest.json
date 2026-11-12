@@ -1280,8 +1280,8 @@
     },
     {
       "path": "lib/production-service.mjs",
-      "size": 22065,
-      "sha256": "1c2fe9e028cef090717542c400e0ea44717a3a451b1c7a0c0f2a76b58df35ba6"
+      "size": 22313,
+      "sha256": "16d9c8478e69505c57ebe7e7e0bdb4867cb520bd9f6d22310ad3ae7b0e9aeadf"
     },
     {
       "path": "lib/project-service.mjs",
@@ -1691,7 +1691,7 @@
     {
       "path": "public/order-composition.js",
       "size": 2688,
-      "sha256": "a9cb3022be4eacbd2d93f1bcad8fbe4855b0743c2995e65109431b569aa94c9c"
+      "sha256": "aba7f0e158b8b87c82980df2c5671f402613b94e8ccfa180ffc76ffa0efc4456"
     },
     {
       "path": "public/order-core.js",
@@ -1726,7 +1726,7 @@
     {
       "path": "public/order-presentation.js",
       "size": 1860,
-      "sha256": "db3b819ebd00d42a25ac9139da72bd35ab55013fd1c1dec15d7ca8d03a4bcc9e"
+      "sha256": "60d273a59284f2ebcce681bdbf8de8993dade6bcf9f654cbcc49cd1d92182ab2"
     },
     {
       "path": "public/order-pricing-ui.js",
@@ -1740,8 +1740,8 @@
     },
     {
       "path": "public/order-visual-tools.js",
-      "size": 18823,
-      "sha256": "8a3d1883e5f5c245f9e9a445e0cab35de1a297c6502b9b5f76008a0295469077"
+      "size": 19655,
+      "sha256": "ecdb9db1f7e7f1d29124e35afa9e86e590a9d4664b5566e0ba6b2a38fbfcd2f4"
     },
     {
       "path": "public/organizador.html",
@@ -1760,8 +1760,8 @@
     },
     {
       "path": "public/pedido.html",
-      "size": 34447,
-      "sha256": "72026b2373e96ff3624adadcbf21e07bf29a5eab15317d23860024951c55e4ec"
+      "size": 34436,
+      "sha256": "dc98d11ee57447a9a0d0b135fc5960526e3dc218b64614ccc1ff8b3cb525a16c"
     },
     {
       "path": "public/presentation-contract.js",
@@ -1790,23 +1790,23 @@
     },
     {
       "path": "public/production-core.js",
-      "size": 21280,
-      "sha256": "7bc2a5c2e7c5ee77c5b6e82c0eafbe6f04aee5e6b3e3d71e886f745e50a2644e"
+      "size": 21361,
+      "sha256": "4dda10b3092bf18d0886683624fdfe52aaa2e36fe3ec0b18f0e52308589f13b9"
     },
     {
       "path": "public/production-sheet.js",
       "size": 34030,
-      "sha256": "ad5ef87961db353fbac2add2761d9d43679265db51a568e02d838a10b99d5b6e"
+      "sha256": "2c8829a3a09487f7d2f96f4de9f186e7f9081312a522b54282aed17d234571c1"
     },
     {
       "path": "public/production-ui.js",
-      "size": 108311,
-      "sha256": "243f37c13d3ec61b6725cf81fe687ec967efaa80284505ebef125e5ebbf476f3"
+      "size": 108958,
+      "sha256": "04bab46764192a64be94f645fefb0853de2cdb709a7d5500e13a79a681cf0964"
     },
     {
       "path": "public/production.css",
-      "size": 52557,
-      "sha256": "7a66fbfc042324f6ecdfb420376dd1a273ddf378f2087a1c0a42f06139895720"
+      "size": 54562,
+      "sha256": "9d83a6b0be50c2ac7aa6b334641f2677e93c3a96cad7b1463e1a8fca6f6337e8"
     },
     {
       "path": "public/project-session.js",
@@ -2480,8 +2480,8 @@
     },
     {
       "path": "tests/order-flow.test.mjs",
-      "size": 66620,
-      "sha256": "674253f38a2f75a3231ffcccce20b4fd290a660983d91662f388c406b0f5bd1a"
+      "size": 66905,
+      "sha256": "d290a256a8595e883c2c13a824973166d127df5b548912359cdee53d4104d852"
     },
     {
       "path": "tests/order-list.test.mjs",
@@ -2555,8 +2555,8 @@
     },
     {
       "path": "tests/product-catalog.test.mjs",
-      "size": 21086,
-      "sha256": "58cafe5adc87162358d7eae7cf18ac9d412188858db20e250127473e05654f20"
+      "size": 21075,
+      "sha256": "d455c0ef92320b0afd7693d98777f89a97e436621809501b1c4a4ae55dd5c72c"
     },
     {
       "path": "tests/production.test.mjs",
@@ -2692,6 +2692,21 @@
       "path": "public/fonts/ArialRoundedMTBold-Orders.ttf",
       "size": 45272,
       "sha256": "b1aea4b3740c4f0ebdd056800a07d30d33f39aa36487a16f0d3930d32c3069f5"
+    },
+    {
+      "path": "public/order-finishes.js",
+      "size": 3777,
+      "sha256": "c6f6b90fdaabd6c68bb32a0da988f7f30a3c99c295ba58971cc736e12505a9b5"
+    },
+    {
+      "path": "public/order-list-entry.js",
+      "size": 10466,
+      "sha256": "8795384d8a2d4f217ac1d20c6dece1aba31f7413bda2a710e93bce5bbf151a03"
+    },
+    {
+      "path": "tests/order-finishes.test.mjs",
+      "size": 3793,
+      "sha256": "e2d9546108f0202911fdd3068f587fd9507ea64dba96c01255a695ae0c9f518c"
     }
   ]
 }

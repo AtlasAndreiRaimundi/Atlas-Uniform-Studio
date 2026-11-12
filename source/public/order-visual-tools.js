@@ -1,9 +1,10 @@
+import {beginFinish,confirmFinish} from './order-finishes.js?v=1';
 import {applicationChoices,beginApplication,applicationNotes,confirmApplication} from './order-application-flow.js?v=2';
 import {syncApplicationArrows} from './order-linked-applications.js?v=3';
 import {createAnnotationEditor} from './order-annotation-editor.js?v=9';
-import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=22';
+import {buildSheets,sheetSVG,PAPER,sheetLabel} from './production-sheet.js?v=23';
 import {imageTransform} from './order-image-layout.js?v=3';
-import {finalPreviewProblems,releaseProblems} from './production-core.js?v=15';
+import {finalPreviewProblems,releaseProblems} from './production-core.js?v=16';
 
 export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,getGeneration,canEdit,readImage,onApply,onError,onDownload,onReviewClose,onConfirmReview}){
  const editor=document.createElement('dialog');editor.className='order-image-dialog';editor.setAttribute('aria-label','Editar layout e apontamentos');
@@ -42,20 +43,21 @@ export function createOrderVisualTools({getOrder,getPage,getProduct,getAssets,ge
   finally{if(edit===current){current.loading=false;find('[data-target]').disabled=false;find('[data-file]').value='';render();}}
  };
  find('[data-apply]').onclick=()=>{
-  if(!edit||edit.loading||!canEdit())return;try{if(getGeneration()!==edit.generation)throw new Error('O pedido mudou. Abra o editor novamente.');if(edit.applicationId){if(!updateApplication())return;const p=selected(),a=p.technical.applications.find(a=>a.id===edit.applicationId);a.position=find('[data-app-position]').value.trim();a.exception=find('[data-app-exception]').value.trim();confirmApplication(edit.page,p,a);}onApply(edit);closeEditor();}catch(error){find('[data-error]').textContent=error.message;return false;}
+  if(!edit||edit.loading||!canEdit())return;try{if(getGeneration()!==edit.generation)throw new Error('O pedido mudou. Abra o editor novamente.');if(edit.applicationId){if(!updateApplication())return;const p=selected(),a=p.technical.applications.find(a=>a.id===edit.applicationId);a.position=find('[data-app-position]').value.trim();a.exception=find('[data-app-exception]').value.trim();confirmApplication(edit.page,p,a);}if(edit.finishId)confirmFinish(edit.page,selected(),edit.finishId);onApply(edit);closeEditor();}catch(error){find('[data-error]').textContent=error.message;return false;}
  };
  function openImageEditor(request={}){
   if(!canEdit())return onError('Abra uma revisão em preparação para editar o layout.');const page=getPage(),product=getProduct();
   edit={header:getOrder(),page:structuredClone(page),productId:product.id,generation:getGeneration(),originalMode:page.mode,sourceChanged:false,loading:false};annotations.reset();
   if(request.create||request.applicationId){try{edit.applicationId=beginApplication(edit.page,selected(),request).id;}catch(error){edit=null;return onError(error.message);}}
+  let finishNote=null;if(request.finishId){try{edit.finishId=request.finishId;finishNote=beginFinish(edit.page,selected(),request.finishId);}catch(error){edit=null;return onError(error.message);}}
   const app=edit.applicationId?selected().technical.applications.find(a=>a.id===edit.applicationId):null;
-  annotations.applicationMode(Boolean(app));find('[data-application-form]').hidden=!app;find('[data-image-options]').open=!app;find('[data-image-help]').hidden=Boolean(app);find('[data-apply]').textContent=app?'OK · salvar aplicação e seta':'Aplicar no pedido';find('[data-editor-title]').textContent=app?'Aplicação e seta · '+product.type:'Imagem e apontamentos';find('[data-editor-help]').textContent=app?'Escolha, posicione e confirme. Não precisa escrever a posição novamente.':'Ajuste a imagem ou adicione uma seta.';
+  annotations.applicationMode(Boolean(app||finishNote));find('[data-application-form]').hidden=!app;find('[data-image-options]').open=!app;find('[data-image-help]').hidden=Boolean(app);find('[data-apply]').textContent=app?'OK · salvar aplicação e seta':'Aplicar no pedido';find('[data-editor-title]').textContent=app?'Aplicação e seta · '+product.type:'Imagem e apontamentos';find('[data-editor-help]').textContent=app?'Escolha, posicione e confirme. Não precisa escrever a posição novamente.':'Ajuste a imagem ou adicione uma seta.';
   if(app){const choices=applicationChoices(selected());find('[data-app-choice]').replaceChildren(...choices.map((c,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=c.label;return o;}));find('[data-app-choice]').value=String(choices.findIndex(c=>c.role===app.role&&c.type===app.type));find('[data-app-count]').value=String(app.perUnit);find('[data-app-count]').disabled=app.role==='MARCA MEINERZ';find('[data-app-exception-wrap]').hidden=selected().technical.fit!=='INFANTIL'||app.type!=='TPU ALTO RELEVO';find('[data-app-exception]').value=app.exception||'';find('[data-app-position]').value=app.position==='Conforme seta no desenho'?'':app.position||'';}
   const options=[['0','Imagem principal desta peça'],['1','Imagem complementar desta peça (opcional)']];if(page.products.length===2||page.mode==='conjunto'||page.visual?.mode==='shared')options.push(['shared','Uma imagem única do kit / conjunto']);
   const select=find('[data-target]');select.replaceChildren(...options.map(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;return option;}));
   const isKit=page.mode==='conjunto'||page.products.length===2&&(page.mode==='conjunto'||[['Camiseta','Calção'],['Jaqueta','Calça']].some(pair=>pair.every(type=>page.products.some(p=>p.type===type))));
   const useShared=page.visual?page.visual.mode==='shared':isKit&&page.products.filter(p=>p.images.some(Boolean)).length<=1;
-  select.value=useShared?'shared':'0';select.disabled=false;find('[data-file]').value='';changeTarget();if(app){annotations.selectApplication(applicationNotes(edit.page,selected(),app).map(a=>a.id));render();}editor.showModal();
+  select.value=useShared?'shared':'0';select.disabled=false;find('[data-file]').value='';changeTarget();if(app){annotations.selectApplication(applicationNotes(edit.page,selected(),app).map(a=>a.id));render();}if(finishNote){find('[data-editor-title]').textContent='Marcar acabamento · '+product.type;find('[data-editor-help]').textContent=finishNote.text+'. Arraste a ponta da seta até o acabamento e confirme.';find('[data-apply]').textContent='OK · confirmar acabamento';find('[data-image-options]').open=false;find('[data-image-help]').hidden=true;find('[data-annotation-controls] [data-tools-title]').textContent='Seta do acabamento';annotations.selectApplication([finishNote.id]);render();}editor.showModal();
  }
  function updateApplication(){
   if(!edit?.applicationId)return;const p=selected(),a=p.technical.applications.find(a=>a.id===edit.applicationId),old=structuredClone(a),oldNotes=structuredClone(edit.page.annotations||[]);
