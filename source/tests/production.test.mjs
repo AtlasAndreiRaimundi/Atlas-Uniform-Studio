@@ -150,11 +150,11 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  await assert.rejects(tracking.transition(alice,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'}),/Confira/);
  saved=await attachFixtureCDR(service,alice,saved,document);
  saved=await service.save(alice,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});
- const snapshot=JSON.stringify((await service.get(alice,saved.id)).document);
+ const snapshot=objects.get(sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(saved.id).object_key);
  await assert.rejects(tracking.transition(bob,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'}),{status:404});
  saved=await tracking.transition(alice,saved.id,{action:'send',version:saved.version,protocol:'PROTO-01',factoryId:'meinerz'});assert.equal(saved.tracking.stage,'sent');
 
- assert.equal(JSON.stringify((await service.get(alice,saved.id)).document),snapshot);
+ assert.equal(objects.get(sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(saved.id).object_key),snapshot);
  await assert.rejects(service.save(alice,saved.id,{document,version:saved.version,action:'revise'}),/enviado/);
  await assert.rejects(tracking.list(bob,{factory:true}),{status:403});
  await assert.rejects(tracking.transition(alice,saved.id,{action:'accept',version:saved.version}),{status:403});
@@ -164,7 +164,7 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  await assert.rejects(tracking.detail(bob,saved.id,{factory:true}),{status:404});
  saved=await tracking.transition(factory,saved.id,{action:'accept',version:saved.version});assert.equal(saved.tracking.stage,'accepted');assert.equal(saved.tracking.acceptedById,'factory');
  await assert.rejects(service.remove(alice,saved.id,{version:saved.version}),/não podem ser excluídos/);
- assert.equal(JSON.stringify((await service.get(alice,saved.id)).document),snapshot);
+ assert.equal(objects.get(sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(saved.id).object_key),snapshot);
  await assert.rejects(service.save(alice,saved.id,{document,version:saved.version,action:'revise'}),/aceito/);
  await assert.rejects(tracking.transition(factory,saved.id,{action:'return',version:saved.version,note:'Teste'}),/aguardando aceite/);
  assert.equal((await tracking.list(alice)).orders[0].tracking.stage,'accepted');
