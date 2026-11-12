@@ -1060,8 +1060,8 @@
     },
     {
       "path": "drizzle/meta/_journal.json",
-      "size": 2379,
-      "sha256": "9f7834d124709f2e5ff828f6b6dab82551e5524cbdef0d99cac2a46ced68565f"
+      "size": 2523,
+      "sha256": "6154f6a0cd9b27451fd1cc8e009e09650948ef5717701118329dff8a95e45d45"
     },
     {
       "path": "drizzle/meta/0000_snapshot.json",
@@ -1142,6 +1142,11 @@
       "path": "drizzle/meta/0015_snapshot.json",
       "size": 42987,
       "sha256": "83c370d20a7c75ea4010be5de63990b7784668f82d266c0d1d52aece21ef8aa4"
+    },
+    {
+      "path": "drizzle/meta/0016_snapshot.json",
+      "size": 47071,
+      "sha256": "953ba9a160dd2ac8f0cc38e76580aec20483d640f84f68c9b5741f2acafd704b"
     },
     {
       "path": "eslint.config.mjs",
@@ -1229,6 +1234,11 @@
       "sha256": "27504ca025586002d0cb7476dee1059a11ddc56e65f17d748ee410ea277f3704"
     },
     {
+      "path": "lib/factory-access.mjs",
+      "size": 1361,
+      "sha256": "b9c9e031d451beb89dfc26d46aefb5521f73109f09b5d89f9b638d1bf2fc9c8e"
+    },
+    {
       "path": "lib/garment-fit.mjs",
       "size": 2393,
       "sha256": "38f0214b1e2d96501580c4ea8f52133283789696583d385ee5164b6b58967608"
@@ -1260,18 +1270,18 @@
     },
     {
       "path": "lib/order-technical-service.mjs",
-      "size": 8483,
-      "sha256": "a7f76796e618f06ce97f0e23029e526cada7cafad87b0427e84d72c8ac1eda30"
+      "size": 8584,
+      "sha256": "4d54e2aca5679c148a8bde70a168d9b14ca93a12086786358ca6a723e608faec"
     },
     {
       "path": "lib/order-tracking.mjs",
-      "size": 8529,
-      "sha256": "7f0e23cfaca766d46c309d8baa158d628c49bcb5bf68324fbbd5285e25ee5563"
+      "size": 11897,
+      "sha256": "f5c3ed615408d3fedea819dbfa317d189b2264c66143c00c739eae80c5097121"
     },
     {
       "path": "lib/production-service.mjs",
-      "size": 21252,
-      "sha256": "d0d4fe6d0f231aca387cc8844dcd74392fecbc09a71864b0d86a71a4522e5680"
+      "size": 21941,
+      "sha256": "fed3abaa0bc3e370ac7f196e297b77324643ac1ce86c74db90db63051270d0c6"
     },
     {
       "path": "lib/project-service.mjs",
