@@ -6,11 +6,11 @@ import {createHash} from 'node:crypto';
 const MAX_CDR=20*1024*1024;
 export class OrderTechnicalService{
  constructor(db,bucket,production,tracking){Object.assign(this,{db,bucket,production,tracking});}
- async authorizeUpload(user,id){const row=await this.production.own(user,id);if(['checked','sent','accepted'].includes(row.production_state))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');return row;}
+ async authorizeUpload(user,id){const row=await this.production.own(user,id);if(['checked','sent','accepted','in_production','completed'].includes(row.production_state))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');return row;}
  async editable(user,id,version){
   const order=await this.production.get(user,id);
   if(!Number.isSafeInteger(version)||version!==order.version)throw new AppError(409,'O pedido mudou. Atualize antes de anexar ou remover o CDR.');
-  if(order.document.workflow?.status==='released'||['sent','accepted'].includes(order.tracking.stage))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');
+  if(order.document.workflow?.status==='released'||['sent','accepted','in_production','completed'].includes(order.tracking.stage))throw new AppError(400,'Abra uma nova revisão para alterar os arquivos técnicos.');
   return order;
  }
  async record(user,id,file){
