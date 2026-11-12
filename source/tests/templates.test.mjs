@@ -57,7 +57,7 @@ test('KIT EDGE 2027 preserves its prepared exterior geometry and source UVs with
 });
 
 test('installed molds support normal project selection, admin edits, archive and trash without reappearing or breaking existing projects',async()=>{
-  const entry=INSTALLED_TEMPLATES[0],id=entry.descriptor.id,{templates,projects,db,bucket}=setup(INSTALLED_TEMPLATES);
+  const entry=INSTALLED_TEMPLATES.find(e=>e.descriptor.id==='kit-edge-2027-mapa-v3'),id=entry.descriptor.id,{templates,projects,db,bucket}=setup(INSTALLED_TEMPLATES);
   await assert.rejects(templates.catalog(null),{status:401});await assert.rejects(templates.adminList(other),{status:403});
   assert.equal((await templates.adminList(admin)).filter(t=>t.id===id).length,1);assert.ok((await templates.catalog(other)).some(t=>t.id===id));
   const project=await projects.create(other,{name:'Teste kit',templateId:id});assert.equal((await projects.template(other,project.id)).panelCount,19);
@@ -195,11 +195,11 @@ test('only the admin can upload, list drafts, publish, archive or download draft
   const {templates,objects}=setup(),file=new File([source],'camiseta.glb',{type:'model/gltf-binary'}),input={name:'Novo modelo',category:'camiseta'};
   await assert.rejects(templates.create(other,input,file),{status:403});assert.equal(objects.size,0);
   const draft=await templates.create(admin,input,file);assert.equal(draft.status,'draft');assert.equal(objects.size,4);
-  assert.equal((await templates.catalog(other)).length,1);
+  assert.equal((await templates.catalog(other)).length,INSTALLED_TEMPLATES.length);
   await assert.rejects(templates.readable(other,draft.id),{status:404});await assert.rejects(templates.adminList(other),{status:403});
   await assert.rejects(templates.status(other,draft.id,{status:'published',confirmed:true}),{status:403});
   await assert.rejects(templates.status(admin,draft.id,{status:'published'}),{status:400});
-  await templates.status(admin,draft.id,{status:'published',confirmed:true});assert.equal((await templates.catalog(other)).length,2);
+  await templates.status(admin,draft.id,{status:'published',confirmed:true});assert.equal((await templates.catalog(other)).length,INSTALLED_TEMPLATES.length+1);
   await assert.rejects(templates.status(other,draft.id,{status:'archived'}),{status:403});
 });
 
@@ -217,7 +217,7 @@ test('new projects bind to the chosen published model; archiving keeps saved pro
   const publicDescriptor=await projects.template(null,null,token);assert.equal(publicDescriptor.templateUrl,null);assert.equal(publicDescriptor.proofUrl,null);
   await assert.rejects(projects.asset(null,null,'template',token),{status:404});
   await templates.status(admin,draft.id,{status:'archived'});
-  assert.equal((await templates.catalog(other)).length,1);
+  assert.equal((await templates.catalog(other)).length,INSTALLED_TEMPLATES.length);
   assert.ok((await projects.asset(null,null,'model',token)).data.length);
   assert.equal((await projects.template(other,p.id)).id,draft.id);
   await assert.rejects(projects.create(other,{name:'No new project',templateId:draft.id}),{status:404});
@@ -228,7 +228,7 @@ test('failed registrations clean uploaded files and leave the existing approved 
   const {templates,db,bucket,objects}=setup();
   const failing=new TemplateService({prepare(query){if(query.startsWith('INSERT INTO templates'))throw new Error('Write failed');return db.prepare(query);}},bucket,admin.userId);
   await assert.rejects(failing.create(admin,{name:'Falha',category:'camiseta'},new File([source],'modelo.glb')),/Write failed/);assert.equal(objects.size,0);
-  assert.equal((await templates.catalog(admin)).length,1);
+  assert.equal((await templates.catalog(admin)).length,INSTALLED_TEMPLATES.length);
   assert.equal((await templates.descriptor('kit-edge-2027-mapa-v3')).kind,'generated');
 });
 
@@ -252,7 +252,7 @@ test('deleted molds leave the catalog, retain saved project assets, and can be r
   const project=await projects.create(other,{name:'Pedido existente',templateId:draft.id});
   await assert.rejects(templates.remove(other,draft.id),{status:403});
   await templates.remove(admin,draft.id);assert.equal(objects.size,4);
-  assert.equal((await templates.catalog(other)).length,1);
+  assert.equal((await templates.catalog(other)).length,INSTALLED_TEMPLATES.length);
   assert.ok((await projects.asset(other,project.id,'model')).data.length);
   assert.equal((await projects.template(other,project.id)).id,draft.id);
   await assert.rejects(templates.available(other,draft.id),{status:404});

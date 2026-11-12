@@ -1,0 +1,42 @@
+{
+  "id": "pack26-raglan-prestige-sem-recorte",
+  "name": "KIT · RAGLAN · PRESTIGE · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT PRESTIGE RAGLAN - CALÇÃO BASICO.glb",
+  "originalSourceSha256": "16fc2e3c381bd1ccbc608f6dfedcefe39ce1a68968e05b09ef370e7a1737e197",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Frente",
+    "Costas",
+    "Gola frente",
+    "Gola frente",
+    "Manga direita",
+    "Filete manga direita",
+    "Manga esquerda",
+    "Filete manga esquerda"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "body",
+    "body",
+    "collar",
+    "collar",
+    "sleeve",
+    "filet",
+    "sleeve",
+    "filet"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "RAGLAN",
+  "collar": "PRESTIGE",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}
