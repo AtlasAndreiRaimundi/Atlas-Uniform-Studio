@@ -21,6 +21,10 @@ export class OrderTrackingService{
   let document=null;if(!row.production_state){const object=await this.bucket.get(row.object_key);if(!object)throw new AppError(503,'Um pedido está indisponível. Tente novamente.');document=await object.json();}
   return {...this.production.summary(row),tracking:{...trackingOf(row,document),downloadedAt:row.last_download_at||null},designer:row.designer_name||'',city:row.city||'',store:row.store||''};
  }
+ /**
+  * @param {*} user
+  * @param {{factory?: boolean,page?: number,industry?: string|null}} [options]
+  */
  async list(user,{factory=false,page=0,industry=null}={}){
   const owner=this.owner(user),isAdmin=isAdminUser(user,this.adminId),factories=await this.industries(user);
   if(factory&&!factories.length)throw new AppError(403,'Sem acesso à produção.');

@@ -155,13 +155,13 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  saved=await tracking.transition(alice,saved.id,{action:'send',version:saved.version,protocol:'PROTO-01',factoryId:'meinerz'});assert.equal(saved.tracking.stage,'sent');
 
  assert.equal(objects.get(sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(saved.id).object_key),snapshot);
- await assert.rejects(service.save(alice,saved.id,{document,version:saved.version,action:'revise'}),/enviado/);
+ await assert.rejects(service.save(alice,saved.id,{document,version:saved.version,action:'revise'}),/disponibilizado/);
  await assert.rejects(tracking.list(bob,{factory:true}),{status:403});
  await assert.rejects(tracking.transition(alice,saved.id,{action:'accept',version:saved.version}),{status:403});
  await assert.rejects(tracking.transition(factory,saved.id,{action:'accept',version:saved.version-1}),{status:409});
  assert.equal((await tracking.list(factory,{factory:true})).orders.length,1);
  assert.equal((await tracking.detail(factory,saved.id,{factory:true})).document.client,document.client);
- await assert.rejects(tracking.detail(bob,saved.id,{factory:true}),{status:404});
+ await assert.rejects(tracking.detail(bob,saved.id,{factory:true}),{status:403});
  saved=await tracking.transition(factory,saved.id,{action:'accept',version:saved.version});assert.equal(saved.tracking.stage,'accepted');assert.equal(saved.tracking.acceptedById,'factory');
  await assert.rejects(service.remove(alice,saved.id,{version:saved.version}),/não podem ser excluídos/);
  assert.equal(objects.get(sql.prepare('SELECT object_key FROM production_orders WHERE id=?').get(saved.id).object_key),snapshot);

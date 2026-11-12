@@ -1275,8 +1275,8 @@
     },
     {
       "path": "lib/order-tracking.mjs",
-      "size": 12548,
-      "sha256": "8c51564b1aba4671afe80f99bfa0a99de846d72b3e88ec446e0154c5ed143615"
+      "size": 12658,
+      "sha256": "0c6f79052fdbc65e37f156322eae87cac356c5f2be85bc38507f6d5dedc63832"
     },
     {
       "path": "lib/production-service.mjs",
@@ -2395,8 +2395,8 @@
     },
     {
       "path": "tests/atlas-brand.test.mjs",
-      "size": 2988,
-      "sha256": "d99ab3ab4bee8f3f8e1571799f2828cf13d442eee0169a0ae894b5a49386dc61"
+      "size": 3062,
+      "sha256": "a3e2a49527cc46204aae06c5dd72ce8d237863a907477646668213f559cc2c88"
     },
     {
       "path": "tests/atlas.test.mjs",
@@ -2560,8 +2560,8 @@
     },
     {
       "path": "tests/production.test.mjs",
-      "size": 32206,
-      "sha256": "c15ad620cd5a2ee84695a6a2b938c0b437d86ca5f74a1ffc9d6c5529eb65b9a0"
+      "size": 32214,
+      "sha256": "9f86d7cdc34544c66c201b5e6cfd6817cf8e1a770abbed57d4c570b269b94c5a"
     },
     {
       "path": "tests/projects.test.mjs",
@@ -2595,8 +2595,8 @@
     },
     {
       "path": "tests/simulator-layers.test.mjs",
-      "size": 6949,
-      "sha256": "ac7f1ed62882eb42f7fa288837f87e79ee520a0dc74e61a03fc6ac9e6df37775"
+      "size": 7096,
+      "sha256": "95c536ef71aac577a30f24bae610c620c4393026b9d46b4c8ab5d9bb958952e0"
     },
     {
       "path": "tests/simulator-presentation.test.mjs",
@@ -2635,8 +2635,8 @@
     },
     {
       "path": "tests/tracking-panel.test.mjs",
-      "size": 10480,
-      "sha256": "5c376fa5ab400d23e98ad26f1b415fe4702f18f6fd9ef1733a3a185814c40ac0"
+      "size": 10491,
+      "sha256": "087727a9b7200c9a344bcbf0b970c223af462e66b027b2075eb0e03b244848fa"
     },
     {
       "path": "tests/video-export.test.mjs",
