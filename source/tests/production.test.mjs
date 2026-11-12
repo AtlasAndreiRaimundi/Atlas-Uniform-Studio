@@ -66,7 +66,7 @@ test('the owner can delete a sent order before factory acceptance and it leaves 
  const {service,objects}=setup(),owner={userId:'alice'},factory={userId:'factory'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory'),lists=new ListService(service.db,service.bucket),document=demoOrder();Object.assign(document,{orderDate:'2026-10-22',deliveryDate:'2026-12-20',artist:'Designer'});
  let saved=await service.save(owner,null,{document});const list=await lists.forOrder(owner,saved.id);
  saved=await attachFixtureCDR(service,owner,saved,document);
- saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version});
+ saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'});
  assert.equal((await tracking.list(factory,{factory:true})).orders.length,1);const files=objects.size;
  await assert.rejects(service.remove(factory,saved.id,{version:saved.version}),{status:404});await assert.rejects(service.remove(owner,saved.id,{version:saved.version-1}),{status:409});assert.equal(objects.size,files);
  await service.remove(owner,saved.id,{version:saved.version});assert.equal((await tracking.list(owner)).orders.length,0);assert.equal((await tracking.list(factory,{factory:true})).orders.length,0);await assert.rejects(tracking.transition(factory,saved.id,{action:'accept',version:saved.version}),{status:404});
@@ -80,7 +80,7 @@ test('order thumbnails show the saved first sheet, enforce ownership and factory
  const preview=await tracking.preview(owner,saved.id,{version:'1'});assert.match(preview,/<svg/);assert.match(preview,/Cliente A/);assert.match(preview,/data:image\/png;base64,AAAA/);assert.ok(!preview.includes('<script>'));assert.ok(preview.includes('&lt;script&gt;'));assert.ok(!preview.includes('MOCKUP'),'draft previews do not invent a garment image');
  saved=await attachFixtureCDR(service,owner,saved,document);
  saved=await service.save(owner,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});await assert.rejects(tracking.preview(owner,saved.id,{version:'1'}),{status:409});
- saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version});assert.match(await tracking.preview(factory,saved.id,{factory:true,version:saved.version}),/Cliente A/);
+ saved=await tracking.transition(owner,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'});assert.match(await tracking.preview(factory,saved.id,{factory:true,version:saved.version}),/Cliente A/);
  await service.remove(owner,saved.id,{version:saved.version});await assert.rejects(tracking.preview(owner,saved.id),{status:404});await assert.rejects(tracking.preview(factory,saved.id,{factory:true}),{status:404});
 });
 test('external image URLs, oversized structures and malformed quantities are rejected before saving',()=>{const d=demoOrder();d.pages[0].products[0].images=['https://untrusted.test/image.png'];assert.throws(()=>validateDocument(d),{status:400});d.pages[0].products[0].images=[];d.pages[0].products[0].quantity=-1;assert.throws(()=>validateDocument(d),{status:400});});
@@ -147,12 +147,12 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  const tracking=new OrderTrackingService(db,service.bucket,service,'factory');
  const document=demoOrder();Object.assign(document,{deliveryDate:'2026-12-20',orderDate:'2026-10-22',artist:'Andrei'});
  let saved=await service.save(alice,null,{document});
- await assert.rejects(tracking.transition(alice,saved.id,{action:'send',version:saved.version}),/Confira/);
+ await assert.rejects(tracking.transition(alice,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'}),/Confira/);
  saved=await attachFixtureCDR(service,alice,saved,document);
  saved=await service.save(alice,saved.id,{document,version:saved.version,action:'release',checks:{art:true,list:true,technical:true}});
  const snapshot=JSON.stringify((await service.get(alice,saved.id)).document);
- await assert.rejects(tracking.transition(bob,saved.id,{action:'send',version:saved.version}),{status:404});
- saved=await tracking.transition(alice,saved.id,{action:'send',version:saved.version,protocol:'PROTO-01'});assert.equal(saved.tracking.stage,'sent');
+ await assert.rejects(tracking.transition(bob,saved.id,{action:'send',version:saved.version,factoryId:'meinerz'}),{status:404});
+ saved=await tracking.transition(alice,saved.id,{action:'send',version:saved.version,protocol:'PROTO-01',factoryId:'meinerz'});assert.equal(saved.tracking.stage,'sent');
 
  assert.equal(JSON.stringify((await service.get(alice,saved.id)).document),snapshot);
  await assert.rejects(service.save(alice,saved.id,{document,version:saved.version,action:'revise'}),/enviado/);
@@ -161,7 +161,7 @@ test('factory queue enforces permissions, exact revisions, acceptance lock and u
  await assert.rejects(tracking.transition(factory,saved.id,{action:'accept',version:saved.version-1}),{status:409});
  assert.equal((await tracking.list(factory,{factory:true})).orders.length,1);
  assert.equal((await tracking.detail(factory,saved.id,{factory:true})).document.client,document.client);
- await assert.rejects(tracking.detail(bob,saved.id,{factory:true}),{status:403});
+ await assert.rejects(tracking.detail(bob,saved.id,{factory:true}),{status:404});
  saved=await tracking.transition(factory,saved.id,{action:'accept',version:saved.version});assert.equal(saved.tracking.stage,'accepted');assert.equal(saved.tracking.acceptedById,'factory');
  await assert.rejects(service.remove(alice,saved.id,{version:saved.version}),/não podem ser excluídos/);
  assert.equal(JSON.stringify((await service.get(alice,saved.id)).document),snapshot);
@@ -173,11 +173,11 @@ test('factory returns require reasons and allow a new reviewed revision without 
  const {OrderTrackingService}=await import('../lib/order-tracking.mjs');
  const {service}=setup(),owner={userId:'alice'},factory={userId:'factory'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory'),document=demoOrder();Object.assign(document,{deliveryDate:'2026-12-20',artist:'Andrei'});
  let order=await service.save(owner,null,{document});order=await attachFixtureCDR(service,owner,order,document);order=await service.save(owner,order.id,{document,version:order.version,action:'release',checks:{art:true,list:true,technical:true}});
- order=await tracking.transition(owner,order.id,{action:'send',version:order.version});
+ order=await tracking.transition(owner,order.id,{action:'send',version:order.version,factoryId:'meinerz'});
  await assert.rejects(tracking.transition(factory,order.id,{action:'return',version:order.version}),/motivo/);
  order=await tracking.transition(factory,order.id,{action:'return',version:order.version,note:'Conferir gola'});assert.equal(order.tracking.stage,'returned');
  order=await service.save(owner,order.id,{document,version:order.version,action:'revise'});assert.equal(order.tracking.stage,'draft');assert.equal(order.tracking.revision,2);assert.equal(order.tracking.sentAt,null);assert.equal(order.tracking.checkedAt,null);assert.ok(order.tracking.events.some(e=>e.action==='return'));
- await assert.rejects(tracking.transition(owner,order.id,{action:'send',version:order.version}),/Confira/);
+ await assert.rejects(tracking.transition(owner,order.id,{action:'send',version:order.version,factoryId:'meinerz'}),/Confira/);
 });
 test('reminder eligibility starts the next Sao Paulo calendar day and excludes drafts, sent, accepted and returned orders',async()=>{
  const {localDay,reminderDue}=await import('../lib/order-tracking.mjs');
@@ -199,8 +199,8 @@ test('factory permissions are administrator controlled and self profile edits ca
  const {OrderTrackingService}=await import('../lib/order-tracking.mjs');
  const {service,sql}=setup(),admin={userId:'factory'},designer={userId:'alice'},tracking=new OrderTrackingService(service.db,service.bucket,service,'factory');
  sql.prepare("INSERT INTO profiles(user_id,display_name,created_at,updated_at) VALUES ('alice','Alice','2026-01-01','2026-01-01')").run();
- assert.equal(await tracking.factoryAllowed(designer),false);await assert.rejects(tracking.setMember(designer,{id:'alice',enabled:true}),{status:403});
- await tracking.setMember(admin,{id:'alice',enabled:true});assert.equal(await tracking.factoryAllowed(designer),true);await tracking.setMember(admin,{id:'alice',enabled:false});assert.equal(await tracking.factoryAllowed(designer),false);
+ assert.equal(await tracking.factoryAllowed(designer),false);await assert.rejects(tracking.setMember(designer,{id:'alice',factoryId:'meinerz',enabled:true}),{status:403});
+ await tracking.setMember(admin,{id:'alice',factoryId:'meinerz',enabled:true});assert.equal(await tracking.factoryAllowed(designer),true);await tracking.setMember(admin,{id:'alice',factoryId:'meinerz',enabled:false});assert.equal(await tracking.factoryAllowed(designer),false);
 });
 
 test('saved production summaries retain durable reverse links to the exact list and presentation IDs',async()=>{
