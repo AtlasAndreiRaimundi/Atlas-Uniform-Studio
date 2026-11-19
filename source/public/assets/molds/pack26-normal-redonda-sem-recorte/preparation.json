@@ -1,0 +1,40 @@
+{
+  "id": "pack26-normal-redonda-sem-recorte",
+  "name": "KIT · NORMAL · REDONDA · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT BASICO NORMAL - CALÇAO BASICO.glb",
+  "originalSourceSha256": "af883cd7761bdc1c482f5e60cb54d8421d32efe59df873efdcf77637076d6865",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Gola inteira",
+    "Manga esquerda",
+    "Filete manga esquerda",
+    "Filete manga direita",
+    "Manga direita",
+    "Costas",
+    "Frente"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "collar",
+    "sleeve",
+    "filet",
+    "filet",
+    "sleeve",
+    "body",
+    "body"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "NORMAL",
+  "collar": "REDONDA",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

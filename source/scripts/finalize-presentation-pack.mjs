@@ -1,0 +1,6 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {PRESENTATION_PACK_TEMPLATES} from '../lib/presentation-pack-templates.mjs';
+const entries=structuredClone(PRESENTATION_PACK_TEMPLATES),manifest=JSON.parse(await readFile('scripts/presentation-pack-manifest.json','utf8'));
+for(const e of entries){const d=e.descriptor;if(d.variant){const old=d.name;d.name=old.replace(' · CALÇÃO 2 PARTES · '+d.variant,' · '+d.variant+' · CALÇÃO 2 PARTES');e.templateSvg=e.templateSvg.replaceAll(old,d.name);const root='public/assets/molds/'+d.id+'/';for(const file of ['template.svg','proof.svg'])await writeFile(root+file,(await readFile(root+file,'utf8')).replaceAll(old,d.name));await writeFile(root+'descriptor.json',JSON.stringify(d,null,2)+'\n');const meta=JSON.parse(await readFile(root+'preparation.json','utf8'));meta.name=d.name;await writeFile(root+'preparation.json',JSON.stringify(meta,null,2)+'\n');manifest.find(m=>m.id===d.id).name=d.name;}}
+await writeFile('scripts/presentation-pack-manifest.json',JSON.stringify(manifest,null,2)+'\n');
+await writeFile('lib/presentation-pack-templates.mjs','// Owner-supplied presentation pack, November 2026. Immutable atlas IDs.\nexport const PRESENTATION_PACK_TEMPLATES=Object.freeze('+JSON.stringify(entries)+');\n');

@@ -69,3 +69,23 @@ test('production ZIP contains the same interleaved PDF, exact CDR bytes and revi
  const manifest=JSON.parse(await zip.file(names.find(name=>name.endsWith(' - versao.json'))).async('string')),pdf=await PDF.PDFDocument.load(await zip.file(manifest.pdf.name).async('uint8array'));assert.equal(pdf.getPageCount(),4);assert.equal(manifest.order.revision,2);assert.equal(manifest.order.version,8);assert.ok(result.name.startsWith(document.number+' - '+document.client+' - '+document.title));assert.ok(manifest.pdf.name.startsWith(document.number+' - '));assert.ok(manifest.technicalFiles[0].name.split('/').at(-1).startsWith(document.number+' - '));assert.deepEqual(await zip.file(manifest.technicalFiles[0].name).async('uint8array'),data);
  await assert.rejects(createProductionPackage(delivery,{...options,readFile:async()=>new TextEncoder().encode('arquivo trocado')}),/não corresponde/);
 });
+
+
+test('shorts name columns appear only when a name exists in the supplied rows',()=>{
+ const order=printFixture(),shorts=order.pages[0].products[1];shorts.names=shorts.names.map(row=>({...row,name:''}));
+ const section=listSections([shorts])[0];assert.ok(!section.columns.some(([label])=>label==='NOME'));assert.equal(section.columns.reduce((sum,[,width])=>sum+width,0),810);assert.ok(!section.rows.flat().includes('SEM NOME'));
+ shorts.names[1].name='ANA';const named=listSections([shorts])[0];assert.ok(named.columns.some(([label])=>label==='NOME'));assert.ok(named.rows.flat().includes('ANA'));
+});
+test('linked shorts without names retain numbers without implying name personalization',()=>{
+ const page=newKitPage();for(const [i,p]of page.products.entries()){p.technical={};p.names=[{kitId:'a',name:i?'':'ANA',number:'07',size:'M',quantity:1}];p.quantity=1;}
+ const section=listSections(page.products,{kit:true})[0];assert.ok(section.columns.some(([label])=>label==='Nº · Calção'));assert.ok(!section.columns.some(([label])=>label==='NOME / Nº · Calção'));assert.equal(section.rows[0][4],'07');assert.match(section.rows[0][1],/ANA/);
+});
+test('the automatic shirt and shorts kit title is omitted without removing custom titles',()=>{
+ const order=printFixture();order.pages=[order.pages[0]];order.pages[0].title='KIT · CAMISETA + CALÇÃO';
+ assert.ok(!buildSheets(order).flatMap(sheet=>sheet.ops).some(op=>op.kind==='text'&&/KIT.*CAMISETA.*CALÇÃO/i.test(op.text)));
+ order.pages[0].title='JOGO PRINCIPAL';assert.ok(buildSheets(order).flatMap(sheet=>sheet.ops).some(op=>op.text==='JOGO PRINCIPAL'));
+});
+test('rounded order font contains the separators used in production sheets',async()=>{
+ const font=fontkit.create(await readFile(new URL('../public/fonts/ArialRoundedMTBold-Orders.ttf',import.meta.url)));
+ for(const character of '·ºÇÃçã—+×')assert.ok(font.hasGlyphForCodePoint(character.codePointAt(0)),character);
+});

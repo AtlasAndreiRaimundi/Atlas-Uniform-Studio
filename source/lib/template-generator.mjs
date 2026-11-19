@@ -163,6 +163,7 @@ function encodeGlb(json, binary) {
 
 export async function generateTemplate(input, options = {}) {
   const source = input instanceof Uint8Array ? input : new Uint8Array(input), {json,binary}=readGlb(source), records=[], islands=[];
+  const triangleLimit=options.offlineTrusted?400000:TEMPLATE_LIMITS.triangles,vertexLimit=options.offlineTrusted?500000:TEMPLATE_LIMITS.vertices;
   let triangleCount=0,vertexCount=0;
   // Bound peak allocations before building the topology maps in a 128 MB Worker.
   let expectedVertices=0,expectedTriangles=0;
@@ -172,11 +173,11 @@ export async function generateTemplate(input, options = {}) {
     if(!Number.isSafeInteger(count)||!Number.isSafeInteger(elements)||count<0||elements<0)fail('A contagem de vértices do GLB é inválida.');
     expectedVertices+=count;expectedTriangles+=elements/3;
   }
-  if(expectedVertices>TEMPLATE_LIMITS.vertices||expectedTriangles>TEMPLATE_LIMITS.triangles)fail('O molde ultrapassa o limite de 200 mil triângulos ou 250 mil vértices.');
-  if(source.byteLength*4+expectedVertices*400+expectedTriangles*80>96*1024*1024)fail('Este GLB está muito pesado para gerar o mapa online. Reduza as texturas ou simplifique a malha e envie novamente.');
+  if(expectedVertices>vertexLimit||expectedTriangles>triangleLimit)fail('O molde ultrapassa o limite de 200 mil triângulos ou 250 mil vértices.');
+  if(!options.offlineTrusted&&source.byteLength*4+expectedVertices*400+expectedTriangles*80>96*1024*1024)fail('Este GLB está muito pesado para gerar o mapa online. Reduza as texturas ou simplifique a malha e envie novamente.');
   for(let m=0;m<json.meshes.length;m++) for(let p=0;p<json.meshes[m].primitives.length;p++) {
     const record=splitPrimitive(json,binary,m,p);triangleCount+=record.triangles;vertexCount+=record.vertices;
-    if(triangleCount>TEMPLATE_LIMITS.triangles||vertexCount>TEMPLATE_LIMITS.vertices) fail('O molde ultrapassa o limite de 200 mil triângulos ou 250 mil vértices.');
+    if(triangleCount>triangleLimit||vertexCount>vertexLimit) fail('O molde ultrapassa o limite de 200 mil triângulos ou 250 mil vértices.');
     records.push(record);for(const island of record.islands){island.order=islands.length;islands.push(island);}
     if(islands.length>TEMPLATE_LIMITS.islands) fail('O molde tem mais de 128 ilhas UV. Una as partes desnecessárias no programa de origem.');
   }

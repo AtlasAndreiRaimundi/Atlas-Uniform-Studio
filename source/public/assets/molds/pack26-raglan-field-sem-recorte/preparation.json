@@ -1,0 +1,40 @@
+{
+  "id": "pack26-raglan-field-sem-recorte",
+  "name": "KIT · RAGLAN · FIELD · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT FIELD SEM RECORTE RECORTE RAGLAN - CALÇÃO 2 PARTES.glb",
+  "originalSourceSha256": "73dbdae6e9021b1bbcaaf37fb4a8e360d9084f06c46facc3ce13c2e137b90ad0",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Gola inteira",
+    "Filete manga esquerda",
+    "Filete manga direita",
+    "Manga direita",
+    "Manga esquerda",
+    "Costas",
+    "Frente"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "collar",
+    "filet",
+    "filet",
+    "sleeve",
+    "sleeve",
+    "body",
+    "body"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "RAGLAN",
+  "collar": "FIELD",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

@@ -15,3 +15,7 @@ coverage/
 .DS_Store
 Thumbs.db
 *.log
+
+# Large pack models are restored from the immutable, SHA-256 checked CDN URLs.
+source/public/assets/molds/pack26-*/*.glb
+source/public/assets/molds/pack26-mapas.zip

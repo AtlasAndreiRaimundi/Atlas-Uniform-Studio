@@ -1,6 +1,6 @@
 // The account screens and the static tools use the same menu and icon paths.
-export const APPROVED_ORDER_STAGES = ['checked', 'sent', 'accepted'];
-export const ORDER_FILTERS = ['all', 'approved', 'draft', 'checked', 'sent', 'accepted', 'returned'];
+export const APPROVED_ORDER_STAGES = ['checked', 'sent', 'accepted', 'in_production', 'completed'];
+export const ORDER_FILTERS = ['all', 'approved', 'draft', 'checked', 'sent', 'accepted', 'in_production', 'completed', 'returned'];
 export const normalizeOrderFilter = value => ORDER_FILTERS.includes(value) ? value : 'all';
 export const orderMatchesFilter = (stage, filter) => filter === 'all' || (filter === 'approved' ? APPROVED_ORDER_STAGES.includes(stage) : stage === filter);
 
@@ -17,6 +17,7 @@ export const NAV_GROUPS = [
     {id:'create-order', label:'Criar pedido', href:'/pedidos?new=1', icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2ZM14 2v6h6M12 12v6M9 15h6'},
     {id:'orders', label:'Meus pedidos', href:'/acompanhamento', icon:'M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M9 2h6v5H9V2ZM8 12h1M12 12h4M8 17h1M12 17h4'},
     {id:'approved-orders', label:'Pedidos aprovados', href:'/acompanhamento?status=approved', icon:'M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3ZM8 12l3 3 5-6'},
+    {id:'factory-portal', label:'Central de produção', href:'/acompanhamento?factory=1', icon:'M3 21V8l6 4V8l6 4V4h6v17H3ZM7 16h2m4 0h2m4 0h1'},
   ]},
   {id:'tools', label:'Ferramentas', items:[
     {id:'lists', label:'Criador de planilha', href:'/organizador', icon:'M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM3 9h18M9 9v12M15 9v12M3 15h18'},

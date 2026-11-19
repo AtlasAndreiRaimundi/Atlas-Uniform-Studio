@@ -1,0 +1,51 @@
+{
+  "id": "pack26-normal-polo-sem-recorte",
+  "name": "KIT · NORMAL · POLO · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT POLO - CALÇÃO BASICO.glb",
+  "originalSourceSha256": "5074e7f32608f02b105cf5cf64ea0598c315718533dc0ebc9df7a5e71d030b25",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Peitilho",
+    "Filete manga direita",
+    "Filete manga esquerda",
+    "Costas",
+    "Manga esquerda",
+    "Manga direita",
+    "Peitilho",
+    "Gola inteira",
+    "Gola inteira",
+    "Frente"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "collar",
+    "filet",
+    "filet",
+    "body",
+    "sleeve",
+    "sleeve",
+    "collar",
+    "collar",
+    "collar",
+    "body"
+  ],
+  "decorativeMeshes": [
+    14,
+    15,
+    16,
+    17
+  ],
+  "modeling": "NORMAL",
+  "collar": "POLO",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

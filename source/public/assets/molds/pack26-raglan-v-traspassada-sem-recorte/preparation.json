@@ -1,0 +1,40 @@
+{
+  "id": "pack26-raglan-v-traspassada-sem-recorte",
+  "name": "KIT · RAGLAN · V TRASPASSADA · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT GOLA V RAGLAN TRASPASSADA - CALÇÃO BASICO.glb",
+  "originalSourceSha256": "a34831b1d796ba6a7cd0e2964d8984cf1dfadaf10f7427041cfb147e68d86ba3",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Costas",
+    "Filete manga direita",
+    "Filete manga esquerda",
+    "Manga esquerda",
+    "Manga direita",
+    "Gola inteira",
+    "Frente"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "body",
+    "filet",
+    "filet",
+    "sleeve",
+    "sleeve",
+    "collar",
+    "body"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "RAGLAN",
+  "collar": "V TRASPASSADA",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

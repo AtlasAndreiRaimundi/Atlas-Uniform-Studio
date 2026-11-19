@@ -39,7 +39,9 @@ test('a removed CDR stays available on its released revision and factory downloa
  const {sql,production,tracking,technical,saved,release}=setup();let order=await saved();order=await technical.attach(alice,order.id,order.version,cdr());const ref=order.document.technicalFiles[0];order=await release(order);
  await assert.rejects(technical.delivery(bob,order.id),{status:404});await assert.rejects(technical.delivery(factory,order.id,{factory:true}),{status:403});
  sql.prepare('INSERT INTO profiles (user_id,display_name,factory_access,created_at,updated_at) VALUES (?,?,?,?,?)').run('factory','Fábrica',1,'now','now');
- await tracking.transition(alice,order.id,{action:'send',version:order.version});order=await production.get(alice,order.id);
+  await assert.rejects(technical.delivery(factory,order.id,{factory:true}),{status:403}); // legacy flag cannot grant cross-factory access
+  sql.prepare('INSERT INTO factory_memberships(user_id,factory_id,enabled,updated_at) VALUES (?,?,1,?)').run('factory','meinerz','now');
+ await tracking.transition(alice,order.id,{action:'send',version:order.version,factoryId:'meinerz'});order=await production.get(alice,order.id);
  const delivery=await technical.delivery(factory,order.id,{factory:true,version:String(order.version)});assert.equal(delivery.files[0].id,ref.id);assert.ok(delivery.files[0].url.includes('factory=1'));
  assert.deepEqual((await technical.download(factory,order.id,ref.id,{factory:true})).object.bytes,new Uint8Array(await cdr().arrayBuffer()));
  await assert.rejects(technical.delivery(factory,order.id,{factory:true,revision:1}),{status:403});

@@ -28,7 +28,7 @@ export class TemplateService {
   summary(row) {
     const layout = JSON.parse(row.layout_json);
     if(row.id===BUILTIN_TEMPLATE.id)return {...BUILTIN_TEMPLATE,name:row.name,line:moldCollection({...layout,id:row.id}),category:row.category,status:row.status,updatedAt:row.updated_at};
-    return { id:row.id, name:row.name, line:moldCollection({...layout,id:row.id}), bottomVariant:layout.bottomVariant, category:row.category, kind:'generated', status:row.status,
+    return { id:row.id, name:row.name, line:moldCollection({...layout,id:row.id}), bottomVariant:layout.bottomVariant,packId:layout.packId,modeling:layout.modeling,collar:layout.collar,sideCut:layout.sideCut,bottomParts:layout.bottomParts,variant:layout.variant,catalogPath:layout.catalogPath, category:row.category, kind:'generated', status:row.status,
       panelCount:layout.panelCount, triangles:layout.triangles, pageSize:4096, sourceName:row.source_name,
       createdAt:row.created_at, updatedAt:row.updated_at, orientation:layout.orientation, ...(layout.thumbnailUrl?{thumbnailUrl:layout.thumbnailUrl}:{}) };
   }

@@ -1,0 +1,40 @@
+{
+  "id": "pack26-raglan-redonda-sem-recorte",
+  "name": "KIT · RAGLAN · REDONDA · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT BASICO RAGLAN - CALÇAO BASICO.glb",
+  "originalSourceSha256": "db9b08cf692597dccc02f6b867fc285095cc6e68087b7d0cd1edcb20c264230e",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Frente",
+    "Costas",
+    "Gola inteira",
+    "Manga esquerda",
+    "Filete manga esquerda",
+    "Manga direita",
+    "Filete manga direita"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "body",
+    "body",
+    "collar",
+    "sleeve",
+    "filet",
+    "sleeve",
+    "filet"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "RAGLAN",
+  "collar": "REDONDA",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

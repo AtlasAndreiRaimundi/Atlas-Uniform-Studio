@@ -1,0 +1,42 @@
+{
+  "id": "pack26-normal-brasil-sem-recorte",
+  "name": "KIT · NORMAL · BRASIL · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT BASICO NORMAL - GOLA BRASIL - CALÇAO BASICO.glb",
+  "originalSourceSha256": "ea12f84b940643180b819c61d7754518babd863ebffedc56eb99ed24a20d081c",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Manga esquerda",
+    "Filete manga esquerda",
+    "Filete manga direita",
+    "Manga direita",
+    "Costas",
+    "Frente",
+    "Gola frente",
+    "Gola inteira"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "sleeve",
+    "filet",
+    "filet",
+    "sleeve",
+    "body",
+    "body",
+    "collar",
+    "collar"
+  ],
+  "decorativeMeshes": [],
+  "modeling": "NORMAL",
+  "collar": "BRASIL",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

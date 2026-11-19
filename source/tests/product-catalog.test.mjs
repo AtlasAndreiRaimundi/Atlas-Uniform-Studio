@@ -73,7 +73,7 @@ test('modern kit rows preserve separate quantities, names and numbering through 
  const row=listRow({id:'atleta-a',quantidadeCamiseta:2,quantidadeCalcao:1,nomeCalcao:'',semNumeroCalcao:true,modelagemCalcao:'FEMININA',tamanhoCalcao:'BLG'});assert.deepEqual(listProblems(row),[]);const pieces=listPieces(row);assert.deepEqual(pieces.map(p=>[p.quantity,p.name,p.number]),[[2,'Ana','07'],[1,'','']]);assert.equal(listSummary([row]).pieces,3);
  const list=validateList({schema:1,title:'Equipe',defaults:{catalogVersion:3,produto:'Kit'},rows:[row],unresolved:[]});assert.equal(list.rows[0].quantidadeCamiseta,2);assert.equal(list.rows[0].semNumeroCalcao,true);assert.equal(list.defaults.catalogVersion,3);
  const o=applyListToOrder(c.catalogOrder(newOrder()),[row],{name:'Equipe'});const [shirt,shorts]=o.pages[0].products;assert.deepEqual([shirt.quantity,shorts.quantity],[2,1]);assert.equal(shorts.names[0].name,'');assert.equal(shorts.names[0].number,'');assert.equal(shirt.names[0].kitId,shorts.names[0].kitId);assert.equal(shorts.technical.fit,'FEMININA');assert.equal(o.listSource.rows[0].quantidadeCamiseta,2);assert.equal(validateDocument(o).listSource.rows[0].semNumeroCalcao,true);
- const sections=listSections([shirt,shorts]);assert.equal(sections.length,1);assert.deepEqual(sections[0].rows[0].slice(1,7),['Ana / 07','M','2','SEM NOME / SEM NÚMERO','BLG','1']);
+ const sections=listSections([shirt,shorts]);assert.equal(sections.length,1);assert.deepEqual(sections[0].rows[0].slice(1,7),['Ana / 07','M','2','SEM NÚMERO','BLG','1']);
 });
 
 test('per-piece zero quantity excludes only that piece and blank number is never inherited',()=>{

@@ -1,0 +1,49 @@
+{
+  "id": "pack26-normal-polo-redonda-sem-recorte",
+  "name": "KIT · NORMAL · POLO REDONDA · SEM RECORTE · CALÇÃO 2 PARTES",
+  "category": "conjunto",
+  "sourceName": "KIT - POLO REDONDA - BASICO.glb",
+  "originalSourceSha256": "44095f39c5937f7547f30f5e44c68378c35f324580e45c8505aa013bbecef54c",
+  "labels": [
+    "Calção direito",
+    "Calção esquerdo",
+    "Cós esquerdo",
+    "Cós direito",
+    "Gola inteira",
+    "Gola inteira",
+    "Gola frente",
+    "Manga direita",
+    "Manga esquerda",
+    "Frente",
+    "Costas",
+    "Filete manga esquerda",
+    "Filete manga direita"
+  ],
+  "panelKinds": [
+    "shorts",
+    "shorts",
+    "waist",
+    "waist",
+    "collar",
+    "collar",
+    "collar",
+    "sleeve",
+    "sleeve",
+    "body",
+    "body",
+    "filet",
+    "filet"
+  ],
+  "decorativeMeshes": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "modeling": "NORMAL",
+  "collar": "POLO REDONDA",
+  "sideCut": false,
+  "bottomParts": 2,
+  "variant": "",
+  "packId": "kits-2026-11"
+}

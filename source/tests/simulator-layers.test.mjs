@@ -15,7 +15,7 @@ const graphic=extra=>layer('pattern',{pattern:'sash',...extra});
 test('successive library choices replace one graphic while retaining all placement, color and symmetry metadata',()=>{
  const s=empty(),g=graphic({x:.22,y:.61,w:.72,h:.34,rotation:29,opacity:.7,mirrorX:true,copyKey:'shared-graphic',color:COLORS[4].hex,colorId:COLORS[4].id}),badge=layer('badge');panel(s).layers=[g,badge];s.selected=badge.id;const before=clone(g);
  for(const id of ['stripes','chevron','center-stripe']){const result=applyGraphic(s,id);assert.equal(result.created,false);assert.equal(result.layer.id,g.id);assert.equal(panel(s).layers.length,2);assert.equal(g.pattern,id);}
- const {name,pattern,...unchanged}=g,{name:oldName,pattern:oldPattern,...original}=before;assert.deepEqual(unchanged,original);assert.equal(s.selected,g.id);assert.equal(panel(s).layers[1],badge);
+ const {name,pattern,w,h,naturalAspect,keepAspect,...unchanged}=g,{name:oldName,pattern:oldPattern,w:oldW,h:oldH,...original}=before;assert.deepEqual(unchanged,original);assert.equal(keepAspect,true);assert.ok(Math.abs(w*panel(s).cm.w/(h*panel(s).cm.h)-naturalAspect)<1e-9);assert.equal(s.selected,g.id);assert.equal(panel(s).layers[1],badge);
 });
 test('only an explicit addition makes another layer, then browsing replaces the newly selected layer',()=>{
  const s=empty(),first=applyGraphic(s,'sash').layer,firstSnapshot=clone(first);const second=applyGraphic(s,'stripes',{createNew:true}).layer;
