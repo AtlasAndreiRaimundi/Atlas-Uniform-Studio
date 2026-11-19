@@ -1,3 +1,7 @@
+## 19/11/2026 — Nome oficial e transferência
+
+MEINERZ UNIFORM STUDIO substitui Atlas Uniform Studio na documentação de continuidade. Identificadores técnicos legados preservados. Handoff e AGENTS registrados; sincronização com Sites e validação de produção pendentes. Nenhuma alteração funcional nesta entrega.
+
 ## v88/v89 — Paisagem, quatro vistas e link do orçamento (31/10/2026)
 
 A4 paisagem com apresentação de quatro vistas em destaque. Link público opcional por orçamento salvo reúne valores e viewer3D somente leitura; snapshot comercial e da apresentação, atualização explícita e revogação. Migração0015 adiciona duas colunas nullable e índice único, sem alterar dados anteriores. Testes384:359 passaram,25 históricos ignorados; tipos/build aprovados. Detalhes em source/docs/orcamentos-2026-10-31.md. VECTOR permanece separado.
@@ -6,7 +10,7 @@ A4 paisagem com apresentação de quatro vistas em destaque. Link público opcio
 
 Nova guia comercial com preço por kit, quantidade, desconto, vendedor e apresentação opcional; salvar/reabrir/excluir e conferência/PDF. Cálculo reaproveita Anexo01/2026, sem inventar preços ausentes. Migração0014 schema-only, autorização por proprietário, validação de corpo/origem e controle de versão. Simulador reativado sobre o único GLB EDGE mantido,19 painéis e apresentação nativa do kit completo; sem reintroduzir moldes antigos.357 testes locais aprovados,25 históricos ignorados; tipos/build aprovados. WebGL acelerado não verificado neste ambiente. VECTOR permanece fora desta publicação.
 
-# Histórico de alterações — ATLAS UNIFORM STUDIO
+# Histórico de alterações — MEINERZ UNIFORM STUDIO
 
 Formato inspirado em Keep a Changelog. Alterações efetivas devem apontar para commits, tags, testes e arquivos de evidência.
 
