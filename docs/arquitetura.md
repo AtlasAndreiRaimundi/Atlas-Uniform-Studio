@@ -1,7 +1,7 @@
 # Arquitetura — levantamento pendente
 
 ## Estado conhecido
-O ATLAS UNIFORM STUDIO é concebido como aplicação web para simulador de uniformes e fluxo de produção. A tecnologia concreta, infraestrutura, banco de dados, framework, dependências e código-fonte ainda **não foram inspecionados** neste repositório.
+O MEINERZ UNIFORM STUDIO é concebido como aplicação web para simulador de uniformes e fluxo de produção. A fonte está em source/. A inspeção de source/package.json identificou Next, React, TypeScript, Drizzle, Vite/Vinext e Wrangler; detalhes no handoff. Infraestrutura publicada, banco e bindings ainda não foram inspecionados.
 
 ## Inventário a completar após importação autorizada do código
 - Framework/linguagens e respectivas versões.
