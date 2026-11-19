@@ -1,4 +1,4 @@
-# AGENTS.md — Atlas Uniform Studio
+# AGENTS.md — MEINERZ UNIFORM STUDIO
 
 Criador: Andrei Raimundi. Este repositório é o ponto de continuidade do projeto. Antes de alterar qualquer arquivo, leia README.md, CHANGELOG.md, docs/atualizacoes-do-codigo.md e docs/HANDOFF-2026-11-19.md. O handoff distingue requisitos de implementação verificada. A versão publicada no Sites pode estar à frente do GitHub: não implante um snapshot antigo sobre produção.
 
@@ -11,3 +11,6 @@ Criador: Andrei Raimundi. Este repositório é o ponto de continuidade do projet
 - Use branch de trabalho, testes de regressão, typecheck, build e revisão visual quando disponível. Registre o que realmente foi testado e o que não foi.
 - Atualize CHANGELOG e handoff após alterações relevantes. Não use force push. Não declare publicação ou sincronização sem evidência.
 - Responda em português do Brasil, com entregas concretas e limitações explícitas.
+
+## Nome oficial
+Use exclusivamente MEINERZ UNIFORM STUDIO na interface, documentos novos e comunicação. Atlas é nome histórico; preserve IDs, caminhos, URLs, chaves de banco, contratos técnicos e o nome do repositório até migração explicitamente validada. Atlas Vector é separado.
