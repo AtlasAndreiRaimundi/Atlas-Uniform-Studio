@@ -1,8 +1,10 @@
-# ATLAS UNIFORM STUDIO
+# MEINERZ UNIFORM STUDIO
 
 Plataforma de Andrei Raimundi para criação de uniformes, apresentações, pedidos e orçamentos.
 
-**Produção: v90 — 04/11/2026.** Fonte sincronizada em `source/`,524 arquivos com manifesto SHA-256. Autoria declarada: Andrei Raimundi; direitos reservados.
+**Snapshot histórico documentado: v90 — 04/11/2026.** Fonte sincronizada em `source/`,524 arquivos com manifesto SHA-256. Autoria declarada: Andrei Raimundi; direitos reservados.
+
+Nome oficial atualizado em 19/11/2026: **MEINERZ UNIFORM STUDIO**. O nome do repositório é legado. A versão publicada atual ainda precisa ser comparada com a fonte. Consulte [instruções](AGENTS.md) e [handoff](docs/HANDOFF-2026-11-19.md).
 
 ## Módulos
 
